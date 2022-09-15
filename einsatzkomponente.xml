@@ -211,14 +211,13 @@
         </languages>
 		
     </administration>
-	
-		<api>
-				<files folder="api/components/com_einsatzkomponente">
-					<folder>src</folder>
-				</files>
-			</api>
+<!--<api>
+		<files folder="api/components/com_einsatzkomponente">
+			<folder>src</folder>
+		</files>
+	</api>
 			
-	<changelogurl>https://www.w3schools.com/xml/note.xml</changelogurl>			
+	<changelogurl>https://www.w3schools.com/xml/note.xml</changelogurl>	-->		
 	
 <!-- UPDATESERVER DEFINITION -->
 	<updateservers>
