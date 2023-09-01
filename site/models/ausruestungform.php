@@ -107,7 +107,7 @@ else{
 
 				// Convert the JTable to a clean JObject.
 				$properties = $table->getProperties(1);
-				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+				$this->_item = Joomla\Utilities\ArrayHelper::toObject($properties, 'JObject');
 			} elseif ($error = $table->getError()) {
 				$this->setError($error);
 			}

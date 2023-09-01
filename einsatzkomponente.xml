@@ -211,6 +211,7 @@
         </languages>
 		
     </administration>
+
 	
 	<api>
 				<files folder="api">
@@ -219,6 +220,7 @@
 			</api> 
 			
 	<changelogurl>https://einsatzkomponente.joomla100.com/update/com_einsatzkomponente-changelog.xml</changelogurl>			
+
 	
  UPDATESERVER DEFINITION -->
 	<updateservers>

@@ -51,8 +51,6 @@ class EinsatzkomponenteViewEinsatzfahrzeug extends HtmlView
 
 		$document = Factory::getDocument();
 
-		// Bootstrap laden
-		HTMLHelper::_('behavior.framework', true);
 		
 		if ($this->params->get('display_fahrzeuge_bootstrap','0') == '1') :
 		HTMLHelper::_('bootstrap.framework');
