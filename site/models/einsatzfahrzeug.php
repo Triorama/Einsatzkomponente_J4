@@ -25,6 +25,21 @@ use Joomla\Utilities\ArrayHelper;
  */
 class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
 {
+
+	/**
+	 * Method to get an item.
+     *
+     * @param   integer  $pk  The id of the item
+     *
+     * @return  object
+     *
+     * @since 4.0.0
+     * @throws \Exception
+	 */
+	public function getItem($pk = null)
+	{
+		return $this->getData($pk);
+	}
 	/**
 	 * Method to auto-populate the model state.
 	 *
@@ -99,7 +114,7 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
 
 				// Convert the JTable to a clean JObject.
 				$properties  = $table->getProperties(1);
-				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+				$this->_item = Joomla\Utilities\ArrayHelper::toObject($properties, 'JObject');
 			}
 		}
 
@@ -108,7 +123,7 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
 
 			if (isset($this->_item->department) && $this->_item->department != '') {
 				if(is_object($this->_item->department)){
-					$this->_item->department = JArrayHelper::fromObject($this->_item->department);
+					$this->_item->department = Joomla\Utilities\ArrayHelper::fromObject($this->_item->department);
 				}
 				$values = (is_array($this->_item->department)) ? $this->_item->department : explode(',',$this->_item->department);
 
@@ -133,7 +148,7 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
 
 			if (isset($this->_item->ausruestung) && $this->_item->ausruestung != '') {
 				if(is_object($this->_item->ausruestung)){
-					$this->_item->ausruestung = JArrayHelper::fromObject($this->_item->ausruestung);
+					$this->_item->ausruestung = Joomla\Utilities\ArrayHelper::fromObject($this->_item->ausruestung);
 				}
 				$values = (is_array($this->_item->ausruestung)) ? $this->_item->ausruestung : explode(',',$this->_item->ausruestung);
 

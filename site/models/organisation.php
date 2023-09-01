@@ -63,7 +63,20 @@ class EinsatzkomponenteModelOrganisation extends ItemModel
 
 		$this->setState('params', $params);
 	}
-
+/**
+	 * Method to get an item.
+     *
+     * @param   integer  $pk  The id of the item
+     *
+     * @return  object
+     *
+     * @since 4.0.0
+     * @throws \Exception
+	 */
+	public function getItem($pk = null)
+	{
+		return $this->getData($pk);
+	}
 	/**
 	 * Method to get an object.
 	 *
@@ -99,7 +112,7 @@ class EinsatzkomponenteModelOrganisation extends ItemModel
 
 				// Convert the JTable to a clean JObject.
 				$properties  = $table->getProperties(1);
-				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+				$this->_item = Joomla\Utilities\ArrayHelper::toObject($properties, 'JObject');
 			}
 		}
 

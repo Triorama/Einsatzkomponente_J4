@@ -493,7 +493,7 @@ endif;
 					
 			if (isset($item->auswahl_orga) && $item->auswahl_orga != '') {
 				if(is_object($item->auswahl_orga)){
-					$item->auswahl_orga = JArrayHelper::fromObject($item->auswahl_orga);
+					$item->auswahl_orga = Joomla\Utilities\ArrayHelper::fromObject($item->auswahl_orga);
 				}
 				$values = (is_array($item->auswahl_orga)) ? $item->auswahl_orga : explode(',',$item->auswahl_orga);
 
@@ -518,7 +518,7 @@ endif;
 
 			if (isset($item->vehicles) && $item->vehicles != '') {
 				if(is_object($item->vehicles)){
-					$item->vehicles = JArrayHelper::fromObject($item->vehicles);
+					$item->vehicles = Joomla\Utilities\ArrayHelper::fromObject($item->vehicles);
 				}
 				$values = (is_array($item->vehicles)) ? $item->vehicles : explode(',',$item->vehicles);
 
@@ -543,7 +543,7 @@ endif;
 
 	//		if (isset($item->ausruestung) && $item->ausruestung != '') {
 	//			if(is_object($item->ausruestung)){
-	//				$item->ausruestung = JArrayHelper::fromObject($item->ausruestung);
+	//				$item->ausruestung = Joomla\Utilities\ArrayHelper::fromObject($item->ausruestung);
 	//			}
 	//			$values = (is_array($item->ausruestung)) ? $item->ausruestung : explode(',',$item->ausruestung);
 
@@ -568,7 +568,7 @@ endif;
 
 	//		if (isset($item->boss_ftm) && $item->boss_ftm != '') {
 	//			if(is_object($item->boss_ftm)){
-	//				$item->boss_ftm = JArrayHelper::fromObject($item->boss_ftm);
+	//				$item->boss_ftm = Joomla\Utilities\ArrayHelper::fromObject($item->boss_ftm);
 	//			}
 	//			$values = (is_array($item->boss_ftm)) ? $item->boss_ftm : explode(',',$item->boss_ftm);
 
@@ -593,7 +593,7 @@ endif;
 
 	//		if (isset($item->boss2_ftm) && $item->boss2_ftm != '') {
 	//			if(is_object($item->boss2_ftm)){
-	//				$item->boss2_ftm = JArrayHelper::fromObject($item->boss2_ftm);
+	//				$item->boss2_ftm = Joomla\Utilities\ArrayHelper::fromObject($item->boss2_ftm);
 	//			}
 	//			$values = (is_array($item->boss2_ftm)) ? $item->boss2_ftm : explode(',',$item->boss2_ftm);
 
@@ -618,7 +618,7 @@ endif;
 
 	//		if (isset($item->people_ftm) && $item->people_ftm != '') {
 	//			if(is_object($item->people_ftm)){
-	//				$item->people_ftm = JArrayHelper::fromObject($item->people_ftm);
+	//				$item->people_ftm = Joomla\Utilities\ArrayHelper::fromObject($item->people_ftm);
 	//			}
 	//			$values = (is_array($item->people_ftm)) ? $item->people_ftm : explode(',',$item->people_ftm);
 
@@ -645,7 +645,7 @@ endif;
 
 			if (isset($item->article_id) && $item->article_id != '') {
 				if(is_object($item->article_id)){
-					$item->article_id = JArrayHelper::fromObject($item->article_id);
+					$item->article_id = Joomla\Utilities\ArrayHelper::fromObject($item->article_id);
 				}
 				$values = (is_array($item->article_id)) ? $item->article_id : explode(',',$item->article_id);
 
