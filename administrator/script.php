@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 use Joomla\CMS\Factory;
 
-class com_einsatzkomponenteInstallerScript {
+class Installer {
 	public function install($parent) {
 		
 		// $parent is the class calling this method
