@@ -7,7 +7,7 @@
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
 
-namespace Eikonamespace\Component\Einsatzkomponente\Api\View\Datenexchanges;
+namespace EikoNamespace\Component\Einsatzkomponente\Api\View\Datenexchanges;
 
 \defined('_JEXEC') or die;
 

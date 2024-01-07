@@ -6,7 +6,7 @@
  * @copyright  Copyright (C) 2021. Alle Rechte vorbehalten.
  * @license    GNU General Public License Version 2 oder später; siehe LICENSE.txt
  */
-namespace Eikonamespace\Component\Einsatzkomponente\Api\Controller;
+namespace EikoNamespace\Component\Einsatzkomponente\Api\Controller;
 
 \defined('_JEXEC') or die;
 

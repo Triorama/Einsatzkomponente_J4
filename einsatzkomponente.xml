@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" method="upgrade">
-    <name>com_einsatzkomponente</name>
+    <name>Einsatzkomponente</name>
     <creationDate>2023-03-20</creationDate>
     <copyright>Copyright (C) 2023 by Ralf Meyer. All rights reserved.</copyright>
     <license>GNU General Public License version 2 or later</license>
@@ -21,10 +21,10 @@
 			]]>
 	</description>
 	
-	<namespace path="src">EinsatzkomponenteNamespace\Component\Einsatzkomponente</namespace>
+	<namespace path="src">EikoNamespace\Component\Einsatzkomponente</namespace>
 	
 	<!-- Runs on install/uninstall/update; New in Joomla 2.5 -->  
-	<scriptfile>file.script.php</scriptfile> 
+	<scriptfile>script.php</scriptfile> 
 	
     <install> <!-- Runs on install -->
         <sql>
@@ -46,14 +46,14 @@
 	
     <files folder="site">
         <filename>index.html</filename>
-        <filename>einsatzkomponente.php</filename>
+       <!-- <filename>einsatzkomponente.php</filename>
         <filename>controller.php</filename>
         <filename>router.php</filename>
         <folder>helpers</folder>
         <folder>views</folder>
         <folder>assets</folder>
         <folder>models</folder>
-        <folder>controllers</folder>
+        <folder>controllers</folder> -->
     </files>
 	
 	<media destination="com_einsatzkomponente" folder="media">
@@ -186,17 +186,15 @@
         <files folder="administrator">
             <filename>access.xml</filename>
             <filename>config.xml</filename>
-            <filename>controller.php</filename>
             <filename>CHANGELOG.php</filename>
-            <filename>index.html</filename>
-            <filename>einsatzkomponente.php</filename>
-            <folder>controllers</folder>
             <folder>assets</folder>
             <folder>helpers</folder>
-            <folder>models</folder>
+            <folder>services</folder>
+            <folder>language</folder>
+            <folder>tmpl</folder>
+            <folder>forms</folder>
             <folder>sql</folder>
-            <folder>tables</folder>
-            <folder>views</folder>
+            <folder>src</folder>
         </files>
 		
         <languages folder="administrator">
