@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -13,11 +12,12 @@
  * FPDF is a free PHP library for creating PDFs:
  * http://www.fpdf.org/
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Helper;
 defined('_JEXEC') or die;
 
-require("fpdf.php");
+require("fpdf/fpdf.php");
 
-class PDF extends FPDF {
+class PdfHelper extends \FPDF {
 
     const DPI = 96;
     const MM_IN_INCH = 25.4;

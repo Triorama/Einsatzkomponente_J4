@@ -10,8 +10,9 @@ namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Helper;
 // No direct access
 defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\PdfHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Object\CMSObject;
+use Joomla\CMS\Object\CMSObject;Ein
 use Joomla\CMS\Version;
 use Joomla\CMS\Session\Session;
 
@@ -742,9 +743,8 @@ endif;
 		{
 		//$model = $this->getModel();
 		$params = ComponentHelper::getParams('com_einsatzkomponente');
-			// Make sure the item ids are integers
-			jimport('joomla.utilities.arrayhelper');
-			ArrayHelper::toInteger($cid);
+		// Make sure the item ids are integers
+		ArrayHelper::toInteger($cid);
 			
 		foreach ($cid as $key => $val) {
 			
@@ -924,7 +924,7 @@ endif;
     }
 	public static function pdf($cid)
      	{
-	     	require_once JPATH_COMPONENT.'/helpers/fpdf.php';
+	    //require_once JPATH_COMPONENT.'/helpers/fpdf.php';
 		//$model = $this->getModel();
 		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		// Make sure the item ids are integers
@@ -1041,7 +1041,7 @@ endif;
 		     	$params = ComponentHelper::getParams('com_einsatzkomponente');
 		     	
 		     	//Hier wird das PDF-Grundgerüst erstellt
-			$pdf=new FPDF('P','mm','A4');
+			$pdf=new PdfHelper('P','mm','A4');
 			
 			//Definiere die Breite und Höhe der Beschriftungszellen:
 			$breite_beschriftung = 45;
