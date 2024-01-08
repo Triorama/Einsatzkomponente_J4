@@ -87,14 +87,14 @@ class HtmlView extends BaseHtmlView
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
 
-			ToolbarHelper::apply('gmapkonfiguration.apply', 'Toolbar_APPLY');
-			ToolbarHelper::save('gmapkonfiguration.save', 'Toolbar_SAVE');
+			ToolbarHelper::apply('gmapkonfiguration.apply', 'JTOOLBAR_APPLY');
+			ToolbarHelper::save('gmapkonfiguration.save', 'JTOOLBAR_SAVE');
 		}
 		if (empty($this->item->id)) {
-			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'Toolbar_CANCEL');
+			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'Toolbar_CLOSE');
+			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CLOSE');
 		}
 		
 		ToolbarHelper::divider();

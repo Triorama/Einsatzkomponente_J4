@@ -55,21 +55,21 @@ class HtmlView extends BaseHtmlView
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
-			ToolBarHelper::apply('kategorie.apply', 'Toolbar_APPLY');
-			ToolBarHelper::save('kategorie.save', 'Toolbar_SAVE');
+			ToolBarHelper::apply('kategorie.apply', 'JTOOLBAR_APPLY');
+			ToolBarHelper::save('kategorie.save', 'JTOOLBAR_SAVE');
 		}
 		if (!$checkedOut && ($canDo->get('core.create'))){
-			ToolBarHelper::custom('kategorie.save2new', 'save-new.png', 'save-new_f2.png', 'Toolbar_SAVE_AND_NEW', false);
+			ToolBarHelper::custom('kategorie.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			ToolBarHelper::custom('kategorie.save2copy', 'save-copy.png', 'save-copy_f2.png', 'Toolbar_SAVE_AS_COPY', false);
+			ToolBarHelper::custom('kategorie.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
 		}
 		if (empty($this->item->id)) {
-			ToolBarHelper::cancel('kategorie.cancel', 'Toolbar_CANCEL');
+			ToolBarHelper::cancel('kategorie.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			ToolBarHelper::cancel('kategorie.cancel', 'Toolbar_CLOSE');
+			ToolBarHelper::cancel('kategorie.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
 }

@@ -53,48 +53,44 @@ class HtmlView extends BaseHtmlView
 	 *
 	 * @since	1.6
 	 */
-	protected function addToolbar()
-	{
-		require_once JPATH_COMPONENT.'/helpers/einsatzkomponente.php';
+	protected function addToolbar(){
 		$state	= $this->get('State');
 		$canDo	= EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
 		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN'), 'kategorien.png');
-        //Check if the form exists before showing the add/edit buttons
-        $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/kategorie';
-        if (file_exists($formPath)) {
+
             if ($canDo->get('core.create')) {
-			    ToolbarHelper::addNew('kategorie.add','Toolbar_NEW');
+			    ToolbarHelper::addNew('kategorie.add','JTOOLBAR_NEW');
 		    }
 		    if ($canDo->get('core.edit') && isset($this->items[0])) {
-			    ToolbarHelper::editList('kategorie.edit','Toolbar_EDIT');
+			    ToolbarHelper::editList('kategorie.edit','JTOOLBAR_EDIT');
 		    }
-        }
+        
 		if ($canDo->get('core.edit.state')) {
             if (isset($this->items[0]->state)) {
 			    ToolbarHelper::divider();
-			    ToolbarHelper::custom('kategorien.publish', 'publish.png', 'publish_f2.png','Toolbar_PUBLISH', true);
-			    ToolbarHelper::custom('kategorien.unpublish', 'unpublish.png', 'unpublish_f2.png', 'Toolbar_UNPUBLISH', true);
+			    ToolbarHelper::custom('kategorien.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+			    ToolbarHelper::custom('kategorien.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
             } else if (isset($this->items[0])) {
                 //If this component does not use state then show a direct delete button as we can not trash
-                ToolbarHelper::deleteList('', 'kategorien.delete','Toolbar_DELETE');
+                ToolbarHelper::deleteList('', 'kategorien.delete','JTOOLBAR_DELETE');
             }
 //            if (isset($this->items[0]->state)) {
 //			    ToolbarHelper::divider();
-//			    ToolbarHelper::archiveList('kategorien.archive','Toolbar_ARCHIVE');
+//			    ToolbarHelper::archiveList('kategorien.archive','JTOOLBAR_ARCHIVE');
 //            }
             if (isset($this->items[0]->checked_out)) {
-            	ToolbarHelper::custom('kategorien.checkin', 'checkin.png', 'checkin_f2.png', 'Toolbar_CHECKIN', true);
+            	ToolbarHelper::custom('kategorien.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
             }
 		}
         
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
 		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    ToolbarHelper::deleteList('', 'kategorien.delete','Toolbar_EMPTY_TRASH');
+			    ToolbarHelper::deleteList('', 'kategorien.delete','JTOOLBAR_EMPTY_TRASH');
 			    ToolbarHelper::divider();
 		    } else if ($canDo->get('core.edit.state')) {
-			    //ToolbarHelper::trash('kategorien.trash','Toolbar_TRASH');
-                ToolbarHelper::deleteList('', 'kategorien.delete','Toolbar_DELETE');
+			    //ToolbarHelper::trash('kategorien.trash','JTOOLBAR_TRASH');
+                ToolbarHelper::deleteList('', 'kategorien.delete','JTOOLBAR_DELETE');
 			    ToolbarHelper::divider();
 		    }
         }

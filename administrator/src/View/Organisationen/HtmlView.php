@@ -53,46 +53,44 @@ class HtmlView extends BaseHtmlView
 	 */
 	protected function addToolbar()
 	{
-		require_once JPATH_COMPONENT.'/helpers/einsatzkomponente.php';
+
 		$state	= $this->get('State');
 		$canDo	= EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
 		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_ORGANISATIONEN'), 'organisationen.png');
-        //Check if the form exists before showing the add/edit buttons
-        $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/organisation';
-        if (file_exists($formPath)) {
+
             if ($canDo->get('core.create')) {
-			    ToolbarHelper::addNew('organisation.add','Toolbar_NEW');
+			    ToolbarHelper::addNew('organisation.add','JTOOLBAR_NEW');
 		    }
 		    if ($canDo->get('core.edit') && isset($this->items[0])) {
-			    ToolbarHelper::editList('organisation.edit','Toolbar_EDIT');
+			    ToolbarHelper::editList('organisation.edit','JTOOLBAR_EDIT');
 		    }
-        }
+        
 		if ($canDo->get('core.edit.state')) {
             if (isset($this->items[0]->state)) {
 			    ToolbarHelper::divider();
-			    ToolbarHelper::custom('organisationen.publish', 'publish.png', 'publish_f2.png','Toolbar_PUBLISH', true);
-			    ToolbarHelper::custom('organisationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'Toolbar_UNPUBLISH', true);
+			    ToolbarHelper::custom('organisationen.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+			    ToolbarHelper::custom('organisationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
             } else if (isset($this->items[0])) {
                 //If this component does not use state then show a direct delete button as we can not trash
-                ToolbarHelper::deleteList('', 'organisationen.delete','Toolbar_DELETE');
+                ToolbarHelper::deleteList('', 'organisationen.delete','JTOOLBAR_DELETE');
             }
 //            if (isset($this->items[0]->state)) {
 //			    ToolbarHelper::divider();
-//			    ToolbarHelper::archiveList('organisationen.archive','Toolbar_ARCHIVE');
+//			    ToolbarHelper::archiveList('organisationen.archive','JTOOLBAR_ARCHIVE');
 //            }
             if (isset($this->items[0]->checked_out)) {
-            	ToolbarHelper::custom('organisationen.checkin', 'checkin.png', 'checkin_f2.png', 'Toolbar_CHECKIN', true);
+            	ToolbarHelper::custom('organisationen.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
             }
 		}
         
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
 		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    ToolbarHelper::deleteList('', 'organisationen.delete','Toolbar_EMPTY_TRASH');
+			    ToolbarHelper::deleteList('', 'organisationen.delete','JTOOLBAR_EMPTY_TRASH');
 			    ToolbarHelper::divider();
 		    } else if ($canDo->get('core.edit.state')) {
-			    //ToolbarHelper::trash('organisationen.trash','Toolbar_TRASH');
-                ToolbarHelper::deleteList('', 'organisationen.delete','Toolbar_DELETE');
+			    //ToolbarHelper::trash('organisationen.trash','JTOOLBAR_TRASH');
+                ToolbarHelper::deleteList('', 'organisationen.delete','JTOOLBAR_DELETE');
 			    ToolbarHelper::divider();
 		    }
         }

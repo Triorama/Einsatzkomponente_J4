@@ -60,45 +60,43 @@ class HtmlView extends BaseHtmlView {
         ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNGEN'), 'ausruestungen.png');
 
         //Check if the form exists before showing the add/edit buttons
-        $formPath = JPATH_COMPONENT_ADMINISTRATOR . '/views/ausruestung';
-        if (file_exists($formPath)) {
 
             if ($canDo->get('core.create')) {
-                ToolbarHelper::addNew('ausruestung.add', 'Toolbar_NEW');
+                ToolbarHelper::addNew('ausruestung.add', 'JTOOLBAR_NEW');
             }
 
             if ($canDo->get('core.edit') && isset($this->items[0])) {
-                ToolbarHelper::editList('ausruestung.edit', 'Toolbar_EDIT');
+                ToolbarHelper::editList('ausruestung.edit', 'JTOOLBAR_EDIT');
             }
-        }
+        
 
         if ($canDo->get('core.edit.state')) {
 
             if (isset($this->items[0]->state)) {
                 ToolbarHelper::divider();
-                ToolbarHelper::custom('ausruestungen.publish', 'publish.png', 'publish_f2.png', 'Toolbar_PUBLISH', true);
-                ToolbarHelper::custom('ausruestungen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'Toolbar_UNPUBLISH', true);
+                ToolbarHelper::custom('ausruestungen.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+                ToolbarHelper::custom('ausruestungen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
             } else if (isset($this->items[0])) {
                 //If this component does not use state then show a direct delete button as we can not trash
-                ToolbarHelper::deleteList('', 'ausruestungen.delete', 'Toolbar_DELETE');
+                ToolbarHelper::deleteList('', 'ausruestungen.delete', 'JTOOLBAR_DELETE');
             }
 
             if (isset($this->items[0]->state)) {
                 ToolbarHelper::divider();
-                ToolbarHelper::archiveList('ausruestungen.archive', 'Toolbar_ARCHIVE');
+                ToolbarHelper::archiveList('ausruestungen.archive', 'JTOOLBAR_ARCHIVE');
             }
             if (isset($this->items[0]->checked_out)) {
-                ToolbarHelper::custom('ausruestungen.checkin', 'checkin.png', 'checkin_f2.png', 'Toolbar_CHECKIN', true);
+                ToolbarHelper::custom('ausruestungen.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
             }
         }
 
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
             if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-                ToolbarHelper::deleteList('', 'ausruestungen.delete', 'Toolbar_EMPTY_TRASH');
+                ToolbarHelper::deleteList('', 'ausruestungen.delete', 'JTOOLBAR_EMPTY_TRASH');
                 ToolbarHelper::divider();
             } else if ($canDo->get('core.edit.state')) {
-                ToolbarHelper::trash('ausruestungen.trash', 'Toolbar_TRASH');
+                ToolbarHelper::trash('ausruestungen.trash', 'JTOOLBAR_TRASH');
                 ToolbarHelper::divider();
             }
         }

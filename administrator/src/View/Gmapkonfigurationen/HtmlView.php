@@ -66,47 +66,44 @@ class HtmlView extends BaseHtmlView
 
 		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN'), 'gmapkonfigurationen.png');
 
-        //Check if the form exists before showing the add/edit buttons
-        $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/gmapkonfiguration';
-        if (file_exists($formPath)) {
 
-//            if ($canDo->get('core.create')) {
-//			    ToolbarHelper::addNew('gmapkonfiguration.add','Toolbar_NEW');
-//		    }
-
-		    if ($canDo->get('core.edit') && isset($this->items[0])) {
-			    ToolbarHelper::editList('gmapkonfiguration.edit','Toolbar_EDIT');
+           if ($canDo->get('core.create')) {
+			    ToolbarHelper::addNew('gmapkonfiguration.add','JTOOLBAR_NEW');
 		    }
 
-        }
+		    if ($canDo->get('core.edit') && isset($this->items[0])) {
+			    ToolbarHelper::editList('gmapkonfiguration.edit','JTOOLBAR_EDIT');
+		    }
+
+        
 
 //		if ($canDo->get('core.edit.state')) {
 //
 //            if (isset($this->items[0]->state)) {
 //			    ToolbarHelper::divider();
-//			    ToolbarHelper::custom('gmapkonfigurationen.publish', 'publish.png', 'publish_f2.png','Toolbar_PUBLISH', true);
-//			    ToolbarHelper::custom('gmapkonfigurationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'Toolbar_UNPUBLISH', true);
+//			    ToolbarHelper::custom('gmapkonfigurationen.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
+//			    ToolbarHelper::custom('gmapkonfigurationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
 //            } else if (isset($this->items[0])) {
 //                //If this component does not use state then show a direct delete button as we can not trash
-//                ToolbarHelper::deleteList('', 'gmapkonfigurationen.delete','Toolbar_DELETE');
+//                ToolbarHelper::deleteList('', 'gmapkonfigurationen.delete','JTOOLBAR_DELETE');
 //            }
 //
 //            if (isset($this->items[0]->state)) {
 //			    ToolbarHelper::divider();
-//			    ToolbarHelper::archiveList('gmapkonfigurationen.archive','Toolbar_ARCHIVE');
+//			    ToolbarHelper::archiveList('gmapkonfigurationen.archive','JTOOLBAR_ARCHIVE');
 //            }
 //            if (isset($this->items[0]->checked_out)) {
-//            	ToolbarHelper::custom('gmapkonfigurationen.checkin', 'checkin.png', 'checkin_f2.png', 'Toolbar_CHECKIN', true);
+//            	ToolbarHelper::custom('gmapkonfigurationen.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
 //            }
 //		}
         
         //Show trash and delete for components that uses the state field
 //        if (isset($this->items[0]->state)) {
 //		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-//			    ToolbarHelper::deleteList('', 'gmapkonfigurationen.delete','Toolbar_EMPTY_TRASH');
+//			    ToolbarHelper::deleteList('', 'gmapkonfigurationen.delete','JTOOLBAR_EMPTY_TRASH');
 //			    ToolbarHelper::divider();
 //		    } else if ($canDo->get('core.edit.state')) {
-//			    ToolbarHelper::trash('gmapkonfigurationen.trash','Toolbar_TRASH');
+//			    ToolbarHelper::trash('gmapkonfigurationen.trash','JTOOLBAR_TRASH');
 //			    ToolbarHelper::divider();
 //		    }
 //        }

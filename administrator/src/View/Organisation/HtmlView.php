@@ -61,21 +61,21 @@ class HtmlView extends BaseHtmlView
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
-			ToolbarHelper::apply('organisation.apply', 'Toolbar_APPLY');
-			ToolbarHelper::save('organisation.save', 'Toolbar_SAVE');
+			ToolbarHelper::apply('organisation.apply', 'JTOOLBAR_APPLY');
+			ToolbarHelper::save('organisation.save', 'JTOOLBAR_SAVE');
 		}
 		if (!$checkedOut && ($canDo->get('core.create'))){
-			ToolbarHelper::custom('organisation.save2new', 'save-new.png', 'save-new_f2.png', 'Toolbar_SAVE_AND_NEW', false);
+			ToolbarHelper::custom('organisation.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			ToolbarHelper::custom('organisation.save2copy', 'save-copy.png', 'save-copy_f2.png', 'Toolbar_SAVE_AS_COPY', false);
+			ToolbarHelper::custom('organisation.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
 		}
 		if (empty($this->item->id)) {
-			ToolbarHelper::cancel('organisation.cancel', 'Toolbar_CANCEL');
+			ToolbarHelper::cancel('organisation.cancel', 'JTOOLBAR_CANCEL');
 		}
 		else {
-			ToolbarHelper::cancel('organisation.cancel', 'Toolbar_CLOSE');
+			ToolbarHelper::cancel('organisation.cancel', 'JTOOLBAR_CLOSE');
 		}
 	}
 }
