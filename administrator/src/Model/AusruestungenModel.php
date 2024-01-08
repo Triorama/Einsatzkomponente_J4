@@ -16,7 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class AusrusetungenModel extends ListModel {
+class AusruestungenModel extends ListModel {
 
     /**
      * Constructor.
