@@ -1,4 +1,3 @@
-
 <?php
 /**
  * @version     3.15.0
@@ -7,33 +6,30 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Einsatzbericht;
 // No direct access
 defined('_JEXEC') or die;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
-jimport('joomla.application.component.view');
-JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
-JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatzkomponente'); 
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\OsmHelper;
 
 /**
  * View to edit
  */
-class EinsatzkomponenteViewEinsatzbericht extends HtmlView
+class HtmlView extends BaseHtmlView
 {
 	protected $state;
 	protected $item;
 	protected $form;
-	
 	protected $gmap_config;
 	/**
 	 * Display the view
 	 */
 	public function display($tpl = null)
 	{
-
 		$this->state	= $this->get('State');
 		$this->item		= $this->get('Item');
 		$this->form		= $this->get('Form');
@@ -41,7 +37,7 @@ class EinsatzkomponenteViewEinsatzbericht extends HtmlView
 		
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-            throw new Exception(implode("\n", $errors));
+            throw new \Exception(implode("\n", $errors));
 		}
 		
 		$this->addToolbar();
@@ -53,7 +49,7 @@ class EinsatzkomponenteViewEinsatzbericht extends HtmlView
 	protected function addToolbar()
 	{
 		
-		Factory::getApplication()->input->set('hidemainmenu', true);
+		Factory::getApplication()->input->set('hidemainmenu', false);
 		$user		= Factory::getUser();
 		$isNew		= ($this->item->id == 0);
         if (isset($this->item->checked_out)) {

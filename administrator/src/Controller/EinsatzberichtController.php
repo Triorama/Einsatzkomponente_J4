@@ -6,9 +6,9 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Contoller;
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Controller;
 // No direct access
-defined('_JEXEC') or die;
+\defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
@@ -17,10 +17,12 @@ use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\Uri\Uri;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 /**
  * Einsatzbericht controller class.
  */
-class EinsatzkomponenteControllerEinsatzbericht extends FormController
+class EinsatzberichtController extends FormController
 {
     function __construct() {
         $this->view_list = 'einsatzberichte';
@@ -29,8 +31,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends FormController
     public function pdf() {
     	// Check for request forgeries
 	Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
-	require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
-	
+		
     	$cid = Factory::getApplication()->input->get('id', array(), 'array');
     	if (!is_array($cid) || count($cid) < 1)
 	{
@@ -171,7 +172,6 @@ class EinsatzkomponenteControllerEinsatzbericht extends FormController
 					$auswahl_orga=  implode(',',$data); 
 
 					$orga		 = explode( ',', $auswahl_orga);
-		$orgas 		 = str_replace(",", " +++ ", $auswahl_orga);
  
 		$mailer->addRecipient($recipient);
 		
@@ -186,7 +186,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends FormController
 					$db->setQuery($query);
 					$kat = $db->loadObject();
 		
-		$link = Route::_( JURI::root() . 'index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.$result[0]->id.'&Itemid='.$params->get('homelink','')); 
+		$link = Route::_( uri::root() . 'index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.$result[0]->id.'&Itemid='.$params->get('homelink','')); 
 		
 		$body   = '';
 			if ($emailtext) :
@@ -212,7 +212,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends FormController
 		endif;
 		if ($result[0]->image) :	
 		if ($params->get('send_mail_image','0')) :	
-		$body   .= '<img src="'.JURI::root().$result[0]->image.'" style="margin-left:10px;float:right;height:50%;" alt="Einsatzbild"/>';
+		$body   .= '<img src="'.uri::root().$result[0]->image.'" style="margin-left:10px;float:right;height:50%;" alt="Einsatzbild"/>';
 		endif;
 		endif;
 		$body   .= '</div>';

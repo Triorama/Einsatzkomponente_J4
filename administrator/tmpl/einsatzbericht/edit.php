@@ -16,13 +16,10 @@ use Joomla\CMS\Router\Route;
 
 $params = ComponentHelper::getParams('com_einsatzkomponente');
 
-HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
-
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
-
 HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 // Daten aus der Bilder-Galerie holen 
@@ -512,14 +509,14 @@ function codeAddress2() {
     zoom: <?php echo $this->gmap_config->gmap_zoom_level; ?>,
     center: new google.maps.LatLng(<?php echo $gmap_latitude; ?>,<?php echo $gmap_longitude; ?>), 
     mapTypeControl: true,
-      scrollwheel: false,
-      disableDoubleClickZoom: true,
-	  streetViewControl: false,
-      keyboardShortcuts: false,
-      mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
-      navigationControl: true,
-      navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
-    mapTypeId: google.maps.MapTypeId.<?php echo $this->gmap_config->gmap_onload; ?>
+    scrollwheel: false,
+    disableDoubleClickZoom: true,
+	streetViewControl: false,
+    keyboardShortcuts: false,
+    mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU},
+    navigationControl: true,
+    navigationControlOptions: {style: google.maps.NavigationControlStyle.SMALL},
+    mapTypeId: google.maps.MapTypeId.<?php echo $this->gmap_config->gmap_onload;?>,
   }
   map = new google.maps.Map(document.getElementById("map_canvas"),myOptions);
   

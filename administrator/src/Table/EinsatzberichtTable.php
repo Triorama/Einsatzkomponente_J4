@@ -15,6 +15,7 @@ use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * einsatzbericht Table class
@@ -25,10 +26,10 @@ class EinsatzberichtTable extends Table {
      *
      * @param JDatabase A database connector object
      */
-    public function __construct(&$db) {
+    public function __construct(DatabaseDriver $db) {
         parent::__construct('#__eiko_einsatzberichte', 'id', $db);
-				// Set the alias since the column is called state
-				$this->setColumnAlias('published', 'state');
+        // Set the alias since the column is called state
+        $this->setColumnAlias('published', 'state');
     }
     /**
      * Overloaded bind function to pre-process the params.

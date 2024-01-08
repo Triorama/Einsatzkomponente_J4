@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Contoller;
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Controller;
 // No direct access.
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\AdminController;
@@ -16,11 +16,12 @@ use Joomla\CMS\Session\Session;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\Utilities\ArrayHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 
 /**
  * Einsatzberichte list controller class.
  */
-class EinsatzkomponenteControllerEinsatzberichte extends AdminController
+class EinsatzberichteController extends AdminController
 {
 	/**
 	 * Proxy for getModel.
