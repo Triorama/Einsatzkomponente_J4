@@ -9,6 +9,7 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
@@ -19,14 +20,16 @@ require_once JPATH_COMPONENT . '/controller.php';
 /**
  * Ausruestung controller class.
  */
-class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteController {
+class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteController
+{
 
     /**
      * Method to check out an item for editing and redirect to the edit form.
      *
      * @since	1.6
      */
-    public function edit() {
+    public function edit()
+    {
         $app = Factory::getApplication();
 
         // Get the previous edit id (if any) and the current edit id.
@@ -37,7 +40,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.id', $editId);
 
         // Get the model.
-        $model = $this->getModel('AusruestungForm', 'EinsatzkomponenteModel');
+        $model = $this->getModel('AusruestungForm', Site);
 
         // Check out the item
         if ($editId) {
@@ -59,13 +62,14 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
      * @return	void
      * @since	1.6
      */
-    public function save() {
+    public function save()
+    {
         // Check for request forgeries.
         Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
         // Initialise variables.
         $app = Factory::getApplication();
-        $model = $this->getModel('AusruestungForm', 'EinsatzkomponenteModel');
+        $model = $this->getModel('AusruestungForm', Site);
 
         // Get the user data.
         $data = Factory::getApplication()->input->get('jform', array(), 'array');
@@ -141,32 +145,34 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.data', null);
     }
 
-    function cancel() {
-        
+    function cancel()
+    {
+
         $app = Factory::getApplication();
 
         // Get the current edit id.
         $editId = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
 
         // Get the model.
-        $model = $this->getModel('AusruestungForm', 'EinsatzkomponenteModel');
+        $model = $this->getModel('AusruestungForm', Site);
 
         // Check in the item
         if ($editId) {
             $model->checkin($editId);
         }
-        
+
         $menu = Factory::getApplication()->getMenu();
         $item = $menu->getActive();
         $url = (empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=ausruestungen' : $item->link);
         $this->setRedirect(Route::_($url, false));
     }
 
-    public function remove() {
+    public function remove()
+    {
 
         // Initialise variables.
         $app = Factory::getApplication();
-        $model = $this->getModel('AusruestungForm', 'EinsatzkomponenteModel');
+        $model = $this->getModel('AusruestungForm', Site);
 
         // Get the user data.
         $data = array();
@@ -229,5 +235,4 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
         // Flush the data from the session.
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.data', null);
     }
-
 }

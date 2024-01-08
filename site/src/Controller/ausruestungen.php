@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -10,7 +11,7 @@
 // No direct access.
 defined('_JEXEC') or die;
 
-require_once JPATH_COMPONENT.'/controller.php';
+require_once JPATH_COMPONENT . '/controller.php';
 
 /**
  * Ausruestungen list controller class.
@@ -21,7 +22,7 @@ class EinsatzkomponenteControllerAusruestungen extends EinsatzkomponenteControll
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function &getModel($name = 'Ausruestungen', $prefix = 'EinsatzkomponenteModel', $config = array())
+	public function &getModel($name = 'Ausruestungen', $prefix = Site, $config = array())
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;

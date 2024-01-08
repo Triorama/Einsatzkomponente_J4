@@ -9,6 +9,7 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
@@ -18,14 +19,16 @@ require_once JPATH_COMPONENT . '/controller.php';
 /**
  * Ausruestung controller class.
  */
-class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController {
+class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
+{
 
     /**
      * Method to check out an item for editing and redirect to the edit form.
      *
      * @since	1.6
      */
-    public function edit() {
+    public function edit()
+    {
         $app = Factory::getApplication();
 
         // Get the previous edit id (if any) and the current edit id.
@@ -36,7 +39,7 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
         $app->setUserState('com_einsatzkomponente.edit.ausruestung.id', $editId);
 
         // Get the model.
-        $model = $this->getModel('Ausruestung', 'EinsatzkomponenteModel');
+        $model = $this->getModel('Ausruestung', Site);
 
         // Check out the item
         if ($editId) {
@@ -58,14 +61,15 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
      * @return	void
      * @since	1.6
      */
-    public function publish() {
+    public function publish()
+    {
         // Initialise variables.
         $app = Factory::getApplication();
 
         //Checking if the user can remove object
         $user = Factory::getUser();
         if ($user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.edit.state', 'com_einsatzkomponente')) {
-            $model = $this->getModel('Ausruestung', 'EinsatzkomponenteModel');
+            $model = $this->getModel('Ausruestung', Site);
 
             // Get the user data.
             $id = $app->input->getInt('id');
@@ -87,7 +91,7 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
 
             // Redirect to the list screen.
             $this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
-            $menu = & Factory::getApplication()->getMenu();
+            $menu = &Factory::getApplication()->getMenu();
             $item = $menu->getActive();
             if (!$item) {
                 // If there isn't any menu item active, redirect to list view
@@ -100,7 +104,8 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
         }
     }
 
-    public function remove() {
+    public function remove()
+    {
 
         // Initialise variables.
         $app = Factory::getApplication();
@@ -108,7 +113,7 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
         //Checking if the user can remove object
         $user = Factory::getUser();
         if ($user->authorise($user->authorise('core.delete', 'com_einsatzkomponente'))) {
-            $model = $this->getModel('Ausruestung', 'EinsatzkomponenteModel');
+            $model = $this->getModel('Ausruestung', Site);
 
             // Get the user data.
             $id = $app->input->getInt('id', 0);
@@ -136,12 +141,11 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
             }
 
             // Redirect to the list screen.
-            $menu = & Factory::getApplication()->getMenu();
+            $menu = &Factory::getApplication()->getMenu();
             $item = $menu->getActive();
             $this->setRedirect(Route::_($item->link, false));
         } else {
             throw new Exception(500);
         }
     }
-
 }

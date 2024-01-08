@@ -9,6 +9,7 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
@@ -42,17 +43,15 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		$app->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id', $editId);
 
 		// Get the model.
-		$model = $this->getModel('EinsatzfahrzeugForm', 'EinsatzkomponenteModel');
+		$model = $this->getModel('EinsatzfahrzeugForm', Site);
 
 		// Check out the item
-		if ($editId)
-		{
+		if ($editId) {
 			$model->checkout($editId);
 		}
 
 		// Check in the previous user.
-		if ($previousId)
-		{
+		if ($previousId) {
 			$model->checkin($previousId);
 		}
 
@@ -75,7 +74,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 
 		// Initialise variables.
 		$app   = Factory::getApplication();
-		$model = $this->getModel('EinsatzfahrzeugForm', 'EinsatzkomponenteModel');
+		$model = $this->getModel('EinsatzfahrzeugForm', Site);
 
 		// Get the user data.
 		$data = Factory::getApplication()->input->get('jform', array(), 'array');
@@ -83,8 +82,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		// Validate the posted data.
 		$form = $model->getForm();
 
-		if (!$form)
-		{
+		if (!$form) {
 			throw new Exception($model->getError(), 500);
 		}
 
@@ -92,20 +90,15 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		$data = $model->validate($form, $data);
 
 		// Check for errors.
-		if ($data === false)
-		{
+		if ($data === false) {
 			// Get the validation messages.
 			$errors = $model->getErrors();
 
 			// Push up to three validation messages out to the user.
-			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
-			{
-				if ($errors[$i] instanceof Exception)
-				{
+			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+				if ($errors[$i] instanceof Exception) {
 					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
-				}
-				else
-				{
+				} else {
 					$app->enqueueMessage($errors[$i], 'warning');
 				}
 			}
@@ -125,8 +118,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		$return = $model->save($data);
 
 		// Check for errors.
-		if ($return === false)
-		{
+		if ($return === false) {
 			// Save the data in the session.
 			$app->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', $data);
 
@@ -137,8 +129,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		}
 
 		// Check in the profile.
-		if ($return)
-		{
+		if ($return) {
 			$model->checkin($return);
 		}
 
@@ -171,11 +162,10 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		$editId = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
 
 		// Get the model.
-		$model = $this->getModel('EinsatzfahrzeugForm', 'EinsatzkomponenteModel');
+		$model = $this->getModel('EinsatzfahrzeugForm', Site);
 
 		// Check in the item
-		if ($editId)
-		{
+		if ($editId) {
 			$model->checkin($editId);
 		}
 
@@ -196,27 +186,22 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 	{
 		// Initialise variables.
 		$app   = Factory::getApplication();
-		$model = $this->getModel('EinsatzfahrzeugForm', 'EinsatzkomponenteModel');
+		$model = $this->getModel('EinsatzfahrzeugForm', Site);
 
 		// Get the user data.
 		$data       = array();
 		$data['id'] = $app->input->getInt('id');
 
 		// Check for errors.
-		if (empty($data['id']))
-		{
+		if (empty($data['id'])) {
 			// Get the validation messages.
 			$errors = $model->getErrors();
 
 			// Push up to three validation messages out to the user.
-			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++)
-			{
-				if ($errors[$i] instanceof Exception)
-				{
+			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+				if ($errors[$i] instanceof Exception) {
 					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
-				}
-				else
-				{
+				} else {
 					$app->enqueueMessage($errors[$i], 'warning');
 				}
 			}
@@ -233,8 +218,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		$return = $model->delete($data);
 
 		// Check for errors.
-		if ($return === false)
-		{
+		if ($return === false) {
 			// Save the data in the session.
 			$app->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', $data);
 
@@ -245,8 +229,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 		}
 
 		// Check in the profile.
-		if ($return)
-		{
+		if ($return) {
 			$model->checkin($return);
 		}
 

@@ -9,6 +9,7 @@
  */
 // No direct access
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
@@ -41,17 +42,15 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 		$app->setUserState('com_einsatzkomponente.edit.organisation.id', $editId);
 
 		// Get the model.
-		$model = $this->getModel('Organisation', 'EinsatzkomponenteModel');
+		$model = $this->getModel('Organisation', Site);
 
 		// Check out the item
-		if ($editId)
-		{
+		if ($editId) {
 			$model->checkout($editId);
 		}
 
 		// Check in the previous user.
-		if ($previousId && $previousId !== $editId)
-		{
+		if ($previousId && $previousId !== $editId) {
 			$model->checkin($previousId);
 		}
 
@@ -75,9 +74,8 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 		// Checking if the user can remove object
 		$user = Factory::getUser();
 
-		if ($user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.edit.state', 'com_einsatzkomponente'))
-		{
-			$model = $this->getModel('Organisation', 'EinsatzkomponenteModel');
+		if ($user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.edit.state', 'com_einsatzkomponente')) {
+			$model = $this->getModel('Organisation', Site);
 
 			// Get the user data.
 			$id    = $app->input->getInt('id');
@@ -87,8 +85,7 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 			$return = $model->publish($id, $state);
 
 			// Check for errors.
-			if ($return === false)
-			{
+			if ($return === false) {
 				$this->setMessage(Text::sprintf('Save failed: %s', $model->getError()), 'warning');
 			}
 
@@ -103,18 +100,13 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 			$menu = Factory::getApplication()->getMenu();
 			$item = $menu->getActive();
 
-			if (!$item)
-			{
+			if (!$item) {
 				// If there isn't any menu item active, redirect to list view
 				$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=organisationen', false));
-			}
-			else
-			{
+			} else {
 				$this->setRedirect(Route::_($item->link . $menuitemid, false));
 			}
-		}
-		else
-		{
+		} else {
 			throw new Exception(500);
 		}
 	}
@@ -134,9 +126,8 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 		// Checking if the user can remove object
 		$user = Factory::getUser();
 
-		if ($user->authorise('core.delete', 'com_einsatzkomponente'))
-		{
-			$model = $this->getModel('Organisation', 'EinsatzkomponenteModel');
+		if ($user->authorise('core.delete', 'com_einsatzkomponente')) {
+			$model = $this->getModel('Organisation', Site);
 
 			// Get the user data.
 			$id = $app->input->getInt('id', 0);
@@ -145,15 +136,11 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 			$return = $model->delete($id);
 
 			// Check for errors.
-			if ($return === false)
-			{
+			if ($return === false) {
 				$this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
-			}
-			else
-			{
+			} else {
 				// Check in the profile.
-				if ($return)
-				{
+				if ($return) {
 					$model->checkin($return);
 				}
 
@@ -170,9 +157,7 @@ class EinsatzkomponenteControllerOrganisation extends EinsatzkomponenteControlle
 			$menu = Factory::getApplication()->getMenu();
 			$item = $menu->getActive();
 			$this->setRedirect(Route::_($item->link, false));
-		}
-		else
-		{
+		} else {
 			throw new Exception(500);
 		}
 	}

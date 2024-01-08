@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -30,7 +31,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeuge extends EinsatzkomponenteContr
 	 *
 	 * @since	1.6
 	 */
-	public function &getModel($name = 'Einsatzfahrzeuge', $prefix = 'EinsatzkomponenteModel', $config = array())
+	public function &getModel($name = 'Einsatzfahrzeuge', $prefix = Site, $config = array())
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 
