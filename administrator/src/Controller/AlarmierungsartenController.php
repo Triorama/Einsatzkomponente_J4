@@ -7,7 +7,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // No direct access.
-namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Contoller;
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Controller;
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Factory;
