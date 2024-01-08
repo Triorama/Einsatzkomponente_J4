@@ -19,7 +19,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Einsatzfahrzeuge list controller class.
  */
-class EinsatzkomponenteControllerEinsatzfahrzeuge extends AdminController
+class EinsatzfahrzeugeController extends AdminController
 {
 	/**
 	 * Proxy for getModel.

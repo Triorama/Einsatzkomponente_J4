@@ -18,7 +18,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Ausruestungen list controller class.
  */
-class Ausruestungen extends AdminController
+class AusruestungenController extends AdminController
 {
 	/**
 	 * Proxy for getModel.

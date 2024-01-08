@@ -20,7 +20,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Einsatzarten list controller class.
  */
-class EinsatzkomponenteControllerEinsatzarten extends AdminController
+class EinsatzartenController extends AdminController
 {
 	/**
 	 * Proxy for getModel.

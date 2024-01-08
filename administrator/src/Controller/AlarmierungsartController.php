@@ -10,13 +10,14 @@ namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Controller;
 // No direct access
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\FormController;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 /**
  * Alarmierungsart controller class.
  */
 class AlarmierungsartController extends FormController
 {
-    function __construct() {
+    function __construct($config=array(), MVCFactoryInterface $factory=null, $app=null, $input=null) {
         $this->view_list = 'alarmierungsarten';
-        parent::__construct();
+        parent::__construct($config, $factory, $app, $input);
     }
 }

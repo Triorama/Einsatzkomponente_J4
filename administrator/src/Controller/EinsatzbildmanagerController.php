@@ -21,7 +21,7 @@ use Joomla\CMS\Toolbar\ToolbarHelper;
 /**
  * Einsatzbildmanager list controller class.
  */
-class EinsatzkomponenteControllerEinsatzbildmanager extends AdminController
+class EinsatzbildmanagerController extends AdminController
 {
 	/**
 	 * Proxy for getModel.

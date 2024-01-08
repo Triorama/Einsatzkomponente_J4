@@ -20,7 +20,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Alarmierungsarten list controller class.
  */
-class EinsatzkomponenteControllerAlarmierungsarten extends AdminController
+class AlarmierungsartenController extends AdminController
 {
 	/**
 	 * Proxy for getModel.

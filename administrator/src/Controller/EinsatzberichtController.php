@@ -14,6 +14,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Session\Session;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 use Joomla\CMS\Input\Input;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Router\Route;
@@ -24,9 +25,9 @@ use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\Einsatzkompon
  */
 class EinsatzberichtController extends FormController
 {
-    function __construct() {
+    function __construct($config=array(), MVCFactoryInterface $factory=null, $app=null, $input=null) {
         $this->view_list = 'einsatzberichte';
-        parent::__construct();
+        parent::__construct($config, $factory, $app, $input);
     }
     public function pdf() {
     	// Check for request forgeries

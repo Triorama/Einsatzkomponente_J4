@@ -12,17 +12,18 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
+use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
 /**
  * Gmapkonfiguration controller class.
  */
-class EinsatzkomponenteControllerGmapkonfiguration extends FormController
+class GmapkonfigurationController extends FormController
 {
 
-    function __construct() {
+    function __construct($config=array(), MVCFactoryInterface $factory=null, $app=null, $input=null) {
         $this->view_list = 'gmapkonfigurationen';
         $this->view = 'gmapkonfiguration';
-        parent::__construct();
+        parent::__construct($config, $factory, $app, $input);
     }
 
  public function reset ()

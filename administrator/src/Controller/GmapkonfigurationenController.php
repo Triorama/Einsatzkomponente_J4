@@ -16,7 +16,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * Gmapkonfigurationen list controller class.
  */
-class EinsatzkomponenteControllerGmapkonfigurationen extends AdminController
+class GmapkonfigurationenController extends AdminController
 {
 	/**
 	 * Proxy for getModel.
