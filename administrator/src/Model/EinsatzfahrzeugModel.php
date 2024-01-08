@@ -32,10 +32,7 @@ class EinsatzfahrzeugModel extends AdminModel
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Einsatzfahrzeug', $prefix = 'EinsatzkomponenteTable', $config = array())
-	{
-		return Table::getInstance($type, $prefix, $config);
-	}
+
 	/**
 	 * Method to get the record form.
 	 *

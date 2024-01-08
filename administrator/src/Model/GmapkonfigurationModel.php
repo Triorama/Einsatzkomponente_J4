@@ -27,19 +27,7 @@ class GmapkonfigurationModel extends AdminModel
 	protected $text_prefix = 'COM_EINSATZKOMPONENTE';
 
 
-	/**
-	 * Returns a reference to the a Table object, always creating it.
-	 *
-	 * @param	type	The table type to instantiate
-	 * @param	string	A prefix for the table class name. Optional.
-	 * @param	array	Configuration array for model. Optional.
-	 * @return	JTable	A database object
-	 * @since	1.6
-	 */
-	public function getTable($type = 'Gmapkonfiguration', $prefix = 'EinsatzkomponenteTable', $config = array())
-	{
-		return Table::getInstance($type, $prefix, $config);
-	}
+
 
 	/**
 	 * Method to get the record form.
