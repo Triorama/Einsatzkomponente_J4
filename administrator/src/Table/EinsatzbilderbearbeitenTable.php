@@ -18,7 +18,7 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * einsatzbilderbearbeiten Table class
  */
-class EinsatzberichtbearbeitenTable extends Table {
+class EinsatzbilderbearbeitenTable extends Table {
     /**
      * Constructor
      *
