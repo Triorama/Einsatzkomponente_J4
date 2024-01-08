@@ -14,6 +14,7 @@ use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * einsatzfahrzeug Table class
@@ -24,7 +25,7 @@ class EinsatzfahrzeugTable extends Table {
      *
      * @param JDatabase A database connector object
      */
-    public function __construct(&$db) {
+    public function __construct(DatabaseDriver $db) {
         parent::__construct('#__eiko_fahrzeuge', 'id', $db);
 				// Set the alias since the column is called state
 				$this->setColumnAlias('published', 'state');
