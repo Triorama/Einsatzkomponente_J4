@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Ausreustungen;
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Ausruestungen;
 // No direct access
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
