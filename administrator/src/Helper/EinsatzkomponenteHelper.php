@@ -12,7 +12,7 @@ defined('_JEXEC') or die;
 use Joomla\CMS\Component\ComponentHelper;
 use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\PdfHelper;
 use Joomla\CMS\HTML\HTMLHelper;
-use Joomla\CMS\Object\CMSObject;Ein
+use Joomla\CMS\Object\CMSObject;
 use Joomla\CMS\Version;
 use Joomla\CMS\Session\Session;
 
