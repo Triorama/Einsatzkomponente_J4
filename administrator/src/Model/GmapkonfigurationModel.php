@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -6,9 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 // No direct access.
 defined('_JEXEC') or die;
+
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
@@ -27,8 +30,6 @@ class GmapkonfigurationModel extends AdminModel
 	protected $text_prefix = 'COM_EINSATZKOMPONENTE';
 
 
-
-
 	/**
 	 * Method to get the record form.
 	 *
@@ -43,7 +44,7 @@ class GmapkonfigurationModel extends AdminModel
 		$app	= Factory::getApplication();
 
 		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.gmapkonfiguration', 'gmapkonfiguration', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_einsatzkomponente.gmapkonfiguration', 'gmapkonfiguration');
 		if (empty($form)) {
 			return false;
 		}
@@ -60,11 +61,10 @@ class GmapkonfigurationModel extends AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.gmapkonfiguration.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.gmapkonfiguration.data');
 
 		if (empty($data)) {
 			$data = $this->getItem();
-            
 		}
 
 		return $data;
@@ -105,10 +105,8 @@ class GmapkonfigurationModel extends AdminModel
 				$db = Factory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_gmap_config');
 				$max = $db->loadResult();
-				$table->ordering = $max+1;
+				$table->ordering = $max + 1;
 			}
-
 		}
 	}
-
 }

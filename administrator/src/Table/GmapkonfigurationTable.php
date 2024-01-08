@@ -7,29 +7,33 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Table;
 // No direct access
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
 use Joomla\Utilities\ArrayHelper;
+use Joomla\Database\DatabaseDriver;
 
 /**
  * gmapkonfiguration Table class
  */
-class GmapconfigurationTable extends Table {
-
+class GmapkonfigurationTable extends Table
+{
     /**
      * Constructor
      *
      * @param JDatabase A database connector object
      */
-    public function __construct(&$db) {
+    public function __construct(DatabaseDriver $db)
+    {
         parent::__construct('#__eiko_gmap_config', 'id', $db);
-				// Set the alias since the column is called state
-				$this->setColumnAlias('published', 'state');
+        // Set the alias since the column is called state
+        $this->setColumnAlias('published', 'state');
     }
 
     /**
@@ -40,14 +44,15 @@ class GmapconfigurationTable extends Table {
      * @see		JTable:bind
      * @since	1.5
      */
-    public function bind($array, $ignore = '') {
+    public function bind($array, $ignore = '')
+    {
 
-        
-		$input = Factory::getApplication()->input;
-		$task = $input->getString('task', '');
-		if(($task == 'save' || $task == 'apply') && (!Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.gmapkonfiguration.'.$array['id']) && $array['state'] == 1)){
-			$array['state'] = 0;
-		}
+
+        $input = Factory::getApplication()->input;
+        $task = $input->getString('task', '');
+        if (($task == 'save' || $task == 'apply') && (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente.gmapkonfiguration.' . $array['id']) && $array['state'] == 1)) {
+            $array['state'] = 0;
+        }
 
         if (isset($array['params']) && is_array($array['params'])) {
             $registry = new Registry();
@@ -60,32 +65,33 @@ class GmapconfigurationTable extends Table {
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string) $registry;
         }
-        if(!Factory::getUser()->authorise('core.admin', 'com_einsatzkomponente.gmapkonfiguration.'.$array['id'])){
-            $actions = Factory::getACL()->getActions('com_einsatzkomponente','gmapkonfiguration');
-            $default_actions = Factory::getACL()->getAssetRules('com_einsatzkomponente.gmapkonfiguration.'.$array['id'])->getData();
+        if (!Factory::getUser()->authorise('core.admin', 'com_einsatzkomponente.gmapkonfiguration.' . $array['id'])) {
+            $actions = Factory::getACL()->getActions('com_einsatzkomponente', 'gmapkonfiguration');
+            $default_actions = Factory::getACL()->getAssetRules('com_einsatzkomponente.gmapkonfiguration.' . $array['id'])->getData();
             $array_jaccess = array();
-            foreach($actions as $action){
+            foreach ($actions as $action) {
                 $array_jaccess[$action->name] = $default_actions[$action->name];
             }
             $array['rules'] = $this->RulestoArray($array_jaccess);
         }
         //Bind the rules for ACL where supported.
-		if (isset($array['rules']) && is_array($array['rules'])) {
-			$this->setRules($array['rules']);
-		}
+        if (isset($array['rules']) && is_array($array['rules'])) {
+            $this->setRules($array['rules']);
+        }
 
         return parent::bind($array, $ignore);
     }
-    
+
     /**
      * This function convert an array of JAccessRule objects into an rules array.
      * @param type $jaccessrules an arrao of JAccessRule objects.
      */
-    private function RulestoArray($jaccessrules){
+    private function RulestoArray($jaccessrules)
+    {
         $rules = array();
-        foreach($jaccessrules as $action => $jaccess){
+        foreach ($jaccessrules as $action => $jaccess) {
             $actions = array();
-            foreach($jaccess->getData() as $group => $allow){
+            foreach ($jaccess->getData() as $group => $allow) {
                 $actions[$group] = ((bool)$allow);
             }
             $rules[$action] = $actions;
@@ -96,7 +102,8 @@ class GmapconfigurationTable extends Table {
     /**
      * Overloaded check function
      */
-    public function check() {
+    public function check()
+    {
 
         //If there is an ordering column and this is a new row then get the next ordering value
         if (property_exists($this, 'ordering') && $this->id == 0) {
@@ -118,7 +125,8 @@ class GmapconfigurationTable extends Table {
      * @return    boolean    True on success.
      * @since    1.0.4
      */
-    public function publish($pks = null, $state = 1, $userId = 0) {
+    public function publish($pks = null, $state = 1, $userId = 0)
+    {
         // Initialise variables.
         $k = $this->_tbl_key;
 
@@ -151,21 +159,18 @@ class GmapconfigurationTable extends Table {
 
         // Update the publishing state for rows with the given primary keys.
         $this->_db->setQuery(
-                'UPDATE ' . $this->_tbl . '' .
+            'UPDATE ' . $this->_tbl . '' .
                 ' SET state = ' . (int) $state .
                 ' WHERE (' . $where . ')' .
                 $checkin
         );
-		try
-		{
-			$this->_db->execute();
-		}
-		catch (\RuntimeException $e)
-		{
-			$this->setError($e->getMessage());
+        try {
+            $this->_db->execute();
+        } catch (\RuntimeException $e) {
+            $this->setError($e->getMessage());
 
-			return false;
-		} 
+            return false;
+        }
 
         // If checkin is supported and all rows were adjusted, check them in.
         if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
@@ -183,38 +188,38 @@ class GmapconfigurationTable extends Table {
         $this->setError('');
         return true;
     }
-    
-//    /**
-//      * Define a namespaced asset name for inclusion in the #__assets table
-//      * @return string The asset name 
-//      *
-//      * @see JTable::_getAssetName 
-//    */
-//    protected function _getAssetName() {
-//        $k = $this->_tbl_key;
-//        return 'com_einsatzkomponente.gmapkonfiguration.' . (int) $this->$k;
-//    }
-// 
-//    /**
-//      * Returns the parrent asset's id. If you have a tree structure, retrieve the parent's id using the external key field
-//      *
-//      * @see JTable::_getAssetParentId 
-//    */
-//	protected function _getAssetParentId(JTable $table = NULL, $id = NULL) {
-//    //protected function _getAssetParentId($table = null, $id = null){
-//        // We will retrieve the parent-asset from the Asset-table
-//        $assetParent = JTable::getInstance('Asset');
-//        // Default: if no asset-parent can be found we take the global asset
-//        $assetParentId = $assetParent->getRootId();
-//        // The item has the component as asset-parent
-//        $assetParent->loadByName('com_einsatzkomponente');
-//        // Return the found asset-parent-id
-//        if ($assetParent->id){
-//            $assetParentId=$assetParent->id;
-//        }
-//        return $assetParentId;
-//    }
-    
-    
+
+    //    /**
+    //      * Define a namespaced asset name for inclusion in the #__assets table
+    //      * @return string The asset name 
+    //      *
+    //      * @see JTable::_getAssetName 
+    //    */
+    //    protected function _getAssetName() {
+    //        $k = $this->_tbl_key;
+    //        return 'com_einsatzkomponente.gmapkonfiguration.' . (int) $this->$k;
+    //    }
+    // 
+    //    /**
+    //      * Returns the parrent asset's id. If you have a tree structure, retrieve the parent's id using the external key field
+    //      *
+    //      * @see JTable::_getAssetParentId 
+    //    */
+    //	protected function _getAssetParentId(JTable $table = NULL, $id = NULL) {
+    //    //protected function _getAssetParentId($table = null, $id = null){
+    //        // We will retrieve the parent-asset from the Asset-table
+    //        $assetParent = JTable::getInstance('Asset');
+    //        // Default: if no asset-parent can be found we take the global asset
+    //        $assetParentId = $assetParent->getRootId();
+    //        // The item has the component as asset-parent
+    //        $assetParent->loadByName('com_einsatzkomponente');
+    //        // Return the found asset-parent-id
+    //        if ($assetParent->id){
+    //            $assetParentId=$assetParent->id;
+    //        }
+    //        return $assetParentId;
+    //    }
+
+
 
 }
