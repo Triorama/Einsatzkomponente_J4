@@ -14,6 +14,7 @@ use Joomla\CMS\Version;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
 use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 
 /**
@@ -36,7 +37,7 @@ class HtmlView extends BaseHtmlView
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors'))) {
-			throw new Exception(implode("\n", $errors));
+			throw new \Exception(implode("\n", $errors));
 		}
         
 		EinsatzkomponenteHelper::addSubmenu('gmapkonfigurationen');
@@ -45,7 +46,7 @@ class HtmlView extends BaseHtmlView
         
 		$version = new Version;
         if ($version->isCompatible('3.0')) :
-        $this->sidebar = JHtmlSidebar::render();
+        $this->sidebar = Sidebar::render();
 		endif;
 
 		parent::display($tpl);
@@ -115,11 +116,11 @@ class HtmlView extends BaseHtmlView
 //		}
         
         //Set sidebar action - New in 3.0
-//		JHtmlSidebar::setAction('index.php?option=com_einsatzkomponente&view=gmapkonfigurationen');
+//		Sidebar::setAction('index.php?option=com_einsatzkomponente&view=gmapkonfigurationen');
 //        
 //        $this->extra_sidebar = '';
 //        
-//		JHtmlSidebar::addFilter(
+//		Sidebar::addFilter(
 //
 //			JText::_('JOPTION_SELECT_PUBLISHED'),
 //

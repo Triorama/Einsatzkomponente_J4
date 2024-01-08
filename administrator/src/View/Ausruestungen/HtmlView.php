@@ -14,6 +14,8 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use Joomla\CMS\HTML\Helpers\Sidebar;
+use Joomla\CMS\HTML\Helpers\ListHelper;
 use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 /**
  * View class for a list of Einsatzkomponente.
@@ -34,14 +36,14 @@ class HtmlView extends BaseHtmlView {
 
         // Check for errors.
         if (count($errors = $this->get('Errors'))) {
-            throw new Exception(implode("\n", $errors));
+            throw new \Exception(implode("\n", $errors));
         }
 
         EinsatzkomponenteHelper::addSubmenu('ausruestungen');
 
         $this->addToolbar();
 
-        $this->sidebar = JHtmlSidebar::render();
+        $this->sidebar = Sidebar::render();
         parent::display($tpl);
     }
 
@@ -106,11 +108,11 @@ class HtmlView extends BaseHtmlView {
         }
 
         //Set sidebar action - New in 3.0
-        JHtmlSidebar::setAction('index.php?option=com_einsatzkomponente&view=ausruestungen');
+        Sidebar::setAction('index.php?option=com_einsatzkomponente&view=ausruestungen');
 
         $this->extra_sidebar = '';
         
-		JHtmlSidebar::addFilter(
+		Sidebar::addFilter(
 
 			Text::_('JOPTION_SELECT_PUBLISHED'),
 

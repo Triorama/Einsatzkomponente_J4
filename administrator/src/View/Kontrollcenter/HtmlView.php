@@ -40,14 +40,14 @@ class HtmlView extends BaseHtmlView
 		
 		// Check for errors.
 		// if (count($errors = $this->get('Errors'))) {
-			// throw new Exception(implode("\n", $errors));
+			// throw new \Exception(implode("\n", $errors));
 		// }
         
 		//EinsatzkomponenteHelper::addSubmenu('kontrollcenter');
         
 		$this->addToolbar();
 		
-       // $this->sidebar = JHtmlSidebar::render();
+       // $this->sidebar = Sidebar::render();
 		
 		parent::display($tpl);
 	}
@@ -63,7 +63,7 @@ class HtmlView extends BaseHtmlView
 		ToolBarHelper::preferences('com_einsatzkomponente');
         
         //Set sidebar action - New in 3.0
-		//JHtmlSidebar::setAction('index.php?option=com_einsatzkomponente&view=kontrollcenter');
+		//Sidebar::setAction('index.php?option=com_einsatzkomponente&view=kontrollcenter');
 		
         $this->extra_sidebar = ''; 
         
