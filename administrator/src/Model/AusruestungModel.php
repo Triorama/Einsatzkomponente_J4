@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 /**
  * Einsatzkomponente model.
  */
-class Ausruestung extends AdminModel
+class AusruestungModel extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.

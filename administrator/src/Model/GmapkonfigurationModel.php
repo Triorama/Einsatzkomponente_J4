@@ -18,7 +18,7 @@ use Joomla\CMS\Factory;
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelgmapkonfiguration extends AdminModel
+class GmapkonfigurationModel extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.

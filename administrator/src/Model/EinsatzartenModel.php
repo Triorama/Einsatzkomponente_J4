@@ -12,12 +12,10 @@ use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 
-jimport('joomla.application.component.modellist');
-
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModeleinsatzarten extends ListModel
+class EinsatzartenModel extends ListModel
 {
 
     /**

@@ -16,7 +16,7 @@ use Joomla\CMS\Component\ComponentHelper;
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelalarmierungsarten extends ListModel
+class AlarmierungsartenModel extends ListModel
 {
 
     /**
