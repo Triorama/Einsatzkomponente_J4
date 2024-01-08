@@ -46,14 +46,12 @@
 	
     <files folder="site">
         <filename>index.html</filename>
-       <!-- <filename>einsatzkomponente.php</filename>
+       	<filename>einsatzkomponente.php</filename>
         <filename>controller.php</filename>
         <filename>router.php</filename>
-        <folder>helpers</folder>
-        <folder>views</folder>
+        <folder>src</folder>
         <folder>assets</folder>
-        <folder>models</folder>
-        <folder>controllers</folder> -->
+
     </files>
 	
 	<media destination="com_einsatzkomponente" folder="media">
