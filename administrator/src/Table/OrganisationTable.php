@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -6,9 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Table;
 // No direct access
 defined('_JEXEC') or die;
+
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
@@ -18,16 +21,18 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * organisation Table class
  */
-class OrganisationTable extends Table {
+class OrganisationTable extends Table
+{
     /**
      * Constructor
      *
      * @param JDatabase A database connector object
      */
-    public function __construct(&$db) {
+    public function __construct(&$db)
+    {
         parent::__construct('#__eiko_organisationen', 'id', $db);
-				// Set the alias since the column is called state
-				$this->setColumnAlias('published', 'state');
+        // Set the alias since the column is called state
+        $this->setColumnAlias('published', 'state');
     }
     /**
      * Overloaded bind function to pre-process the params.
@@ -37,14 +42,15 @@ class OrganisationTable extends Table {
      * @see		JTable:bind
      * @since	1.5
      */
-    public function bind($array, $ignore = '') {
-        
-		if(!Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.organisation.'.$array['id']) && $array['state'] == 1){
-			$array['state'] = 0;
-		}
-		if(isset($array['created_by']) || $array['created_by'] == 0){
-			$array['created_by'] = Factory::getUser()->id;
-		}
+    public function bind($array, $ignore = '')
+    {
+
+        if (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente.organisation.' . $array['id']) && $array['state'] == 1) {
+            $array['state'] = 0;
+        }
+        if (isset($array['created_by']) || $array['created_by'] == 0) {
+            $array['created_by'] = Factory::getUser()->id;
+        }
         if (isset($array['params']) && is_array($array['params'])) {
             $registry = new Registry();
             $registry->loadArray($array['params']);
@@ -55,41 +61,42 @@ class OrganisationTable extends Table {
             $registry->loadArray($array['metadata']);
             $array['metadata'] = (string) $registry;
         }
- //       if(!JFactory::getUser()->authorise('core.admin', 'com_einsatzkomponente.organisation.'.$array['id'])){
- //           $actions = JFactory::getACL()->getActions('com_einsatzkomponente','organisation');
- //           $default_actions = JFactory::getACL()->getAssetRules('com_einsatzkomponente.organisation.'.$array['id'])->getData();
- //           $array_jaccess = array();
- //           foreach($actions as $action){
- //               $array_jaccess[$action->name] = $default_actions[$action->name];
- //           }
- //           $array['rules'] = $this->JAccessRulestoArray($array_jaccess);
- //       }
+        //       if(!JFactory::getUser()->authorise('core.admin', 'com_einsatzkomponente.organisation.'.$array['id'])){
+        //           $actions = JFactory::getACL()->getActions('com_einsatzkomponente','organisation');
+        //           $default_actions = JFactory::getACL()->getAssetRules('com_einsatzkomponente.organisation.'.$array['id'])->getData();
+        //           $array_jaccess = array();
+        //           foreach($actions as $action){
+        //               $array_jaccess[$action->name] = $default_actions[$action->name];
+        //           }
+        //           $array['rules'] = $this->JAccessRulestoArray($array_jaccess);
+        //       }
         //Bind the rules for ACL where supported.
-//		if (isset($array['rules']) && is_array($array['rules'])) {
-//			$this->setRules($array['rules']);
-//		}
+        //		if (isset($array['rules']) && is_array($array['rules'])) {
+        //			$this->setRules($array['rules']);
+        //		}
         return parent::bind($array, $ignore);
     }
-    
+
     /**
      * This function convert an array of JAccessRule objects into an rules array.
      * @param type $jaccessrules an arrao of JAccessRule objects.
      */
-//    private function JAccessRulestoArray($jaccessrules){
-//        $rules = array();
-//        foreach($jaccessrules as $action => $jaccess){
-//            $actions = array();
-//            foreach($jaccess->getData() as $group => $allow){
-//                $actions[$group] = ((bool)$allow);
-//            }
-//            $rules[$action] = $actions;
-//        }
-//        return $rules;
-//    }
+    //    private function JAccessRulestoArray($jaccessrules){
+    //        $rules = array();
+    //        foreach($jaccessrules as $action => $jaccess){
+    //            $actions = array();
+    //            foreach($jaccess->getData() as $group => $allow){
+    //                $actions[$group] = ((bool)$allow);
+    //            }
+    //            $rules[$action] = $actions;
+    //        }
+    //        return $rules;
+    //    }
     /**
      * Overloaded check function
      */
-    public function check() {
+    public function check()
+    {
         //If there is an ordering column and this is a new row then get the next ordering value
         if (property_exists($this, 'ordering') && $this->id == 0) {
             $this->ordering = self::getNextOrder();
@@ -108,7 +115,8 @@ class OrganisationTable extends Table {
      * @return    boolean    True on success.
      * @since    1.0.4
      */
-    public function publish($pks = null, $state = 1, $userId = 0) {
+    public function publish($pks = null, $state = 1, $userId = 0)
+    {
         // Initialise variables.
         $k = $this->_tbl_key;
         // Sanitize input.
@@ -136,21 +144,18 @@ class OrganisationTable extends Table {
         }
         // Update the publishing state for rows with the given primary keys.
         $this->_db->setQuery(
-                'UPDATE ' . $this->_tbl . '' .
+            'UPDATE ' . $this->_tbl . '' .
                 ' SET state = ' . (int) $state .
                 ' WHERE (' . $where . ')' .
                 $checkin
         );
-		try
-		{
-			$this->_db->execute();
-		}
-		catch (\RuntimeException $e)
-		{
-			$this->setError($e->getMessage());
+        try {
+            $this->_db->execute();
+        } catch (\RuntimeException $e) {
+            $this->setError($e->getMessage());
 
-			return false;
-		} 
+            return false;
+        }
 
         // If checkin is supported and all rows were adjusted, check them in.
         if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
@@ -166,37 +171,37 @@ class OrganisationTable extends Table {
         $this->setError('');
         return true;
     }
-    
-//    /**
-//      * Define a namespaced asset name for inclusion in the #__assets table
-//      * @return string The asset name 
-//      *
-//      * @see JTable::_getAssetName 
-//    */
-//    protected function _getAssetName() {
-//        $k = $this->_tbl_key;
-//        return 'com_einsatzkomponente.organisation.' . (int) $this->$k;
-//    }
-// 
-//    /**
-//      * Returns the parrent asset's id. If you have a tree structure, retrieve the parent's id using the external key field
-//      *
-//      * @see JTable::_getAssetParentId 
-//    */
-//	protected function _getAssetParentId(JTable $table = NULL, $id = NULL) {
-//    //protected function _getAssetParentId($table = null, $id = null){
-//        // We will retrieve the parent-asset from the Asset-table
-//        $assetParent = JTable::getInstance('Asset');
-//        // Default: if no asset-parent can be found we take the global asset
-//        $assetParentId = $assetParent->getRootId();
-//        // The item has the component as asset-parent
-//        $assetParent->loadByName('com_einsatzkomponente');
-//        // Return the found asset-parent-id
-//        if ($assetParent->id){
-//            $assetParentId=$assetParent->id;
-//        }
-//        return $assetParentId;
-//    }
-    
-    
+
+    //    /**
+    //      * Define a namespaced asset name for inclusion in the #__assets table
+    //      * @return string The asset name 
+    //      *
+    //      * @see JTable::_getAssetName 
+    //    */
+    //    protected function _getAssetName() {
+    //        $k = $this->_tbl_key;
+    //        return 'com_einsatzkomponente.organisation.' . (int) $this->$k;
+    //    }
+    // 
+    //    /**
+    //      * Returns the parrent asset's id. If you have a tree structure, retrieve the parent's id using the external key field
+    //      *
+    //      * @see JTable::_getAssetParentId 
+    //    */
+    //	protected function _getAssetParentId(JTable $table = NULL, $id = NULL) {
+    //    //protected function _getAssetParentId($table = null, $id = null){
+    //        // We will retrieve the parent-asset from the Asset-table
+    //        $assetParent = JTable::getInstance('Asset');
+    //        // Default: if no asset-parent can be found we take the global asset
+    //        $assetParentId = $assetParent->getRootId();
+    //        // The item has the component as asset-parent
+    //        $assetParent->loadByName('com_einsatzkomponente');
+    //        // Return the found asset-parent-id
+    //        if ($assetParent->id){
+    //            $assetParentId=$assetParent->id;
+    //        }
+    //        return $assetParentId;
+    //    }
+
+
 }

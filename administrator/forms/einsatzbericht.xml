@@ -101,6 +101,7 @@
                
                
                
+               
 			default ="images/com_einsatzkomponente/watermark/watermark.png"
                directory="com_einsatzkomponente/watermark" />
 
@@ -205,6 +206,7 @@
           <field name="department"
                type="hidden"
                
+               
                default = "0" />
 
           <field name="params"
@@ -245,6 +247,7 @@
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE_LABEL"
                class="eiko_presse1_label"
                
+               
 			default ="Presselink"
                filter="safehtml"
                size="100"
@@ -263,6 +266,7 @@
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE2_LABEL"
                class="eiko_presse2_label"
                
+               
                default ="Presselink"
                filter="safehtml"
                size="100"
@@ -280,6 +284,7 @@
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE3_LABEL"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE3_LABEL"
                class="eiko_presse3_label"
+               
                
                default ="Presselink"
                filter="safehtml"
@@ -357,6 +362,7 @@
 
           <field name="article_id"
                
+               
                label = "COM_EINSATZKOMPONENTE_ARTIKEL_JOOMLA_LINK"
                description="Bitte frei lassen, wenn kein Joomla-Artikel verlinkt werden soll."
                default="0"
@@ -375,7 +381,6 @@
                <option value="0">Verbergen</option>
                <option value="1">Anzeigen</option>
           </field>
-
 
           <field name="status"
                type="list"

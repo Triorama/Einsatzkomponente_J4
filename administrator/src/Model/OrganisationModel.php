@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -6,9 +7,11 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 // No direct access.
 defined('_JEXEC') or die;
+
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
@@ -55,17 +58,15 @@ class OrganisationModel extends AdminModel
 		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.organisation.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
- 
+
 			//Support for multiple or not foreign key field: vehicles
 			$array = array();
-			foreach((array)$data->params as $value): 
-				if(!is_array($value)):
+			foreach ((array)$data->params as $value) :
+				if (!is_array($value)) :
 					$array[] = $value;
 				endif;
 			endforeach;
-			$data->params = implode(',',$array);
-
- 
+			$data->params = implode(',', $array);
 		}
 		return $data;
 	}
@@ -98,7 +99,7 @@ class OrganisationModel extends AdminModel
 				$db = Factory::getDbo();
 				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_organisationen');
 				$max = $db->loadResult();
-				$table->ordering = $max+1;
+				$table->ordering = $max + 1;
 			}
 		}
 	}
@@ -111,23 +112,17 @@ class OrganisationModel extends AdminModel
 	 *
 	 * @since   1.6
 	 */
- public function delete (&$pks)
-    {
-
-        $db =Factory::getDBO();
-        foreach($pks as $id)
-        {
-            $db->setQuery("DELETE FROM #__eiko_organisationen WHERE id=".$id);
-				try
-				{
-					$db->execute();
-				}
-				catch (RuntimeException $e)
-				{
-					throw new Exception($e->getMessage(), 500);
-				}
-        }
-		return true;		
-    }	
-
+	public function delete(&$pks)
+	{
+		$db = Factory::getDBO();
+		foreach ($pks as $id) {
+			$db->setQuery("DELETE FROM #__eiko_organisationen WHERE id=" . $id);
+			try {
+				$db->execute();
+			} catch (\RuntimeException $e) {
+				throw new \Exception($e->getMessage(), 500);
+			}
+		}
+		return true;
+	}
 }

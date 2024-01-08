@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -10,6 +11,7 @@
 namespace Eikonamespace\Component\Einsatzkomponente\Administrator\Controller;
 // No direct access.
 defined('_JEXEC') or die;
+
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
@@ -24,13 +26,13 @@ class AusruestungenController extends AdminController
 	 * Proxy for getModel.
 	 * @since	1.6
 	 */
-	public function getModel($name = 'ausruestung', $prefix = 'EinsatzkomponenteModel', $config = array())
+	public function getModel($name = 'ausruestung', $prefix = 'Administrator', $config = array())
 	{
 		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
 		return $model;
 	}
-    
-    
+
+
 	/**
 	 * Method to save the submitted ordering values for records via AJAX.
 	 *
@@ -55,15 +57,11 @@ class AusruestungenController extends AdminController
 		// Save the ordering
 		$return = $model->saveorder($pks, $order);
 
-		if ($return)
-		{
+		if ($return) {
 			echo "1";
 		}
 
 		// Close the application
 		Factory::getApplication()->close();
 	}
-    
-    
-    
 }
