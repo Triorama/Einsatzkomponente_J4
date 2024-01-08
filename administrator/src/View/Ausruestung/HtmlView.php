@@ -13,6 +13,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 
 
 /**
@@ -56,25 +58,25 @@ class HtmlView extends BaseHtmlView {
         }
         $canDo = EinsatzkomponenteHelper::getActions();
 
-        JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG'), 'ausruestung.png');
+        ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG'), 'ausruestung.png');
 
         // If not checked out, can save the item.
         if (!$checkedOut && ($canDo->get('core.edit') || ($canDo->get('core.create')))) {
 
-            JToolBarHelper::apply('ausruestung.apply', 'JTOOLBAR_APPLY');
-            JToolBarHelper::save('ausruestung.save', 'JTOOLBAR_SAVE');
+            ToolbarHelper::apply('ausruestung.apply', 'Toolbar_APPLY');
+            ToolbarHelper::save('ausruestung.save', 'Toolbar_SAVE');
         }
         if (!$checkedOut && ($canDo->get('core.create'))) {
-            JToolBarHelper::custom('ausruestung.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+            ToolbarHelper::custom('ausruestung.save2new', 'save-new.png', 'save-new_f2.png', 'Toolbar_SAVE_AND_NEW', false);
         }
         // If an existing item, can save to a copy.
         if (!$isNew && $canDo->get('core.create')) {
-            JToolBarHelper::custom('ausruestung.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+            ToolbarHelper::custom('ausruestung.save2copy', 'save-copy.png', 'save-copy_f2.png', 'Toolbar_SAVE_AS_COPY', false);
         }
         if (empty($this->item->id)) {
-            JToolBarHelper::cancel('ausruestung.cancel', 'JTOOLBAR_CANCEL');
+            ToolbarHelper::cancel('ausruestung.cancel', 'Toolbar_CANCEL');
         } else {
-            JToolBarHelper::cancel('ausruestung.cancel', 'JTOOLBAR_CLOSE');
+            ToolbarHelper::cancel('ausruestung.cancel', 'Toolbar_CLOSE');
         }
     }
 

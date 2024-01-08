@@ -6,19 +6,19 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Einsatzfahrzeuge;
 // No direct access
 defined('_JEXEC') or die;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Version;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
-jimport('joomla.application.component.view');
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewEinsatzfahrzeuge extends HtmlView
+class HtmlView extends BaseHtmlView
 {
 	protected $items;
 	protected $pagination;
@@ -62,38 +62,38 @@ class EinsatzkomponenteViewEinsatzfahrzeuge extends HtmlView
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/einsatzfahrzeug';
         if (file_exists($formPath)) {
             if ($canDo->get('core.create')) {
-			    ToolbarHelper::addNew('einsatzfahrzeug.add','JTOOLBAR_NEW');
+			    ToolbarHelper::addNew('einsatzfahrzeug.add','Toolbar_NEW');
 		    }
 		    if ($canDo->get('core.edit') && isset($this->items[0])) {
-			    ToolbarHelper::editList('einsatzfahrzeug.edit','JTOOLBAR_EDIT');
+			    ToolbarHelper::editList('einsatzfahrzeug.edit','Toolbar_EDIT');
 		    }
         }
 		if ($canDo->get('core.edit.state')) {
             if (isset($this->items[0]->state)) {
 			    ToolbarHelper::divider();
-			    ToolbarHelper::custom('einsatzfahrzeuge.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			    ToolbarHelper::custom('einsatzfahrzeuge.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+			    ToolbarHelper::custom('einsatzfahrzeuge.publish', 'publish.png', 'publish_f2.png','Toolbar_PUBLISH', true);
+			    ToolbarHelper::custom('einsatzfahrzeuge.unpublish', 'unpublish.png', 'unpublish_f2.png', 'Toolbar_UNPUBLISH', true);
             } else if (isset($this->items[0])) {
                 //If this component does not use state then show a direct delete button as we can not trash
-                ToolbarHelper::deleteList('', 'einsatzfahrzeuge.delete','JTOOLBAR_DELETE');
+                ToolbarHelper::deleteList('', 'einsatzfahrzeuge.delete','Toolbar_DELETE');
             }
             if (isset($this->items[0]->state)) {
 			    ToolbarHelper::divider();
 			    ToolbarHelper::archiveList('einsatzfahrzeuge.archive','Fahrzeug a.D.');
             }
             if (isset($this->items[0]->checked_out)) {
-            	ToolbarHelper::custom('einsatzfahrzeuge.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+            	ToolbarHelper::custom('einsatzfahrzeuge.checkin', 'checkin.png', 'checkin_f2.png', 'Toolbar_CHECKIN', true);
             }
 		}
         
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
 		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    ToolbarHelper::deleteList('', 'einsatzfahrzeuge.delete','JTOOLBAR_EMPTY_TRASH');
+			    ToolbarHelper::deleteList('', 'einsatzfahrzeuge.delete','Toolbar_EMPTY_TRASH');
 			    ToolbarHelper::divider();
 		    } else if ($canDo->get('core.edit.state')) {
-			    //ToolbarHelper::trash('einsatzfahrzeuge.trash','JTOOLBAR_TRASH');
-                ToolbarHelper::deleteList('', 'einsatzfahrzeuge.delete','JTOOLBAR_DELETE');
+			    //ToolbarHelper::trash('einsatzfahrzeuge.trash','Toolbar_TRASH');
+                ToolbarHelper::deleteList('', 'einsatzfahrzeuge.delete','Toolbar_DELETE');
 			    ToolbarHelper::divider();
 		    }
         }

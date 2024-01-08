@@ -6,20 +6,20 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
- 
+ namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Organisationen;
 // No direct access
 defined('_JEXEC') or die;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView; 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Toolbar\ToolbarHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 
-jimport('joomla.application.component.view');
 
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewOrganisationen extends HtmlView
+class HtmlView extends BaseHtmlView
 {
 	protected $items;
 	protected $pagination;
@@ -60,38 +60,38 @@ class EinsatzkomponenteViewOrganisationen extends HtmlView
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/organisation';
         if (file_exists($formPath)) {
             if ($canDo->get('core.create')) {
-			    ToolbarHelper::addNew('organisation.add','JTOOLBAR_NEW');
+			    ToolbarHelper::addNew('organisation.add','Toolbar_NEW');
 		    }
 		    if ($canDo->get('core.edit') && isset($this->items[0])) {
-			    ToolbarHelper::editList('organisation.edit','JTOOLBAR_EDIT');
+			    ToolbarHelper::editList('organisation.edit','Toolbar_EDIT');
 		    }
         }
 		if ($canDo->get('core.edit.state')) {
             if (isset($this->items[0]->state)) {
 			    ToolbarHelper::divider();
-			    ToolbarHelper::custom('organisationen.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			    ToolbarHelper::custom('organisationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+			    ToolbarHelper::custom('organisationen.publish', 'publish.png', 'publish_f2.png','Toolbar_PUBLISH', true);
+			    ToolbarHelper::custom('organisationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'Toolbar_UNPUBLISH', true);
             } else if (isset($this->items[0])) {
                 //If this component does not use state then show a direct delete button as we can not trash
-                ToolbarHelper::deleteList('', 'organisationen.delete','JTOOLBAR_DELETE');
+                ToolbarHelper::deleteList('', 'organisationen.delete','Toolbar_DELETE');
             }
 //            if (isset($this->items[0]->state)) {
 //			    ToolbarHelper::divider();
-//			    ToolbarHelper::archiveList('organisationen.archive','JTOOLBAR_ARCHIVE');
+//			    ToolbarHelper::archiveList('organisationen.archive','Toolbar_ARCHIVE');
 //            }
             if (isset($this->items[0]->checked_out)) {
-            	ToolbarHelper::custom('organisationen.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+            	ToolbarHelper::custom('organisationen.checkin', 'checkin.png', 'checkin_f2.png', 'Toolbar_CHECKIN', true);
             }
 		}
         
         //Show trash and delete for components that uses the state field
         if (isset($this->items[0]->state)) {
 		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    ToolbarHelper::deleteList('', 'organisationen.delete','JTOOLBAR_EMPTY_TRASH');
+			    ToolbarHelper::deleteList('', 'organisationen.delete','Toolbar_EMPTY_TRASH');
 			    ToolbarHelper::divider();
 		    } else if ($canDo->get('core.edit.state')) {
-			    //ToolbarHelper::trash('organisationen.trash','JTOOLBAR_TRASH');
-                ToolbarHelper::deleteList('', 'organisationen.delete','JTOOLBAR_DELETE');
+			    //ToolbarHelper::trash('organisationen.trash','Toolbar_TRASH');
+                ToolbarHelper::deleteList('', 'organisationen.delete','Toolbar_DELETE');
 			    ToolbarHelper::divider();
 		    }
         }

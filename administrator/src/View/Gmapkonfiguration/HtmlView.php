@@ -6,26 +6,23 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Gmapkonfiguration;
 // No direct access
 defined('_JEXEC') or die;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Toolbar\ToolbarHelper;
-
-
-jimport('joomla.application.component.view');
-JLoader::import('helpers.einsatzkomponente', JPATH_SITE.'/administrator/components/com_einsatzkomponente');
-JLoader::import('helpers.osm', JPATH_SITE.'/administrator/components/com_einsatzkomponente'); 
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\OsmHelper;
 
 
 
 /**
  * View to edit
  */
-class EinsatzkomponenteViewGmapkonfiguration extends HtmlView
+class HtmlView extends BaseHtmlView
 {
 	protected $state;
 	protected $item;
@@ -90,14 +87,14 @@ class EinsatzkomponenteViewGmapkonfiguration extends HtmlView
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
 
-			ToolbarHelper::apply('gmapkonfiguration.apply', 'JTOOLBAR_APPLY');
-			ToolbarHelper::save('gmapkonfiguration.save', 'JTOOLBAR_SAVE');
+			ToolbarHelper::apply('gmapkonfiguration.apply', 'Toolbar_APPLY');
+			ToolbarHelper::save('gmapkonfiguration.save', 'Toolbar_SAVE');
 		}
 		if (empty($this->item->id)) {
-			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CANCEL');
+			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'Toolbar_CANCEL');
 		}
 		else {
-			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'JTOOLBAR_CLOSE');
+			ToolbarHelper::cancel('gmapkonfiguration.cancel', 'Toolbar_CLOSE');
 		}
 		
 		ToolbarHelper::divider();

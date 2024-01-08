@@ -6,20 +6,20 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Gmapkonfigurationen;
 // No direct access
 defined('_JEXEC') or die;
-use Joomla\CMS\MVC\View\HtmlView;
+use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Version;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
-
-jimport('joomla.application.component.view');
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 
 /**
  * View class for a list of Einsatzkomponente.
  */
-class EinsatzkomponenteViewGmapkonfigurationen extends HtmlView
+class HtmlView extends BaseHtmlView
 {
 	protected $items;
 	protected $pagination;
@@ -63,18 +63,18 @@ class EinsatzkomponenteViewGmapkonfigurationen extends HtmlView
 		$state	= $this->get('State');
 		$canDo	= EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
 
-		JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN'), 'gmapkonfigurationen.png');
+		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN'), 'gmapkonfigurationen.png');
 
         //Check if the form exists before showing the add/edit buttons
         $formPath = JPATH_COMPONENT_ADMINISTRATOR.'/views/gmapkonfiguration';
         if (file_exists($formPath)) {
 
 //            if ($canDo->get('core.create')) {
-//			    JToolBarHelper::addNew('gmapkonfiguration.add','JTOOLBAR_NEW');
+//			    ToolbarHelper::addNew('gmapkonfiguration.add','Toolbar_NEW');
 //		    }
 
 		    if ($canDo->get('core.edit') && isset($this->items[0])) {
-			    JToolBarHelper::editList('gmapkonfiguration.edit','JTOOLBAR_EDIT');
+			    ToolbarHelper::editList('gmapkonfiguration.edit','Toolbar_EDIT');
 		    }
 
         }
@@ -82,36 +82,36 @@ class EinsatzkomponenteViewGmapkonfigurationen extends HtmlView
 //		if ($canDo->get('core.edit.state')) {
 //
 //            if (isset($this->items[0]->state)) {
-//			    JToolBarHelper::divider();
-//			    JToolBarHelper::custom('gmapkonfigurationen.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-//			    JToolBarHelper::custom('gmapkonfigurationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
+//			    ToolbarHelper::divider();
+//			    ToolbarHelper::custom('gmapkonfigurationen.publish', 'publish.png', 'publish_f2.png','Toolbar_PUBLISH', true);
+//			    ToolbarHelper::custom('gmapkonfigurationen.unpublish', 'unpublish.png', 'unpublish_f2.png', 'Toolbar_UNPUBLISH', true);
 //            } else if (isset($this->items[0])) {
 //                //If this component does not use state then show a direct delete button as we can not trash
-//                JToolBarHelper::deleteList('', 'gmapkonfigurationen.delete','JTOOLBAR_DELETE');
+//                ToolbarHelper::deleteList('', 'gmapkonfigurationen.delete','Toolbar_DELETE');
 //            }
 //
 //            if (isset($this->items[0]->state)) {
-//			    JToolBarHelper::divider();
-//			    JToolBarHelper::archiveList('gmapkonfigurationen.archive','JTOOLBAR_ARCHIVE');
+//			    ToolbarHelper::divider();
+//			    ToolbarHelper::archiveList('gmapkonfigurationen.archive','Toolbar_ARCHIVE');
 //            }
 //            if (isset($this->items[0]->checked_out)) {
-//            	JToolBarHelper::custom('gmapkonfigurationen.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
+//            	ToolbarHelper::custom('gmapkonfigurationen.checkin', 'checkin.png', 'checkin_f2.png', 'Toolbar_CHECKIN', true);
 //            }
 //		}
         
         //Show trash and delete for components that uses the state field
 //        if (isset($this->items[0]->state)) {
 //		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-//			    JToolBarHelper::deleteList('', 'gmapkonfigurationen.delete','JTOOLBAR_EMPTY_TRASH');
-//			    JToolBarHelper::divider();
+//			    ToolbarHelper::deleteList('', 'gmapkonfigurationen.delete','Toolbar_EMPTY_TRASH');
+//			    ToolbarHelper::divider();
 //		    } else if ($canDo->get('core.edit.state')) {
-//			    JToolBarHelper::trash('gmapkonfigurationen.trash','JTOOLBAR_TRASH');
-//			    JToolBarHelper::divider();
+//			    ToolbarHelper::trash('gmapkonfigurationen.trash','Toolbar_TRASH');
+//			    ToolbarHelper::divider();
 //		    }
 //        }
 
 //		if ($canDo->get('core.admin')) {
-//			JToolBarHelper::preferences('com_einsatzkomponente');
+//			ToolbarHelper::preferences('com_einsatzkomponente');
 //		}
         
         //Set sidebar action - New in 3.0

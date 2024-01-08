@@ -12,6 +12,8 @@ defined('_JEXEC') or die;
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Toolbar\ToolbarHelper;
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
 /**
  * View to edit
  */
@@ -49,25 +51,25 @@ class HtmlView extends BaseHtmlView
             $checkedOut = false;
         }
 		$canDo		= EinsatzkomponenteHelper::getActions();
-		JToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSART'), 'alarmierungsart.png');
+		ToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSART'), 'alarmierungsart.png');
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||($canDo->get('core.create'))))
 		{
-			JToolBarHelper::apply('alarmierungsart.apply', 'JTOOLBAR_APPLY');
-			JToolBarHelper::save('alarmierungsart.save', 'JTOOLBAR_SAVE');
+			ToolBarHelper::apply('alarmierungsart.apply', 'Toolbar_APPLY');
+			ToolBarHelper::save('alarmierungsart.save', 'Toolbar_SAVE');
 		}
 		if (!$checkedOut && ($canDo->get('core.create'))){
-			JToolBarHelper::custom('alarmierungsart.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
+			ToolBarHelper::custom('alarmierungsart.save2new', 'save-new.png', 'save-new_f2.png', 'Toolbar_SAVE_AND_NEW', false);
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create')) {
-			JToolBarHelper::custom('alarmierungsart.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
+			ToolBarHelper::custom('alarmierungsart.save2copy', 'save-copy.png', 'save-copy_f2.png', 'Toolbar_SAVE_AS_COPY', false);
 		}
 		if (empty($this->item->id)) {
-			JToolBarHelper::cancel('alarmierungsart.cancel', 'JTOOLBAR_CANCEL');
+			ToolBarHelper::cancel('alarmierungsart.cancel', 'Toolbar_CANCEL');
 		}
 		else {
-			JToolBarHelper::cancel('alarmierungsart.cancel', 'JTOOLBAR_CLOSE');
+			ToolBarHelper::cancel('alarmierungsart.cancel', 'Toolbar_CLOSE');
 		}
 	}
 }
