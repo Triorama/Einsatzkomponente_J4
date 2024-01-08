@@ -6,40 +6,25 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 // No direct access.
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
-jimport('joomla.application.component.modeladmin');
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModeleinsatzbericht extends AdminModel
+class EinsatzberichtModel extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
 	 */
 	protected $text_prefix = 'COM_EINSATZKOMPONENTE';
-	/**
-	 * Returns a reference to the a Table object, always creating it.
-	 *
-	 * @param	type	The table type to instantiate
-	 * @param	string	A prefix for the table class name. Optional.
-	 * @param	array	Configuration array for model. Optional.
-	 * @return	JTable	A database object
-	 * @since	1.6
-	 */
-	 
-	 
-   
-   
-	public function getTable($type = 'Einsatzbericht', $prefix = 'EinsatzkomponenteTable', $config = array())
-	{
-		return Table::getInstance($type, $prefix, $config);
-	}
+	
 	/**
 	 * Method to get the record form.
 	 *
@@ -53,7 +38,7 @@ class EinsatzkomponenteModeleinsatzbericht extends AdminModel
 		// Initialise variables.
 		$app	= Factory::getApplication();
 		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.einsatzbericht', 'einsatzbericht', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_einsatzkomponente.einsatzbericht', 'einsatzbericht');
 		if (empty($form)) {
 			return false;
 		}
@@ -159,7 +144,6 @@ class EinsatzkomponenteModeleinsatzbericht extends AdminModel
 			}
 		}
 	}
-	
 	
 	/**
 	 * Method to delete rows.
