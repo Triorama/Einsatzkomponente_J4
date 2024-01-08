@@ -6,20 +6,17 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
-
 jimport('joomla.application.component.modellist');
-
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModeleinsatzarten extends ListModel
+class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
 {
-
     /**
      * Constructor.
      *
@@ -32,23 +29,18 @@ class EinsatzkomponenteModeleinsatzarten extends ListModel
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                                 'id', 'a.id',
-                'title', 'a.title',
-                'marker', 'a.marker',
-                'beschr', 'a.beschr',
-                'icon', 'a.icon',
-                'list_icon', 'a.list_icon',
                 'ordering', 'a.ordering',
+                'image', 'a.image',
+                'report_id', 'a.report_id',
+                'comment', 'a.comment',
+                'thumb', 'a.thumb',
                 'state', 'a.state',
                 'created_by', 'a.created_by',
                 'params', 'a.params',
-
             );
         }
-
         parent::__construct($config);
     }
-
-
 	/**
 	 * Method to auto-populate the model state.
 	 *
@@ -58,24 +50,22 @@ class EinsatzkomponenteModeleinsatzarten extends ListModel
 	{
 		// Initialise variables.
 		$app = Factory::getApplication('administrator');
-
 		// Load the filter state.
 		$search = $app->getUserStateFromRequest($this->context.'.filter.search', 'filter_search');
 		$this->setState('filter.search', $search);
-
 		$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
 		$this->setState('filter.state', $published);
         
-        
+		//Filtering created_by
+		$this->setState('filter.created_by', $app->getUserStateFromRequest($this->context.'.filter.created_by', 'filter_created_by', '', 'string'));
+
         
 		// Load the parameters.
 		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$this->setState('params', $params);
-
 		// List state information.
-		parent::populateState('a.title', 'asc');
+		parent::populateState('a.report_id', 'DESC');
 	}
-
 	/**
 	 * Method to get a store id based on model configuration state.
 	 *
@@ -92,10 +82,9 @@ class EinsatzkomponenteModeleinsatzarten extends ListModel
 		// Compile the store id.
 		$id.= ':' . $this->getState('filter.search');
 		$id.= ':' . $this->getState('filter.state');
-
 		return parent::getStoreId($id);
 	}
-
+	
 	/**
 	 * Build an SQL query to load the list data.
 	 *
@@ -107,7 +96,6 @@ class EinsatzkomponenteModeleinsatzarten extends ListModel
 		// Create a new query object.
 		$db		= $this->getDbo();
 		$query	= $db->getQuery(true);
-
 		// Select the required fields from the table.
 		$query->select(
 			$this->getState(
@@ -115,23 +103,19 @@ class EinsatzkomponenteModeleinsatzarten extends ListModel
 				'a.*'
 			)
 		);
-		$query->from('#__eiko_einsatzarten AS a');
-
-
+		$query->from('#__eiko_images AS a');
 		// Join over the user field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
-
-
     // Filter by published state
     $published = $this->getState('filter.state');
     if (is_numeric($published)) {
         $query->where('a.state = '.(int) $published);
     } else if ($published === '') {
-        $query->where('(a.state IN (0, 1))');
+        $query->where('(a.state IN (0, 1,2))');
     }
     
-
+       
 		// Filter by search in title
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
@@ -139,11 +123,15 @@ class EinsatzkomponenteModeleinsatzarten extends ListModel
 				$query->where('a.id = '.(int) substr($search, 3));
 			} else {
 				$search = $db->Quote('%'.$db->escape($search, true).'%');
-                $query->where('( a.title LIKE '.$search.' )');
+                $query->where('( a.report_id LIKE '.$search.'  OR  a.comment LIKE '.$search.')');
 			}
 		}
-        
-        
+		
+		//Filtering created_by
+		$filter_created_by = $this->state->get("filter.created_by");
+		if ($filter_created_by) {
+			$query->where("a.created_by = '".$db->escape($filter_created_by)."'");
+		}        
         
         
 		// Add the list ordering clause.
@@ -152,7 +140,12 @@ class EinsatzkomponenteModeleinsatzarten extends ListModel
         if ($orderCol && $orderDirn) {
             $query->order($db->escape($orderCol.' '.$orderDirn));
         }
-
 		return $query;
 	}
+
+  /**
+   * Build a list of authors
+   *
+   * @return  JDatabaseQuery
+   */
 }

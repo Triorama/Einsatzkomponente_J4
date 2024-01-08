@@ -6,16 +6,17 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 // No direct access.
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
-jimport('joomla.application.component.modeladmin');
+
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelKategorie extends AdminModel
+class EinsatzkomponenteModelorganisation extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -31,7 +32,7 @@ class EinsatzkomponenteModelKategorie extends AdminModel
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Kategorie', $prefix = 'EinsatzkomponenteTable', $config = array())
+	public function getTable($type = 'Organisation', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
 		return Table::getInstance($type, $prefix, $config);
 	}
@@ -48,7 +49,7 @@ class EinsatzkomponenteModelKategorie extends AdminModel
 		// Initialise variables.
 		$app	= Factory::getApplication();
 		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.kategorie', 'kategorie', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_einsatzkomponente.organisation', 'organisation', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
@@ -63,10 +64,10 @@ class EinsatzkomponenteModelKategorie extends AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.kategorie.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.organisation.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
-
+ 
 			//Support for multiple or not foreign key field: vehicles
 			$array = array();
 			foreach((array)$data->params as $value): 
@@ -75,8 +76,8 @@ class EinsatzkomponenteModelKategorie extends AdminModel
 				endif;
 			endforeach;
 			$data->params = implode(',',$array);
-   
-   
+
+ 
 		}
 		return $data;
 	}
@@ -107,13 +108,12 @@ class EinsatzkomponenteModelKategorie extends AdminModel
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_tickerkat');
+				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_organisationen');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}
 		}
 	}
-	
 	/**
 	 * Method to delete rows.
 	 *
@@ -129,7 +129,7 @@ class EinsatzkomponenteModelKategorie extends AdminModel
         $db =Factory::getDBO();
         foreach($pks as $id)
         {
-            $db->setQuery("DELETE FROM #__eiko_tickerkat WHERE id=".$id);
+            $db->setQuery("DELETE FROM #__eiko_organisationen WHERE id=".$id);
 				try
 				{
 					$db->execute();

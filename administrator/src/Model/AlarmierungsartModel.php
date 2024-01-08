@@ -6,16 +6,18 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
+ 
 // No direct access.
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
-jimport('joomla.application.component.modeladmin');
+
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModeleinsatzart extends AdminModel
+class EinsatzkomponenteModelalarmierungsart extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -31,7 +33,7 @@ class EinsatzkomponenteModeleinsatzart extends AdminModel
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Einsatzart', $prefix = 'EinsatzkomponenteTable', $config = array())
+	public function getTable($type = 'Alarmierungsart', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
 		return Table::getInstance($type, $prefix, $config);
 	}
@@ -48,7 +50,7 @@ class EinsatzkomponenteModeleinsatzart extends AdminModel
 		// Initialise variables.
 		$app	= Factory::getApplication();
 		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.einsatzart', 'einsatzart', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_einsatzkomponente.alarmierungsart', 'alarmierungsart', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
@@ -63,7 +65,7 @@ class EinsatzkomponenteModeleinsatzart extends AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzart.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.alarmierungsart.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
 
@@ -75,7 +77,8 @@ class EinsatzkomponenteModeleinsatzart extends AdminModel
 				endif;
 			endforeach;
 			$data->params = implode(',',$array);
-            
+
+           
 		}
 		return $data;
 	}
@@ -106,7 +109,7 @@ class EinsatzkomponenteModeleinsatzart extends AdminModel
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_einsatzarten');
+				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_alarmierungsarten');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}
@@ -128,7 +131,7 @@ class EinsatzkomponenteModeleinsatzart extends AdminModel
         $db =Factory::getDBO();
         foreach($pks as $id)
         {
-            $db->setQuery("DELETE FROM #__eiko_einsatzarten WHERE id=".$id);
+            $db->setQuery("DELETE FROM #__eiko_alarmierungsarten WHERE id=".$id);
 				try
 				{
 					$db->execute();

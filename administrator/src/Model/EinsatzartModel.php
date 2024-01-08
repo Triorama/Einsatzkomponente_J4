@@ -6,16 +6,17 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 // No direct access.
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
-jimport('joomla.application.component.modeladmin');
+
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
+class EinsatzkomponenteModeleinsatzart extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -31,7 +32,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Einsatzfahrzeug', $prefix = 'EinsatzkomponenteTable', $config = array())
+	public function getTable($type = 'Einsatzart', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
 		return Table::getInstance($type, $prefix, $config);
 	}
@@ -48,7 +49,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
 		// Initialise variables.
 		$app	= Factory::getApplication();
 		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.einsatzfahrzeug', 'einsatzfahrzeug', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_einsatzkomponente.einsatzart', 'einsatzart', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
@@ -63,18 +64,9 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzart.data', array());
 		if (empty($data)) {
 			$data = $this->getItem();
-			
-			//Support for multiple or not foreign key field: ausruestung
-			$array = array();
-			foreach((array)$data->ausruestung as $value): 
-				if(!is_array($value)):
-					$array[] = $value;
-				endif;
-			endforeach;
-			$data->ausruestung = implode(',',$array);
 
 			//Support for multiple or not foreign key field: vehicles
 			$array = array();
@@ -84,8 +76,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
 				endif;
 			endforeach;
 			$data->params = implode(',',$array);
-
-       
+            
 		}
 		return $data;
 	}
@@ -116,12 +107,13 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM__eiko_fahrzeuge');
+				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_einsatzarten');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}
 		}
 	}
+	
 	/**
 	 * Method to delete rows.
 	 *
@@ -137,7 +129,7 @@ class EinsatzkomponenteModeleinsatzfahrzeug extends AdminModel
         $db =Factory::getDBO();
         foreach($pks as $id)
         {
-            $db->setQuery("DELETE FROM #__eiko_fahrzeuge WHERE id=".$id);
+            $db->setQuery("DELETE FROM #__eiko_einsatzarten WHERE id=".$id);
 				try
 				{
 					$db->execute();

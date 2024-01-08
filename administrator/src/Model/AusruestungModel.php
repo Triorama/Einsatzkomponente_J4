@@ -1,4 +1,5 @@
 <?php
+namespace Eikonamespace\Component\Einsatzkomponente\Administrator\Model;
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -6,6 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 
 // No direct access.
 defined('_JEXEC') or die;
@@ -13,12 +15,10 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 
-jimport('joomla.application.component.modeladmin');
-
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelgmapkonfiguration extends AdminModel
+class Ausruestung extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
@@ -36,7 +36,7 @@ class EinsatzkomponenteModelgmapkonfiguration extends AdminModel
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Gmapkonfiguration', $prefix = 'EinsatzkomponenteTable', $config = array())
+	public function getTable($type = 'Ausruestung', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
 		return Table::getInstance($type, $prefix, $config);
 	}
@@ -55,7 +55,9 @@ class EinsatzkomponenteModelgmapkonfiguration extends AdminModel
 		$app	= Factory::getApplication();
 
 		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.gmapkonfiguration', 'gmapkonfiguration', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_einsatzkomponente.ausruestung', 'ausruestung', array('control' => 'jform', 'load_data' => $loadData));
+        
+        
 		if (empty($form)) {
 			return false;
 		}
@@ -72,11 +74,21 @@ class EinsatzkomponenteModelgmapkonfiguration extends AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.gmapkonfiguration.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.ausruestung.data', array());
 
 		if (empty($data)) {
 			$data = $this->getItem();
-            
+ 
+			//Support for multiple or not foreign key field: vehicles
+			$array = array();
+			foreach((array)$data->params as $value): 
+				if(!is_array($value)):
+					$array[] = $value;
+				endif;
+			endforeach;
+			$data->params = implode(',',$array);
+ 
+
 		}
 
 		return $data;
@@ -115,7 +127,7 @@ class EinsatzkomponenteModelgmapkonfiguration extends AdminModel
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_gmap_config');
+				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_ausruestung');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}

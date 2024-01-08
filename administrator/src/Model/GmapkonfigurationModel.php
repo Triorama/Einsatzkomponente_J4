@@ -6,22 +6,27 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 // No direct access.
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
-jimport('joomla.application.component.modeladmin');
+
+
+
 /**
  * Einsatzkomponente model.
  */
-class EinsatzkomponenteModelorganisation extends AdminModel
+class EinsatzkomponenteModelgmapkonfiguration extends AdminModel
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
 	 * @since	1.6
 	 */
 	protected $text_prefix = 'COM_EINSATZKOMPONENTE';
+
+
 	/**
 	 * Returns a reference to the a Table object, always creating it.
 	 *
@@ -31,10 +36,11 @@ class EinsatzkomponenteModelorganisation extends AdminModel
 	 * @return	JTable	A database object
 	 * @since	1.6
 	 */
-	public function getTable($type = 'Organisation', $prefix = 'EinsatzkomponenteTable', $config = array())
+	public function getTable($type = 'Gmapkonfiguration', $prefix = 'EinsatzkomponenteTable', $config = array())
 	{
 		return Table::getInstance($type, $prefix, $config);
 	}
+
 	/**
 	 * Method to get the record form.
 	 *
@@ -47,13 +53,16 @@ class EinsatzkomponenteModelorganisation extends AdminModel
 	{
 		// Initialise variables.
 		$app	= Factory::getApplication();
+
 		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.organisation', 'organisation', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_einsatzkomponente.gmapkonfiguration', 'gmapkonfiguration', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form)) {
 			return false;
 		}
+
 		return $form;
 	}
+
 	/**
 	 * Method to get the data that should be injected in the form.
 	 *
@@ -63,23 +72,16 @@ class EinsatzkomponenteModelorganisation extends AdminModel
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.organisation.data', array());
+		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.gmapkonfiguration.data', array());
+
 		if (empty($data)) {
 			$data = $this->getItem();
- 
-			//Support for multiple or not foreign key field: vehicles
-			$array = array();
-			foreach((array)$data->params as $value): 
-				if(!is_array($value)):
-					$array[] = $value;
-				endif;
-			endforeach;
-			$data->params = implode(',',$array);
-
- 
+            
 		}
+
 		return $data;
 	}
+
 	/**
 	 * Method to get a single record.
 	 *
@@ -91,10 +93,14 @@ class EinsatzkomponenteModelorganisation extends AdminModel
 	public function getItem($pk = null)
 	{
 		if ($item = parent::getItem($pk)) {
+
 			//Do any procesing on fields here if needed
+
 		}
+
 		return $item;
 	}
+
 	/**
 	 * Prepare and sanitise the table prior to saving.
 	 *
@@ -103,42 +109,18 @@ class EinsatzkomponenteModelorganisation extends AdminModel
 	protected function prepareTable($table)
 	{
 		jimport('joomla.filter.output');
+
 		if (empty($table->id)) {
+
 			// Set ordering to the last item if not set
 			if (@$table->ordering === '') {
 				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_organisationen');
+				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_gmap_config');
 				$max = $db->loadResult();
 				$table->ordering = $max+1;
 			}
+
 		}
 	}
-	/**
-	 * Method to delete rows.
-	 *
-	 * @param   array  &$pks  An array of item ids.
-	 *
-	 * @return  boolean  Returns true on success, false on failure.
-	 *
-	 * @since   1.6
-	 */
- public function delete (&$pks)
-    {
-
-        $db =Factory::getDBO();
-        foreach($pks as $id)
-        {
-            $db->setQuery("DELETE FROM #__eiko_organisationen WHERE id=".$id);
-				try
-				{
-					$db->execute();
-				}
-				catch (RuntimeException $e)
-				{
-					throw new Exception($e->getMessage(), 500);
-				}
-        }
-		return true;		
-    }	
 
 }

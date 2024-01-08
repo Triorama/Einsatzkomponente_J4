@@ -6,18 +6,17 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 
-jimport('joomla.application.component.modellist');
 
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModelgmapkonfigurationen extends ListModel
+class EinsatzkomponenteModelalarmierungsarten extends ListModel
 {
 
     /**
@@ -32,11 +31,9 @@ class EinsatzkomponenteModelgmapkonfigurationen extends ListModel
         if (empty($config['filter_fields'])) {
             $config['filter_fields'] = array(
                                 'id', 'a.id',
-                'gmap_zoom_level', 'a.gmap_zoom_level',
-                'gmap_onload', 'a.gmap_onload',
-                'gmap_alarmarea', 'a.gmap_alarmarea',
-                'start_lat', 'a.start_lat',
-                'start_lang', 'a.start_lang',
+                'ordering', 'a.ordering',
+                'title', 'a.title',
+                'image', 'a.image',
                 'state', 'a.state',
                 'created_by', 'a.created_by',
                 'params', 'a.params',
@@ -72,7 +69,7 @@ class EinsatzkomponenteModelgmapkonfigurationen extends ListModel
 		$this->setState('params', $params);
 
 		// List state information.
-		parent::populateState('a.id', 'asc');
+		parent::populateState('a.title', 'asc');
 	}
 
 	/**
@@ -114,7 +111,7 @@ class EinsatzkomponenteModelgmapkonfigurationen extends ListModel
 				'a.*'
 			)
 		);
-		$query->from('#__eiko_gmap_config AS a');
+		$query->from('#__eiko_alarmierungsarten AS a');
 
 
 		// Join over the user field 'created_by'
@@ -122,21 +119,13 @@ class EinsatzkomponenteModelgmapkonfigurationen extends ListModel
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
 
 
-
     // Filter by published state
-
     $published = $this->getState('filter.state');
-
     if (is_numeric($published)) {
-
         $query->where('a.state = '.(int) $published);
-
     } else if ($published === '') {
-
         $query->where('(a.state IN (0, 1))');
-
     }
-
     
 
 		// Filter by search in title
@@ -146,7 +135,7 @@ class EinsatzkomponenteModelgmapkonfigurationen extends ListModel
 				$query->where('a.id = '.(int) substr($search, 3));
 			} else {
 				$search = $db->Quote('%'.$db->escape($search, true).'%');
-                
+                $query->where('( a.title LIKE '.$search.' )');
 			}
 		}
         

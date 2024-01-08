@@ -6,6 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 defined('_JEXEC') or die;
 use Joomla\CMS\MVC\Model\ListModel;
 use Joomla\CMS\Factory;
@@ -14,7 +15,7 @@ jimport('joomla.application.component.modellist');
 /**
  * Methods supporting a list of Einsatzkomponente records.
  */
-class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
+class EinsatzkomponenteModelorganisationen extends ListModel
 {
     /**
      * Constructor.
@@ -29,10 +30,27 @@ class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
             $config['filter_fields'] = array(
                                 'id', 'a.id',
                 'ordering', 'a.ordering',
-                'image', 'a.image',
-                'report_id', 'a.report_id',
-                'comment', 'a.comment',
-                'thumb', 'a.thumb',
+                'name', 'a.name',
+                'gmap_icon_orga', 'a.gmap_icon_orga',
+                'detail1_label', 'a.detail1_label',
+                'detail1', 'a.detail1',
+                'detail2_label', 'a.detail2_label',
+                'detail2', 'a.detail2',
+                'detail3_label', 'a.detail3_label',
+                'detail3', 'a.detail3',
+                'detail4_label', 'a.detail4_label',
+                'detail4', 'a.detail4',
+                'detail5_label', 'a.detail5_label',
+                'detail5', 'a.detail5',
+                'detail6_label', 'a.detail6_label',
+                'detail6', 'a.detail6',
+                'detail7_label', 'a.detail7_label',
+                'detail7', 'a.detail7',
+                'link', 'a.link',
+                'gmap_latitude', 'a.gmap_latitude',
+                'gmap_longitude', 'a.gmap_longitude',
+                'ffw', 'a.ffw',
+                'desc', 'a.desc',
                 'state', 'a.state',
                 'created_by', 'a.created_by',
                 'params', 'a.params',
@@ -55,15 +73,13 @@ class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
 		$published = $app->getUserStateFromRequest($this->context.'.filter.state', 'filter_published', '', 'string');
 		$this->setState('filter.state', $published);
         
-		//Filtering created_by
-		$this->setState('filter.created_by', $app->getUserStateFromRequest($this->context.'.filter.created_by', 'filter_created_by', '', 'string'));
-
+        
         
 		// Load the parameters.
 		$params = ComponentHelper::getParams('com_einsatzkomponente');
 		$this->setState('params', $params);
 		// List state information.
-		parent::populateState('a.report_id', 'DESC');
+		parent::populateState('a.ordering', 'asc');
 	}
 	/**
 	 * Method to get a store id based on model configuration state.
@@ -83,7 +99,6 @@ class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
 		$id.= ':' . $this->getState('filter.state');
 		return parent::getStoreId($id);
 	}
-	
 	/**
 	 * Build an SQL query to load the list data.
 	 *
@@ -102,7 +117,7 @@ class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
 				'a.*'
 			)
 		);
-		$query->from('#__eiko_images AS a');
+		$query->from('#__eiko_organisationen AS a');
 		// Join over the user field 'created_by'
 		$query->select('created_by.name AS created_by');
 		$query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -111,10 +126,9 @@ class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
     if (is_numeric($published)) {
         $query->where('a.state = '.(int) $published);
     } else if ($published === '') {
-        $query->where('(a.state IN (0, 1,2))');
+        $query->where('(a.state IN (0, 1))');
     }
     
-       
 		// Filter by search in title
 		$search = $this->getState('filter.search');
 		if (!empty($search)) {
@@ -122,15 +136,11 @@ class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
 				$query->where('a.id = '.(int) substr($search, 3));
 			} else {
 				$search = $db->Quote('%'.$db->escape($search, true).'%');
-                $query->where('( a.report_id LIKE '.$search.'  OR  a.comment LIKE '.$search.')');
+                $query->where('( a.name LIKE '.$search.'  OR  a.detail1 LIKE '.$search.' )');
 			}
 		}
-		
-		//Filtering created_by
-		$filter_created_by = $this->state->get("filter.created_by");
-		if ($filter_created_by) {
-			$query->where("a.created_by = '".$db->escape($filter_created_by)."'");
-		}        
+        
+        
         
         
 		// Add the list ordering clause.
@@ -141,10 +151,4 @@ class EinsatzkomponenteModeleinsatzbildmanager extends ListModel
         }
 		return $query;
 	}
-
-  /**
-   * Build a list of authors
-   *
-   * @return  JDatabaseQuery
-   */
 }
