@@ -2,7 +2,8 @@
 <form>
      <fieldset>
 
-          <field name="id"
+          <field
+               name="id"
                type="text"
                default="0"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ID"
@@ -10,7 +11,8 @@
                class="readonly"
                description="JGLOBAL_FIELD_ID_DESC" />
 
-          <field name="tickerkat"
+          <field
+               name="tickerkat"
                type="sql"
                class="eiko_tickerkat"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_KATEGORIE"
@@ -21,7 +23,8 @@
                key_field="id"
                value_field="title" />
 
-          <field name="filter_tickerkat"
+          <field
+               name="filter_tickerkat"
                type="sql"
                class="inputbox"
                onchange="this.form.submit();"
@@ -29,7 +32,8 @@
                key_field="id"
                value_field="val" />
 
-          <field name="data1"
+          <field
+               name="data1"
                type="sql"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATA1"
@@ -39,7 +43,8 @@
                key_field="id"
                value_field="title" />
 
-          <field name="filter_data1"
+          <field
+               name="filter_data1"
                type="sql"
                class="inputbox"
                onchange="this.form.submit();"
@@ -48,7 +53,8 @@
                value_field="val" />
 
 
-          <field name="alerting"
+          <field
+               name="alerting"
                type="sql"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_ALERTING"
@@ -58,7 +64,8 @@
                key_field="id"
                value_field="title" />
 
-          <field name="filter_alerting"
+          <field
+               name="filter_alerting"
                type="sql"
                class="inputbox"
                onchange="this.form.submit();"
@@ -67,15 +74,16 @@
                value_field="val" />
 
 
-
-          <field name="image"
+          <field
+               name="image"
                type="media"
                label="Titelbild"
                description="Weitere Bilder können Sie über den Mehrfachbild-Uploader hinzufügen"
                preview="true"
                id="einsatzbericht_image_klein"
                directory="com_einsatzkomponente/einsatzbilder" />
-          <field name="address"
+          <field
+               name="address"
                type="einsatzort"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_ADDRESS"
@@ -84,28 +92,17 @@
                size="60"
                maxlength="100" />
 
-          <field name="watermark_image"
+          <field
+               name="watermark_image"
                type="media"
                label="COM_EINSATZKOMPONENTE_OPTION_WASSERZEICHEN_WAEHLEN"
                description="Sie können Wasserzeichen hinzufügen. Die Datei muss zwingend eine PNG-Datei sein !!"
                preview="true"
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-               
-			default ="images/com_einsatzkomponente/watermark/watermark.png"
+               default="images/com_einsatzkomponente/watermark/watermark.png"
                directory="com_einsatzkomponente/watermark" />
 
-          <field name="gmap"
+          <field
+               name="gmap"
                type="radio"
                layout="joomla.form.field.radio.switcher"
                default="1"
@@ -115,7 +112,8 @@
                <option value="1">Anzeigen</option>
           </field>
 
-          <field name="date1"
+          <field
+               name="date1"
                default="NOW"
                class="inputbox"
                format="%Y-%m-%d %H:%M:00"
@@ -133,7 +131,8 @@
                hint="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE1"
                filter="safehtml" />
 
-          <field name="date2"
+          <field
+               name="date2"
                class="inputbox"
                format="%Y-%m-%d %H:%M:00"
                default="0000-00-00 00:00:00"
@@ -151,7 +150,8 @@
                hint="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE2"
                filter="safehtml" />
 
-          <field name="date3"
+          <field
+               name="date3"
                class="inputbox"
                default="0000-00-00 00:00:00"
                timeformat="24"
@@ -169,7 +169,8 @@
                hint="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DATE3"
                filter="safehtml" />
 
-          <field name="summary"
+          <field
+               name="summary"
                type="summary"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_SUMMARY"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_SUMMARY"
@@ -178,7 +179,8 @@
                filter="string"
                size="60"
                maxlength="500" />
-          <field name="boss"
+          <field
+               name="boss"
                type="einsatzleiter"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_BOSS"
@@ -186,7 +188,8 @@
                filter="safehtml"
                size="60"
                maxlength="100" />
-          <field name="boss2"
+          <field
+               name="boss2"
                type="einsatzfuehrer"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_BOSS2"
@@ -194,7 +197,8 @@
                filter="safehtml"
                size="60"
                maxlength="100" />
-          <field name="people"
+          <field
+               name="people"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PEOPLE"
@@ -203,18 +207,19 @@
                size="50"
                maxlength="100" />
 
-          <field name="department"
+          <field
+               name="department"
                type="hidden"
-               
-               
-               default = "0" />
+               default="0" />
 
-          <field name="params"
+          <field
+               name="params"
                type="hidden"
                filter="safehtml"
                default="" />
 
-          <field name="desc"
+          <field
+               name="desc"
                type="editor"
                label="ausführlicher Einsatzbericht"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_DESC"
@@ -223,7 +228,8 @@
                buttons="true"
                hide="readmore,pagebreak"
                filter="raw" />
-          <field name="gmap_report_latitude"
+          <field
+               name="gmap_report_latitude"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LATITUDE"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_GMAP_REPORT_LATITUDE"
@@ -232,7 +238,8 @@
                filter="raw"
                size="100"
                maxlength="100" />
-          <field name="gmap_report_longitude"
+          <field
+               name="gmap_report_longitude"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_GMAP_REPORT_LONGITUDE"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_GMAP_REPORT_LONGITUDE"
@@ -241,18 +248,18 @@
                filter="raw"
                size="100"
                maxlength="100" />
-          <field name="presse_label"
+          <field
+               name="presse_label"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE_LABEL"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE_LABEL"
                class="eiko_presse1_label"
-               
-               
-			default ="Presselink"
+               default="Presselink"
                filter="safehtml"
                size="100"
                maxlength="500" />
-          <field name="presse"
+          <field
+               name="presse"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE"
@@ -260,18 +267,18 @@
                filter="url"
                size="100"
                maxlength="500" />
-          <field name="presse2_label"
+          <field
+               name="presse2_label"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE2_LABEL"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE2_LABEL"
                class="eiko_presse2_label"
-               
-               
-               default ="Presselink"
+               default="Presselink"
                filter="safehtml"
                size="100"
                maxlength="500" />
-          <field name="presse2"
+          <field
+               name="presse2"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE2"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE2"
@@ -279,18 +286,18 @@
                filter="url"
                size="100"
                maxlength="500" />
-          <field name="presse3_label"
+          <field
+               name="presse3_label"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE3_LABEL"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE3_LABEL"
                class="eiko_presse3_label"
-               
-               
-               default ="Presselink"
+               default="Presselink"
                filter="safehtml"
                size="100"
                maxlength="500" />
-          <field name="presse3"
+          <field
+               name="presse3"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PRESSE3"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_PRESSE3"
@@ -298,7 +305,8 @@
                filter="url"
                size="100"
                maxlength="500" />
-          <field name="einsatzticker"
+          <field
+               name="einsatzticker"
                type="hidden"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZTICKER"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_EINSATZTICKER"
@@ -306,7 +314,8 @@
                class="eiko_einsatzticker"
                filter="safehtml" />
 
-          <field name="notrufticker"
+          <field
+               name="notrufticker"
                type="hidden"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_NOTRUFTICKER"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_NOTRUFTICKER"
@@ -314,7 +323,8 @@
                class="eiko_notrufticker"
                filter="safehtml" />
 
-          <field name="auswahl_orga"
+          <field
+               name="auswahl_orga"
                type="sql"
                class="inputbox"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSWAHLORGA"
@@ -326,7 +336,8 @@
                multiple="multiple"
                layout="joomla.form.field.list-fancy-select" />
 
-          <field name="filter_auswahl_orga"
+          <field
+               name="filter_auswahl_orga"
                type="sql"
                class="inputbox"
                onchange="this.form.submit();"
@@ -334,13 +345,15 @@
                key_field="id"
                value_field="val" />
 
-          <field name="vehicles"
+          <field
+               name="vehicles"
                type="optgroup"
                class="inputbox"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_VEHICLES" />
 
-          <field name="ausruestung"
+          <field
+               name="ausruestung"
                type="sql"
                class="inputbox"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSRUESTUNG"
@@ -352,7 +365,8 @@
                multiple="multiple"
                layout="joomla.form.field.list-fancy-select" />
 
-          <field name="ausruestung"
+          <field
+               name="ausruestung"
                type="sql"
                class="inputbox"
                onchange="this.form.submit();"
@@ -360,10 +374,9 @@
                key_field="id"
                value_field="val" />
 
-          <field name="article_id"
-               
-               
-               label = "COM_EINSATZKOMPONENTE_ARTIKEL_JOOMLA_LINK"
+          <field
+               name="article_id"
+               label="COM_EINSATZKOMPONENTE_ARTIKEL_JOOMLA_LINK"
                description="Bitte frei lassen, wenn kein Joomla-Artikel verlinkt werden soll."
                default="0"
                type="sql"
@@ -372,7 +385,8 @@
                key_field="id"
                value_field="title" />
 
-          <field name="status_fb"
+          <field
+               name="status_fb"
                type="radio"
                layout="joomla.form.field.radio.switcher"
                default="1"
@@ -382,7 +396,8 @@
                <option value="1">Anzeigen</option>
           </field>
 
-          <field name="status"
+          <field
+               name="status"
                type="list"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_STATUS"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_STATUS"
@@ -394,40 +409,47 @@
                <option value="0">Einsatzbericht</option>
                <option value="1">Vorlage</option>
           </field>
-          <field name="created_by"
+          <field
+               name="created_by"
                type="createdby"
                default=""
                label="Erstellt von"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_CREATED_BY" />
 
-          <field name="filter_created_by"
+          <field
+               name="filter_created_by"
                type="user"
                onchange="this.form.submit();" />
 
-          <field name="modified_by"
+          <field
+               name="modified_by"
                type="modifiedby"
                default=""
                label="Bearbeitet von"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_MODIFIED_BY" />
 
-          <field name="filter_modified_by"
+          <field
+               name="filter_modified_by"
                type="user"
                onchange="this.form.submit();" />
 
 
-          <field name="updatedate"
+          <field
+               name="updatedate"
                type="timeupdated"
                default=""
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_UPDATEDATE"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_UPDATEDATE" />
 
-          <field name="createdate"
+          <field
+               name="createdate"
                type="timecreated"
                default=""
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_CREATEDATE"
                description="COM_EINSATZKOMPONENTE_FORM_DESC_EINSATZBERICHT_CREATEDATE" />
 
-          <field name="counter"
+          <field
+               name="counter"
                type="text"
                label="COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_COUNTER"
                description="Dieses Feld ist nur für Admins sichtbar ! Hier können Sie den Zähler der Einsatzberichte ändern."
@@ -436,7 +458,8 @@
                class="eiko_counter"
                filter="int"
                size="20" />
-          <field name="state"
+          <field
+               name="state"
                type="list"
                label="JSTATUS"
                description="JFIELD_PUBLISHED_DESC"
@@ -448,7 +471,8 @@
           </field>
 
 
-          <field name="automail_off"
+          <field
+               name="automail_off"
                type="list"
                label="Automailfunktion"
                description="Schaltet einmalig für das Abspeichern die automaitsche Emailfunktion aus."
@@ -461,7 +485,8 @@
                <option value="1">aus</option>
           </field>
 
-          <field name="emailtext"
+          <field
+               name="emailtext"
                type="editor"
                label="Emailtext"
                description="Optionaler Emailinfotext bei Emailbenachrichtigung"
@@ -473,10 +498,12 @@
 
      </fieldset>
      <fieldset name="accesscontrol">
-          <field name="asset_id"
+          <field
+               name="asset_id"
                type="hidden"
                filter="unset" />
-          <field name="rules"
+          <field
+               name="rules"
                type="rules"
                label="JFIELD_RULES_LABEL"
                translate_label="false"
