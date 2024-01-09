@@ -16,13 +16,18 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
+
 $params = ComponentHelper::getParams('com_einsatzkomponente');
 
-HTMLHelper::_('bootstrap.tooltip');
-HTMLHelper::_('behavior.formvalidator');
-HTMLHelper::_('behavior.keepalive');
-HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+$wa = $this->document->getWebAssetManager();
+$wa->useScript('keepalive')
+	->useScript('form.validate');
+
+//HTMLHelper::_('bootstrap.tooltip');
+//HTMLHelper::_('behavior.formvalidator');
+//HTMLHelper::_('behavior.keepalive');
+//HTMLHelper::_('formbehavior.chosen', 'select');
+//HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 // Daten aus der Bilder-Galerie holen 
 if (!$this->item->id == 0) {
@@ -120,7 +125,6 @@ if (!$this->item->id == 0) {
 							}
 						});
 					</script>
-
 					<div class="control-group">
 						<div class="control-label"><?php echo $this->form->getLabel('vehicles'); ?></div>
 						<div class="controls"><?php echo $this->form->getInput('vehicles'); ?></div>
