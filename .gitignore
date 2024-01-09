@@ -52,3 +52,7 @@ com_einsatzkomponente.code-workspace
 .ionide
 
 # End of https://www.toptal.com/developers/gitignore/api/macos,visualstudiocode
+.prettierrc
+node_modules
+package.json
+package-lock.json
