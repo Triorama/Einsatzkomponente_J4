@@ -7,7 +7,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
@@ -19,12 +19,16 @@ HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_(
+  'stylesheet',
+  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
+);
 
 $params = ComponentHelper::getParams('com_einsatzkomponente');
-
 ?>
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzfahrzeug-form" class="form-validate">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
+); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzfahrzeug-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -73,28 +77,30 @@ $params = ComponentHelper::getParams('com_einsatzkomponente');
 			<div class="control-group hide_ausruestung">
 				<div class="control-label line"><?php echo $this->form->getLabel('ausruestung'); ?></div>
 				<div class="controls hideme"><?php echo $this->form->getInput('ausruestung'); ?></div>
-				<?php if (!$params->get('eiko','0')) : ?>
+				<?php if (!$params->get('eiko', '0')): ?>
 				<style>
 				.hideme {display:none;}
 				.line {text-decoration: line-through;}
 				</style>
 				 <input type="hidden" name="jform[ausruestung]" value="<?php echo $this->item->ausruestung; ?>" />
 
-				<?php endif;?>
+				<?php endif; ?>
 			</div>
-				<?php if (!$params->get('display_detail_ausruestung','1')) : ?>
+				<?php if (!$params->get('display_detail_ausruestung', '1')): ?>
 				<style>
 				.hide_ausruestung {display:none;}
 				</style>
-				<?php endif;?>
+				<?php endif; ?>
 			
-			<?php
-				foreach((array)$this->item->ausruestung as $value): 
-					if(!is_array($value)):
-						echo '<input type="hidden" class="ausruestung" name="jform[ausruestunghidden]['.$value.']" value="'.$value.'" />';
-					endif;
-				endforeach;
-			?>
+			<?php foreach ((array) $this->item->ausruestung as $value):
+     if (!is_array($value)):
+       echo '<input type="hidden" class="ausruestung" name="jform[ausruestunghidden][' .
+         $value .
+         ']" value="' .
+         $value .
+         '" />';
+     endif;
+   endforeach; ?>
 			<script type="text/javascript">
 				jQuery.noConflict();
 				jQuery('input:hidden.ausruestung').each(function(){

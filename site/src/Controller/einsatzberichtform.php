@@ -9,7 +9,7 @@
  */
 
 // No direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
@@ -23,280 +23,304 @@ require_once JPATH_COMPONENT . '/controller.php';
  */
 class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteController
 {
+  /**
+   * Method to check out an item for editing and redirect to the edit form.
+   *
+   * @since	1.6
+   */
+  public function edit()
+  {
+    $app = Factory::getApplication();
 
-	/**
-	 * Method to check out an item for editing and redirect to the edit form.
-	 *
-	 * @since	1.6
-	 */
-	public function edit()
-	{
-		$app			= Factory::getApplication();
+    // Get the previous edit id (if any) and the current edit id.
+    $previousId = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+    $editId = Factory::getApplication()->input->getInt('id', null, 'array');
+    // Set the user id for the user to edit in the session.
+    $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', $editId);
 
-		// Get the previous edit id (if any) and the current edit id.
-		$previousId = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-		$editId	= Factory::getApplication()->input->getInt('id', null, 'array');
-		// Set the user id for the user to edit in the session.
-		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', $editId);
+    // Get the model.
+    $model = $this->getModel('EinsatzberichtForm', Site);
 
-		// Get the model.
-		$model = $this->getModel('EinsatzberichtForm', Site);
+    // Check out the item
+    if ($editId) {
+      $model->checkout($editId);
+    }
 
-		// Check out the item
-		if ($editId) {
-			$model->checkout($editId);
-		}
+    // Check in the previous user.
+    if ($previousId) {
+      $model->checkin($previousId);
+    }
 
-		// Check in the previous user.
-		if ($previousId) {
-			$model->checkin($previousId);
-		}
+    // Redirect to the edit screen.
+    $this->setRedirect(
+      Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit', false)
+    );
+  }
 
-		// Redirect to the edit screen.
-		$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit', false));
-	}
+  /**
+   * Method to save a user's profile data.
+   *
+   * @return	void
+   * @since	1.6
+   */
+  public function save()
+  {
+    // Check for request forgeries.
+    Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
 
-	/**
-	 * Method to save a user's profile data.
-	 *
-	 * @return	void
-	 * @since	1.6
-	 */
-	public function save()
-	{
-		// Check for request forgeries.
-		Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
+    // Initialise variables.
+    $app = Factory::getApplication();
+    $model = $this->getModel('EinsatzberichtForm', Site);
 
-		// Initialise variables.
-		$app	= Factory::getApplication();
-		$model = $this->getModel('EinsatzberichtForm', Site);
+    // Get the user data.
+    $data = Factory::getApplication()->input->get('jform', [], 'array');
 
-		// Get the user data.
-		$data = Factory::getApplication()->input->get('jform', array(), 'array');
+    // Validate the posted data.
+    $form = $model->getForm();
+    if (!$form) {
+      throw new Exception($model->getError(), 500);
+      return false;
+    }
 
-		// Validate the posted data.
-		$form = $model->getForm();
-		if (!$form) {
-			throw new Exception($model->getError(), 500);
-			return false;
-		}
+    // Validate the posted data.
+    $data = $model->validate($form, $data);
 
-		// Validate the posted data.
-		$data = $model->validate($form, $data);
+    // Check for errors.
+    if ($data === false) {
+      // Get the validation messages.
+      $errors = $model->getErrors();
 
-		// Check for errors.
-		if ($data === false) {
-			// Get the validation messages.
-			$errors	= $model->getErrors();
+      // Push up to three validation messages out to the user.
+      for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+        if ($errors[$i] instanceof Exception) {
+          $app->enqueueMessage($errors[$i]->getMessage(), 'warning');
+        } else {
+          $app->enqueueMessage($errors[$i], 'warning');
+        }
+      }
 
-			// Push up to three validation messages out to the user.
-			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-				if ($errors[$i] instanceof Exception) {
-					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
-				} else {
-					$app->enqueueMessage($errors[$i], 'warning');
-				}
-			}
+      // Save the data in the session.
+      $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
 
-			// Save the data in the session.
-			$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
+      // Redirect back to the edit screen.
+      $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+      $this->setRedirect(
+        Route::_(
+          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
+          false
+        )
+      );
+      return false;
+    }
 
-			// Redirect back to the edit screen.
-			$id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
-			return false;
-		}
+    // Attempt to save the data.
+    $return = $model->save($data);
 
-		// Attempt to save the data.
-		$return	= $model->save($data);
+    // Check for errors.
+    if ($return === false) {
+      // Save the data in the session.
+      $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
 
-		// Check for errors.
-		if ($return === false) {
-			// Save the data in the session.
-			$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
+      // Redirect back to the edit screen.
+      $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+      $this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
+      $this->setRedirect(
+        Route::_(
+          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
+          false
+        )
+      );
+      return false;
+    }
 
-			// Redirect back to the edit screen.
-			$id = (int)$app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
-			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
-			return false;
-		}
+    // Check in the profile.
+    if ($return) {
+      $model->checkin($return);
+    }
 
+    // Clear the profile id from the session.
+    $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
 
-		// Check in the profile.
-		if ($return) {
-			$model->checkin($return);
-		}
+    // Redirect to the list screen.
+    $this->setMessage(Text::_('Item saved successfully'));
+    $menu = Factory::getApplication()->getMenu();
+    $item = $menu->getActive();
+    $this->setRedirect(Route::_($item->link, false));
 
-		// Clear the profile id from the session.
-		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
+    // Flush the data from the session.
+    $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
+  }
 
-		// Redirect to the list screen.
-		$this->setMessage(Text::_('Item saved successfully'));
-		$menu = Factory::getApplication()->getMenu();
-		$item = $menu->getActive();
-		$this->setRedirect(Route::_($item->link, false));
+  function cancel()
+  {
+    $menu = &Factory::getApplication()->getMenu();
+    $item = $menu->getActive();
+    $this->setRedirect(Route::_($item->link, false));
+  }
 
-		// Flush the data from the session.
-		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
-	}
+  function publish()
+  {
+    // Initialise variables.
+    $app = Factory::getApplication();
+    $model = $this->getModel('EinsatzberichtForm', Site);
 
+    // Get the user data.
+    $data = [];
+    $data['id'] = $app->input->getInt('id');
+    $data['state'] = $app->input->getInt('state');
 
-	function cancel()
-	{
-		$menu = &Factory::getApplication()->getMenu();
-		$item = $menu->getActive();
-		$this->setRedirect(Route::_($item->link, false));
-	}
+    // Check for errors.
+    if (empty($data['id'])) {
+      // Get the validation messages.
+      $errors = $model->getErrors();
 
-	function publish()
-	{
-		// Initialise variables.
-		$app	= Factory::getApplication();
-		$model = $this->getModel('EinsatzberichtForm', Site);
+      // Push up to three validation messages out to the user.
+      for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+        if ($errors[$i] instanceof Exception) {
+          $app->enqueueMessage($errors[$i]->getMessage(), 'warning');
+        } else {
+          $app->enqueueMessage($errors[$i], 'warning');
+        }
+      }
 
-		// Get the user data.
-		$data = array();
-		$data['id'] = $app->input->getInt('id');
-		$data['state'] = $app->input->getInt('state');
+      // Save the data in the session.
+      $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
 
-		// Check for errors.
-		if (empty($data['id'])) {
-			// Get the validation messages.
-			$errors = $model->getErrors();
+      // Redirect back to the edit screen.
+      $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+      $this->setRedirect(
+        Route::_(
+          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
+          false
+        )
+      );
+      return false;
+    }
 
-			// Push up to three validation messages out to the user.
-			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-				if ($errors[$i] instanceof Exception) {
-					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
-				} else {
-					$app->enqueueMessage($errors[$i], 'warning');
-				}
-			}
+    if ($data['id']):
+      $db = Factory::getDBO();
+      $query = $db->getQuery(true);
+      $query->update('#__eiko_einsatzberichte');
+      $query->set('state = "' . $data['state'] . '" ');
+      $query->where('id ="' . $data['id'] . '"');
+      $db->setQuery((string) $query);
+      try {
+        $db->execute();
+        $return = true;
+      } catch (RuntimeException $e) {
+        throw new Exception($e->getMessage(), 500);
+      }
+    endif;
 
+    // Attempt to save the data.
+    //$return	= $model->save($data);
 
-			// Save the data in the session.
-			$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
+    // Check for errors.
+    if ($return === false) {
+      // Save the data in the session.
+      $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
 
-			// Redirect back to the edit screen.
-			$id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
-			return false;
-		}
+      // Redirect back to the edit screen.
+      $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+      $this->setMessage(
+        Text::sprintf('Status konnte nicht geändert werden', $model->getError()),
+        'warning'
+      );
+      $this->setRedirect(
+        Route::_(
+          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
+          false
+        )
+      );
+      return false;
+    }
 
+    // Clear the profile id from the session.
+    //$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
 
+    // Redirect to the list screen.
+    $this->setMessage(Text::_('Status erfolgreich geändert'));
+    $menu = &Factory::getApplication()->getMenu();
+    $item = $menu->getActive();
+    $this->setRedirect(Route::_($item->link, false));
 
-		if ($data['id']) :
-			$db		= Factory::getDBO();
-			$query	= $db->getQuery(true);
-			$query->update('#__eiko_einsatzberichte');
-			$query->set('state = "' . $data['state'] . '" ');
-			$query->where('id ="' . $data['id'] . '"');
-			$db->setQuery((string) $query);
-			try {
-				$db->execute();
-				$return = true;
-			} catch (RuntimeException $e) {
-				throw new Exception($e->getMessage(), 500);
-			}
-		endif;
+    // Flush the data from the session.
+    $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
+  }
 
+  public function remove()
+  {
+    // Initialise variables.
+    $app = Factory::getApplication();
+    $model = $this->getModel('EinsatzberichtForm', Site);
 
-		// Attempt to save the data.
-		//$return	= $model->save($data);
+    // Get the user data.
+    $data = [];
+    $data['id'] = $app->input->getInt('id');
 
-		// Check for errors.
-		if ($return === false) {
-			// Save the data in the session.
-			$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
+    // Check for errors.
+    if (empty($data['id'])) {
+      // Get the validation messages.
+      $errors = $model->getErrors();
 
-			// Redirect back to the edit screen.
-			$id = (int)$app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setMessage(Text::sprintf('Status konnte nicht geändert werden', $model->getError()), 'warning');
-			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
-			return false;
-		}
+      // Push up to three validation messages out to the user.
+      for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
+        if ($errors[$i] instanceof Exception) {
+          $app->enqueueMessage($errors[$i]->getMessage(), 'warning');
+        } else {
+          $app->enqueueMessage($errors[$i], 'warning');
+        }
+      }
 
+      // Save the data in the session.
+      $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
 
+      // Redirect back to the edit screen.
+      $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+      $this->setRedirect(
+        Route::_(
+          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
+          false
+        )
+      );
+      return false;
+    }
 
-		// Clear the profile id from the session.
-		//$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
+    // Attempt to save the data.
+    $return = $model->delete($data);
 
-		// Redirect to the list screen.
-		$this->setMessage(Text::_('Status erfolgreich geändert'));
-		$menu = &Factory::getApplication()->getMenu();
-		$item = $menu->getActive();
-		$this->setRedirect(Route::_($item->link, false));
+    // Check for errors.
+    if ($return === false) {
+      // Save the data in the session.
+      $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
 
-		// Flush the data from the session.
-		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
-	}
+      // Redirect back to the edit screen.
+      $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
+      $this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
+      $this->setRedirect(
+        Route::_(
+          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
+          false
+        )
+      );
+      return false;
+    }
 
-	public function remove()
-	{
-		// Initialise variables.
-		$app	= Factory::getApplication();
-		$model = $this->getModel('EinsatzberichtForm', Site);
+    // Check in the profile.
+    if ($return) {
+      $model->checkin($return);
+    }
 
-		// Get the user data.
-		$data = array();
-		$data['id'] = $app->input->getInt('id');
+    // Clear the profile id from the session.
+    $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
 
-		// Check for errors.
-		if (empty($data['id'])) {
-			// Get the validation messages.
-			$errors = $model->getErrors();
+    // Redirect to the list screen.
+    $this->setMessage(Text::_('Item deleted successfully'));
+    $menu = &Factory::getApplication()->getMenu();
+    $item = $menu->getActive();
+    $this->setRedirect(Route::_($item->link, false));
 
-			// Push up to three validation messages out to the user.
-			for ($i = 0, $n = count($errors); $i < $n && $i < 3; $i++) {
-				if ($errors[$i] instanceof Exception) {
-					$app->enqueueMessage($errors[$i]->getMessage(), 'warning');
-				} else {
-					$app->enqueueMessage($errors[$i], 'warning');
-				}
-			}
-
-
-			// Save the data in the session.
-			$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
-
-			// Redirect back to the edit screen.
-			$id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
-			return false;
-		}
-
-		// Attempt to save the data.
-		$return	= $model->delete($data);
-
-		// Check for errors.
-		if ($return === false) {
-			// Save the data in the session.
-			$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
-
-			// Redirect back to the edit screen.
-			$id = (int)$app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-			$this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
-			$this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
-			return false;
-		}
-
-
-		// Check in the profile.
-		if ($return) {
-			$model->checkin($return);
-		}
-
-		// Clear the profile id from the session.
-		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', null);
-
-		// Redirect to the list screen.
-		$this->setMessage(Text::_('Item deleted successfully'));
-		$menu = &Factory::getApplication()->getMenu();
-		$item = $menu->getActive();
-		$this->setRedirect(Route::_($item->link, false));
-
-		// Flush the data from the session.
-		$app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
-	}
+    // Flush the data from the session.
+    $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
+  }
 }

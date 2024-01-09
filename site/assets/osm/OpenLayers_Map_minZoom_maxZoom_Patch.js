@@ -32,37 +32,41 @@
 //	http://www.netzwolf.info/kartografie/openlayers/restrictedzoom.htm
 //--------------------------------------------------------------------------------
 
-(function () {
-	OpenLayers.Map.prototype.minZoom = null;
-	OpenLayers.Map.prototype.maxZoom = null;
+;(function () {
+  OpenLayers.Map.prototype.minZoom = null
+  OpenLayers.Map.prototype.maxZoom = null
 
-	var moveTo = OpenLayers.Map.prototype.moveTo;
+  var moveTo = OpenLayers.Map.prototype.moveTo
 
-	OpenLayers.Map.prototype.moveTo = function (lonlat, zoom, options) {
+  OpenLayers.Map.prototype.moveTo = function (lonlat, zoom, options) {
+    if (this.minZoom && zoom < this.minZoom) {
+      zoom = this.minZoom
+      center = this.getCenter()
+      if (center) {
+        lonlat = center
+      }
+    }
+    if (this.maxZoom && zoom > this.maxZoom) {
+      zoom = this.maxZoom
+      center = this.getCenter()
+      if (center) {
+        lonlat = center
+      }
+    }
 
-		if (this.minZoom && zoom<this.minZoom) {
-			zoom  = this.minZoom;
-			center= this.getCenter();
-			if (center) { lonlat=center; }
-		}
-		if (this.maxZoom && zoom>this.maxZoom) {
-			zoom = this.maxZoom;
-			center= this.getCenter();
-			if (center) { lonlat=center; }
-		}
+    return moveTo.apply(this, [lonlat, zoom, options])
+  }
 
-		return moveTo.apply (this, [lonlat, zoom, options]);
-	};
+  var getNumZoomLevels = OpenLayers.Map.prototype.getNumZoomLevels
 
-	var getNumZoomLevels = OpenLayers.Map.prototype.getNumZoomLevels;
-
-	OpenLayers.Map.prototype.getNumZoomLevels = function () {
-
-		var num = getNumZoomLevels.apply (this, arguments);
-		if (this.maxZoom && num>this.maxZoom+1) { num = this.maxZoom+1; }
-		return num;
-	};
-})();
+  OpenLayers.Map.prototype.getNumZoomLevels = function () {
+    var num = getNumZoomLevels.apply(this, arguments)
+    if (this.maxZoom && num > this.maxZoom + 1) {
+      num = this.maxZoom + 1
+    }
+    return num
+  }
+})()
 
 //--------------------------------------------------------------------------------------------------
 //	$Id: OpenLayers_Map_minZoom_maxZoom_Patch.js,v 1.4 2013/02/25 07:53:40 wolf Exp wolf $

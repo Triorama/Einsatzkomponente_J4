@@ -10,7 +10,7 @@
 
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
 
-defined('JPATH_BASE') or die;
+defined('JPATH_BASE') or die();
 
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
@@ -26,48 +26,64 @@ use Joomla\CMS\Form\FormHelper;
  */
 class InfoField extends FormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var		string
-	 * @since   3.0
-	 */
-	protected $type = 'Info';
+  /**
+   * The form field type.
+   *
+   * @var		string
+   * @since   3.0
+   */
+  protected $type = 'Info';
 
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return  string	The field input markup.
-	 * @since   3.0
-	 */
+  /**
+   * Method to get the field input markup.
+   *
+   * @return  string	The field input markup.
+   * @since   3.0
+   */
 
+  protected function getInput()
+  {
+    $document = Factory::getDocument();
+    require_once JPATH_SITE .
+      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php';
+    $html = [];
+    $val = '';
+    $val = EinsatzkomponenteHelper::getValidation();
 
-	protected function getInput()
-	{
-
-		$document = Factory::getDocument();
-		require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php';
-		$html = array();
-		$val = '';
-		$val = EinsatzkomponenteHelper::getValidation();
-
-		if ($val == '12') :
-			$html[] = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">x</button><span aria-hidden="true" class="icon-cancel"></span> ' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_1');
-		else :
-			$html[] = '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">x</button><span aria-hidden="true" class="icon-cancel"></span>' . JText::_('COM_EINSATZKOMPONENTE_OPTION_INFO_2') . '</div><a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HDFKVJSKSEFY"><div>' . JText::_('COM_EINSATZKOMPONENTE_OPTION_INFO_3') . ' : <img border=0  src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" /></div></a><br/><br/>
+    if ($val == '12'):
+      $html[] =
+        '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">x</button><span aria-hidden="true" class="icon-cancel"></span> ' .
+        Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_1');
+    else:
+      $html[] =
+        '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">x</button><span aria-hidden="true" class="icon-cancel"></span>' .
+        JText::_('COM_EINSATZKOMPONENTE_OPTION_INFO_2') .
+        '</div><a target="_blank" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=9HDFKVJSKSEFY"><div>' .
+        JText::_('COM_EINSATZKOMPONENTE_OPTION_INFO_3') .
+        ' : <img border=0  src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" /></div></a><br/><br/>
 ';
-			if ($val == '1') :	$html[] =  '<span class="label label-important">' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_4') . '</span>';
-			endif;
-			if ($val == '2') :	$html[] =  '<span class="label label-important">' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_5') . '</span>';
-			endif;
-		endif;
-		$html[] = '<h2>Einsatzkomponente Version 3.x</h2>';
-		if ($val == '12') :	$html[] = '';
-		else :
-			$html[] = '<h3>' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_6') . '</h3>';
-		endif;
-		$html[] = '<p></p>';
-		$html[] = '<p><a href="https://www.einsatzkomponente.de/" target="_blank">Supportforum: https://www.einsatzkomponente.de/</a></p>';
-		return implode($html);
-	}
+      if ($val == '1'):
+        $html[] =
+          '<span class="label label-important">' .
+          Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_4') .
+          '</span>';
+      endif;
+      if ($val == '2'):
+        $html[] =
+          '<span class="label label-important">' .
+          Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_5') .
+          '</span>';
+      endif;
+    endif;
+    $html[] = '<h2>Einsatzkomponente Version 3.x</h2>';
+    if ($val == '12'):
+      $html[] = '';
+    else:
+      $html[] = '<h3>' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_6') . '</h3>';
+    endif;
+    $html[] = '<p></p>';
+    $html[] =
+      '<p><a href="https://www.einsatzkomponente.de/" target="_blank">Supportforum: https://www.einsatzkomponente.de/</a></p>';
+    return implode($html);
+  }
 }

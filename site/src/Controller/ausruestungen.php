@@ -9,7 +9,7 @@
  */
 
 // No direct access.
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 require_once JPATH_COMPONENT . '/controller.php';
 
@@ -18,13 +18,13 @@ require_once JPATH_COMPONENT . '/controller.php';
  */
 class EinsatzkomponenteControllerAusruestungen extends EinsatzkomponenteController
 {
-	/**
-	 * Proxy for getModel.
-	 * @since	1.6
-	 */
-	public function &getModel($name = 'Ausruestungen', $prefix = Site, $config = array())
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
-		return $model;
-	}
+  /**
+   * Proxy for getModel.
+   * @since	1.6
+   */
+  public function &getModel($name = 'Ausruestungen', $prefix = Site, $config = [])
+  {
+    $model = parent::getModel($name, $prefix, ['ignore_request' => true]);
+    return $model;
+  }
 }

@@ -8,7 +8,7 @@
  */
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Kategorien;
 // No direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 use Joomla\CMS\Version;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -21,111 +21,133 @@ use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\Einsatzkompon
  */
 class HtmlView extends BaseHtmlView
 {
-	protected $items;
-	protected $pagination;
-	protected $state;
-	/**
-	 * Display the view
-	 */
-	public function display($tpl = null)
-	{
-		$this->state		= $this->get('State');
-		$this->items		= $this->get('Items');
-		$this->pagination	= $this->get('Pagination');
-		// Check for errors.
-		if (count($errors = $this->get('Errors'))) {
-			throw new \Exception(implode("\n", $errors));
-		}
-        
-		EinsatzkomponenteHelper::addSubmenu('kategorien');
-        
-		$this->addToolbar();
-        
-		$version = new Version;
-        if ($version->isCompatible('3.0')) :
-        $this->sidebar = Sidebar::render();
-		endif;
+  protected $items;
+  protected $pagination;
+  protected $state;
+  /**
+   * Display the view
+   */
+  public function display($tpl = null)
+  {
+    $this->state = $this->get('State');
+    $this->items = $this->get('Items');
+    $this->pagination = $this->get('Pagination');
+    // Check for errors.
+    if (count($errors = $this->get('Errors'))) {
+      throw new \Exception(implode("\n", $errors));
+    }
 
-		parent::display($tpl);
-	}
-	/**
-	 * Add the page title and toolbar.
-	 *
-	 * @since	1.6
-	 */
-	protected function addToolbar(){
-		$state	= $this->get('State');
-		$canDo	= EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
-		ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN'), 'kategorien.png');
+    EinsatzkomponenteHelper::addSubmenu('kategorien');
 
-            if ($canDo->get('core.create')) {
-			    ToolbarHelper::addNew('kategorie.add','JTOOLBAR_NEW');
-		    }
-		    if ($canDo->get('core.edit') && isset($this->items[0])) {
-			    ToolbarHelper::editList('kategorie.edit','JTOOLBAR_EDIT');
-		    }
-        
-		if ($canDo->get('core.edit.state')) {
-            if (isset($this->items[0]->state)) {
-			    ToolbarHelper::divider();
-			    ToolbarHelper::custom('kategorien.publish', 'publish.png', 'publish_f2.png','JTOOLBAR_PUBLISH', true);
-			    ToolbarHelper::custom('kategorien.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
-            } else if (isset($this->items[0])) {
-                //If this component does not use state then show a direct delete button as we can not trash
-                ToolbarHelper::deleteList('', 'kategorien.delete','JTOOLBAR_DELETE');
-            }
-//            if (isset($this->items[0]->state)) {
-//			    ToolbarHelper::divider();
-//			    ToolbarHelper::archiveList('kategorien.archive','JTOOLBAR_ARCHIVE');
-//            }
-            if (isset($this->items[0]->checked_out)) {
-            	ToolbarHelper::custom('kategorien.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
-            }
-		}
-        
-        //Show trash and delete for components that uses the state field
-        if (isset($this->items[0]->state)) {
-		    if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
-			    ToolbarHelper::deleteList('', 'kategorien.delete','JTOOLBAR_EMPTY_TRASH');
-			    ToolbarHelper::divider();
-		    } else if ($canDo->get('core.edit.state')) {
-			    //ToolbarHelper::trash('kategorien.trash','JTOOLBAR_TRASH');
-                ToolbarHelper::deleteList('', 'kategorien.delete','JTOOLBAR_DELETE');
-			    ToolbarHelper::divider();
-		    }
-        }
-		if ($canDo->get('core.admin')) {
-			ToolbarHelper::preferences('com_einsatzkomponente');
-		}
-		
-        //Set sidebar action - New in 3.0
-		Sidebar::setAction('index.php?option=com_einsatzkomponente&view=kategorien');
-		$options = array ();
-		$options[] = HTMLHelper::_('select.option', '1', 'JPUBLISHED');
-		$options[] = HTMLHelper::_('select.option', '0', 'JUNPUBLISHED');
-		$options[] = HTMLHelper::_('select.option', '*', 'JALL');
-		Sidebar::addFilter(
-			Text::_('JOPTION_SELECT_PUBLISHED'),
-			'filter_published',
-			HTMLHelper::_('select.options', $options, "value", "text", $this->state->get('filter.state'), true)
-		);
-		
-        $this->extra_sidebar = '';
-		
-        
-	}
+    $this->addToolbar();
 
-    
-	protected function getSortFields()
-	{
-		return array(
-		'a.id' => Text::_('JGRID_HEADING_ID'),
-		'a.ordering' => Text::_('JGRID_HEADING_ORDERING'),
-		'a.title' => Text::_('COM_EINSATZKOMPONENTE_KATEGORIEN_TITLE'),
-		'a.image' => Text::_('COM_EINSATZKOMPONENTE_KATEGORIEN_IMAGE'),
-		'a.state' => Text::_('JSTATUS'),
-		'a.created_by' => Text::_('COM_EINSATZKOMPONENTE_KATEGORIEN_CREATED_BY'),
-		);
-	}
-    
+    $version = new Version();
+    if ($version->isCompatible('3.0')):
+      $this->sidebar = Sidebar::render();
+    endif;
+
+    parent::display($tpl);
+  }
+  /**
+   * Add the page title and toolbar.
+   *
+   * @since	1.6
+   */
+  protected function addToolbar()
+  {
+    $state = $this->get('State');
+    $canDo = EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
+    ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN'), 'kategorien.png');
+
+    if ($canDo->get('core.create')) {
+      ToolbarHelper::addNew('kategorie.add', 'JTOOLBAR_NEW');
+    }
+    if ($canDo->get('core.edit') && isset($this->items[0])) {
+      ToolbarHelper::editList('kategorie.edit', 'JTOOLBAR_EDIT');
+    }
+
+    if ($canDo->get('core.edit.state')) {
+      if (isset($this->items[0]->state)) {
+        ToolbarHelper::divider();
+        ToolbarHelper::custom(
+          'kategorien.publish',
+          'publish.png',
+          'publish_f2.png',
+          'JTOOLBAR_PUBLISH',
+          true
+        );
+        ToolbarHelper::custom(
+          'kategorien.unpublish',
+          'unpublish.png',
+          'unpublish_f2.png',
+          'JTOOLBAR_UNPUBLISH',
+          true
+        );
+      } elseif (isset($this->items[0])) {
+        //If this component does not use state then show a direct delete button as we can not trash
+        ToolbarHelper::deleteList('', 'kategorien.delete', 'JTOOLBAR_DELETE');
+      }
+      //            if (isset($this->items[0]->state)) {
+      //			    ToolbarHelper::divider();
+      //			    ToolbarHelper::archiveList('kategorien.archive','JTOOLBAR_ARCHIVE');
+      //            }
+      if (isset($this->items[0]->checked_out)) {
+        ToolbarHelper::custom(
+          'kategorien.checkin',
+          'checkin.png',
+          'checkin_f2.png',
+          'JTOOLBAR_CHECKIN',
+          true
+        );
+      }
+    }
+
+    //Show trash and delete for components that uses the state field
+    if (isset($this->items[0]->state)) {
+      if ($state->get('filter.state') == -2 && $canDo->get('core.delete')) {
+        ToolbarHelper::deleteList('', 'kategorien.delete', 'JTOOLBAR_EMPTY_TRASH');
+        ToolbarHelper::divider();
+      } elseif ($canDo->get('core.edit.state')) {
+        //ToolbarHelper::trash('kategorien.trash','JTOOLBAR_TRASH');
+        ToolbarHelper::deleteList('', 'kategorien.delete', 'JTOOLBAR_DELETE');
+        ToolbarHelper::divider();
+      }
+    }
+    if ($canDo->get('core.admin')) {
+      ToolbarHelper::preferences('com_einsatzkomponente');
+    }
+
+    //Set sidebar action - New in 3.0
+    Sidebar::setAction('index.php?option=com_einsatzkomponente&view=kategorien');
+    $options = [];
+    $options[] = HTMLHelper::_('select.option', '1', 'JPUBLISHED');
+    $options[] = HTMLHelper::_('select.option', '0', 'JUNPUBLISHED');
+    $options[] = HTMLHelper::_('select.option', '*', 'JALL');
+    Sidebar::addFilter(
+      Text::_('JOPTION_SELECT_PUBLISHED'),
+      'filter_published',
+      HTMLHelper::_(
+        'select.options',
+        $options,
+        'value',
+        'text',
+        $this->state->get('filter.state'),
+        true
+      )
+    );
+
+    $this->extra_sidebar = '';
+  }
+
+  protected function getSortFields()
+  {
+    return [
+      'a.id' => Text::_('JGRID_HEADING_ID'),
+      'a.ordering' => Text::_('JGRID_HEADING_ORDERING'),
+      'a.title' => Text::_('COM_EINSATZKOMPONENTE_KATEGORIEN_TITLE'),
+      'a.image' => Text::_('COM_EINSATZKOMPONENTE_KATEGORIEN_IMAGE'),
+      'a.state' => Text::_('JSTATUS'),
+      'a.created_by' => Text::_('COM_EINSATZKOMPONENTE_KATEGORIEN_CREATED_BY'),
+    ];
+  }
 }

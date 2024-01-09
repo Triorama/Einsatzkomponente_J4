@@ -8,7 +8,7 @@
  */
 namespace EikoNamespace\Component\Einsatzkomponente\Api\Controller;
 
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\Controller\ApiController;
 
@@ -17,21 +17,21 @@ use Joomla\CMS\MVC\Controller\ApiController;
  *
  * @since  4.0.0
  */
-class DatenexchangesController extends ApiController 
+class DatenexchangesController extends ApiController
 {
-	/**
-	 * The content type of the item.
-	 *
-	 * @var    string
-	 * @since  4.0.0
-	 */
-	protected $contentType = 'datenexchanges';
+  /**
+   * The content type of the item.
+   *
+   * @var    string
+   * @since  4.0.0
+   */
+  protected $contentType = 'datenexchanges';
 
-	/**
-	 * The default view for the display method.
-	 *
-	 * @var    string
-	 * @since  3.0
-	 */
-	protected $default_view = 'datenexchanges';
+  /**
+   * The default view for the display method.
+   *
+   * @var    string
+   * @since  3.0
+   */
+  protected $default_view = 'datenexchanges';
 }

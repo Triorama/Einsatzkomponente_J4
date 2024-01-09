@@ -8,7 +8,7 @@
  */
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Helper;
 // No direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 
@@ -19,33 +19,39 @@ use Joomla\CMS\Uri\Uri;
 /**
  * OSM helper.
  */
- 
+
 class OsmHelper
 {
-	
+  public static function installOsmMap()
+  {
+    HTMLHelper::_('stylesheet', 'components/com_einsatzkomponente/assets/leaflet/leaflet.css');
+    HTMLHelper::_('script', 'components/com_einsatzkomponente/assets/leaflet/leaflet.js');
+    HTMLHelper::_('script', 'components/com_einsatzkomponente/assets/leaflet/geocode.js');
 
-		
-		public static function installOsmMap()
-	{
-			HTMLHelper::_('stylesheet','components/com_einsatzkomponente/assets/leaflet/leaflet.css');			
-			HTMLHelper::_('script','components/com_einsatzkomponente/assets/leaflet/leaflet.js');
-			HTMLHelper::_('script','components/com_einsatzkomponente/assets/leaflet/geocode.js');
-			
-			return;
-	}
+    return;
+  }
 
-
-public static function callOsmMap($zoom='',$lat='53.26434271775887',$lon='7.5730027132448186')
-	{
-	$script ="			
+  public static function callOsmMap(
+    $zoom = '',
+    $lat = '53.26434271775887',
+    $lon = '7.5730027132448186'
+  ) {
+    $script =
+      "			
 		var myOsmDe = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {attribution:  'Map data &copy; <a href=\"https://osm.org/copyright\"> OpenStreetMap</a> | Lizenz: <a href=\"http://opendatacommons.org/licenses/odbl/\"> Open Database License (ODbL)</a>'});
 					
 		var map = L.map('map_canvas', {
 			doubleClickZoom: false,
-			center: [".$lat.", ".$lon."],
+			center: [" .
+      $lat .
+      ', ' .
+      $lon .
+      "],
 			minZoom: 2,
 			maxZoom: 18,
-			zoom: ".$zoom.",
+			zoom: " .
+      $zoom .
+      ",
 			layers: [myOsmDe],
 			scrollWheelZoom: false
 			});
@@ -56,17 +62,16 @@ public static function callOsmMap($zoom='',$lat='53.26434271775887',$lon='7.5730
 		var osmGeocoder = new L.Control.OSMGeocoder();
 	map.addControl(osmGeocoder);
 			";
-			
-		Factory::getDocument()->addScriptDeclaration($script);
-		
-		return;
-}
 
+    Factory::getDocument()->addScriptDeclaration($script);
 
+    return;
+  }
 
-		public static function addMarkerOsmMap($lat='53.26434271775887',$lon='7.5730027132448186')
-	{
-	$script ="			
+  public static function addMarkerOsmMap($lat = '53.26434271775887', $lon = '7.5730027132448186')
+  {
+    $script =
+      "			
 	function addMarker(e){	
 		map.removeLayer(marker2);
  
@@ -126,10 +131,16 @@ var LeafIcon = L.Icon.extend({
 //*********************************************************************
 // Icons zuweisen
 
-var blueIcon   = new LeafIcon({iconUrl:'".Uri::base()."/components/com_einsatzkomponente/assets/leaflet/pin48blue.png'});
+var blueIcon   = new LeafIcon({iconUrl:'" .
+      Uri::base() .
+      "/components/com_einsatzkomponente/assets/leaflet/pin48blue.png'});
 		
 		
-var marker2 = new L.marker([".$lat.','.$lon."],{draggable:'true',icon: blueIcon}).bindPopup().addTo(map);
+var marker2 = new L.marker([" .
+      $lat .
+      ',' .
+      $lon .
+      "],{draggable:'true',icon: blueIcon}).bindPopup().addTo(map);
 
 marker2.on('drag', function(e) {
     var marker2 = e.target;
@@ -140,23 +151,26 @@ marker2.on('drag', function(e) {
 });
 
 ";
-			Factory::getDocument()->addScriptDeclaration($script);
+    Factory::getDocument()->addScriptDeclaration($script);
 
-			return;
-}
+    return;
+  }
 
+  public static function addEinsatzorteMap($json = '')
+  {
+    $app = Factory::getApplication();
+    $params = $app->getParams('com_einsatzkomponente');
 
-
-		public static function addEinsatzorteMap($json='')
-	{
-			$app	= Factory::getApplication();
-			$params = $app->getParams('com_einsatzkomponente');
-
-	$script ="			
+    $script =
+      "			
 	var geodaten =[];
 	var current;
-			icsize = '".$params->get('einsatzkarte_gmap_icon','18')."';	
-			geodaten = ".$json.";
+			icsize = '" .
+      $params->get('einsatzkarte_gmap_icon', '18') .
+      "';	
+			geodaten = " .
+      $json .
+      ";
 			
 			var LeafIcon = L.Icon.extend({
 						options: {
@@ -170,8 +184,14 @@ marker2.on('drag', function(e) {
 			for (var i = 0; i < geodaten.length; i++) {
 				
 				var current = geodaten[i];
-				var Icon   = new LeafIcon({iconUrl:'".Uri::base()."'+current.icon});
-				var text = '<h2 class='eiko_h2_osm'>'+current.name+'</h2><a class='btn-home' href=".Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' )."'+current.id+'>".Text::_('COM_EINSATZKOMPONENTE_DETAILS')."</a>'
+				var Icon   = new LeafIcon({iconUrl:'" .
+      Uri::base() .
+      "'+current.icon});
+				var text = '<h2 class='eiko_h2_osm'>'+current.name+'</h2><a class='btn-home' href=" .
+      Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=') .
+      "'+current.id+'>" .
+      Text::_('COM_EINSATZKOMPONENTE_DETAILS') .
+      "</a>'
 
 				L.marker(new L.LatLng([current.lat], [current.lon]),{icon : Icon},{title : current.name}).addTo(map)
 				.bindPopup(text);
@@ -181,29 +201,55 @@ marker2.on('drag', function(e) {
 
 
 ";
-			Factory::getDocument()->addScriptDeclaration($script);
+    Factory::getDocument()->addScriptDeclaration($script);
+
+    return;
+  }
+
+  public static function addEinsatzortMap(
+    $lat = '53.26434271775887',
+    $lon = '7.5730027132448186',
+    $name = 'Einsatz',
+    $icon = '',
+    $id = '1'
+  ) {
+    $app = Factory::getApplication();
+    $params = $app->getParams('com_einsatzkomponente');
+
+    $script =
+      "			
+
+			lat = " .
+      $lat .
+      ";
+			lon = " .
+      $lon .
+      ";
+			name = '" .
+      $name .
+      "';
+			icon = '" .
+      $icon .
+      "';
+			icsize = '" .
+      $params->get('einsatzkarte_gmap_icon', '18') .
+      "';
+			id = '" .
+      $id .
+      "';
+			popup = " .
+      $params->get('display_detail_popup', 'false') .
+      ";
+			map.setView(new L.LatLng(lat,lon)," .
+      $params->get('detail_gmap_zoom_level', '12') .
+      ");
 			
-			return;
-}
-
-		public static function addEinsatzortMap($lat='53.26434271775887',$lon='7.5730027132448186',$name='Einsatz',$icon='',$id='1')
-	{
-			$app	= Factory::getApplication();
-			$params = $app->getParams('com_einsatzkomponente');
-
-	$script ="			
-
-			lat = ".$lat.";
-			lon = ".$lon.";
-			name = '".$name."';
-			icon = '".$icon."';
-			icsize = '".$params->get('einsatzkarte_gmap_icon','18')."';
-			id = '".$id."';
-			popup = ".$params->get('display_detail_popup','false').";
-			map.setView(new L.LatLng(lat,lon),".$params->get('detail_gmap_zoom_level','12').");
-			
-			//map.options.minZoom = ".$params->get('detail_gmap_zoom_level','12').";
-			map.options.maxZoom = ".$params->get('detail_gmap_zoom_level','12').";
+			//map.options.minZoom = " .
+      $params->get('detail_gmap_zoom_level', '12') .
+      ";
+			map.options.maxZoom = " .
+      $params->get('detail_gmap_zoom_level', '12') .
+      ";
 			
 			
 			var LeafIcon = L.Icon.extend({
@@ -216,7 +262,9 @@ marker2.on('drag', function(e) {
 
 
 				
-				var Icon   = new LeafIcon({iconUrl:'".Uri::base()."'+icon});
+				var Icon   = new LeafIcon({iconUrl:'" .
+      Uri::base() .
+      "'+icon});
 				
 				if (name && popup) {
 				var text = '<h2 class='eiko_h2_osm'>'+name+'</h2>'
@@ -231,21 +279,26 @@ marker2.on('drag', function(e) {
 
 
 ";
-			Factory::getDocument()->addScriptDeclaration($script);
+    Factory::getDocument()->addScriptDeclaration($script);
 
-			return;
-}
+    return;
+  }
 
-		public static function addOrganisationenMap($json='')
-	{
-			$app	= Factory::getApplication();
-			$params = $app->getParams('com_einsatzkomponente');
-		
-	$script ="			
+  public static function addOrganisationenMap($json = '')
+  {
+    $app = Factory::getApplication();
+    $params = $app->getParams('com_einsatzkomponente');
+
+    $script =
+      "			
 	var geodaten =[];
 	var current;
-	icsize = '".$params->get('einsatzkarte_gmap_icon_orga','18')."';
-	geodaten = ".$json.";
+	icsize = '" .
+      $params->get('einsatzkarte_gmap_icon_orga', '18') .
+      "';
+	geodaten = " .
+      $json .
+      ";
 			
 			var LeafIcon = L.Icon.extend({
 						options: {
@@ -259,7 +312,9 @@ marker2.on('drag', function(e) {
 			for (var i = 0; i < geodaten.length; i++) {
 				
 				var current = geodaten[i];
-				var Icon   = new LeafIcon({iconUrl:'".Uri::base()."'+current.icon});
+				var Icon   = new LeafIcon({iconUrl:'" .
+      Uri::base() .
+      "'+current.icon});
 				var text = '<h2 class='eiko_h2_osm'>'+current.name+'</h2>'
 				L.marker(new L.LatLng([current.lat], [current.lon]),{icon : Icon},{title : current.name})
 				.bindPopup(text)
@@ -269,26 +324,30 @@ marker2.on('drag', function(e) {
 
 
 ";
-			Factory::getDocument()->addScriptDeclaration($script);
+    Factory::getDocument()->addScriptDeclaration($script);
 
-			return;
-}
+    return;
+  }
 
-
-		public static function addPolygonMap($latlngs='[[0,0]]',$color='red')
-	{
-	$script ="			
-			var latlngs = ".$latlngs.";
-			var polygon = L.polygon(latlngs, {color: '".$color."'}).addTo(map);
+  public static function addPolygonMap($latlngs = '[[0,0]]', $color = 'red')
+  {
+    $script =
+      "			
+			var latlngs = " .
+      $latlngs .
+      ";
+			var polygon = L.polygon(latlngs, {color: '" .
+      $color .
+      "'}).addTo(map);
 ";
-			Factory::getDocument()->addScriptDeclaration($script);
+    Factory::getDocument()->addScriptDeclaration($script);
 
-			return;
-}
+    return;
+  }
 
-		public static function addRightClickOsmMap()
-	{
-	$script ="			
+  public static function addRightClickOsmMap()
+  {
+    $script = "			
 			
 			map.on('contextmenu', function(e) {
 				//alert(e.target);
@@ -304,22 +363,30 @@ marker2.on('drag', function(e) {
 				  });		
 			
 ";
-			Factory::getDocument()->addScriptDeclaration($script);
+    Factory::getDocument()->addScriptDeclaration($script);
 
-			return;
-}
+    return;
+  }
 
+  public static function editPolygonMap($latlngs = '[[0,0]]', $color = 'red')
+  {
+    $document = Factory::getDocument();
+    $document->addStyleSheet(
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css'
+    );
+    $document->addScript(
+      'https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js'
+    );
 
-		public static function editPolygonMap($latlngs='[[0,0]]',$color='red')
-	{
-			$document = Factory::getDocument();
-			$document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css'); 
-			$document->addScript('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js');
-
-	$script ="			
+    $script =
+      "			
 			
-			var latlngs = ".$latlngs.";
-			var polygon = L.polygon(latlngs, {color: '".$color."'}).addTo(map);
+			var latlngs = " .
+      $latlngs .
+      ";
+			var polygon = L.polygon(latlngs, {color: '" .
+      $color .
+      "'}).addTo(map);
 			
 			// Initialise the FeatureGroup to store editable layers
 var editableLayers = new L.FeatureGroup();
@@ -391,12 +458,8 @@ if (type === 'polygon') {
 });
 
 ";
-			Factory::getDocument()->addScriptDeclaration($script);
+    Factory::getDocument()->addScriptDeclaration($script);
 
-			return;
-}
-
-
-
-	
+    return;
+  }
 }

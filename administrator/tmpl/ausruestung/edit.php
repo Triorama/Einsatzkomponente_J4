@@ -7,29 +7,39 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
-HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
-HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_(
+  'stylesheet',
+  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
+);
 ?>
 
 
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
+); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
 
     <div class="form-horizontal">
-        <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
+        <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'general']); ?>
 
-        <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'general', Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)); ?>
+        <?php echo HTMLHelper::_(
+          'bootstrap.addTab',
+          'myTab',
+          'general',
+          Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)
+        ); ?>
         <div class="row-fluid">
             <div class="span10 form-horizontal">
                 <fieldset class="adminform">
@@ -56,15 +66,15 @@ HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/asset
 				<div class="controls"><?php echo $this->form->getInput('checked_out'); ?></div>
 			</div>
 
-				<?php if(empty($this->item->created_by)){ ?>
+				<?php if (empty($this->item->created_by)) { ?>
 					<input type="hidden" name="jform[created_by]" value="<?php echo Factory::getUser()->id; ?>" />
 
-				<?php } 
-				else{ ?>
+				<?php } else { ?>
 					<input type="hidden" name="jform[created_by]" value="<?php echo $this->item->created_by; ?>" />
 
 				<?php } ?>				
-				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
+				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item
+      ->checked_out_time; ?>" />
 				<input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>" />
 				<input type="hidden" name="jform[state]" value="<?php echo $this->item->state; ?>" />
 
@@ -74,8 +84,13 @@ HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/asset
         </div>
         <?php echo HTMLHelper::_('bootstrap.endTab'); ?>
         
-        <?php if (Factory::getUser()->authorise('core.admin','einsatzkomponente')) : ?>
-	<?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'permissions', Text::_('JGLOBAL_ACTION_PERMISSIONS_LABEL', true)); ?>
+        <?php if (Factory::getUser()->authorise('core.admin', 'einsatzkomponente')): ?>
+	<?php echo HTMLHelper::_(
+   'bootstrap.addTab',
+   'myTab',
+   'permissions',
+   Text::_('JGLOBAL_ACTION_PERMISSIONS_LABEL', true)
+ ); ?>
 		<?php echo $this->form->getInput('rules'); ?>
 	<?php echo HTMLHelper::_('bootstrap.endTab'); ?>
 <?php endif; ?>

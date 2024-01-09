@@ -10,7 +10,7 @@
 
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
 
-defined('JPATH_BASE') or die;
+defined('JPATH_BASE') or die();
 
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Date\Date;
@@ -22,33 +22,33 @@ use Joomla\CMS\Form\FormHelper;
  */
 class TimecreatedField extends FormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var		string
-	 * @since	1.6
-	 */
-	protected $type = 'Timecreated';
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return	string	The field input markup.
-	 * @since	1.6
-	 */
-	protected function getInput()
-	{
-		// Initialize variables.
-		$html = array();
+  /**
+   * The form field type.
+   *
+   * @var		string
+   * @since	1.6
+   */
+  protected $type = 'Timecreated';
+  /**
+   * Method to get the field input markup.
+   *
+   * @return	string	The field input markup.
+   * @since	1.6
+   */
+  protected function getInput()
+  {
+    // Initialize variables.
+    $html = [];
 
-		$time_created = $this->value;
-		if (!$time_created) {
-			$time_created = date("Y-m-d H:i:s");
-			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $time_created . '" />';
-		}
-		$jdate = new Date($time_created);
-		$pretty_date = $jdate->format(Text::_('DATE_FORMAT_LC2'));
-		$html[] = "<div>" . $pretty_date . "</div>";
+    $time_created = $this->value;
+    if (!$time_created) {
+      $time_created = date('Y-m-d H:i:s');
+      $html[] = '<input type="hidden" name="' . $this->name . '" value="' . $time_created . '" />';
+    }
+    $jdate = new Date($time_created);
+    $pretty_date = $jdate->format(Text::_('DATE_FORMAT_LC2'));
+    $html[] = '<div>' . $pretty_date . '</div>';
 
-		return implode($html);
-	}
+    return implode($html);
+  }
 }

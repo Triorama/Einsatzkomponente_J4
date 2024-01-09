@@ -7,30 +7,38 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-HTMLHelper::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+HTMLHelper::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_('stylesheet','administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
+HTMLHelper::_(
+  'stylesheet',
+  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
+);
 
 $params = ComponentHelper::getParams('com_einsatzkomponente');
-
 ?>
 
 <?php $gmap_latitude = $this->item->gmap_latitude; ?>
 <?php $gmap_longitude = $this->item->gmap_longitude; ?>
-<?php if ($gmap_latitude < '1')  $gmap_latitude = $this->gmap_config->start_lat; ?>
-<?php if ($gmap_longitude < '1') $gmap_longitude = $this->gmap_config->start_lang; ?>
+<?php if ($gmap_latitude < '1') {
+  $gmap_latitude = $this->gmap_config->start_lat;
+} ?>
+<?php if ($gmap_longitude < '1') {
+  $gmap_longitude = $this->gmap_config->start_lang;
+} ?>
 
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
+); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -47,38 +55,52 @@ $params = ComponentHelper::getParams('com_einsatzkomponente');
 				<div class="controls"><?php echo $this->form->getInput('gmap_icon_orga'); ?></div>
             </div>   
 <?php // zugeordnete Fahrzeuge aufrufen ----------------------------------
-if ($this->item->name)
-{
-?>
+
+if ($this->item->name) { ?>
             <div class="control-group">  
             
-<?php 
-	echo '<div class="control-label">';echo Text::_('COM_EINSATZKOMPONENTE_ZUGORDNETE_FAHRZEUGE').':';echo '</div>';
-	echo '<div class="controls"><ul class="adminformlist">';
-$database			= Factory::getDBO();
-$query = 'SELECT * FROM #__eiko_fahrzeuge WHERE department = "'.$this->item->id.'" ORDER BY ordering,state ASC ' ;
-$database->setQuery( $query );
-$total = $database->loadObjectList();	
-		if ($total) {
-		foreach($total as $totale): 
-		echo '<li>';
-		echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id='.$totale->id.'); ">';
-		echo $totale->name;
-		if ($totale->detail2): echo ' ( '.$totale->detail2.' )'; endif;
-		if ($totale->detail1): echo ' '.$totale->detail1; endif;
-		echo '</a>';
-                if ($totale->state == 2): echo Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG_AUSSER_DIENST'); endif;
-                if ($totale->state == 0): echo Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG_DEAKTIVIERT'); endif;
-                echo '</li>';
-		endforeach; 
-		}
-		else
-		{
-		echo '<span class="label label-important">'.Text::_('COM_EINSATZKOMPONENTE_KEINE_FAHRZEUGE').'</span>';
-		}
-echo '</ul></div></div>';
+<?php
+echo '<div class="control-label">';
+echo Text::_('COM_EINSATZKOMPONENTE_ZUGORDNETE_FAHRZEUGE') . ':';
+echo '</div>';
+echo '<div class="controls"><ul class="adminformlist">';
+$database = Factory::getDBO();
+$query =
+  'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' .
+  $this->item->id .
+  '" ORDER BY ordering,state ASC ';
+$database->setQuery($query);
+$total = $database->loadObjectList();
+if ($total) {
+  foreach ($total as $totale):
+    echo '<li>';
+    echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' .
+      $totale->id .
+      '); ">';
+    echo $totale->name;
+    if ($totale->detail2):
+      echo ' ( ' . $totale->detail2 . ' )';
+    endif;
+    if ($totale->detail1):
+      echo ' ' . $totale->detail1;
+    endif;
+    echo '</a>';
+    if ($totale->state == 2):
+      echo Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG_AUSSER_DIENST');
+    endif;
+    if ($totale->state == 0):
+      echo Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG_DEAKTIVIERT');
+    endif;
+    echo '</li>';
+  endforeach;
+} else {
+  echo '<span class="label label-important">' .
+    Text::_('COM_EINSATZKOMPONENTE_KEINE_FAHRZEUGE') .
+    '</span>';
 }
-else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
+echo '</ul></div></div>';
+} else {}
+// zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 ?>
 			
             
@@ -132,9 +154,14 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
 			</div>
 -->            
-            <?php if ($params->get('gmap_action','0') == '1' or $params->get('gmap_action','0') == '2') : ?>
+            <?php if (
+              $params->get('gmap_action', '0') == '1' or
+              $params->get('gmap_action', '0') == '2'
+            ): ?>
 	           <!--Slider für Ortsangaben-->
-            <?php $gmap_config = $this->gmap_config;  // GMap-Config Daten laden?>
+            <?php $gmap_config = $this->gmap_config;
+              // GMap-Config Daten laden
+              ?>
 			<div class="fltlft" style="width:80%;">
             <div class="control-group" id="map_canvas" style="width:100%;max-width:600px;height:400px;border:1px solid;">Karte</div>
 			<div class="control-group">
@@ -143,14 +170,17 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 			</div>		
 			<div class="control-group">
 			<div class="control-label"><?php echo 'Latitude / Longitude'; ?></div>
-            <div class="controls"><?php echo $this->form->getInput('gmap_latitude'); ?><?php echo $this->form->getInput('gmap_longitude'); ?></div>
+            <div class="controls"><?php
+            echo $this->form->getInput('gmap_latitude');
+            echo $this->form->getInput('gmap_longitude');
+            ?></div>
 			</div>
-            <?php endif;?>
-			<?php if ($params->get('gmap_action','0') == '2') : ?>
-			<?php OsmHelper::installOsmMap();?>
-			<?php OsmHelper::callOsmMap($gmap_config->gmap_zoom_level,$gmap_latitude,$gmap_longitude); ?>
-			<?php OsmHelper::addMarkerOsmMap($gmap_latitude,$gmap_longitude); ?> 
-			<?php endif;?>
+            <?php endif; ?>
+			<?php if ($params->get('gmap_action', '0') == '2'): ?>
+			<?php OsmHelper::installOsmMap(); ?>
+			<?php OsmHelper::callOsmMap($gmap_config->gmap_zoom_level, $gmap_latitude, $gmap_longitude); ?>
+			<?php OsmHelper::addMarkerOsmMap($gmap_latitude, $gmap_longitude); ?> 
+			<?php endif; ?>
 	
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('gmap_icon'); ?></div>
@@ -168,11 +198,14 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 			</fieldset>
 			</div>
 
-<?php if ($params->get('gmap_action','0') == '1') : ?>
+<?php if ($params->get('gmap_action', '0') == '1'): ?>
 
               <!-- Javascript für GMap-Anzeige -->
 			  
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get ('gmapkey','AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E') ;?>&callback=initMap&v=weekly"
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get(
+  'gmapkey',
+  'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'
+); ?>&callback=initMap&v=weekly"
       async
     ></script>
 
@@ -270,7 +303,7 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
               window.initMap = initMap;
               </script>
               <!-- Javascript für GMap-Anzeige ENDE -->
-  <?php  endif; ?>
+  <?php endif; ?>
 				
         
         <input type="hidden" name="task" value="" />

@@ -7,7 +7,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
-defined('JPATH_BASE') or die;
+defined('JPATH_BASE') or die();
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -17,106 +17,113 @@ jimport('joomla.form.formfield');
 /**
  * Supports a value from an external table
  */
-class FormFieldForeignKey extends FormField {
+class FormFieldForeignKey extends FormField
+{
+  /**
+   * The form field type.
+   *
+   * @var		string
+   * @since	1.6
+   */
+  protected $type = 'foreignkey';
+  private $input_type;
+  private $table;
+  private $key_field;
+  private $value_field;
 
-    /**
-     * The form field type.
-     *
-     * @var		string
-     * @since	1.6
-     */
-    protected $type = 'foreignkey';
-    private $input_type;
-    private $table;
-    private $key_field;
-    private $value_field;
+  /**
+   * Method to get the field input markup.
+   *
+   * @return	string	The field input markup.
+   * @since	1.6
+   */
+  protected function getInput()
+  {
+    //Assign field properties.
+    //Type of input the field shows
+    $this->input_type = $this->getAttribute('input_type');
 
-    /**
-     * Method to get the field input markup.
-     *
-     * @return	string	The field input markup.
-     * @since	1.6
-     */
-    protected function getInput() {
+    //Database Table
+    $this->table = $this->getAttribute('table');
 
-        //Assign field properties.
-        //Type of input the field shows
-        $this->input_type = $this->getAttribute('input_type');
+    //The field that the field will save on the database
+    $this->key_field = $this->getAttribute('key_field');
 
-        //Database Table
-        $this->table = $this->getAttribute('table');
+    //The column that the field shows in the input
+    $this->value_field = $this->getAttribute('value_field');
+    // Initialize variables.
+    $html = '';
 
-        //The field that the field will save on the database
-        $this->key_field = $this->getAttribute('key_field');
+    //Load all the field options
+    $db = Factory::getDbo();
+    $query = $db->getQuery(true);
 
-        //The column that the field shows in the input
-        $this->value_field = $this->getAttribute('value_field');
-        // Initialize variables.
-        $html = '';
+    $query->select([$this->key_field, $this->value_field])->from($this->table);
 
-        //Load all the field options
-        $db = Factory::getDbo();
-        $query = $db->getQuery(true);
+    $db->setQuery($query);
+    $results = $db->loadObjectList();
 
-        $query
-                ->select(
-                        array(
-                            $this->key_field,
-                            $this->value_field
-                        )
-                )
-                ->from($this->table);
+    $input_options = 'class="' . $this->getAttribute('class') . '"';
 
-        $db->setQuery($query);
-        $results = $db->loadObjectList();
+    //Depends of the type of input, the field will show a type or another
+    switch ($this->input_type) {
+      case 'list':
+      default:
+        $options = [];
 
-        $input_options = 'class="' . $this->getAttribute('class') . '"';
-
-        //Depends of the type of input, the field will show a type or another
-        switch ($this->input_type) {
-            case 'list':
-            default:
-                $options = array();
-
-                //Iterate through all the results
-                foreach ($results as $result) {
-                    $options[] = HTMLHelper::_('select.option', $result->{$this->key_field}, $result->{$this->value_field});
-                }
-
-                $value = $this->value;
-
-                //If the value is a string -> Only one result
-                if (is_string($value)) {
-                    $value = array($value);
-                } else if (is_object($value)) { //If the value is an object, let's get its properties.
-                    $value = get_object_vars($value);
-                }
-
-                //If the select is multiple
-                if ($this->multiple) {
-                    $input_options.= 'multiple="multiple"';
-                } else {
-                    array_unshift($options, HTMLHelper::_('select.option', '', ''));
-                }
-
-                $html = HTMLHelper::_('select.genericlist', $options, $this->name, $input_options, 'value', 'text', $value, $this->id);
-                break;
+        //Iterate through all the results
+        foreach ($results as $result) {
+          $options[] = HTMLHelper::_(
+            'select.option',
+            $result->{$this->key_field},
+            $result->{$this->value_field}
+          );
         }
-        return $html;
-    }
 
-    /**
-     * Wrapper method for getting attributes from the form element
-     * @param string $attr_name Attribute name
-     * @param mixed  $default Optional value to return if attribute not found
-     * @return mixed The value of the attribute if it exists, null otherwise
-     */
-    public function getAttribute($attr_name, $default = null) {
-        if (!empty($this->element[$attr_name])) {
-            return $this->element[$attr_name];
+        $value = $this->value;
+
+        //If the value is a string -> Only one result
+        if (is_string($value)) {
+          $value = [$value];
+        } elseif (is_object($value)) {
+          //If the value is an object, let's get its properties.
+          $value = get_object_vars($value);
+        }
+
+        //If the select is multiple
+        if ($this->multiple) {
+          $input_options .= 'multiple="multiple"';
         } else {
-            return $default;
+          array_unshift($options, HTMLHelper::_('select.option', '', ''));
         }
-    }
 
+        $html = HTMLHelper::_(
+          'select.genericlist',
+          $options,
+          $this->name,
+          $input_options,
+          'value',
+          'text',
+          $value,
+          $this->id
+        );
+        break;
+    }
+    return $html;
+  }
+
+  /**
+   * Wrapper method for getting attributes from the form element
+   * @param string $attr_name Attribute name
+   * @param mixed  $default Optional value to return if attribute not found
+   * @return mixed The value of the attribute if it exists, null otherwise
+   */
+  public function getAttribute($attr_name, $default = null)
+  {
+    if (!empty($this->element[$attr_name])) {
+      return $this->element[$attr_name];
+    } else {
+      return $default;
+    }
+  }
 }

@@ -8,7 +8,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -16,12 +16,10 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
-
 $params = ComponentHelper::getParams('com_einsatzkomponente');
 
 $wa = $this->document->getWebAssetManager();
-$wa->useScript('keepalive')
-	->useScript('form.validate');
+$wa->useScript('keepalive')->useScript('form.validate');
 
 //HTMLHelper::_('bootstrap.tooltip');
 //HTMLHelper::_('behavior.formvalidator');
@@ -29,21 +27,29 @@ $wa->useScript('keepalive')
 //HTMLHelper::_('formbehavior.chosen', 'select');
 //HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
-// Daten aus der Bilder-Galerie holen 
+// Daten aus der Bilder-Galerie holen
 if (!$this->item->id == 0) {
-	$db = Factory::getDBO();
-	$query = 'SELECT id, thumb, comment FROM #__eiko_images WHERE report_id="' . $this->item->id . '" AND state="1" ORDER BY ordering ASC';
-	$db->setQuery($query);
-	$rImages = $db->loadObjectList();
+  $db = Factory::getDBO();
+  $query =
+    'SELECT id, thumb, comment FROM #__eiko_images WHERE report_id="' .
+    $this->item->id .
+    '" AND state="1" ORDER BY ordering ASC';
+  $db->setQuery($query);
+  $rImages = $db->loadObjectList();
 }
-
 ?>
 <?php $gmap_latitude = $this->item->gmap_report_latitude; ?>
 <?php $gmap_longitude = $this->item->gmap_report_longitude; ?>
-<?php if ($gmap_latitude < '1') $gmap_latitude = $this->gmap_config->start_lat; ?>
-<?php if ($gmap_longitude < '1') $gmap_longitude = $this->gmap_config->start_lang; ?>
+<?php if ($gmap_latitude < '1') {
+  $gmap_latitude = $this->gmap_config->start_lat;
+} ?>
+<?php if ($gmap_longitude < '1') {
+  $gmap_longitude = $this->gmap_config->start_lang;
+} ?>
 
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzbericht-form" class="form-validate">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
+); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzbericht-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
 			<fieldset class="adminform">
@@ -54,7 +60,7 @@ if (!$this->item->id == 0) {
 						<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
 						<div class="controls"><?php echo $this->form->getInput('id'); ?></div>
 					</div>
-					<?php if (Factory::getUser()->authorise('core.admin', 'einsatzkomponente')) : ?>
+					<?php if (Factory::getUser()->authorise('core.admin', 'einsatzkomponente')): ?>
 						<div class="control-group">
 							<div class="control-label"><?php echo $this->form->getLabel('counter'); ?></div>
 							<div class="controls"><?php echo $this->form->getInput('counter'); ?></div>
@@ -109,13 +115,15 @@ if (!$this->item->id == 0) {
 						<div class="control-label"><?php echo $this->form->getLabel('auswahl_orga'); ?></div>
 						<div class="controls"><?php echo $this->form->getInput('auswahl_orga'); ?></div>
 					</div>
-					<?php
-					foreach ((array)$this->item->auswahl_orga as $value) :
-						if (!is_array($value)) :
-							echo '<input type="hidden" class="auswahl_orga" name="jform[auswahl_orgahidden][' . $value . ']" value="' . $value . '" />';
-						endif;
-					endforeach;
-					?>
+					<?php foreach ((array) $this->item->auswahl_orga as $value):
+       if (!is_array($value)):
+         echo '<input type="hidden" class="auswahl_orga" name="jform[auswahl_orgahidden][' .
+           $value .
+           ']" value="' .
+           $value .
+           '" />';
+       endif;
+     endforeach; ?>
 					<script type="text/javascript">
 						jQuery.noConflict();
 						jQuery('input:hidden.auswahl_orga').each(function() {
@@ -129,13 +137,15 @@ if (!$this->item->id == 0) {
 						<div class="control-label"><?php echo $this->form->getLabel('vehicles'); ?></div>
 						<div class="controls"><?php echo $this->form->getInput('vehicles'); ?></div>
 					</div>
-					<?php
-					foreach ((array)$this->item->vehicles as $value) :
-						if (!is_array($value)) :
-							echo '<input type="hidden" class="vehicles" name="jform[vehicleshidden][' . $value . ']" value="' . $value . '" />';
-						endif;
-					endforeach;
-					?>
+					<?php foreach ((array) $this->item->vehicles as $value):
+       if (!is_array($value)):
+         echo '<input type="hidden" class="vehicles" name="jform[vehicleshidden][' .
+           $value .
+           ']" value="' .
+           $value .
+           '" />';
+       endif;
+     endforeach; ?>
 					<script>
 						function displayVals() {
 							var multipleValues = jQuery("#jform_vehicles").val() || [];
@@ -146,9 +156,8 @@ if (!$this->item->id == 0) {
 					</script>
 
 					<?php
-					//echo '<input type="text" id="fahrzeug">  />';			
-
-					?>
+//echo '<input type="text" id="fahrzeug">  />';
+?>
 					<script type="text/javascript">
 						jQuery.noConflict();
 						jQuery('input:hidden.vehicles').each(function() {
@@ -162,7 +171,7 @@ if (!$this->item->id == 0) {
 					<div class="control-group hide_ausruestung">
 						<div class="control-label line"><?php echo $this->form->getLabel('ausruestung'); ?></div>
 						<div class="controls hideme"><?php echo $this->form->getInput('ausruestung'); ?></div>
-						<?php if (!$params->get('eiko', '0')) : ?>
+						<?php if (!$params->get('eiko', '0')): ?>
 							<style>
 								.hideme {
 									display: none;
@@ -174,7 +183,7 @@ if (!$this->item->id == 0) {
 							</style>
 						<?php endif; ?>
 					</div>
-					<?php if (!$params->get('display_detail_ausruestung', '1')) : ?>
+					<?php if (!$params->get('display_detail_ausruestung', '1')): ?>
 						<style>
 							.hide_ausruestung {
 								display: none;
@@ -182,13 +191,15 @@ if (!$this->item->id == 0) {
 						</style>
 					<?php endif; ?>
 
-					<?php
-					foreach ((array)$this->item->ausruestung as $value) :
-						if (!is_array($value)) :
-							echo '<input type="hidden" class="ausruestung" name="jform[ausruestunghidden][' . $value . ']" value="' . $value . '" />';
-						endif;
-					endforeach;
-					?>
+					<?php foreach ((array) $this->item->ausruestung as $value):
+       if (!is_array($value)):
+         echo '<input type="hidden" class="ausruestung" name="jform[ausruestunghidden][' .
+           $value .
+           ']" value="' .
+           $value .
+           '" />';
+       endif;
+     endforeach; ?>
 					<script type="text/javascript">
 						jQuery.noConflict();
 						jQuery('input:hidden.ausruestung').each(function() {
@@ -203,19 +214,15 @@ if (!$this->item->id == 0) {
 				</div>
 
 				<?php
-
-				//			$array = array();
-				//			foreach((array)$this->item->vehicles as $value): 
-				//				if(!is_array($value)):
-				//					$array[] = $value;
-				//				endif;
-				//			endforeach;
-				//			$vehicles = implode(',',$array);
-
-				//echo '<input id="fahrzeug"/>';
-
-
-				?>
+//			$array = array();
+//			foreach((array)$this->item->vehicles as $value):
+//				if(!is_array($value)):
+//					$array[] = $value;
+//				endif;
+//			endforeach;
+//			$vehicles = implode(',',$array);
+//echo '<input id="fahrzeug"/>';
+?>
 
 				<!--			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('department'); ?></div>
@@ -290,30 +297,36 @@ if (!$this->item->id == 0) {
 						<table>
 
 							<?php
-							$n = false;
-							for ($i = 0; $i < count($rImages); ++$i) {
-								if (@$rImages[$i]->comment) : $n = true;
-								endif;
-							}
-							for ($i = 0; $i < count($rImages); ++$i) {
-								$fileName = '../' . $rImages[$i]->thumb;
-							?>
+       $n = false;
+       for ($i = 0; $i < count($rImages); ++$i) {
+         if (@$rImages[$i]->comment):
+           $n = true;
+         endif;
+       }
+       for ($i = 0; $i < count($rImages); ++$i) {
+         $fileName = '../' . $rImages[$i]->thumb; ?>
 								<ul class="thumbnails inline">
 									<li class="span2">
 										<div class="thumbnail">
-											<a href="index.php?option=com_einsatzkomponente&task=einsatzbilderbearbeiten.edit&id=<?php echo $rImages[$i]->id; ?>" target="_self" class="thumbnail" title="<?php echo $rImages[$i]->comment; ?>">
+											<a href="index.php?option=com_einsatzkomponente&task=einsatzbilderbearbeiten.edit&id=<?php echo $rImages[
+             $i
+           ]->id; ?>" target="_self" class="thumbnail" title="<?php echo $rImages[$i]->comment; ?>">
 												<img data-src="holder.js/300x200" src="<?php echo $fileName; ?>" alt="" title="<?php echo $fileName; ?>" />
 											</a>
 											<h5 class="label label-info">Bild ID.Nr. <?php echo $rImages[$i]->id; ?></h5>
-											<?php if ($rImages[$i]->comment) : ?>
-												<br /><span title="<?php echo $rImages[$i]->comment; ?>" style="color:#ff0000;"><small>Bild-Info</small></span>
-											<?php else : ?>
-												<?php if ($n == true) : echo '<br/><small>keine Bild-Info</small>';
-												endif; ?>
+											<?php if ($rImages[$i]->comment): ?>
+												<br /><span title="<?php echo $rImages[$i]
+              ->comment; ?>" style="color:#ff0000;"><small>Bild-Info</small></span>
+											<?php else: ?>
+												<?php if ($n == true):
+              echo '<br/><small>keine Bild-Info</small>';
+            endif; ?>
 											<?php endif; ?>
 										</div>
 									</li>
-								<?php 	} ?>
+								<?php
+       }
+       ?>
 								</ul>
 						</table>
 					</div>
@@ -351,19 +364,26 @@ if (!$this->item->id == 0) {
 
 
 				<!--Slider für GMap-Ortsangabe-->
-				<?php if ($params->get('gmap_action', '0') == '1' or $params->get('gmap_action', '0') == '2') : ?>
+				<?php if ($params->get('gmap_action', '0') == '1' or $params->get('gmap_action', '0') == '2'): ?>
 					<div class="fltlft well" style="width:80%;">
 						<h1>Bitte markieren Sie den Einsatzort auf der Karte :</h1>
 						<div class="control-group" id="map_canvas" style="width:100%;max-width:600px;height:400px;border:1px solid;">Karte</div>
-						<?php if ($params->get('gmap_action', '0') == '2') : ?>
+						<?php if ($params->get('gmap_action', '0') == '2'): ?>
 							<?php OsmHelper::installOsmMap(); ?>
-							<?php OsmHelper::callOsmMap($this->gmap_config->gmap_zoom_level, $gmap_latitude, $gmap_longitude); ?>
+							<?php OsmHelper::callOsmMap(
+         $this->gmap_config->gmap_zoom_level,
+         $gmap_latitude,
+         $gmap_longitude
+       ); ?>
 							<?php OsmHelper::addMarkerOsmMap($gmap_latitude, $gmap_longitude); ?>
 						<?php endif; ?>
 
 						<div class="control-group">
 							<div class="control-label">Koordinaten (Lat./Lon.):</div>
-							<div class="controls"><?php echo $this->form->getInput('gmap_report_latitude'); ?><?php echo $this->form->getInput('gmap_report_longitude'); ?></div>
+							<div class="controls"><?php
+       echo $this->form->getInput('gmap_report_latitude');
+       echo $this->form->getInput('gmap_report_longitude');
+       ?></div>
 						</div>
 						<div class="control-group">
 							<div class="control-label"><?php echo $this->form->getLabel('gmap'); ?></div>
@@ -376,7 +396,7 @@ if (!$this->item->id == 0) {
 
 				<div class="fltlft well" style="width:80%;">
 
-					<?php if ($params->get('send_mail_auto', '0')) : ?>
+					<?php if ($params->get('send_mail_auto', '0')): ?>
 						<hr>
 						<div class="control-group">
 							<div class="control-label"><?php echo $this->form->getLabel('emailtext'); ?></div>
@@ -447,11 +467,14 @@ if (!$this->item->id == 0) {
 
 </form>
 
-<?php if ($params->get('gmap_action', '0') == '1') : ?>
+<?php if ($params->get('gmap_action', '0') == '1'): ?>
 
 	<!-- Javascript für GMap-Anzeige -->
 
-	<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get('gmapkey', 'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'); ?>&callback=initMap&v=weekly" async></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get(
+   'gmapkey',
+   'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'
+ ); ?>&callback=initMap&v=weekly" async></script>
 
 	<script type="text/javascript">
 		var map = null;
@@ -461,7 +484,8 @@ if (!$this->item->id == 0) {
 
 
 		function codeAddress2() {
-			var address = document.getElementById("jform_address").value + "<?php echo ' ' . $params->get('ort_geocode', ''); ?>";
+			var address = document.getElementById("jform_address").value + "<?php echo ' ' .
+     $params->get('ort_geocode', ''); ?>";
 			geocoder.geocode({
 				'address': address
 			}, function(results, status) {

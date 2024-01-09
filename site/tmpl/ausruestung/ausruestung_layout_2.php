@@ -7,17 +7,20 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 $canEdit = Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente.' . $this->item->id);
-if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)) {
-	$canEdit = Factory::getUser()->id == $this->item->created_by;
+if (
+  !$canEdit &&
+  Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)
+) {
+  $canEdit = Factory::getUser()->id == $this->item->created_by;
 }
 ?>
-<?php if ($this->item) : ?>
+<?php if ($this->item): ?>
 
     <div class="item_fields">
         <table class="table eiko_table_ausruestung">
@@ -31,7 +34,8 @@ if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomp
 </tr>
 <tr>
 			<th><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_AUSRUESTUNG_IMAGE'); ?></th>
-			<td><img src="<?php echo $this->item->image; ?>" alt="<?php echo $this->item->name; ?>" style="width: 100%;" </td>
+			<td><img src="<?php echo $this->item->image; ?>" alt="<?php echo $this->item
+  ->name; ?>" style="width: 100%;" </td>
 </tr>
 <tr>
 			<th><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_AUSRUESTUNG_BESCHREIBUNG'); ?></th>
@@ -44,19 +48,26 @@ if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomp
 <tr>
 			<th><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_AUSRUESTUNG_STATE'); ?></th>
 			<td>
-			<i class="icon-<?php echo ($this->item->state == 1) ? 'publish' : 'unpublish'; ?>"></i></td>
+			<i class="icon-<?php echo $this->item->state == 1 ? 'publish' : 'unpublish'; ?>"></i></td>
 </tr>
 
         </table>
     </div>
-    <?php if($canEdit && $this->item->checked_out == 0): ?>
-		<a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&id='.$this->item->id); ?>"><?php echo Text::_("Bearbeiten"); ?></a>
+    <?php if ($canEdit && $this->item->checked_out == 0): ?>
+		<a class="btn" href="<?php echo Route::_(
+    'index.php?option=com_einsatzkomponente&view=ausruestungform&id=' . $this->item->id
+  ); ?>"><?php echo Text::_('Bearbeiten'); ?></a>
 	<?php endif; ?>
-								<?php if(Factory::getUser()->authorise('core.delete','com_einsatzkomponente.ausruestung.'.$this->item->id)):?>
-									<a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestung.remove&id=' . $this->item->id, false, 2); ?>"><?php echo Text::_("Löschen"); ?></a>
+								<?php if (
+          Factory::getUser()->authorise(
+            'core.delete',
+            'com_einsatzkomponente.ausruestung.' . $this->item->id
+          )
+        ): ?>
+									<a class="btn" href="<?php echo Route::_(
+           'index.php?option=com_einsatzkomponente&task=ausruestung.remove&id=' . $this->item->id,
+           false,
+           2
+         ); ?>"><?php echo Text::_('Lï¿½schen'); ?></a>
 								<?php endif; ?>
-    <?php
-else:
-    echo Text::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');
-endif;
-?>
+    <?php else:echo Text::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');endif; ?>

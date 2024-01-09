@@ -2,7 +2,7 @@
 
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\View\Einsatzkomponente;
 
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 
@@ -17,16 +17,16 @@ use Joomla\CMS\MVC\View\HtmlView as BaseHtmlView;
 /**
  * Main "Hello World" Admin View
  */
-class HtmlView extends BaseHtmlView {
-    
-    /**
-     * Display the main "Hello World" view
-     *
-     * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
-     * @return  void
-     */
-    function display($tpl = null) {
-        parent::display($tpl);
-    }
-
+class HtmlView extends BaseHtmlView
+{
+  /**
+   * Display the main "Hello World" view
+   *
+   * @param   string  $tpl  The name of the template file to parse; automatically searches through the template paths.
+   * @return  void
+   */
+  function display($tpl = null)
+  {
+    parent::display($tpl);
+  }
 }

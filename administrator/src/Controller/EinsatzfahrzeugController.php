@@ -8,7 +8,7 @@
  */
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Controller;
 // No direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\MVC\Controller\FormController;
 use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
 
@@ -17,10 +17,13 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
  */
 class EinsatzfahrzeugController extends FormController
 {
-
-    function __construct($config=array(), MVCFactoryInterface $factory=null, $app=null, $input=null) {
-        $this->view_list = 'einsatzfahrzeuge';
-        parent::__construct($config, $factory, $app, $input);
-    }
-
+  function __construct(
+    $config = [],
+    MVCFactoryInterface $factory = null,
+    $app = null,
+    $input = null
+  ) {
+    $this->view_list = 'einsatzfahrzeuge';
+    parent::__construct($config, $factory, $app, $input);
+  }
 }

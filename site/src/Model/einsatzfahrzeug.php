@@ -8,7 +8,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // No direct access.
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\MVC\Model\ItemModel;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Object\CMSObject;
@@ -25,292 +25,287 @@ use Joomla\Utilities\ArrayHelper;
  */
 class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
 {
-	/**
-	 * Method to auto-populate the model state.
-	 *
-	 * Note. Calling getState in this method will result in recursion.
-	 *
-	 * @return void
-	 *
-	 * @since    1.6
-	 *
-	 */
-	protected function populateState()
-	{
-		$app = Factory::getApplication('com_einsatzkomponente');
+  /**
+   * Method to auto-populate the model state.
+   *
+   * Note. Calling getState in this method will result in recursion.
+   *
+   * @return void
+   *
+   * @since    1.6
+   *
+   */
+  protected function populateState()
+  {
+    $app = Factory::getApplication('com_einsatzkomponente');
 
-		// Load state from the request userState on edit or from the passed variable on default
-		if (Factory::getApplication()->input->get('layout') == 'edit')
-		{
-			$id = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
-		}
-		else
-		{
-			$id = Factory::getApplication()->input->get('id');
-			Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id', $id);
-		}
+    // Load state from the request userState on edit or from the passed variable on default
+    if (Factory::getApplication()->input->get('layout') == 'edit') {
+      $id = Factory::getApplication()->getUserState(
+        'com_einsatzkomponente.edit.einsatzfahrzeug.id'
+      );
+    } else {
+      $id = Factory::getApplication()->input->get('id');
+      Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id', $id);
+    }
 
-		$this->setState('einsatzfahrzeug.id', $id);
+    $this->setState('einsatzfahrzeug.id', $id);
 
-		// Load the parameters.
-		$params       = $app->getParams();
-		$params_array = $params->toArray();
+    // Load the parameters.
+    $params = $app->getParams();
+    $params_array = $params->toArray();
 
-		if (isset($params_array['item_id']))
-		{
-			$this->setState('einsatzfahrzeug.id', (int)$params_array['item_id']);
-		}
+    if (isset($params_array['item_id'])) {
+      $this->setState('einsatzfahrzeug.id', (int) $params_array['item_id']);
+    }
 
-		$this->setState('params', $params);
-	}
+    $this->setState('params', $params);
+  }
 
-	/**
-	 * Method to get an object.
-	 *
-	 * @param   integer  $id  The id of the object to get.
-	 *
-	 * @return  mixed    Object on success, false on failure.
-	 */
-	public function &getData($id = null)
-	{
-		if ($this->_item === null)
-		{
-			$this->_item = false;
+  /**
+   * Method to get an object.
+   *
+   * @param   integer  $id  The id of the object to get.
+   *
+   * @return  mixed    Object on success, false on failure.
+   */
+  public function &getData($id = null)
+  {
+    if ($this->_item === null) {
+      $this->_item = false;
 
-			if (empty($id))
-			{
-				$id = $this->getState('einsatzfahrzeug.id');
-			}
+      if (empty($id)) {
+        $id = $this->getState('einsatzfahrzeug.id');
+      }
 
-			// Get a level row instance.
-			$table = $this->getTable();
+      // Get a level row instance.
+      $table = $this->getTable();
 
-			// Attempt to load the row.
-			if ($table->load($id))
-			{
-				// Check published state.
-				if ($published = $this->getState('filter.published'))
-				{
-					if ($table->state != $published)
-					{
-						return $this->_item;
-					}
-				}
+      // Attempt to load the row.
+      if ($table->load($id)) {
+        // Check published state.
+        if ($published = $this->getState('filter.published')) {
+          if ($table->state != $published) {
+            return $this->_item;
+          }
+        }
 
-				// Convert the JTable to a clean JObject.
-				$properties  = $table->getProperties(1);
-				$this->_item = JArrayHelper::toObject($properties, 'JObject');
-			}
-		}
+        // Convert the JTable to a clean JObject.
+        $properties = $table->getProperties(1);
+        $this->_item = JArrayHelper::toObject($properties, 'JObject');
+      }
+    }
 
-			if ($this->_item->state == '2'): $this->_item->name = $this->_item->name.' (a.D.)';endif;
+    if ($this->_item->state == '2'):
+      $this->_item->name = $this->_item->name . ' (a.D.)';
+    endif;
 
+    if (isset($this->_item->department) && $this->_item->department != '') {
+      if (is_object($this->_item->department)) {
+        $this->_item->department = JArrayHelper::fromObject($this->_item->department);
+      }
+      $values = is_array($this->_item->department)
+        ? $this->_item->department
+        : explode(',', $this->_item->department);
 
-			if (isset($this->_item->department) && $this->_item->department != '') {
-				if(is_object($this->_item->department)){
-					$this->_item->department = JArrayHelper::fromObject($this->_item->department);
-				}
-				$values = (is_array($this->_item->department)) ? $this->_item->department : explode(',',$this->_item->department);
+      $textValue = [];
+      foreach ($values as $value) {
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        $query
+          ->select('name')
+          ->from('#__eiko_organisationen')
+          ->where('id = ' . $db->quote($db->escape($value)));
+        $db->setQuery($query);
+        $results = $db->loadObject();
+        if ($results) {
+          $textValue[] = $results->name;
+        }
+      }
 
-				$textValue = array();
-				foreach ($values as $value){
-					$db = Factory::getDbo();
-					$query = $db->getQuery(true);
-					$query
-							->select('name')
-							->from('#__eiko_organisationen')
-							->where('id = ' . $db->quote($db->escape($value)));
-					$db->setQuery($query);
-					$results = $db->loadObject();
-					if ($results) {
-						$textValue[] = $results->name;
-					}
-				}
+      $this->_item->department = !empty($textValue)
+        ? implode(', ', $textValue)
+        : $this->_item->department;
+    }
 
-			$this->_item->department = !empty($textValue) ? implode(', ', $textValue) : $this->_item->department;
+    if (isset($this->_item->ausruestung) && $this->_item->ausruestung != '') {
+      if (is_object($this->_item->ausruestung)) {
+        $this->_item->ausruestung = JArrayHelper::fromObject($this->_item->ausruestung);
+      }
+      $values = is_array($this->_item->ausruestung)
+        ? $this->_item->ausruestung
+        : explode(',', $this->_item->ausruestung);
 
-			}
+      $textValue = [];
+      foreach ($values as $value) {
+        $db = Factory::getDbo();
+        $query = $db->getQuery(true);
+        $query
+          ->select('name')
+          ->from('#__eiko_ausruestung')
+          ->where('id = ' . $db->quote($db->escape($value)));
+        $db->setQuery($query);
+        $results = $db->loadObject();
+        if ($results) {
+          $textValue[] = $results->name;
+        }
+      }
 
-			if (isset($this->_item->ausruestung) && $this->_item->ausruestung != '') {
-				if(is_object($this->_item->ausruestung)){
-					$this->_item->ausruestung = JArrayHelper::fromObject($this->_item->ausruestung);
-				}
-				$values = (is_array($this->_item->ausruestung)) ? $this->_item->ausruestung : explode(',',$this->_item->ausruestung);
+      $this->_item->ausruestung = !empty($textValue)
+        ? implode(', ', $textValue)
+        : $this->_item->ausruestung;
+    }
+    if (isset($this->_item->created_by)) {
+      $this->_item->created_by_name = Factory::getUser($this->_item->created_by)->name;
+    }
 
-				$textValue = array();
-				foreach ($values as $value){
-					$db = Factory::getDbo();
-					$query = $db->getQuery(true);
-					$query
-							->select('name')
-							->from('#__eiko_ausruestung')
-							->where('id = ' . $db->quote($db->escape($value)));
-					$db->setQuery($query);
-					$results = $db->loadObject();
-					if ($results) {
-						$textValue[] = $results->name;
-					}
-				}
+    return $this->_item;
+  }
 
-			$this->_item->ausruestung = !empty($textValue) ? implode(', ', $textValue) : $this->_item->ausruestung;
+  /**
+   * Get an instance of JTable class
+   *
+   * @param   string  $type    Name of the JTable class to get an instance of.
+   * @param   string  $prefix  Prefix for the table class name. Optional.
+   * @param   array   $config  Array of configuration values for the JTable object. Optional.
+   *
+   * @return  JTable|bool JTable if success, false on failure.
+   */
+  public function getTable(
+    $type = 'Einsatzfahrzeug',
+    $prefix = 'EinsatzkomponenteTable',
+    $config = []
+  ) {
+    $this->addTablePath(JPATH_ADMINISTRATOR . '/components/com_einsatzkomponente/tables');
 
-			}if (isset($this->_item->created_by) )
-		{
-			$this->_item->created_by_name = Factory::getUser($this->_item->created_by)->name;
-		}
+    return Table::getInstance($type, $prefix, $config);
+  }
 
-		return $this->_item;
-	}
+  /**
+   * Get the id of an item by alias
+   *
+   * @param   string  $alias  Item alias
+   *
+   * @return  mixed
+   */
+  public function getItemIdByAlias($alias)
+  {
+    $table = $this->getTable();
 
-	/**
-	 * Get an instance of JTable class
-	 *
-	 * @param   string  $type    Name of the JTable class to get an instance of.
-	 * @param   string  $prefix  Prefix for the table class name. Optional.
-	 * @param   array   $config  Array of configuration values for the JTable object. Optional.
-	 *
-	 * @return  JTable|bool JTable if success, false on failure.
-	 */
-	public function getTable($type = 'Einsatzfahrzeug', $prefix = 'EinsatzkomponenteTable', $config = array())
-	{
-		$this->addTablePath(JPATH_ADMINISTRATOR . '/components/com_einsatzkomponente/tables');
+    $table->load(['alias' => $alias]);
 
-		return Table::getInstance($type, $prefix, $config);
-	}
+    return $table->id;
+  }
 
-	/**
-	 * Get the id of an item by alias
-	 *
-	 * @param   string  $alias  Item alias
-	 *
-	 * @return  mixed
-	 */
-	public function getItemIdByAlias($alias)
-	{
-		$table = $this->getTable();
+  /**
+   * Method to check in an item.
+   *
+   * @param   integer  $id  The id of the row to check out.
+   *
+   * @return  boolean True on success, false on failure.
+   *
+   * @since    1.6
+   */
+  public function checkin($id = null)
+  {
+    // Get the id.
+    $id = !empty($id) ? $id : (int) $this->getState('einsatzfahrzeug.id');
 
-		$table->load(array('alias' => $alias));
+    if ($id) {
+      // Initialise the table
+      $table = $this->getTable();
 
-		return $table->id;
-	}
+      // Attempt to check the row in.
+      if (method_exists($table, 'checkin')) {
+        if (!$table->checkin($id)) {
+          return false;
+        }
+      }
+    }
 
-	/**
-	 * Method to check in an item.
-	 *
-	 * @param   integer  $id  The id of the row to check out.
-	 *
-	 * @return  boolean True on success, false on failure.
-	 *
-	 * @since    1.6
-	 */
-	public function checkin($id = null)
-	{
-		// Get the id.
-		$id = (!empty($id)) ? $id : (int) $this->getState('einsatzfahrzeug.id');
+    return true;
+  }
 
-		if ($id)
-		{
-			// Initialise the table
-			$table = $this->getTable();
+  /**
+   * Method to check out an item for editing.
+   *
+   * @param   integer  $id  The id of the row to check out.
+   *
+   * @return  boolean True on success, false on failure.
+   *
+   * @since    1.6
+   */
+  public function checkout($id = null)
+  {
+    // Get the user id.
+    $id = !empty($id) ? $id : (int) $this->getState('einsatzfahrzeug.id');
 
-			// Attempt to check the row in.
-			if (method_exists($table, 'checkin'))
-			{
-				if (!$table->checkin($id))
-				{
-					return false;
-				}
-			}
-		}
+    if ($id) {
+      // Initialise the table
+      $table = $this->getTable();
 
-		return true;
-	}
+      // Get the current user object.
+      $user = Factory::getUser();
 
-	/**
-	 * Method to check out an item for editing.
-	 *
-	 * @param   integer  $id  The id of the row to check out.
-	 *
-	 * @return  boolean True on success, false on failure.
-	 *
-	 * @since    1.6
-	 */
-	public function checkout($id = null)
-	{
-		// Get the user id.
-		$id = (!empty($id)) ? $id : (int) $this->getState('einsatzfahrzeug.id');
+      // Attempt to check the row out.
+      if (method_exists($table, 'checkout')) {
+        if (!$table->checkout($user->get('id'), $id)) {
+          return false;
+        }
+      }
+    }
 
-		if ($id)
-		{
-			// Initialise the table
-			$table = $this->getTable();
+    return true;
+  }
 
-			// Get the current user object.
-			$user = Factory::getUser();
+  /**
+   * Get the name of a category by id
+   *
+   * @param   int  $id  Category id
+   *
+   * @return  Object|null	Object if success, null in case of failure
+   */
+  public function getCategoryName($id)
+  {
+    $db = Factory::getDbo();
+    $query = $db->getQuery(true);
+    $query
+      ->select('title')
+      ->from('#__categories')
+      ->where('id = ' . $id);
+    $db->setQuery($query);
 
-			// Attempt to check the row out.
-			if (method_exists($table, 'checkout'))
-			{
-				if (!$table->checkout($user->get('id'), $id))
-				{
-					return false;
-				}
-			}
-		}
+    return $db->loadObject();
+  }
 
-		return true;
-	}
+  /**
+   * Publish the element
+   *
+   * @param   int  $id     Item id
+   * @param   int  $state  Publish state
+   *
+   * @return  boolean
+   */
+  public function publish($id, $state)
+  {
+    $table = $this->getTable();
+    $table->load($id);
+    $table->state = $state;
 
-	/**
-	 * Get the name of a category by id
-	 *
-	 * @param   int  $id  Category id
-	 *
-	 * @return  Object|null	Object if success, null in case of failure
-	 */
-	public function getCategoryName($id)
-	{
-		$db    = Factory::getDbo();
-		$query = $db->getQuery(true);
-		$query
-			->select('title')
-			->from('#__categories')
-			->where('id = ' . $id);
-		$db->setQuery($query);
+    return $table->store();
+  }
 
-		return $db->loadObject();
-	}
+  /**
+   * Method to delete an item
+   *
+   * @param   int  $id  Element id
+   *
+   * @return  bool
+   */
+  public function delete($id)
+  {
+    $table = $this->getTable();
 
-	/**
-	 * Publish the element
-	 *
-	 * @param   int  $id     Item id
-	 * @param   int  $state  Publish state
-	 *
-	 * @return  boolean
-	 */
-	public function publish($id, $state)
-	{
-		$table = $this->getTable();
-		$table->load($id);
-		$table->state = $state;
-
-		return $table->store();
-	}
-
-	/**
-	 * Method to delete an item
-	 *
-	 * @param   int  $id  Element id
-	 *
-	 * @return  bool
-	 */
-	public function delete($id)
-	{
-		$table = $this->getTable();
-
-		return $table->delete($id);
-	}
-
-	
+    return $table->delete($id);
+  }
 }

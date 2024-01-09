@@ -7,7 +7,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\HTML\HTMLHelper;
@@ -19,30 +19,29 @@ $lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
 $params = ComponentHelper::getParams('com_einsatzkomponente');
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.keepalive');
 
-$version = new Version;
-if ($version->isCompatible('3.0')) :
-JHtml::_('formbehavior.chosen', 'select');
+$version = new Version();
+if ($version->isCompatible('3.0')):
+  JHtml::_('formbehavior.chosen', 'select');
 endif;
-
 
 // Import CSS
 $document = Factory::getDocument();
 $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
-
-
- 
-
 ?>
 
 <?php $gmap_latitude = $this->item->gmap_latitude; ?>
 <?php $gmap_longitude = $this->item->gmap_longitude; ?>
-<?php if ($gmap_latitude < '1') $gmap_latitude = $this->gmap_config->start_lat; ?>
-<?php if ($gmap_longitude < '1') $gmap_longitude = $this->gmap_config->start_lang; ?>
+<?php if ($gmap_latitude < '1') {
+  $gmap_latitude = $this->gmap_config->start_lat;
+} ?>
+<?php if ($gmap_longitude < '1') {
+  $gmap_longitude = $this->gmap_config->start_lang;
+} ?>
 
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
@@ -51,11 +50,13 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 			Joomla.submitform(task, document.getElementById('organisation-form'));
 		}
 		else {
-			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
 		}
 	}
 </script>
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
+); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -72,38 +73,50 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 				<div class="controls"><?php echo $this->form->getInput('gmap_icon_orga'); ?></div>
             </div>   
 <?php // zugeordnete Fahrzeuge aufrufen ----------------------------------
-if ($this->item->name)
-{
-?>
+
+if ($this->item->name) { ?>
             <div class="control-group">  
             
-<?php 
-	echo '<div class="control-label">';echo Text::_('Zugeordnete Fahrzeuge :');echo '</div>';
-	echo '<div class="controls"><ul class="adminformlist">';
-$database			= Factory::getDBO();
-$query = 'SELECT * FROM #__eiko_fahrzeuge WHERE department = "'.$this->item->id.'" ORDER BY ordering,state ASC ' ;
-$database->setQuery( $query );
-$total = $database->loadObjectList();	
-		if ($total) {
-		foreach($total as $totale): 
-		echo '<li>';
-		echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id='.$totale->id.'); ">';
-		echo $totale->name;
-		if ($totale->detail2): echo ' ( '.$totale->detail2.' )'; endif;
-		if ($totale->detail1): echo ' '.$totale->detail1; endif;
-		echo '</a>';
-                if ($totale->state == 2): echo ' (Fahrzeug Au&szlig;er Dienst) '; endif;
-                if ($totale->state == 0): echo ' (Fahrzeug deaktiviert!) '; endif;
-                echo '</li>';
-		endforeach; 
-		}
-		else
-		{
-		echo '<span class="label label-important">Es wurden keine Fahrzeuge zugeordnet !!</span>';
-		}
-echo '</ul></div></div>';
+<?php
+echo '<div class="control-label">';
+echo Text::_('Zugeordnete Fahrzeuge :');
+echo '</div>';
+echo '<div class="controls"><ul class="adminformlist">';
+$database = Factory::getDBO();
+$query =
+  'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' .
+  $this->item->id .
+  '" ORDER BY ordering,state ASC ';
+$database->setQuery($query);
+$total = $database->loadObjectList();
+if ($total) {
+  foreach ($total as $totale):
+    echo '<li>';
+    echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' .
+      $totale->id .
+      '); ">';
+    echo $totale->name;
+    if ($totale->detail2):
+      echo ' ( ' . $totale->detail2 . ' )';
+    endif;
+    if ($totale->detail1):
+      echo ' ' . $totale->detail1;
+    endif;
+    echo '</a>';
+    if ($totale->state == 2):
+      echo ' (Fahrzeug Au&szlig;er Dienst) ';
+    endif;
+    if ($totale->state == 0):
+      echo ' (Fahrzeug deaktiviert!) ';
+    endif;
+    echo '</li>';
+  endforeach;
+} else {
+  echo '<span class="label label-important">Es wurden keine Fahrzeuge zugeordnet !!</span>';
 }
-else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
+echo '</ul></div></div>';
+} else {}
+// zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 ?>
 			
             
@@ -157,9 +170,11 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
 			</div>
 -->            
-   <?php if ($params->get('gmap_action','0')) : ?>
+   <?php if ($params->get('gmap_action', '0')): ?>
 	           <!--Slider für Ortsangaben-->
-            <?php $gmap_config = $this->gmap_config;  // GMap-Config Daten laden?>
+            <?php $gmap_config = $this->gmap_config;
+     // GMap-Config Daten laden
+     ?>
 			<div class="fltlft" style="width:80%;">
             <div class="control-group" id="map_canvas" style="width:100%;max-width:600px;height:400px;border:1px solid;">Karte</div>
 			<div class="control-group">
@@ -167,7 +182,10 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
             <input class="btn btn-danger" type="button" value="Geocode" onclick="codeAddress()"></div>
 			</div>		
 			<div class="control-group">
-            <div class="control-label">Koordinaten (Lat./Lon.):</div><div class="controls"><?php echo $this->form->getInput('gmap_latitude'); ?><?php echo $this->form->getInput('gmap_longitude'); ?></div>
+            <div class="control-label">Koordinaten (Lat./Lon.):</div><div class="controls"><?php
+            echo $this->form->getInput('gmap_latitude');
+            echo $this->form->getInput('gmap_longitude');
+            ?></div>
 			</div>
             
 			<div class="control-group">
@@ -179,8 +197,12 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 			
               <!-- Javascript für GMap-Anzeige -->
 			  
-<?php if(isset($_SERVER['HTTPS'])) : $ssl='https://'; else:	$ssl='http://'; endif;?>
-<script type="text/javascript" src="<?php echo $ssl;?>maps.google.com/maps/api/js?v=3"></script> 
+<?php if (isset($_SERVER['HTTPS'])):
+  $ssl = 'https://';
+else:
+  $ssl = 'http://';
+endif; ?>
+<script type="text/javascript" src="<?php echo $ssl; ?>maps.google.com/maps/api/js?v=3"></script> 
 
               <script type="text/javascript"> 
                     var map = null;
@@ -275,7 +297,7 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
               google.maps.event.addDomListener(window, 'load', initialize);
               </script>
               <!-- Javascript für GMap-Anzeige ENDE -->
-  <?php  endif; ?>
+  <?php endif; ?>
 				
         
         
@@ -288,7 +310,9 @@ else {}  // zugeordnete Fahrzeuge aufrufen   ENDE --------------------------
 					</button>
 				<?php endif; ?>
 				<a class="btn"
-				   href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisationform.cancel'); ?>"
+				   href="<?php echo Route::_(
+         'index.php?option=com_einsatzkomponente&task=organisationform.cancel'
+       ); ?>"
 				   title="<?php echo Text::_('JCANCEL'); ?>">
 					<?php echo Text::_('JCANCEL'); ?>
 				</a>

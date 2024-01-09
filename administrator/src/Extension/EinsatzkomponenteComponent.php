@@ -7,9 +7,9 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Extension;
- 
+
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -21,33 +21,29 @@ use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 //use EikoNamespace\Component\Einsatzkomponente\Administrator\Service\HTML\AdministratorService;
 use Psr\Container\ContainerInterface;
 
-class EinsatzkomponenteComponent extends MVCComponent implements BootableExtensionInterface, CategoryServiceInterface
-{ 
-	use CategoryServiceTrait;
-	use HTMLRegistryAwareTrait;
+class EinsatzkomponenteComponent extends MVCComponent implements
+  BootableExtensionInterface,
+  CategoryServiceInterface
+{
+  use CategoryServiceTrait;
+  use HTMLRegistryAwareTrait;
 
-	/**
-	 * Booting the extension. This is the function to set up the environment of the extension like
-	 * registering new class loaders, etc.
-	 *
-	 * If required, some initial set up can be done from services of the container, eg.
-	 * registering HTML services.
-	 *
-	 * @param   ContainerInterface  $container  The container
-	 *
-	 * @return  void
-	 *
-	 * @since   __BUMP_VERSION__
-	 */
+  /**
+   * Booting the extension. This is the function to set up the environment of the extension like
+   * registering new class loaders, etc.
+   *
+   * If required, some initial set up can be done from services of the container, eg.
+   * registering HTML services.
+   *
+   * @param   ContainerInterface  $container  The container
+   *
+   * @return  void
+   *
+   * @since   __BUMP_VERSION__
+   */
 
-	public function boot(ContainerInterface $container)
-	{
-		//$this->getRegistry()->register('einsatzkomponenteAdministrator', new AdministratorService);
-
-	}
-		
-	}
-
-	
-	
-
+  public function boot(ContainerInterface $container)
+  {
+    //$this->getRegistry()->register('einsatzkomponenteAdministrator', new AdministratorService);
+  }
+}

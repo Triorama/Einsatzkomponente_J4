@@ -8,7 +8,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\Dispatcher\ComponentDispatcherFactoryInterface;
 use Joomla\CMS\Extension\ComponentInterface;
@@ -28,31 +28,35 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
  * @since  __BUMP_VERSION__
  */
 
-return new class implements ServiceProviderInterface
-{
-	/**
-	 * Registers the service provider with a DI container.
-	 *
-	 * @param   Container  $container  The DI container.
-	 *
-	 * @return  void
-	 * 
-	 * @since   __BUMP_VERSION__
-	 */
-	public function register(Container $container)
-	{
-		$container->registerServiceProvider(new CategoryFactory('\\EikoNamespace\\Component\\Einsatzkomponente'));
-		$container->registerServiceProvider(new MVCFactory('\\EikoNamespace\\Component\\Einsatzkomponente'));
-		$container->registerServiceProvider(new ComponentDispatcherFactory('\\EikoNamespace\\Component\\Einsatzkomponente'));
+return new class implements ServiceProviderInterface {
+  /**
+   * Registers the service provider with a DI container.
+   *
+   * @param   Container  $container  The DI container.
+   *
+   * @return  void
+   *
+   * @since   __BUMP_VERSION__
+   */
+  public function register(Container $container)
+  {
+    $container->registerServiceProvider(
+      new CategoryFactory('\\EikoNamespace\\Component\\Einsatzkomponente')
+    );
+    $container->registerServiceProvider(
+      new MVCFactory('\\EikoNamespace\\Component\\Einsatzkomponente')
+    );
+    $container->registerServiceProvider(
+      new ComponentDispatcherFactory('\\EikoNamespace\\Component\\Einsatzkomponente')
+    );
 
-		$container->set(
-			ComponentInterface::class,
-			function (Container $container) {
-				$component = new EinsatzkomponenteComponent($container->get(ComponentDispatcherFactoryInterface::class));
-                $component->setMVCFactory($container->get(MVCFactoryInterface::class));
+    $container->set(ComponentInterface::class, function (Container $container) {
+      $component = new EinsatzkomponenteComponent(
+        $container->get(ComponentDispatcherFactoryInterface::class)
+      );
+      $component->setMVCFactory($container->get(MVCFactoryInterface::class));
 
-				return $component;
-			}
-		);
-	}
-}; 
+      return $component;
+    });
+  }
+};

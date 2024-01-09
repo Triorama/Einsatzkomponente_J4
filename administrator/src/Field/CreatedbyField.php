@@ -10,7 +10,7 @@
 
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
 
-defined('JPATH_BASE') or die;
+defined('JPATH_BASE') or die();
 
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
@@ -21,35 +21,34 @@ use Joomla\CMS\Form\FormHelper;
  */
 class CreatedbyField extends FormField
 {
-	/**
-	 * The form field type.
-	 *
-	 * @var		string
-	 * @since	1.6
-	 */
-	protected $type = 'Createdby';
-	/**
-	 * Method to get the field input markup.
-	 *
-	 * @return	string	The field input markup.
-	 * @since	1.6
-	 */
-	protected function getInput()
-	{
-		// Initialize variables.
-		$html = array();
+  /**
+   * The form field type.
+   *
+   * @var		string
+   * @since	1.6
+   */
+  protected $type = 'Createdby';
+  /**
+   * Method to get the field input markup.
+   *
+   * @return	string	The field input markup.
+   * @since	1.6
+   */
+  protected function getInput()
+  {
+    // Initialize variables.
+    $html = [];
 
+    //Load user
+    $user_id = $this->value;
+    if ($user_id) {
+      $user = Factory::getUser($user_id);
+    } else {
+      $user = Factory::getUser();
+      $html[] = '<input type="hidden" name="' . $this->name . '" value="' . $user->id . '" />';
+    }
+    $html[] = '<div>' . $user->name . ' (' . $user->username . ')</div>';
 
-		//Load user
-		$user_id = $this->value;
-		if ($user_id) {
-			$user = Factory::getUser($user_id);
-		} else {
-			$user = Factory::getUser();
-			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $user->id . '" />';
-		}
-		$html[] = "<div>" . $user->name . " (" . $user->username . ")</div>";
-
-		return implode($html);
-	}
+    return implode($html);
+  }
 }

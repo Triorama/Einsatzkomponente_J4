@@ -8,36 +8,42 @@
  */
 
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Version;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
 
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.multiselect');
 
-$version = new Version;
-if ($version->isCompatible('3.0')) :
-JHtml::_('formbehavior.chosen', 'select');
-JHtml::_('bootstrap.tooltip');
+$version = new Version();
+if ($version->isCompatible('3.0')):
+  JHtml::_('formbehavior.chosen', 'select');
+  JHtml::_('bootstrap.tooltip');
 endif;
 
 // Import CSS
 $document = Factory::getDocument();
 $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
-$user	= Factory::getUser();
-$userId	= $user->get('id');
-$listOrder	= $this->state->get('list.ordering');
-$listDirn	= $this->state->get('list.direction');
-$canOrder	= $user->authorise('core.edit.state', 'com_einsatzkomponente');
-$saveOrder	= $listOrder == 'a.ordering';
-if ($saveOrder)
-{
-	$saveOrderingUrl = 'index.php?option=com_einsatzkomponente&task=gmapkonfigurationen.saveOrderAjax&tmpl=component';
-	HTMLHelper::_('sortablelist.sortable', 'gmapkonfigurationList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
+$user = Factory::getUser();
+$userId = $user->get('id');
+$listOrder = $this->state->get('list.ordering');
+$listDirn = $this->state->get('list.direction');
+$canOrder = $user->authorise('core.edit.state', 'com_einsatzkomponente');
+$saveOrder = $listOrder == 'a.ordering';
+if ($saveOrder) {
+  $saveOrderingUrl =
+    'index.php?option=com_einsatzkomponente&task=gmapkonfigurationen.saveOrderAjax&tmpl=component';
+  HTMLHelper::_(
+    'sortablelist.sortable',
+    'gmapkonfigurationList',
+    'adminForm',
+    strtolower($listDirn),
+    $saveOrderingUrl
+  );
 }
 $sortFields = $this->getSortFields();
 ?>
@@ -55,22 +61,23 @@ $sortFields = $this->getSortFields();
 	}
 </script>
 
-<?php
-//Joomla Component Creator code to allow adding non select list filters
-if (!empty($this->extra_sidebar)) {
-    $this->sidebar .= $this->extra_sidebar;
-}
-?>
+<?php //Joomla Component Creator code to allow adding non select list filters
 
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=gmapkonfigurationen'); ?>" method="post" name="adminForm" id="adminForm">
-<?php if(!empty($this->sidebar)): ?>
+if (!empty($this->extra_sidebar)) {
+  $this->sidebar .= $this->extra_sidebar;
+} ?>
+
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&view=gmapkonfigurationen'
+); ?>" method="post" name="adminForm" id="adminForm">
+<?php if (!empty($this->sidebar)): ?>
 	<div id="j-sidebar-container" class="span2">
 		<?php echo $this->sidebar; ?>
 	</div>
 	<div id="j-main-container" class="span10">
-<?php else : ?>
+<?php else: ?>
 	<div id="j-main-container">
-<?php endif;?>
+<?php endif; ?>
     
 		<div class="clearfix"> </div>
 		<table class="table table-striped" id="gmapkonfigurationList">
@@ -78,11 +85,22 @@ if (!empty($this->extra_sidebar)) {
 				<tr>
                 <?php if (isset($this->items[0]->ordering)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
+						<?php echo HTMLHelper::_(
+        'grid.sort',
+        '<i class="icon-menu-2"></i>',
+        'a.ordering',
+        $listDirn,
+        $listOrder,
+        null,
+        'asc',
+        'JGRID_HEADING_ORDERING'
+      ); ?>
 					</th>
                 <?php endif; ?>
 					<th width="1%" class="hidden-phone">
-						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
+						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_(
+        'JGLOBAL_CHECK_ALL'
+      ); ?>" onclick="Joomla.checkAll(this)" />
 					</th>
                 <?php if (isset($this->items[0]->state)): ?>
 					<th width="1%" class="nowrap center">
@@ -104,48 +122,51 @@ if (!empty($this->extra_sidebar)) {
 				</tr>
 			</thead>
 			<tfoot>
-                <?php 
-                if(isset($this->items[0])){
-                    $colspan = count(get_object_vars($this->items[0]));
-                }
-                else{
-                    $colspan = 10;
-                }
-            ?>
+                <?php if (isset($this->items[0])) {
+                  $colspan = count(get_object_vars($this->items[0]));
+                } else {
+                  $colspan = 10;
+                } ?>
 			<tr>
-				<td colspan="<?php echo $colspan ?>">
+				<td colspan="<?php echo $colspan; ?>">
 					<?php echo $this->pagination->getListFooter(); ?>
 				</td>
 			</tr>
 			</tfoot>
 			<tbody>
-			<?php foreach ($this->items as $i => $item) :
-				$ordering   = ($listOrder == 'a.ordering');
-                $canCreate	= $user->authorise('core.create',		'com_einsatzkomponente');
-                $canEdit	= $user->authorise('core.edit',			'com_einsatzkomponente');
-                $canCheckin	= $user->authorise('core.manage',		'com_einsatzkomponente');
-                $canChange	= $user->authorise('core.edit.state',	'com_einsatzkomponente');
-				?>
+			<?php foreach ($this->items as $i => $item):
+
+     $ordering = $listOrder == 'a.ordering';
+     $canCreate = $user->authorise('core.create', 'com_einsatzkomponente');
+     $canEdit = $user->authorise('core.edit', 'com_einsatzkomponente');
+     $canCheckin = $user->authorise('core.manage', 'com_einsatzkomponente');
+     $canChange = $user->authorise('core.edit.state', 'com_einsatzkomponente');
+     ?>
 				<tr class="row<?php echo $i % 2; ?>">
                     
                 <?php if (isset($this->items[0]->ordering)): ?>
 					<td class="order nowrap center hidden-phone">
-					<?php if ($canChange) :
-						$disableClassName = '';
-						$disabledLabel	  = '';
-						if (!$saveOrder) :
-							$disabledLabel    = Text::_('JORDERINGDISABLED');
-							$disableClassName = 'inactive tip-top';
-						endif; ?>
-						<span class="sortable-handler hasTooltip <?php echo $disableClassName?>" title="<?php echo $disabledLabel?>">
+					<?php if ($canChange):
+
+       $disableClassName = '';
+       $disabledLabel = '';
+       if (!$saveOrder):
+         $disabledLabel = Text::_('JORDERINGDISABLED');
+         $disableClassName = 'inactive tip-top';
+       endif;
+       ?>
+						<span class="sortable-handler hasTooltip <?php echo $disableClassName; ?>" title="<?php echo $disabledLabel; ?>">
 							<i class="icon-menu"></i>
 						</span>
-						<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering;?>" class="width-20 text-area-order " />
-					<?php else : ?>
+						<input type="text" style="display:none" name="order[]" size="5" value="<?php echo $item->ordering; ?>" class="width-20 text-area-order " />
+					<?php
+     else:
+        ?>
 						<span class="sortable-handler inactive" >
 							<i class="icon-menu"></i>
 						</span>
-					<?php endif; ?>
+					<?php
+     endif; ?>
 					</td>
                 <?php endif; ?>
 					<td class="center hidden-phone">
@@ -153,12 +174,21 @@ if (!empty($this->extra_sidebar)) {
 					</td>
                 <?php if (isset($this->items[0]->state)): ?>
 					<td class="center">
-						<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'gmapkonfigurationen.', $canChange, 'cb'); ?>
+						<?php echo HTMLHelper::_(
+        'jgrid.published',
+        $item->state,
+        $i,
+        'gmapkonfigurationen.',
+        $canChange,
+        'cb'
+      ); ?>
 					</td>
                 <?php endif; ?>
                 
 				<td>
-			    <a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=gmapkonfiguration.edit&id='.(int) $item->id); ?>">
+			    <a href="<?php echo Route::_(
+         'index.php?option=com_einsatzkomponente&task=gmapkonfiguration.edit&id=' . (int) $item->id
+       ); ?>">
                 <?php echo 'GMap-Konfiguration'; ?>
                 </a>
 				</td>
@@ -169,7 +199,8 @@ if (!empty($this->extra_sidebar)) {
 					</td>
                 <?php endif; ?>
 				</tr>
-				<?php endforeach; ?>
+				<?php
+   endforeach; ?>
 			</tbody>
 		</table>
 

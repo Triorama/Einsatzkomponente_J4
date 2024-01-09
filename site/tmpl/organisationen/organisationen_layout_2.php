@@ -7,10 +7,12 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Router\Route;
-require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
+require_once JPATH_SITE .
+  '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php';
 
+// Helper-class laden
 ?>
 
 
@@ -25,17 +27,17 @@ require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers
     
  <tbody>
 
-<?php foreach ($this->items as $item) :?>
-<?php if ($item->gmap_latitude >= '3') :?>
-	<?php
-	$orga_fahrzeuge = EinsatzkomponenteHelper::getOrga_fahrzeuge($item->id);  
-	?>
+<?php foreach ($this->items as $item): ?>
+<?php if ($item->gmap_latitude >= '3'): ?>
+	<?php $orga_fahrzeuge = EinsatzkomponenteHelper::getOrga_fahrzeuge($item->id); ?>
         
 	<tr>
     <td>    
- 	<?php if ($this->params->get('display_orga_links','1')) :?>
+ 	<?php if ($this->params->get('display_orga_links', '1')): ?>
            
-		<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisation&id=' . (int)$item->id); ?>"><?php echo $item->name; ?></a>
+		<a href="<?php echo Route::_(
+    'index.php?option=com_einsatzkomponente&view=organisation&id=' . (int) $item->id
+  ); ?>"><?php echo $item->name; ?></a>
 		<br/><?php echo $item->detail1; ?>
 		<?php else: ?>	
     	<?php echo $item->name; ?>
@@ -43,23 +45,31 @@ require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers
 		<?php endif; ?>
 	</td>
     <td>
-    <?php 
-				$array = array();
-				foreach((array)$orga_fahrzeuge as $value): 
-					if(!is_array($value)):
-						$array[] = $value;
-					endif;
-				endforeach; ?>
+    <?php
+    $array = [];
+    foreach ((array) $orga_fahrzeuge as $value):
+      if (!is_array($value)):
+        $array[] = $value;
+      endif;
+    endforeach;
+    ?>
 				<div class="items">
                 <ul class="items_list">
-                <?php foreach($array as $value): ?>
-				<?php if ($value->state == '2'): $value->name = $value->name.' (a.D.)';endif;?>
+                <?php foreach ($array as $value): ?>
+				<?php if ($value->state == '2'):
+      $value->name = $value->name . ' (a.D.)';
+    endif; ?>
 				<li>
-		<?php if ($this->params->get('display_orga_fhz_links','1')) :?>
-					<?php if (!$value->link) :?>
-					<a title ="<?php echo $value->detail2;?>" target="_self" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid='.$this->params->get('vehiclelink','').'&id=' . $value->id); ?>"><?php echo $value->name; ?></a>
-					<?php else :?>
-					<a title ="<?php echo $value->detail2;?>" target="_blank" href="<?php echo $value->link; ?>"><?php echo $value->name; ?></a>
+		<?php if ($this->params->get('display_orga_fhz_links', '1')): ?>
+					<?php if (!$value->link): ?>
+					<a title ="<?php echo $value->detail2; ?>" target="_self" href="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid=' .
+    $this->params->get('vehiclelink', '') .
+    '&id=' .
+    $value->id
+); ?>"><?php echo $value->name; ?></a>
+					<?php else: ?>
+					<a title ="<?php echo $value->detail2; ?>" target="_blank" href="<?php echo $value->link; ?>"><?php echo $value->name; ?></a>
 					<?php endif; ?>		
                     <?php else: ?>	
                     <?php echo $value->name; ?>		
@@ -70,14 +80,14 @@ require_once JPATH_SITE.'/administrator/components/com_einsatzkomponente/helpers
                 </div>
     </td>
     </tr>
-<?php endif;?>
+<?php endif; ?>
 <?php endforeach; ?>
         
 </tbody>
 <tfoot>
-<?php if (!$this->params->get('eiko')) : ?>
+<?php if (!$this->params->get('eiko')): ?>
         <tr><!-- Bitte das Copyright nicht entfernen. Danke. -->
-            <th colspan="<?php echo $col;?>"><span class="copyright">Einsatzkomponente V<?php echo $this->version; ?>  (C) 2015 by Ralf Meyer ( <a class="copyright_link" href="http://einsatzkomponente.de" target="_blank">www.einsatzkomponente.de</a> )</span></th>
+            <th colspan="<?php echo $col; ?>"><span class="copyright">Einsatzkomponente V<?php echo $this->version; ?>  (C) 2015 by Ralf Meyer ( <a class="copyright_link" href="http://einsatzkomponente.de" target="_blank">www.einsatzkomponente.de</a> )</span></th>
         </tr>
 	<?php endif; ?>
 </tfoot>

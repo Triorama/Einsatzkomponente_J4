@@ -10,58 +10,56 @@
 
 namespace Eikonamespace\Component\Einsatzkomponente\Administrator\Controller;
 // No direct access.
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\Controller\AdminController;
 use Joomla\CMS\Factory;
 use Joomla\Utilities\ArrayHelper;
-
 
 /**
  * Ausruestungen list controller class.
  */
 class AusruestungenController extends AdminController
 {
-	/**
-	 * Proxy for getModel.
-	 * @since	1.6
-	 */
-	public function getModel($name = 'ausruestung', $prefix = 'Administrator', $config = array())
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
-		return $model;
-	}
+  /**
+   * Proxy for getModel.
+   * @since	1.6
+   */
+  public function getModel($name = 'ausruestung', $prefix = 'Administrator', $config = [])
+  {
+    $model = parent::getModel($name, $prefix, ['ignore_request' => true]);
+    return $model;
+  }
 
+  /**
+   * Method to save the submitted ordering values for records via AJAX.
+   *
+   * @return  void
+   *
+   * @since   3.0
+   */
+  public function saveOrderAjax()
+  {
+    // Get the input
+    $input = Factory::getApplication()->input;
+    $pks = $input->post->get('cid', [], 'array');
+    $order = $input->post->get('order', [], 'array');
 
-	/**
-	 * Method to save the submitted ordering values for records via AJAX.
-	 *
-	 * @return  void
-	 *
-	 * @since   3.0
-	 */
-	public function saveOrderAjax()
-	{
-		// Get the input
-		$input = Factory::getApplication()->input;
-		$pks = $input->post->get('cid', array(), 'array');
-		$order = $input->post->get('order', array(), 'array');
+    // Sanitize the input
+    ArrayHelper::toInteger($pks);
+    ArrayHelper::toInteger($order);
 
-		// Sanitize the input
-		ArrayHelper::toInteger($pks);
-		ArrayHelper::toInteger($order);
+    // Get the model
+    $model = $this->getModel();
 
-		// Get the model
-		$model = $this->getModel();
+    // Save the ordering
+    $return = $model->saveorder($pks, $order);
 
-		// Save the ordering
-		$return = $model->saveorder($pks, $order);
+    if ($return) {
+      echo '1';
+    }
 
-		if ($return) {
-			echo "1";
-		}
-
-		// Close the application
-		Factory::getApplication()->close();
-	}
+    // Close the application
+    Factory::getApplication()->close();
+  }
 }

@@ -8,7 +8,7 @@
  */
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Table;
 // No direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
@@ -18,187 +18,205 @@ use Joomla\Utilities\ArrayHelper;
 /**
  * einsatzart Table class
  */
-class EinsatzartTable extends Table {
-    /**
-     * Constructor
-     *
-     * @param JDatabase A database connector object
-     */
-    public function __construct(&$db) {
-        parent::__construct('#__eiko_einsatzarten', 'id', $db);
-				// Set the alias since the column is called state
-				$this->setColumnAlias('published', 'state');
+class EinsatzartTable extends Table
+{
+  /**
+   * Constructor
+   *
+   * @param JDatabase A database connector object
+   */
+  public function __construct(&$db)
+  {
+    parent::__construct('#__eiko_einsatzarten', 'id', $db);
+    // Set the alias since the column is called state
+    $this->setColumnAlias('published', 'state');
+  }
+  /**
+   * Overloaded bind function to pre-process the params.
+   *
+   * @param	array		Named array
+   * @return	null|string	null is operation was satisfactory, otherwise returns an error
+   * @see		JTable:bind
+   * @since	1.5
+   */
+  public function bind($array, $ignore = '')
+  {
+    if (
+      !Factory::getUser()->authorise(
+        'core.edit.state',
+        'com_einsatzkomponente.einsatzart.' . $array['id']
+      ) &&
+      $array['state'] == 1
+    ) {
+      $array['state'] = 0;
     }
-    /**
-     * Overloaded bind function to pre-process the params.
-     *
-     * @param	array		Named array
-     * @return	null|string	null is operation was satisfactory, otherwise returns an error
-     * @see		JTable:bind
-     * @since	1.5
-     */
-    public function bind($array, $ignore = '') {
-        
-		if(!Factory::getUser()->authorise('core.edit.state','com_einsatzkomponente.einsatzart.'.$array['id']) && $array['state'] == 1){
-			$array['state'] = 0;
-		}
-		if(isset($array['created_by']) || $array['created_by'] == 0){
-			$array['created_by'] = Factory::getUser()->id;
-		}
-        if (isset($array['params']) && is_array($array['params'])) {
-            $registry = new Registry();
-            $registry->loadArray($array['params']);
-            $array['params'] = (string) $registry;
-        }
-        if (isset($array['metadata']) && is_array($array['metadata'])) {
-            $registry = new Registry();
-            $registry->loadArray($array['metadata']);
-            $array['metadata'] = (string) $registry;
-        }
-        if(!Factory::getUser()->authorise('core.admin', 'com_einsatzkomponente.einsatzart.'.$array['id'])){
-            $actions = Factory::getACL()->getActions('com_einsatzkomponente','einsatzart');
-            $default_actions = Factory::getACL()->getAssetRules('com_einsatzkomponente.einsatzart.'.$array['id'])->getData();
-            $array_jaccess = array();
-            foreach($actions as $action){
-                $array_jaccess[$action->name] = $default_actions[$action->name];
-            }
-            $array['rules'] = $this->RulestoArray($array_jaccess);
-        }
-        //Bind the rules for ACL where supported.
-		if (isset($array['rules']) && is_array($array['rules'])) {
-			$this->setRules($array['rules']);
-		}
-        return parent::bind($array, $ignore);
+    if (isset($array['created_by']) || $array['created_by'] == 0) {
+      $array['created_by'] = Factory::getUser()->id;
     }
-    
-    /**
-     * This function convert an array of JAccessRule objects into an rules array.
-     * @param type $jaccessrules an arrao of JAccessRule objects.
-     */
-    private function RulestoArray($jaccessrules){
-        $rules = array();
-        foreach($jaccessrules as $action => $jaccess){
-            $actions = array();
-            foreach($jaccess->getData() as $group => $allow){
-                $actions[$group] = ((bool)$allow);
-            }
-            $rules[$action] = $actions;
-        }
-        return $rules;
+    if (isset($array['params']) && is_array($array['params'])) {
+      $registry = new Registry();
+      $registry->loadArray($array['params']);
+      $array['params'] = (string) $registry;
     }
-    /**
-     * Overloaded check function
-     */
-    public function check() {
-        //If there is an ordering column and this is a new row then get the next ordering value
-        if (property_exists($this, 'ordering') && $this->id == 0) {
-            $this->ordering = self::getNextOrder();
-        }
-        return parent::check();
+    if (isset($array['metadata']) && is_array($array['metadata'])) {
+      $registry = new Registry();
+      $registry->loadArray($array['metadata']);
+      $array['metadata'] = (string) $registry;
     }
-    /**
-     * Method to set the publishing state for a row or list of rows in the database
-     * table.  The method respects checked out rows by other users and will attempt
-     * to checkin rows that it can after adjustments are made.
-     *
-     * @param    mixed    An optional array of primary key values to update.  If not
-     *                    set the instance property value is used.
-     * @param    integer The publishing state. eg. [0 = unpublished, 1 = published]
-     * @param    integer The user id of the user performing the operation.
-     * @return    boolean    True on success.
-     * @since    1.0.4
-     */
-    public function publish($pks = null, $state = 1, $userId = 0) {
-        // Initialise variables.
-        $k = $this->_tbl_key;
-        // Sanitize input.
-        ArrayHelper::toInteger($pks);
-        $userId = (int) $userId;
-        $state = (int) $state;
-        // If there are no primary keys set check to see if the instance key is set.
-        if (empty($pks)) {
-            if ($this->$k) {
-                $pks = array($this->$k);
-            }
-            // Nothing to set publishing state on, return false.
-            else {
-                $this->setError(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
-                return false;
-            }
-        }
-        // Build the WHERE clause for the primary keys.
-        $where = $k . '=' . implode(' OR ' . $k . '=', $pks);
-        // Determine if there is checkin support for the table.
-        if (!property_exists($this, 'checked_out') || !property_exists($this, 'checked_out_time')) {
-            $checkin = '';
-        } else {
-            $checkin = ' AND (checked_out = 0 OR checked_out = ' . (int) $userId . ')';
-        }
-        // Update the publishing state for rows with the given primary keys.
-        $this->_db->setQuery(
-                'UPDATE ' . $this->_tbl . '' .
-                ' SET state = ' . (int) $state .
-                ' WHERE (' . $where . ')' .
-                $checkin
-        );
-		try
-		{
-			$this->_db->execute();
-		}
-		catch (\RuntimeException $e)
-		{
-			$this->setError($e->getMessage());
+    if (
+      !Factory::getUser()->authorise(
+        'core.admin',
+        'com_einsatzkomponente.einsatzart.' . $array['id']
+      )
+    ) {
+      $actions = Factory::getACL()->getActions('com_einsatzkomponente', 'einsatzart');
+      $default_actions = Factory::getACL()
+        ->getAssetRules('com_einsatzkomponente.einsatzart.' . $array['id'])
+        ->getData();
+      $array_jaccess = [];
+      foreach ($actions as $action) {
+        $array_jaccess[$action->name] = $default_actions[$action->name];
+      }
+      $array['rules'] = $this->RulestoArray($array_jaccess);
+    }
+    //Bind the rules for ACL where supported.
+    if (isset($array['rules']) && is_array($array['rules'])) {
+      $this->setRules($array['rules']);
+    }
+    return parent::bind($array, $ignore);
+  }
 
-			return false;
-		} 
-
-        // If checkin is supported and all rows were adjusted, check them in.
-        if ($checkin && (count($pks) == $this->_db->getAffectedRows())) {
-            // Checkin each row.
-            foreach ($pks as $pk) {
-                $this->checkin($pk);
-            }
-        }
-        // If the JTable instance value is in the list of primary keys that were set, set the instance.
-        if (in_array($this->$k, $pks)) {
-            $this->state = $state;
-        }
-        $this->setError('');
-        return true;
+  /**
+   * This function convert an array of JAccessRule objects into an rules array.
+   * @param type $jaccessrules an arrao of JAccessRule objects.
+   */
+  private function RulestoArray($jaccessrules)
+  {
+    $rules = [];
+    foreach ($jaccessrules as $action => $jaccess) {
+      $actions = [];
+      foreach ($jaccess->getData() as $group => $allow) {
+        $actions[$group] = ((bool) $allow);
+      }
+      $rules[$action] = $actions;
     }
-    
-    /**
-      * Define a namespaced asset name for inclusion in the #__assets table
-      * @return string The asset name 
-      *
-      * @see JTable::_getAssetName 
-    */
-//    protected function _getAssetName() {
-//        $k = $this->_tbl_key;
-//        return 'com_einsatzkomponente.einsatzart.' . (int) $this->$k;
-//    }
- 
-    /**
-      * Returns the parrent asset's id. If you have a tree structure, retrieve the parent's id using the external key field
-      *
-      * @see JTable::_getAssetParentId 
-    */
-	
-//	protected function _getAssetParentId(JTable $table = NULL, $id = NULL) {
-//		
-//    //protected function _getAssetParentId($table = null, $id = null){
-//        // We will retrieve the parent-asset from the Asset-table
-//        $assetParent = JTable::getInstance('Asset');
-//        // Default: if no asset-parent can be found we take the global asset
-//        $assetParentId = $assetParent->getRootId();
-//        // The item has the component as asset-parent
-//        $assetParent->loadByName('com_einsatzkomponente');
-//        // Return the found asset-parent-id
-//        if ($assetParent->id){
-//            $assetParentId=$assetParent->id;
-//        }
-//        return $assetParentId;
-//    }
-    
-    
+    return $rules;
+  }
+  /**
+   * Overloaded check function
+   */
+  public function check()
+  {
+    //If there is an ordering column and this is a new row then get the next ordering value
+    if (property_exists($this, 'ordering') && $this->id == 0) {
+      $this->ordering = self::getNextOrder();
+    }
+    return parent::check();
+  }
+  /**
+   * Method to set the publishing state for a row or list of rows in the database
+   * table.  The method respects checked out rows by other users and will attempt
+   * to checkin rows that it can after adjustments are made.
+   *
+   * @param    mixed    An optional array of primary key values to update.  If not
+   *                    set the instance property value is used.
+   * @param    integer The publishing state. eg. [0 = unpublished, 1 = published]
+   * @param    integer The user id of the user performing the operation.
+   * @return    boolean    True on success.
+   * @since    1.0.4
+   */
+  public function publish($pks = null, $state = 1, $userId = 0)
+  {
+    // Initialise variables.
+    $k = $this->_tbl_key;
+    // Sanitize input.
+    ArrayHelper::toInteger($pks);
+    $userId = (int) $userId;
+    $state = (int) $state;
+    // If there are no primary keys set check to see if the instance key is set.
+    if (empty($pks)) {
+      if ($this->$k) {
+        $pks = [$this->$k];
+      }
+      // Nothing to set publishing state on, return false.
+      else {
+        $this->setError(Text::_('JLIB_DATABASE_ERROR_NO_ROWS_SELECTED'));
+        return false;
+      }
+    }
+    // Build the WHERE clause for the primary keys.
+    $where = $k . '=' . implode(' OR ' . $k . '=', $pks);
+    // Determine if there is checkin support for the table.
+    if (!property_exists($this, 'checked_out') || !property_exists($this, 'checked_out_time')) {
+      $checkin = '';
+    } else {
+      $checkin = ' AND (checked_out = 0 OR checked_out = ' . (int) $userId . ')';
+    }
+    // Update the publishing state for rows with the given primary keys.
+    $this->_db->setQuery(
+      'UPDATE ' .
+        $this->_tbl .
+        '' .
+        ' SET state = ' .
+        (int) $state .
+        ' WHERE (' .
+        $where .
+        ')' .
+        $checkin
+    );
+    try {
+      $this->_db->execute();
+    } catch (\RuntimeException $e) {
+      $this->setError($e->getMessage());
+
+      return false;
+    }
+
+    // If checkin is supported and all rows were adjusted, check them in.
+    if ($checkin && count($pks) == $this->_db->getAffectedRows()) {
+      // Checkin each row.
+      foreach ($pks as $pk) {
+        $this->checkin($pk);
+      }
+    }
+    // If the JTable instance value is in the list of primary keys that were set, set the instance.
+    if (in_array($this->$k, $pks)) {
+      $this->state = $state;
+    }
+    $this->setError('');
+    return true;
+  }
+
+  /**
+   * Define a namespaced asset name for inclusion in the #__assets table
+   * @return string The asset name
+   *
+   * @see JTable::_getAssetName
+   */
+  //    protected function _getAssetName() {
+  //        $k = $this->_tbl_key;
+  //        return 'com_einsatzkomponente.einsatzart.' . (int) $this->$k;
+  //    }
+
+  /**
+   * Returns the parrent asset's id. If you have a tree structure, retrieve the parent's id using the external key field
+   *
+   * @see JTable::_getAssetParentId
+   */
+
+  //	protected function _getAssetParentId(JTable $table = NULL, $id = NULL) {
+  //
+  //    //protected function _getAssetParentId($table = null, $id = null){
+  //        // We will retrieve the parent-asset from the Asset-table
+  //        $assetParent = JTable::getInstance('Asset');
+  //        // Default: if no asset-parent can be found we take the global asset
+  //        $assetParentId = $assetParent->getRootId();
+  //        // The item has the component as asset-parent
+  //        $assetParent->loadByName('com_einsatzkomponente');
+  //        // Return the found asset-parent-id
+  //        if ($assetParent->id){
+  //            $assetParentId=$assetParent->id;
+  //        }
+  //        return $assetParentId;
+  //    }
 }

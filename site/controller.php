@@ -6,7 +6,7 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
- 
+
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
 use Joomla\CMS\MVC\Controller\BaseController;
@@ -14,6 +14,4 @@ use Joomla\CMS\MVC\Controller\BaseController;
 jimport('joomla.application.component.controller');
 class EinsatzkomponenteController extends BaseController
 {
-	
-	
 }

@@ -7,7 +7,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Plugin\PluginHelper;
@@ -15,7 +15,7 @@ use Joomla\CMS\Plugin\PluginHelper;
 $lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 ?>
-<?php if( $this->item ) : ?>
+<?php if ($this->item): ?>
     <div class="item_fields">
         
         <ul class="fields_list">
@@ -24,9 +24,9 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ORDERING'); ?>:
 			<?php echo $this->item->ordering; ?></li>
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1'); ?>:
-			<?php echo $this->item->data1.' : '.$this->item->einsatzart; ?></li>
+			<?php echo $this->item->data1 . ' : ' . $this->item->einsatzart; ?></li>
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_IMAGE'); ?>:
-			<?php $this->item->image = preg_replace("%thumbs/%", "", $this->item->image,1); ?>
+			<?php $this->item->image = preg_replace('%thumbs/%', '', $this->item->image, 1); ?>
 			<?php echo $this->item->image; ?></li>
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS'); ?>:
 			<?php echo $this->item->address; ?></li>
@@ -74,47 +74,49 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 			<?php echo Text::_($this->item->tickerKat->title); ?></li>
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSWAHLORGA'); ?>:
 			<?php
-				$array = array();
-				foreach((array)$this->item->auswahl_orga as $value): 
-					if(!is_array($value)):
-						$array[] = $value;
-					endif;
-				endforeach;
-				$data = array();
-				foreach($array as $value):
-					$db = Factory::getDbo();
-					$query	= $db->getQuery(true);
-					$query
-						->select('name')
-						->from('#__eiko_organisationen')
-						->where('id = "' .$value.'"');
-					$db->setQuery($query);
-					$results = $db->loadObjectList();
-					$data[] = $results[0]->name;
-				endforeach;
-				$this->item->auswahl_orga = implode(',',$data); ?>
+   $array = [];
+   foreach ((array) $this->item->auswahl_orga as $value):
+     if (!is_array($value)):
+       $array[] = $value;
+     endif;
+   endforeach;
+   $data = [];
+   foreach ($array as $value):
+     $db = Factory::getDbo();
+     $query = $db->getQuery(true);
+     $query
+       ->select('name')
+       ->from('#__eiko_organisationen')
+       ->where('id = "' . $value . '"');
+     $db->setQuery($query);
+     $results = $db->loadObjectList();
+     $data[] = $results[0]->name;
+   endforeach;
+   $this->item->auswahl_orga = implode(',', $data);
+   ?>
 			<?php echo $this->item->auswahl_orga; ?></li>
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES'); ?>:
 			<?php
-				$array = array();
-				foreach((array)$this->item->vehicles as $value): 
-					if(!is_array($value)):
-						$array[] = $value;
-					endif;
-				endforeach;
-				$data = array();
-				foreach($array as $value):
-					$db = Factory::getDbo();
-					$query	= $db->getQuery(true);
-					$query
-						->select('name')
-						->from('#__eiko_fahrzeuge')
-						->where('id = "' .$value.'"');
-					$db->setQuery($query);
-					$results = $db->loadObjectList();
-					$data[] = $results[0]->name;
-				endforeach;
-				$this->item->vehicles = implode(',',$data); ?>
+   $array = [];
+   foreach ((array) $this->item->vehicles as $value):
+     if (!is_array($value)):
+       $array[] = $value;
+     endif;
+   endforeach;
+   $data = [];
+   foreach ($array as $value):
+     $db = Factory::getDbo();
+     $query = $db->getQuery(true);
+     $query
+       ->select('name')
+       ->from('#__eiko_fahrzeuge')
+       ->where('id = "' . $value . '"');
+     $db->setQuery($query);
+     $results = $db->loadObjectList();
+     $data[] = $results[0]->name;
+   endforeach;
+   $this->item->vehicles = implode(',', $data);
+   ?>
 			<?php echo $this->item->vehicles; ?></li>
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_STATUS'); ?>:
 			<?php echo $this->item->status; ?></li>
@@ -123,27 +125,39 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 			<li><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_CREATED_BY'); ?>:
 			<?php echo $this->item->created_by; ?></li>
             
-            <?php if( $this->item->gmap_report_latitude != '0' ) : ?> 
-			<?php if ($this->params->get('gmap_action','0') == '1') :?>
-  			<li><div id="map-canvas" style="width:100%; height:<?php echo $this->params->get('detail_map_height','250px');?>;">
+            <?php if ($this->item->gmap_report_latitude != '0'): ?> 
+			<?php if ($this->params->get('gmap_action', '0') == '1'): ?>
+  			<li><div id="map-canvas" style="width:100%; height:<?php echo $this->params->get(
+       'detail_map_height',
+       '250px'
+     ); ?>;">
     		<noscript>Dieser Teil der Seite erfordert die JavaScript Unterstützung Ihres Browsers!</noscript>
 			</div></li>
-            <?php endif;?>
-			<?php if ($this->params->get('gmap_action','0') == '2') :?>
+            <?php endif; ?>
+			<?php if ($this->params->get('gmap_action', '0') == '2'): ?>
 				<li><body onLoad="drawmap();"></body>
 				<!--<div id="descriptionToggle" onClick="toggleInfo()">Informationen zur Karte anzeigen</div>
 				<div id="description" class="">Einsatzkarte</div>-->
-				<div id="map" style="width:100%; height:<?php echo $this->params->get('detail_map_height','250px');?>;"></div> 
+				<div id="map" style="width:100%; height:<?php echo $this->params->get(
+      'detail_map_height',
+      '250px'
+    ); ?>;"></div> 
     		<noscript>Dieser Teil der Seite erfordert die JavaScript Unterstützung Ihres Browsers!</noscript>
-            <?php endif;?>
-            <?php endif;?>
+            <?php endif; ?>
+            <?php endif; ?>
             
         </ul>
         
 		<?php
-			$plugin = PluginHelper::getPlugin('content', 'myshariff') ;
-			if ($plugin) : 	echo JHTML::_('content.prepare', '{myshariff}');endif;
-			?>
+  $plugin = PluginHelper::getPlugin('content', 'myshariff');
+  if ($plugin):
+    echo JHTML::_(
+      'content.prepare',
+
+      '{myshariff}'
+    );
+  endif;
+  ?>
 
     </div>
 <?php else: ?>

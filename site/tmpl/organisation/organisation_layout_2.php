@@ -7,7 +7,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
@@ -18,7 +18,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 ?>
 <input type="button" class="btn eiko_back_button" value="Zurück" onClick="history.back();">
 
-<?php if( $this->item ) : ?>
+<?php if ($this->item): ?>
     <div class="item_fields">
         
         <ul class="fields_list">
@@ -60,10 +60,18 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
         
     </div>
    
-								<?php if(Factory::getUser()->authorise('core.delete','com_einsatzkomponente.organisation.'.$this->item->id)):
-								?>
-									<a href="javascript:document.getElementById('form-organisation-delete-<?php echo $this->item->id ?>').submit()">Delete</a>
-									<form id="form-organisation-delete-<?php echo $this->item->id; ?>" style="display:inline" action="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisation.remove'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
+								<?php if (
+          Factory::getUser()->authorise(
+            'core.delete',
+            'com_einsatzkomponente.organisation.' . $this->item->id
+          )
+        ): ?>
+									<a href="javascript:document.getElementById('form-organisation-delete-<?php echo $this->item
+           ->id; ?>').submit()">Delete</a>
+									<form id="form-organisation-delete-<?php echo $this->item
+           ->id; ?>" style="display:inline" action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&task=organisation.remove'
+); ?>" method="post" class="form-validate" enctype="multipart/form-data">
 										<input type="hidden" name="jform[id]" value="<?php echo $this->item->id; ?>" />
 										<input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>" />
 										<input type="hidden" name="jform[name]" value="<?php echo $this->item->name; ?>" />
@@ -74,16 +82,25 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 										<input type="hidden" name="jform[detail5]" value="<?php echo $this->item->detail5; ?>" />
 										<input type="hidden" name="jform[detail6]" value="<?php echo $this->item->detail6; ?>" />
 										<input type="hidden" name="jform[detail7]" value="<?php echo $this->item->detail7; ?>" />
-										<input type="hidden" name="jform[detail1_label]" value="<?php echo $this->item->detail1_label; ?>" />
-										<input type="hidden" name="jform[detail2_label]" value="<?php echo $this->item->detail2_label; ?>" />
-										<input type="hidden" name="jform[detail3_label]" value="<?php echo $this->item->detail3_label; ?>" />
-										<input type="hidden" name="jform[detail4_label]" value="<?php echo $this->item->detail4_label; ?>" />
-										<input type="hidden" name="jform[detail5_label]" value="<?php echo $this->item->detail5_label; ?>" />
-										<input type="hidden" name="jform[detail6_label]" value="<?php echo $this->item->detail6_label; ?>" />
-										<input type="hidden" name="jform[detail7_label]" value="<?php echo $this->item->detail7_label; ?>" />
+										<input type="hidden" name="jform[detail1_label]" value="<?php echo $this->item
+            ->detail1_label; ?>" />
+										<input type="hidden" name="jform[detail2_label]" value="<?php echo $this->item
+            ->detail2_label; ?>" />
+										<input type="hidden" name="jform[detail3_label]" value="<?php echo $this->item
+            ->detail3_label; ?>" />
+										<input type="hidden" name="jform[detail4_label]" value="<?php echo $this->item
+            ->detail4_label; ?>" />
+										<input type="hidden" name="jform[detail5_label]" value="<?php echo $this->item
+            ->detail5_label; ?>" />
+										<input type="hidden" name="jform[detail6_label]" value="<?php echo $this->item
+            ->detail6_label; ?>" />
+										<input type="hidden" name="jform[detail7_label]" value="<?php echo $this->item
+            ->detail7_label; ?>" />
 										<input type="hidden" name="jform[link]" value="<?php echo $this->item->link; ?>" />
-										<input type="hidden" name="jform[gmap_latitude]" value="<?php echo $this->item->gmap_latitude; ?>" />
-										<input type="hidden" name="jform[gmap_longitude]" value="<?php echo $this->item->gmap_longitude; ?>" />
+										<input type="hidden" name="jform[gmap_latitude]" value="<?php echo $this->item
+            ->gmap_latitude; ?>" />
+										<input type="hidden" name="jform[gmap_longitude]" value="<?php echo $this->item
+            ->gmap_longitude; ?>" />
 										<input type="hidden" name="jform[ffw]" value="<?php echo $this->item->ffw; ?>" />
 										<input type="hidden" name="jform[desc]" value="<?php echo $this->item->desc; ?>" />
 										<input type="hidden" name="jform[state]" value="<?php echo $this->item->state; ?>" />
@@ -92,9 +109,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 										<input type="hidden" name="task" value="organisation.remove" />
 										<?php echo HTMLHelper::_('form.token'); ?>
 									</form>
-								<?php
-								endif;
-							?>
+								<?php endif; ?>
 <?php else: ?>
     Could not load the item
 <?php endif; ?>

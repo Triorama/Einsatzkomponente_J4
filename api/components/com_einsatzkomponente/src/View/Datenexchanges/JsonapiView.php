@@ -9,7 +9,7 @@
 
 namespace EikoNamespace\Component\Einsatzkomponente\Api\View\Datenexchanges;
 
-\defined('_JEXEC') or die;
+\defined('_JEXEC') or die();
 
 use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
 
@@ -20,37 +20,37 @@ use Joomla\CMS\MVC\View\JsonApiView as BaseApiView;
  */
 class JsonApiView extends BaseApiView
 {
-	/**
-	 * The fields to render item in the documents
-	 *
-	 * @var  array
-	 * @since  4.0.0
-	 */
-	protected $fieldsToRenderItem = [
-		'id', 
-		'ordering', 
-		'state', 
-		'file', 
-		'dateityp', 
-		'info', 
-		'createdate', 
-		'updatedate', 
-	];
+  /**
+   * The fields to render item in the documents
+   *
+   * @var  array
+   * @since  4.0.0
+   */
+  protected $fieldsToRenderItem = [
+    'id',
+    'ordering',
+    'state',
+    'file',
+    'dateityp',
+    'info',
+    'createdate',
+    'updatedate',
+  ];
 
-	/**
-	 * The fields to render items in the documents
-	 *
-	 * @var  array
-	 * @since  4.0.0
-	 */
-	protected $fieldsToRenderList = [
-		'id', 
-		'ordering', 
-		'state', 
-		'file', 
-		'dateityp', 
-		'info', 
-		'createdate', 
-		'updatedate', 
-	];
+  /**
+   * The fields to render items in the documents
+   *
+   * @var  array
+   * @since  4.0.0
+   */
+  protected $fieldsToRenderList = [
+    'id',
+    'ordering',
+    'state',
+    'file',
+    'dateityp',
+    'info',
+    'createdate',
+    'updatedate',
+  ];
 }

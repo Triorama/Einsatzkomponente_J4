@@ -7,7 +7,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
@@ -17,8 +17,7 @@ use Joomla\CMS\Router\Route;
 $lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 
-
-JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
+JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('behavior.tooltip');
 JHtml::_('behavior.formvalidation');
 JHtml::_('behavior.keepalive');
@@ -35,11 +34,13 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 			Joomla.submitform(task, document.getElementById('einsatzfahrzeug-form'));
 		}
 		else {
-			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED'));?>');
+			alert('<?php echo $this->escape(Text::_('JGLOBAL_VALIDATION_FORM_FAILED')); ?>');
 		}
 	}
 </script>
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id='.(int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzfahrzeug-form" class="form-validate">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
+); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzfahrzeug-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -115,7 +116,9 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 					</button>
 				<?php endif; ?>
 				<a class="btn"
-				   href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.cancel'); ?>"
+				   href="<?php echo Route::_(
+         'index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.cancel'
+       ); ?>"
 				   title="<?php echo Text::_('JCANCEL'); ?>">
 					<?php echo Text::_('JCANCEL'); ?>
 				</a>

@@ -7,10 +7,11 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Layout\LayoutHelper;
 use Joomla\CMS\HTML\HTMLHelper;
+
 //echo count ($this->items).' - '.count($this->all_items);
 //print_r ($this->all_items);
 ?>
@@ -28,11 +29,15 @@ use Joomla\CMS\HTML\HTMLHelper;
 </style>
 
 
-<?php echo '<span class="mobile_hide_320">'.$this->modulepos_2.'</span>';?>
+<?php echo '<span class="mobile_hide_320">' . $this->modulepos_2 . '</span>'; ?>
 
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid='.$this->params->get('homelink','').''); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid=' .
+    $this->params->get('homelink', '') .
+    ''
+); ?>" method="post" name="adminForm" id="adminForm">
 
-    <?php echo LayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__)); ?>
+    <?php echo LayoutHelper::render('default_filter', ['view' => $this], dirname(__FILE__)); ?>
 
 
 
@@ -44,33 +49,37 @@ use Joomla\CMS\HTML\HTMLHelper;
   
       <div class="container-fluid">
 	
-	<?php 	$m ='';
-			$y=''; //print_r ($this->items);
-			$marker_colors = array();
-			$o=0;
-	?>
-    <?php foreach ($this->items as $i => $item) : ?>
+	<?php
+ $m = '';
+ $y = ''; //print_r ($this->items);
+ $marker_colors = [];
+ $o = 0;
+ ?>
+    <?php foreach ($this->items as $i => $item): ?>
 
 
 	
 <?php $o++; ?>
 
         <!-- Example row of columns -->
-	<?php if ($o=='1') { ?>	
+	<?php if ($o == '1') { ?>	
         <div class="row-fluid">
 	<?php } ?>
           <div class="col-md-4">
             <h2 class="eiko_h2">
-					<?php if ($this->params->get('display_tickerkat_icon')) : ?>
-					<img class="eiko_icon " src="<?php echo JURI::Root();?><?php echo $item->tickerkat_image;?>" alt="<?php echo $item->tickerkat;?>" title="Kategorie: <?php echo $item->tickerkat;?>"/>
-					<?php endif;?>
-			<?php echo $item->summary;?></h2>
+					<?php if ($this->params->get('display_tickerkat_icon')): ?>
+					<img class="eiko_icon " src="<?php
+     echo JURI::Root();
+     echo $item->tickerkat_image;
+     ?>" alt="<?php echo $item->tickerkat; ?>" title="Kategorie: <?php echo $item->tickerkat; ?>"/>
+					<?php endif; ?>
+			<?php echo $item->summary; ?></h2>
 
 			
-		<?php $date_image = $this->params->get('display_home_date_image','1') ?>
-           <?php if ($date_image == '0' || $date_image == '2') : ?>
+		<?php $date_image = $this->params->get('display_home_date_image', '1'); ?>
+           <?php if ($date_image == '0' || $date_image == '2'): ?>
                <p><i class="icon-calendar"></i> <?php echo date('d.m.Y', $item->date1); ?>
-               <?php if ($date_image == '2') : ?>
+               <?php if ($date_image == '2'): ?>
                <i class="icon-clock"></i> <?php echo date('H:i', $item->date1); ?>Uhr</p>
                <?php endif; ?>
        <?php endif; ?>
@@ -78,41 +87,63 @@ use Joomla\CMS\HTML\HTMLHelper;
 	   
 	   
 					<!-- Einsatzbild --> 
-           <?php if ($this->params->get('display_home_image')) : ?>
+           <?php if ($this->params->get('display_home_image')): ?>
 		   <p>
-		   <?php if ($item->image) : ?>
-					<?php if (isset($item->checked_out) && $item->checked_out) : ?>
-					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
+		   <?php if ($item->image): ?>
+					<?php if (isset($item->checked_out) && $item->checked_out): ?>
+					<?php echo HTMLHelper::_(
+       'jgrid.checkedout',
+       $i,
+       $item->editor,
+       $item->checked_out_time,
+       'einsatzarchiv.',
+       $canCheckin
+     ); ?>
 					<?php endif; ?> 
 					
-					<?php if ($this->params->get('display_home_links_3','0')) : ?>
-					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.(int) $item->id); ?>">
-					<?php endif; ?> 
-
-					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php echo JURI::Root();?><?php echo $item->image;?>"/>
-					
-					<?php if ($this->params->get('display_home_links_3','0')) : ?>
-					</a>
-					<?php endif;?>
-           <?php endif;?>
-		   <?php if (!$item->image AND $this->params->get('display_home_image_nopic','0')) : ?>
-					<?php if (isset($item->checked_out) && $item->checked_out) : ?>
-					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
-					<?php endif; ?> 
-					
-					<?php if ($this->params->get('display_home_links_3','0')) : ?>
-					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id='.(int) $item->id); ?>">
+					<?php if ($this->params->get('display_home_links_3', '0')): ?>
+					<a href="<?php echo Route::_(
+       'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
+     ); ?>">
 					<?php endif; ?> 
 
-					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php echo JURI::Root().'images/com_einsatzkomponente/einsatzbilder/nopic.png';?>"/>
+					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php
+     echo JURI::Root();
+     echo $item->image;
+     ?>"/>
 					
-					<?php if ($this->params->get('display_home_links_3','0')) : ?>
+					<?php if ($this->params->get('display_home_links_3', '0')): ?>
 					</a>
-					<?php endif;?>
-           <?php endif;?>
+					<?php endif; ?>
+           <?php endif; ?>
+		   <?php if (!$item->image and $this->params->get('display_home_image_nopic', '0')): ?>
+					<?php if (isset($item->checked_out) && $item->checked_out): ?>
+					<?php echo HTMLHelper::_(
+       'jgrid.checkedout',
+       $i,
+       $item->editor,
+       $item->checked_out_time,
+       'einsatzarchiv.',
+       $canCheckin
+     ); ?>
+					<?php endif; ?> 
+					
+					<?php if ($this->params->get('display_home_links_3', '0')): ?>
+					<a href="<?php echo Route::_(
+       'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
+     ); ?>">
+					<?php endif; ?> 
+
+					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php echo JURI::Root() .
+       'images/com_einsatzkomponente/einsatzbilder/nopic.png'; ?>"/>
+					
+					<?php if ($this->params->get('display_home_links_3', '0')): ?>
+					</a>
+					<?php endif; ?>
+           <?php endif; ?>
 		   </p>
 		   
-           <?php endif;?>
+           <?php endif; ?>
 		   
 		   
 					<!-- Einsatzbild ENDE --> 
@@ -120,18 +151,23 @@ use Joomla\CMS\HTML\HTMLHelper;
 					
 					
 	   
-		   <?php if ($item->desc) : ?>
+		   <?php if ($item->desc): ?>
 			<?php jimport('joomla.html.content'); ?>  
-			<?php $desc = strip_tags( $item->desc);?>
+			<?php $desc = strip_tags($item->desc); ?>
 			<?php $Desc = JHTML::_('content.prepare', $desc); ?>
-			<?php $Desc = (strlen($Desc) > '200') ? substr($Desc,0,strrpos(substr($Desc,0,'200'+1),' ')).' ...' : $Desc;?>
-			<?php echo $Desc;?>
-            <?php endif;?>
+			<?php $Desc =
+     strlen($Desc) > '200'
+       ? substr($Desc, 0, strrpos(substr($Desc, 0, '200' + 1), ' ')) . ' ...'
+       : $Desc; ?>
+			<?php echo $Desc; ?>
+            <?php endif; ?>
             <p><a class="btn btn-secondary" href="#" role="button">weitere Details &raquo;</a></p>
           </div>
-	<?php if ($o=='3') {  $o=0; ?>	
+	<?php if ($o == '3') {
+   $o = 0; ?>	
         </div>
-	<?php } ?>
+	<?php
+ } ?>
 
 
 	

@@ -9,7 +9,7 @@
  */
 
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
@@ -23,11 +23,15 @@ HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
 // Import CSS
-HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
-
+HTMLHelper::_(
+  'stylesheet',
+  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
+);
 ?>
 
-<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="gmapkonfiguration-form" class="form-validate">
+<form action="<?php echo Route::_(
+  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
+); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="gmapkonfiguration-form" class="form-validate">
   <div class="row-fluid">
     <div class="span10 form-horizontal">
       <fieldset class="adminform">
@@ -72,14 +76,20 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
           <li><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_2'); ?></li>
 
           <li> <!-- Button to trigger modal -->
-            <button type="button" class="btn-primary" data-bs-toggle="modal" data-bs-target="#eiko-changelog"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_4'); ?></button>
+            <button type="button" class="btn-primary" data-bs-toggle="modal" data-bs-target="#eiko-changelog"><?php echo Text::_(
+              'COM_EINSATZKOMPONENTE_GMAP_4'
+            ); ?></button>
           </li>
         </ul>
       </div>
 
-      <?php if ($this->params->get('gmap_action', '0') == '1') : ?>
-        <input class='btn btn-warning' type='button' onclick='clearMap();return false;' value='<?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATEN_LOESCHEN'); ?>' />
-        <input class='btn btn-warning' type='button' onclick='resetarea()' value='<?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATENLISTE_ZUUECKSETZEN'); ?>' />
+      <?php if ($this->params->get('gmap_action', '0') == '1'): ?>
+        <input class='btn btn-warning' type='button' onclick='clearMap();return false;' value='<?php echo Text::_(
+          'COM_EINSATZKOMPONENTE_GMAP_KOORDINATEN_LOESCHEN'
+        ); ?>' />
+        <input class='btn btn-warning' type='button' onclick='resetarea()' value='<?php echo Text::_(
+          'COM_EINSATZKOMPONENTE_GMAP_KOORDINATENLISTE_ZUUECKSETZEN'
+        ); ?>' />
       <?php endif; ?>
 
 
@@ -88,7 +98,9 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="eiko-changelogLabel"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_5'); ?></h5>
+              <h5 class="modal-title" id="eiko-changelogLabel"><?php echo Text::_(
+                'COM_EINSATZKOMPONENTE_GMAP_5'
+              ); ?></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -111,7 +123,9 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_6'); ?></button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_(
+                'COM_EINSATZKOMPONENTE_GMAP_6'
+              ); ?></button>
               <!--	<button type="button" class="btn btn-primary">Save changes</button> -->
             </div>
           </div>
@@ -120,14 +134,22 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
 
       <hr>
   </div>
-  <?php if ($this->params->get('gmap_action', '0') == '1') : ?>
-    <div id="map" style="width: 810px; height: 400px"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_7'); ?></div>
+  <?php if ($this->params->get('gmap_action', '0') == '1'): ?>
+    <div id="map" style="width: 810px; height: 400px"><?php echo Text::_(
+      'COM_EINSATZKOMPONENTE_GMAP_7'
+    ); ?></div>
   <?php endif; ?>
 
-  <?php if ($this->params->get('gmap_action', '0') == '2') : ?>
-    <div id="map_canvas" style="width: 810px; height: 400px"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_7'); ?></div>
+  <?php if ($this->params->get('gmap_action', '0') == '2'): ?>
+    <div id="map_canvas" style="width: 810px; height: 400px"><?php echo Text::_(
+      'COM_EINSATZKOMPONENTE_GMAP_7'
+    ); ?></div>
     <?php OsmHelper::installOsmMap(); ?>
-    <?php OsmHelper::callOsmMap($this->gmap_config->gmap_zoom_level, $this->gmap_config->start_lat, $this->gmap_config->start_lang); ?>
+    <?php OsmHelper::callOsmMap(
+      $this->gmap_config->gmap_zoom_level,
+      $this->gmap_config->start_lat,
+      $this->gmap_config->start_lang
+    ); ?>
     <?php OsmHelper::addRightClickOsmMap(); ?>
     <?php OsmHelper::editPolygonMap($this->einsatzgebiet, 'blue'); ?>
   <?php endif; ?>
@@ -184,16 +206,20 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
 <?php if ($this->params->get('gmap_action', '0') == '1') { ?>
 
   <?php // Einsatzgebiet für GMap-Karte vorbereiten
+  // Einsatzgebiet für GMap-Karte vorbereiten
+
+  // Einsatzgebiet für GMap-Karte vorbereiten
+
   $area = substr($this->item->gmap_alarmarea, -1);
-  if ($area == "|") {
+  if ($area == '|') {
     $gmap_alarmarea = substr($this->item->gmap_alarmarea, 0, -1);
-    $area  = $gmap_alarmarea;
-    $area = explode("|", $gmap_alarmarea);
+    $area = $gmap_alarmarea;
+    $area = explode('|', $gmap_alarmarea);
     $area[] = $area[0];
-    $gmap_alarmarea = implode("|", $area);
+    $gmap_alarmarea = implode('|', $area);
   }
 
-  $alarmareas1  = $gmap_alarmarea; // Einsatzgebiet  ---->
+  $alarmareas1 = $gmap_alarmarea; // Einsatzgebiet  ---->
   $alarmareas = explode('|', $alarmareas1);
   $stralarmarea = '[ ';
   $n = 0;
@@ -206,13 +232,15 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
   }
   $stralarmarea = substr($stralarmarea, 0, strlen($stralarmarea) - 1);
   $stralarmarea = $stralarmarea . ' ];';
-
   ?>
 
 
   <!--Javascript für Gmap-Karte-->
 
-  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $this->params->get('gmapkey', ''); ?>"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $this->params->get(
+    'gmapkey',
+    ''
+  ); ?>"></script>
 
   <script type="text/javascript">
     //<![CDATA[
@@ -377,7 +405,8 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
 
       var g = google.maps;
       var opts_map = {
-        center: new g.LatLng(<?php echo $this->item->start_lat; ?>, <?php echo $this->item->start_lang; ?>),
+        center: new g.LatLng(<?php echo $this->item->start_lat; ?>, <?php echo $this->item
+  ->start_lang; ?>),
         zoom: <?php echo $this->item->gmap_zoom_level; ?>,
         mapTypeId: g.MapTypeId.<?php echo $this->item->gmap_onload; ?>,
         streetViewControl: false,
@@ -520,7 +549,8 @@ HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/asse
 
       markers.length = 0;
       count = 0;
-      document.getElementById('jform_gmap_alarmarea').innerHTML = '<?php echo $this->item->gmap_alarmarea; ?>';
+      document.getElementById('jform_gmap_alarmarea').innerHTML = '<?php echo $this->item
+        ->gmap_alarmarea; ?>';
 
       poly.setMap(null);
 

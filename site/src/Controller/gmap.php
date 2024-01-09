@@ -8,20 +8,20 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // No direct access.
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 require_once JPATH_COMPONENT . '/controller.php';
 /**
  * Einsatzberichte list controller class.
  */
 class EinsatzkomponenteControllerGmap extends EinsatzkomponenteController
 {
-	/**
-	 * Proxy for getModel.
-	 * @since	1.6
-	 */
-	public function &getModel($name = 'Einsatzberichte', $prefix = Site, $config = [])
-	{
-		$model = parent::getModel($name, $prefix, array('ignore_request' => true));
-		return $model;
-	}
+  /**
+   * Proxy for getModel.
+   * @since	1.6
+   */
+  public function &getModel($name = 'Einsatzberichte', $prefix = Site, $config = [])
+  {
+    $model = parent::getModel($name, $prefix, ['ignore_request' => true]);
+    return $model;
+  }
 }

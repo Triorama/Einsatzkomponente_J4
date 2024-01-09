@@ -8,7 +8,7 @@
  */
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Model;
 // No direct access.
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
@@ -18,125 +18,129 @@ use Joomla\CMS\Factory;
  */
 class EinsatzbilderbearbeitenModel extends AdminModel
 {
-	/**
-	 * @var		string	The prefix to use with controller messages.
-	 * @since	1.6
-	 */
-	protected $text_prefix = 'COM_EINSATZKOMPONENTE';
-	
-	/**
-	 * Method to get the record form.
-	 *
-	 * @param	array	$data		An optional array of data for the form to interogate.
-	 * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
-	 * @return	JForm	A JForm object on success, false on failure
-	 * @since	1.6
-	 */
-	public function getForm($data = array(), $loadData = true)
-	{
-		// Initialise variables.
-		$app	= Factory::getApplication();
-		// Get the form.
-		$form = $this->loadForm('com_einsatzkomponente.einsatzbilderbearbeiten', 'einsatzbilderbearbeiten', array('control' => 'jform', 'load_data' => $loadData));
-		if (empty($form)) {
-			return false;
-		}
-		return $form;
-	}
-	/**
-	 * Method to get the data that should be injected in the form.
-	 *
-	 * @return	mixed	The data for the form.
-	 * @since	1.6
-	 */
-	protected function loadFormData()
-	{
-		// Check the session for previously entered form data.
-		$data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbilderbearbeiten.data', array());
-		if (empty($data)) {
-			$data = $this->getItem();
+  /**
+   * @var		string	The prefix to use with controller messages.
+   * @since	1.6
+   */
+  protected $text_prefix = 'COM_EINSATZKOMPONENTE';
 
-			//Support for multiple or not foreign key field: vehicles
-			$array = array();
-			foreach((array)$data->params as $value): 
-				if(!is_array($value)):
-					$array[] = $value;
-				endif;
-			endforeach;
-			$data->params = implode(',',$array);
-            
-		}
-		return $data;
-	}
-	/**
-	 * Method to get a single record.
-	 *
-	 * @param	integer	The id of the primary key.
-	 *
-	 * @return	mixed	Object on success, false on failure.
-	 * @since	1.6
-	 */
-	public function getItem($pk = null)
-	{
-		if ($item = parent::getItem($pk)) {
-			//Do any procesing on fields here if needed
-		}
-		return $item;
-	}
-	/**
-	 * Prepare and sanitise the table prior to saving.
-	 *
-	 * @since	1.6
-	 */
-	protected function prepareTable($table)
-	{
-		jimport('joomla.filter.output');
-		if (empty($table->id)) {
-			// Set ordering to the last item if not set
-			if (@$table->ordering === '') {
-				$db = Factory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__eiko_images');
-				$max = $db->loadResult();
-				$table->ordering = $max+1;
-			}
-		}
-	}
-	/**
-	 * Method to delete rows.
-	 *
-	 * @param   array  &$pks  An array of item ids.
-	 *
-	 * @return  boolean  Returns true on success, false on failure.
-	 *
-	 * @since   1.6
-	 */
- public function delete (&$pks)
-    {
+  /**
+   * Method to get the record form.
+   *
+   * @param	array	$data		An optional array of data for the form to interogate.
+   * @param	boolean	$loadData	True if the form is to load its own data (default case), false if not.
+   * @return	JForm	A JForm object on success, false on failure
+   * @since	1.6
+   */
+  public function getForm($data = [], $loadData = true)
+  {
+    // Initialise variables.
+    $app = Factory::getApplication();
+    // Get the form.
+    $form = $this->loadForm(
+      'com_einsatzkomponente.einsatzbilderbearbeiten',
+      'einsatzbilderbearbeiten',
+      ['control' => 'jform', 'load_data' => $loadData]
+    );
+    if (empty($form)) {
+      return false;
+    }
+    return $form;
+  }
+  /**
+   * Method to get the data that should be injected in the form.
+   *
+   * @return	mixed	The data for the form.
+   * @since	1.6
+   */
+  protected function loadFormData()
+  {
+    // Check the session for previously entered form data.
+    $data = Factory::getApplication()->getUserState(
+      'com_einsatzkomponente.edit.einsatzbilderbearbeiten.data',
+      []
+    );
+    if (empty($data)) {
+      $data = $this->getItem();
 
-        foreach($pks as $id)
-        {
-			$db = Factory::getDBO();
-			$query = 'SELECT * FROM #__eiko_images WHERE id='.$id;
-			$db->setQuery($query);
-			$result = $db->loadObjectList();
-			
-			if ($result[0]->image) : $delete_image = '../'.$result[0]->image; endif;
-			if ($result[0]->thumb) : $delete_thumb = '../'.$result[0]->thumb; endif;
-			
-			@ unlink ( $delete_image );
-			@ unlink ( $delete_thumb );
-        	$db =Factory::getDBO();
-            $db->setQuery("DELETE FROM #__eiko_images WHERE id=".$id);
-				try
-				{
-					$db->execute();
-				}
-				catch (RuntimeException $e)
-				{
-					throw new Exception($e->getMessage(), 500);
-				}
-        }
-		return true;		
-    }	
+      //Support for multiple or not foreign key field: vehicles
+      $array = [];
+      foreach ((array) $data->params as $value):
+        if (!is_array($value)):
+          $array[] = $value;
+        endif;
+      endforeach;
+      $data->params = implode(',', $array);
+    }
+    return $data;
+  }
+  /**
+   * Method to get a single record.
+   *
+   * @param	integer	The id of the primary key.
+   *
+   * @return	mixed	Object on success, false on failure.
+   * @since	1.6
+   */
+  public function getItem($pk = null)
+  {
+    if ($item = parent::getItem($pk)) {
+      //Do any procesing on fields here if needed
+    }
+    return $item;
+  }
+  /**
+   * Prepare and sanitise the table prior to saving.
+   *
+   * @since	1.6
+   */
+  protected function prepareTable($table)
+  {
+    jimport('joomla.filter.output');
+    if (empty($table->id)) {
+      // Set ordering to the last item if not set
+      if (@$table->ordering === '') {
+        $db = Factory::getDbo();
+        $db->setQuery('SELECT MAX(ordering) FROM #__eiko_images');
+        $max = $db->loadResult();
+        $table->ordering = $max + 1;
+      }
+    }
+  }
+  /**
+   * Method to delete rows.
+   *
+   * @param   array  &$pks  An array of item ids.
+   *
+   * @return  boolean  Returns true on success, false on failure.
+   *
+   * @since   1.6
+   */
+  public function delete(&$pks)
+  {
+    foreach ($pks as $id) {
+      $db = Factory::getDBO();
+      $query = 'SELECT * FROM #__eiko_images WHERE id=' . $id;
+      $db->setQuery($query);
+      $result = $db->loadObjectList();
 
+      if ($result[0]->image):
+        $delete_image = '../' . $result[0]->image;
+      endif;
+      if ($result[0]->thumb):
+        $delete_thumb = '../' . $result[0]->thumb;
+      endif;
+
+      @unlink($delete_image);
+      @unlink($delete_thumb);
+      $db = Factory::getDBO();
+      $db->setQuery('DELETE FROM #__eiko_images WHERE id=' . $id);
+      try {
+        $db->execute();
+      } catch (RuntimeException $e) {
+        throw new Exception($e->getMessage(), 500);
+      }
+    }
+    return true;
+  }
 }

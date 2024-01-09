@@ -9,7 +9,7 @@
 
 namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Service\HTML;
 
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 
 /**
  * Foo HTML class.

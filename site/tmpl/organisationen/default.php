@@ -7,14 +7,13 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 // no direct access
-defined('_JEXEC') or die;
+defined('_JEXEC') or die();
 use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 
 //Load admin language file
 $lang = Factory::getLanguage();
 $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
-
 
 JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
 JHtml::_('bootstrap.tooltip');
@@ -33,16 +32,18 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 ?>
 
 <!--Page Heading-->
-<?php if ($this->params->get('show_page_heading', 1)) : ?>
+<?php if ($this->params->get('show_page_heading', 1)): ?>
 <div class="page-header eiko_header_main">
-<h1 class="eiko_header_main_h1"> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1> 
+<h1 class="eiko_header_main_h1"> <?php echo $this->escape(
+  $this->params->get('page_heading')
+); ?> </h1> 
 </div>
 <br/>
-<?php endif;?>
+<?php endif; ?>
 
-<?php
-require_once JPATH_SITE.'/components/com_einsatzkomponente/views/organisationen/tmpl/'.$this->params->get('organisation_layout','organisationen_layout_1.php').''; 
-
-?>
+<?php require_once JPATH_SITE .
+  '/components/com_einsatzkomponente/views/organisationen/tmpl/' .
+  $this->params->get('organisation_layout', 'organisationen_layout_1.php') .
+  ''; ?>
 
 
