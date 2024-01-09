@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -6,15 +7,20 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
+
 defined('JPATH_BASE') or die;
+
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Date\Date;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Form\FormHelper;
+
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldTimecreated extends FormField
+class TimecreatedField extends FormField
 {
 	/**
 	 * The form field type.
@@ -22,7 +28,7 @@ class JFormFieldTimecreated extends FormField
 	 * @var		string
 	 * @since	1.6
 	 */
-	protected $type = 'timecreated';
+	protected $type = 'Timecreated';
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -33,16 +39,16 @@ class JFormFieldTimecreated extends FormField
 	{
 		// Initialize variables.
 		$html = array();
-        
+
 		$time_created = $this->value;
 		if (!$time_created) {
 			$time_created = date("Y-m-d H:i:s");
-			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$time_created.'" />';
+			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $time_created . '" />';
 		}
 		$jdate = new Date($time_created);
 		$pretty_date = $jdate->format(Text::_('DATE_FORMAT_LC2'));
-		$html[] = "<div>".$pretty_date."</div>";
-        
+		$html[] = "<div>" . $pretty_date . "</div>";
+
 		return implode($html);
 	}
 }

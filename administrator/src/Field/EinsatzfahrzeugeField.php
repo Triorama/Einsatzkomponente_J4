@@ -8,7 +8,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 
-namespace Joomla\Component\Content\Administrator\Field;
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
 
 defined('JPATH_BASE') or die;
 
@@ -28,7 +28,7 @@ class EinsatzfahrzeugeField extends FormField
          * @var         string
          * @since       1.6
          */
-        protected $type = 'einsatzfahrzeuge';
+        protected $type = 'Einsatzfahrzeuge';
         /**
          * Method to get the field input markup.
          *

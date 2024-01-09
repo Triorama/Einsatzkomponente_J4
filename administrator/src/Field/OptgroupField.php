@@ -8,7 +8,7 @@
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
 
-namespace Joomla\Component\Content\Administrator\Field;
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
 
 defined('JPATH_BASE') or die;
 
@@ -28,7 +28,7 @@ class OptgroupField extends FormField
      * @var         string
      * @since       1.6
      */
-    protected $type = 'optgroup';
+    protected $type = 'Optgroup';
     /**
      * Method to get the field input markup.
      *
@@ -111,5 +111,10 @@ class OptgroupField extends FormField
 
         $html[] .= '</select>';
         return implode($html);
+    }
+
+    protected function getLabel()
+    {
+        return str_replace($this->id, $this->id . '_name', parent::getLabel());
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -6,14 +7,19 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
+
 defined('JPATH_BASE') or die;
+
 use Joomla\CMS\Form\FormField;
-use Joomla\CMS\Factory;
+use Joomla\CMS\Date\Date;
 use Joomla\CMS\Form\FormHelper;
+
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldCreatedby extends FormField
+class TimeupdatedField extends FormField
 {
 	/**
 	 * The form field type.
@@ -21,7 +27,7 @@ class JFormFieldCreatedby extends FormField
 	 * @var		string
 	 * @since	1.6
 	 */
-	protected $type = 'createdby';
+	protected $type = 'Timeupdated';
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -32,18 +38,19 @@ class JFormFieldCreatedby extends FormField
 	{
 		// Initialize variables.
 		$html = array();
-        
-        
-		//Load user
-		$user_id = $this->value;
-		if ($user_id) {
-			$user = Factory::getUser($user_id);
+
+
+		$old_time_updated = $this->value;
+		if (!$old_time_updated) {
+			$html[] = '-';
 		} else {
-			$user = Factory::getUser();
-			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$user->id.'" />';
+			$jdate = new Date($old_time_updated);
+			$pretty_date = $jdate->format(Text::_('DATE_FORMAT_LC2'));
+			$html[] = "<div>" . $pretty_date . "</div>";
 		}
-		$html[] = "<div>".$user->name." (".$user->username.")</div>";
-        
+		$time_updated = date("Y-m-d H:i:s");
+		$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $time_updated . '" />';
+
 		return implode($html);
 	}
 }

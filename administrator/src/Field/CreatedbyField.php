@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @version     3.15.0
  * @package     com_einsatzkomponente
@@ -6,14 +7,19 @@
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  * @author      Ralf Meyer <ralf.meyer@mail.de> - https://einsatzkomponente.de
  */
+
+namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
+
 defined('JPATH_BASE') or die;
+
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Form\FormHelper;
+
 /**
  * Supports an HTML select list of categories
  */
-class JFormFieldModifiedby extends FormField
+class CreatedbyField extends FormField
 {
 	/**
 	 * The form field type.
@@ -21,7 +27,7 @@ class JFormFieldModifiedby extends FormField
 	 * @var		string
 	 * @since	1.6
 	 */
-	protected $type = 'modifiedby';
+	protected $type = 'Createdby';
 	/**
 	 * Method to get the field input markup.
 	 *
@@ -32,18 +38,18 @@ class JFormFieldModifiedby extends FormField
 	{
 		// Initialize variables.
 		$html = array();
-        
-        
+
+
 		//Load user
 		$user_id = $this->value;
 		if ($user_id) {
 			$user = Factory::getUser($user_id);
 		} else {
 			$user = Factory::getUser();
-			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$user->id.'" />';
+			$html[] = '<input type="hidden" name="' . $this->name . '" value="' . $user->id . '" />';
 		}
-		$html[] = "<div>".$user->name." (".$user->username.")</div>";
-        
+		$html[] = "<div>" . $user->name . " (" . $user->username . ")</div>";
+
 		return implode($html);
 	}
 }
