@@ -28,3 +28,5 @@ CHANGE `ausruestung` `ausruestung` TEXT NULL,
 CHANGE `status` `status` VARCHAR(255) NULL,
 CHANGE `tickerkat` `einsatzkategorie` INT(10) NOT NULL,
 CHANGE `data1` `einsatzart` INT(10) NULL;
+
+RENAME TABLE `#__eiko_tickerkat` TO `#__eiko_einsatzkategorie`;

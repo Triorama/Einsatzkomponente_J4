@@ -177,7 +177,7 @@ CREATE TABLE IF NOT EXISTS `#__eiko_gmap_config` (
   PRIMARY KEY (`id`)
 ) DEFAULT COLLATE = utf8mb4_unicode_ci;
 
-CREATE TABLE IF NOT EXISTS `#__eiko_tickerkat` (
+CREATE TABLE IF NOT EXISTS `#__eiko_einsatzkategorie` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
