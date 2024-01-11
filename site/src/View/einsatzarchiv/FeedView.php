@@ -68,7 +68,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
       $title = html_entity_decode($summary);
       $desc = strip_tags($item->desc);
       $desc = strlen($desc) > $this->params->get('rss_chars', '1000') ? substr($desc, 0, strrpos(substr($desc, 0, $this->params->get('rss_chars', '1000') + 1), ' ')) . ' ...' : $desc;
-      $nr = EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1, $item->data1_id);
+      $nr = EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->alarmierungszeit, $item->einsatzart_id);
       // url link to article
       // & used instead of &amp; as this is converted by feed creator
       $link = Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht' . $this->layout_detail_link . '&id=' . $item->id);
@@ -87,8 +87,8 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
 
       $rss_item->description .= '<table>';
 
-      if ($item->date1 > 1 and $this->params->get('display_rss_alerttime', '0')):
-        $rss_item->description .= '<tr><td><b>Alarmierung am</b>: ' . date('d.m.Y', $item->date1) . ' um ' . date('H:i', $item->date1) . ' Uhr</td></tr>';
+      if ($item->alarmierungszeit > 1 and $this->params->get('display_rss_alerttime', '0')):
+        $rss_item->description .= '<tr><td><b>Alarmierung am</b>: ' . date('d.m.Y', $item->alarmierungszeit) . ' um ' . date('H:i', $item->alarmierungszeit) . ' Uhr</td></tr>';
       endif;
 
       if ($desc):
@@ -107,8 +107,8 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
         $rss_item->description .= '<tr><td><b>Mannschaftsstärke</b>: ' . $item->people . '</td></tr>';
       endif;
 
-      if ($item->date3 > 1 and $this->params->get('display_rss_time', '0')):
-        $einsatzdauer = EinsatzkomponenteHelper::getEinsatzdauer(date('d.m.Y H:i', $item->date1), $item->date3);
+      if ($item->einsatzende > 1 and $this->params->get('display_rss_time', '0')):
+        $einsatzdauer = EinsatzkomponenteHelper::getEinsatzdauer(date('d.m.Y H:i', $item->alarmierungszeit), $item->einsatzende);
         $rss_item->description .= '<tr><td><b>Einsatzdauer</b>: ' . $einsatzdauer . '</td></tr>';
       endif;
 
@@ -118,7 +118,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
         endif;
       endif;
 
-      $rss_item->date = date('d.m.Y H:i', $item->date1);
+      $rss_item->date = date('d.m.Y H:i', $item->alarmierungszeit);
 
       $rss_item->description .= '</table>';
 

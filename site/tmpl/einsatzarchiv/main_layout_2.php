@@ -37,7 +37,7 @@ use Joomla\CMS\Date\Date;
 				</th>
 
 				<th class='left'>
-				<?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATE1'); ?>
+				<?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALARMIERUNGSZEIT'); ?>
 				<?php $eiko_col = $eiko_col + 1; ?>
 				</th>
 				
@@ -125,26 +125,26 @@ use Joomla\CMS\Date\Date;
 				<?php endif; ?>
 
            <!--Anzeige des Jahres-->
-           <?php if ($item->date1_year != $y && $this->params->get('display_home_jahr', '1')): ?>
+           <?php if ($item->alarmierungszeit_year != $y && $this->params->get('display_home_jahr', '1')): ?>
 		   <tr class="eiko_einsatzarchiv_jahr_tr"><td class="eiko_einsatzarchiv_jahr_td" colspan="<?php echo $eiko_col; ?>">
-           <?php $y = $item->date1_year; ?>
+           <?php $y = $item->alarmierungszeit_year; ?>
            <?php $m = '';
              /* reset month for new year */
              ?>
 		   <?php echo '<div class="eiko_einsatzarchiv_jahr_div">'; ?>
-           <?php echo 'Einsatzberichte ' . $item->date1_year . ''; ?> 
+           <?php echo 'Einsatzberichte ' . $item->alarmierungszeit_year . ''; ?> 
            <?php echo '</div>'; ?>
            </td></tr>
            <?php endif; ?>
            <!--Anzeige des Jahres ENDE-->
 
            <!--Anzeige des Monatsnamen-->
-           <?php if (($item->date1_month != $m || $item->date1_year != $y) && $this->params->get('display_home_monat', '1')): ?>
-           <?php $y = $item->date1_year;
+           <?php if (($item->alarmierungszeit_month != $m || $item->alarmierungszeit_year != $y) && $this->params->get('display_home_monat', '1')): ?>
+           <?php $y = $item->alarmierungszeit_year;
              // $y may not have been set before if display_home_jahr is 0
              ?>
 		   <tr class="eiko_einsatzarchiv_monat_tr"><td class="eiko_einsatzarchiv_monat_td" colspan="<?php echo $eiko_col; ?>">
-           <?php $m = $item->date1_month; ?>
+           <?php $m = $item->alarmierungszeit_month; ?>
 		   <?php echo '<div class="eiko_einsatzarchiv_monat_div">'; ?>
            <?php echo (new Date())->monthToString($m); ?>
            <?php echo '</div>'; ?>
@@ -163,9 +163,9 @@ use Joomla\CMS\Date\Date;
         <?php $date_image = $this->params->get('display_home_date_image', '1'); ?>
         <?php if ($date_image == '0' || $date_image == '2'): ?>
           <td class="eiko_td_datum_main_1">
-            <?php echo date('d.m.Y', $item->date1); ?>
+            <?php echo date('d.m.Y', $item->alarmierungszeit); ?>
             <?php if ($date_image == '2'): ?>
-              <br /><?php echo date('H:i', $item->date1); ?>Uhr
+              <br /><?php echo date('H:i', $item->alarmierungszeit); ?>Uhr
             <?php endif; ?>
           </td>
         <?php endif; ?>
@@ -173,11 +173,11 @@ use Joomla\CMS\Date\Date;
         <?php if ($date_image == '1' || $date_image == '3'): ?>
           <td class="eiko_td_kalender_main_1">
             <div class="home_cal_icon">
-              <div class="home_cal_monat"><?php echo date('M', $item->date1); ?></div>
-              <div class="home_cal_tag"><?php echo date('d', $item->date1); ?></div>
-              <div class="home_cal_jahr"><span style="font-size:10px;"><?php echo date('Y', $item->date1); ?></span></div>
+              <div class="home_cal_monat"><?php echo date('M', $item->alarmierungszeit); ?></div>
+              <div class="home_cal_tag"><?php echo date('d', $item->alarmierungszeit); ?></div>
+              <div class="home_cal_jahr"><span style="font-size:10px;"><?php echo date('Y', $item->alarmierungszeit); ?></span></div>
               <?php if ($date_image == '3'): ?>
-                <div style="font-size: 12px; white-space: nowrap;"><?php echo date('H:i', $item->date1); ?>Uhr</div>
+                <div style="font-size: 12px; white-space: nowrap;"><?php echo date('H:i', $item->alarmierungszeit); ?>Uhr</div>
               <?php endif; ?>
             </div>
           </td>
@@ -195,23 +195,23 @@ use Joomla\CMS\Date\Date;
 					<?php if ($this->params->get('display_home_alertimage', '0')): ?>
 					<img class="eiko_icon " src="<?php
      echo JURI::Root();
-     echo $item->alerting_image;
-     ?>" title="Alarmierung über: <?php echo $item->alerting; ?>" />
+     echo $item->alarmierungsart_image;
+     ?>" title="Alarmierung über: <?php echo $item->alarmierungsart; ?>" />
 					<?php endif; ?>
 					<?php if ($this->params->get('display_list_icon')): ?>
 					<img class="eiko_icon " src="<?php
      echo JURI::Root();
      echo $item->list_icon;
-     ?>" alt="<?php echo $item->list_icon; ?>" title="Einsatzart: <?php echo $item->data1; ?>"/>
+     ?>" alt="<?php echo $item->list_icon; ?>" title="Einsatzart: <?php echo $item->einsatzart; ?>"/>
 					<?php endif; ?>
-					<?php if ($this->params->get('display_tickerkat_icon')): ?>
+					<?php if ($this->params->get('display_einsatzkategorie_icon')): ?>
 					<img class="eiko_icon " src="<?php
      echo JURI::Root();
-     echo $item->tickerkat_image;
-     ?>" alt="<?php echo $item->tickerkat; ?>" title="Kategorie: <?php echo $item->tickerkat; ?>"/>
+     echo $item->einsatzkategorie_image;
+     ?>" alt="<?php echo $item->einsatzkategorie; ?>" title="Kategorie: <?php echo $item->einsatzkategorie; ?>"/>
 					<?php endif; ?>
 					
-					<span class="eiko_nowrap"><b><?php echo $item->data1; ?></b></span>
+					<span class="eiko_nowrap"><b><?php echo $item->einsatzart; ?></b></span>
 					<?php if ($this->params->get('display_home_links', '1')): ?>
 					</a>
 					<?php endif; ?>

@@ -35,13 +35,13 @@ $restore = Factory::getApplication()->input->get('restore', false);
 // DB-Service
 $repair_array = [];
 $repair_array['111'] =
-  "CREATE TABLE IF NOT EXISTS `#__eiko_tickerkat` ( `id` int(11) unsigned NOT NULL AUTO_INCREMENT,  `asset_id` int(10) unsigned NOT NULL DEFAULT '0',  `title` varchar(255) NOT NULL,  `image` varchar(255) NOT NULL,  `beschreibung` TEXT NOT NULL,  `ordering` int(11) NOT NULL,  `state` tinyint(1) NOT NULL,  `created_by` int(11) NOT NULL,  `checked_out` int(11) NOT NULL,  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  PRIMARY KEY (`id`)) DEFAULT COLLATE=utf8_general_ci;";
+  "CREATE TABLE IF NOT EXISTS `#__eiko_einsatzkategorie` ( `id` int(11) unsigned NOT NULL AUTO_INCREMENT,  `asset_id` int(10) unsigned NOT NULL DEFAULT '0',  `title` varchar(255) NOT NULL,  `image` varchar(255) NOT NULL,  `beschreibung` TEXT NOT NULL,  `ordering` int(11) NOT NULL,  `state` tinyint(1) NOT NULL,  `created_by` int(11) NOT NULL,  `checked_out` int(11) NOT NULL,  `checked_out_time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',  PRIMARY KEY (`id`)) DEFAULT COLLATE=utf8_general_ci;";
 
 $repair_array['112'] =
   "CREATE TABLE IF NOT EXISTS `#__eiko_ausruestung` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,`asset_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',`name` VARCHAR(255)  NOT NULL ,`image` VARCHAR(255)  NOT NULL ,`beschreibung` TEXT NOT NULL ,`created_by` INT(11)  NOT NULL ,`checked_out` INT(11)  NOT NULL ,`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',`ordering` INT(11)  NOT NULL ,`state` TINYINT(1)  NOT NULL ,PRIMARY KEY (`id`)) DEFAULT COLLATE=utf8_general_ci;";
 
 $repair_array['113'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `ausruestung` TEXT NOT NULL AFTER `vehicles`;';
-$repair_array['114'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `auswahl_orga` TEXT NOT NULL AFTER `tickerkat`;';
+$repair_array['114'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `auswahl_orga` TEXT NOT NULL AFTER `einsatzkategorie`;';
 $repair_array['115'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `createdate` DATETIME NOT NULL AFTER `updatedate`;';
 $repair_array['116'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `modified_by` INT(11)  NOT NULL AFTER `created_by`;';
 $repair_array['117'] = 'UPDATE `#__eiko_einsatzberichte` SET `createdate` = `updatedate`;';
@@ -140,17 +140,17 @@ endif;
           }
         }
         // ------------------ Update von Version 3.05 auf 3.06 beta ---------------------------------------------------
-        $check_tickerkat = '0';
+        $check_einsatzkategorie = '0';
         $db = Factory::getDbo();
-        $db->setQuery('select * from `#__eiko_tickerkat`');
+        $db->setQuery('select * from `#__eiko_einsatzkategorie`');
         try {
-          $check_tickerkat = $db->execute();
+          $check_einsatzkategorie = $db->execute();
         } catch (Exception $e) {
-          $check_tickerkat = '1';
+          $check_einsatzkategorie = '1';
         }
 
-        if ($check_tickerkat == '1') {
-          $eiko_tickerkat = [
+        if ($check_einsatzkategorie == '1') {
+          $eiko_einsatzkategorie = [
             [
               'id' => '1',
               'asset_id' => '0',
@@ -430,7 +430,7 @@ endif;
           ];
 
           $e = '';
-          $sql = "CREATE TABLE IF NOT EXISTS `#__eiko_tickerkat` (
+          $sql = "CREATE TABLE IF NOT EXISTS `#__eiko_einsatzkategorie` (
 `id` int(11)  UNSIGNED NOT NULL AUTO_INCREMENT,
   `asset_id` int(10) unsigned NOT NULL DEFAULT '0',
   `title` varchar(255) NOT NULL,
@@ -452,9 +452,9 @@ endif;
             $bug = '1';
           }
 
-          foreach ($eiko_tickerkat as $data) {
+          foreach ($eiko_einsatzkategorie as $data) {
             $sql =
-              'INSERT INTO `#__eiko_tickerkat` (id, asset_id, title, image, beschreibung, ordering, state,created_by,checked_out,checked_out_time)
+              'INSERT INTO `#__eiko_einsatzkategorie` (id, asset_id, title, image, beschreibung, ordering, state,created_by,checked_out,checked_out_time)
     VALUES ("' .
               $data['id'] .
               '", "' .

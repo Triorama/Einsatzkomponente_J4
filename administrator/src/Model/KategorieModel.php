@@ -97,7 +97,7 @@ class KategorieModel extends AdminModel
       // Set ordering to the last item if not set
       if (@$table->ordering === '') {
         $db = Factory::getDbo();
-        $db->setQuery('SELECT MAX(ordering) FROM #__eiko_tickerkat');
+        $db->setQuery('SELECT MAX(ordering) FROM #__eiko_einsatzkategorie');
         $max = $db->loadResult();
         $table->ordering = $max + 1;
       }
@@ -117,7 +117,7 @@ class KategorieModel extends AdminModel
   {
     $db = Factory::getDBO();
     foreach ($pks as $id) {
-      $db->setQuery('DELETE FROM #__eiko_tickerkat WHERE id=' . $id);
+      $db->setQuery('DELETE FROM #__eiko_einsatzkategorie WHERE id=' . $id);
       try {
         $db->execute();
       } catch (RuntimeException $e) {

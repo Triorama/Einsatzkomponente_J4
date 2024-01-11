@@ -159,23 +159,23 @@ $reports_id[$i] = $results[$i]->id;
 						$query
 							->select('id')
 							->from('#__eiko_einsatzarten')
-							->where('title = "' .$results[$i]->data1.'"');
+							->where('title = "' .$results[$i]->einsatzart.'"');
 						$db->setQuery($query);
 						$data_id = $db->loadResult();
 
-$reports_data1[$i] = $data_id  ?: '';
+$reports_einsatzart[$i] = $data_id  ?: '';
 $reports_image[$i] = $results[$i]->image ?: 'nopic.jpg';
 $reports_address[$i] = $results[$i]->address ?: '';
-$reports_date1[$i] = $results[$i]->date1 ?: '';
-$reports_date2[$i] = $results[$i]->date2 ?: '';
-$reports_date3[$i] = $results[$i]->date3 ?: '';
+$reports_alarmierungszeit[$i] = $results[$i]->alarmierungszeit ?: '';
+$reports_ausfahrtszeit[$i] = $results[$i]->ausfahrtszeit ?: '';
+$reports_einsatzende[$i] = $results[$i]->einsatzende ?: '';
 $reports_summary[$i] = $results[$i]->summary ?: '';
-$reports_boss[$i] = $results[$i]->boss ?: '';
+$reports_einsatzleiter[$i] = $results[$i]->einsatzleiter ?: '';
 $reports_people[$i] = $results[$i]->people ?: '';
 $reports_department[$i] = $results[$i]->department ?: '';
 $reports_desc[$i] = $results[$i]->desc ?: '';
 $reports_published[$i] = $results[$i]->published ?: '0';
-$reports_alerting[$i] = $results[$i]->alerting ?: '';
+$reports_alarmierungsart[$i] = $results[$i]->alarmierungsart ?: '';
 $reports_gmap_report_latitude[$i] = $results[$i]->gmap_report_latitude ?: '1';
 $reports_gmap_report_longitude[$i] = $results[$i]->gmap_report_longitude ?: '1';
 $reports_counter[$i] = $results[$i]->counter ?: '0';
@@ -183,7 +183,7 @@ $reports_gmap[$i] = $results[$i]->gmap ?: '0';
 $reports_presse[$i] = $results[$i]->presse ?: '';
 $reports_updatename[$i] = $results[$i]->updatename ?: '';
 $reports_updatedate[$i] = $results[$i]->updatedate ?: '';
-$reports_boss2[$i] = $results[$i]->boss2 ?: '';
+$reports_einsatzfuehrer[$i] = $results[$i]->einsatzfuehrer ?: '';
 $reports_einsatzticker[$i] = $results[$i]->einsatzticker ?: '0';
 $reports_tickerKAT[$i] = $results[$i]->tickerKAT ?: '0';
 $reports_notrufticker[$i] = $results[$i]->notrufticker ?: '0';
@@ -235,8 +235,8 @@ $foto = 'images/com_einsatzkomponente/einsatzbilder/thumbs/nopic.png';
 endif;
 $db = Factory::getDbo();
 $query = $db->getQuery(true);
-$columns = array('id','asset_id','ordering','data1','image','address','date1','date2','date3','summary','boss','boss2','people','department','desc','alerting','gmap_report_latitude','gmap_report_longitude','counter','gmap','presse','presse2','presse3','updatedate','einsatzticker','notrufticker','tickerkat','auswahl_orga','vehicles','status','state','created_by');
-$values = array($reports_id[$i], '0', '0', $db->quote($reports_data1[$i]), $db->quote($foto), $db->quote($reports_address[$i]), $db->quote($reports_date1[$i]), $db->quote($reports_date2[$i]), $db->quote($reports_date3[$i]), $db->quote($reports_summary[$i]), $db->quote($reports_boss[$i]), $db->quote($reports_boss2[$i]), $db->quote($reports_people[$i]), $db->quote($reports_department[$i]), $db->quote($reports_desc[$i]), $db->quote($reports_alerting[$i]), $db->quote($reports_gmap_report_latitude[$i]), $db->quote($reports_gmap_report_longitude[$i]), $db->quote($reports_counter[$i]), $db->quote($reports_gmap[$i]), $db->quote($reports_presse[$i]), $db->quote($reports_presse2[$i]), $db->quote($reports_presse3[$i]), $db->quote($reports_updatedate[$i]),$db->quote($reports_einsatzticker[$i]), $db->quote($reports_notrufticker[$i]),$db->quote($reports_tickerKAT[$i]), $db->quote($auswahl_orga[$i]), $db->quote($vehicles[$i]), $db->quote($reports_status[$i]), $db->quote($reports_published[$i]), $db->quote($reports_updatename[$i]));
+$columns = array('id','asset_id','ordering','einsatzart','image','address','alarmierungszeit','ausfahrtszeit','einsatzende','summary','einsatzleiter','einsatzfuehrer','people','department','desc','alarmierungsart','gmap_report_latitude','gmap_report_longitude','counter','gmap','presse','presse2','presse3','updatedate','einsatzticker','notrufticker','einsatzkategorie','auswahl_orga','vehicles','status','state','created_by');
+$values = array($reports_id[$i], '0', '0', $db->quote($reports_einsatzart[$i]), $db->quote($foto), $db->quote($reports_address[$i]), $db->quote($reports_alarmierungszeit[$i]), $db->quote($reports_ausfahrtszeit[$i]), $db->quote($reports_einsatzende[$i]), $db->quote($reports_summary[$i]), $db->quote($reports_einsatzleiter[$i]), $db->quote($reports_einsatzfuehrer[$i]), $db->quote($reports_people[$i]), $db->quote($reports_department[$i]), $db->quote($reports_desc[$i]), $db->quote($reports_alarmierungsart[$i]), $db->quote($reports_gmap_report_latitude[$i]), $db->quote($reports_gmap_report_longitude[$i]), $db->quote($reports_counter[$i]), $db->quote($reports_gmap[$i]), $db->quote($reports_presse[$i]), $db->quote($reports_presse2[$i]), $db->quote($reports_presse3[$i]), $db->quote($reports_updatedate[$i]),$db->quote($reports_einsatzticker[$i]), $db->quote($reports_notrufticker[$i]),$db->quote($reports_tickerKAT[$i]), $db->quote($auswahl_orga[$i]), $db->quote($vehicles[$i]), $db->quote($reports_status[$i]), $db->quote($reports_published[$i]), $db->quote($reports_updatename[$i]));
 $query
     ->insert($db->quoteName('#__eiko_einsatzberichte'))
     ->columns($db->quoteName($columns))
@@ -256,19 +256,19 @@ endif;
 $db = Factory::getDbo();
 $query = $db->getQuery(true);
 $query->select('*');
-$query->from('#__reports_alerting');
+$query->from('#__reports_alarmierungsart');
 $db->setQuery($query);
 $results = $db->loadObjectList();
 if ($results) :
-	echo 'Importiere <span class="label label-info">#_reports_alerting</span>     ..........      ';
+	echo 'Importiere <span class="label label-info">#_reports_alarmierungsart</span>     ..........      ';
 	echo count($results).' Alarmierungsarten <span class="label label-success">erfolgreich importiert</span><br/>';
 $count = count($results)-1;	
 $i = 0;
 while ($i <= $count) {
-$reports_alerting_id[$i] = $results[$i]->id;
-$reports_alerting_title[$i] = $results[$i]->title ?: '';
-$reports_alerting_image[$i] = 'images/com_einsatzkomponente/images/alert/'.$results[$i]->image ?: '';
-$reports_alerting_published[$i] = $results[$i]->published ?: '';
+$reports_alarmierungsart_id[$i] = $results[$i]->id;
+$reports_alarmierungsart_title[$i] = $results[$i]->title ?: '';
+$reports_alarmierungsart_image[$i] = 'images/com_einsatzkomponente/images/alert/'.$results[$i]->image ?: '';
+$reports_alarmierungsart_published[$i] = $results[$i]->published ?: '';
 $i++; 
 }
 $i = 0;
@@ -276,7 +276,7 @@ while ($i <= $count) {
 $db = Factory::getDbo();
 $query = $db->getQuery(true);
 $columns = array('id', 'asset_id', 'ordering', 'title', 'image', 'state', 'created_by');
-$values = array($db->quote($reports_alerting_id[$i]),'0','0', $db->quote($reports_alerting_title[$i]), $db->quote($reports_alerting_image[$i]), $db->quote($reports_alerting_published[$i]),$db->quote('') );
+$values = array($db->quote($reports_alarmierungsart_id[$i]),'0','0', $db->quote($reports_alarmierungsart_title[$i]), $db->quote($reports_alarmierungsart_image[$i]), $db->quote($reports_alarmierungsart_published[$i]),$db->quote('') );
  
 $query
     ->insert($db->quoteName('#__eiko_alarmierungsarten'))
@@ -412,7 +412,7 @@ $reports_config_tickerDEBUG2[$i] = $results[$i]->tickerDEBUG2;
 $reports_config_vehicleupload[$i] = $results[$i]->vehicleupload;
 $reports_config_missionupload[$i] = $results[$i]->missionupload;
 $reports_config_missioniconupload[$i] = $results[$i]->missioniconupload;
-$reports_config_alertingupload[$i] = $results[$i]->alertingupload;
+$reports_config_alarmierungsartupload[$i] = $results[$i]->alarmierungsartupload;
 $reports_config_gmap_zoom_show[$i] = $results[$i]->gmap_zoom_show;
 $reports_config_gmap_max_level_show[$i] = $results[$i]->gmap_max_level_show;
 $reports_config_allowmap[$i] = $results[$i]->allowmap;
@@ -524,23 +524,23 @@ $count = count($results)-1;
 $i = 0;
 while ($i <= $count) {
 $reports_display_report_id[$i] = $results[$i]->report_id;
-$reports_display_data1[$i] = $results[$i]->data1;
+$reports_display_einsatzart[$i] = $results[$i]->einsatzart;
 $reports_display_image[$i] = $results[$i]->image;
 $reports_display_address[$i] = $results[$i]->address;
-$reports_display_date1[$i] = $results[$i]->date1;
-$reports_display_date2[$i] = $results[$i]->date2;
-$reports_display_date3[$i] = $results[$i]->date3;
+$reports_display_alarmierungszeit[$i] = $results[$i]->alarmierungszeit;
+$reports_display_ausfahrtszeit[$i] = $results[$i]->ausfahrtszeit;
+$reports_display_einsatzende[$i] = $results[$i]->einsatzende;
 $reports_display_summary[$i] = $results[$i]->summary;
-$reports_display_boss[$i] = $results[$i]->boss;
+$reports_display_einsatzleiter[$i] = $results[$i]->einsatzleiter;
 $reports_display_people[$i] = $results[$i]->people;
 $reports_display_department[$i] = $results[$i]->department;
 $reports_display_desc[$i] = $results[$i]->desc;
-$reports_display_alerting[$i] = $results[$i]->alerting;
+$reports_display_alarmierungsart[$i] = $results[$i]->alarmierungsart;
 $reports_display_vehicle[$i] = $results[$i]->vehicle;
 $reports_display_dauer[$i] = $results[$i]->dauer;
 $reports_display_logo[$i] = $results[$i]->logo;
 $reports_display_mapshow[$i] = $results[$i]->mapshow;
-$reports_display_boss2[$i] = $results[$i]->boss2;
+$reports_display_einsatzfuehrer[$i] = $results[$i]->einsatzfuehrer;
 $i++; 
 }
 endif;

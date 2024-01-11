@@ -201,7 +201,7 @@ if (!empty($this->extra_sidebar)) {
 
 
     $database = Factory::getDBO();
-    $query = 'SELECT count(id) FROM #__eiko_einsatzberichte WHERE alerting = "' . $item->id . '" and (state="1" or state="2") ';
+    $query = 'SELECT count(id) FROM #__eiko_einsatzberichte WHERE alarmierungsart = "' . $item->id . '" and (state="1" or state="2") ';
     $database->setQuery($query);
     $mission = $database->loadResult();
     ?>

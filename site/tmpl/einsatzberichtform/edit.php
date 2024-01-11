@@ -97,16 +97,16 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
 			</div>
             <?php endif; ?>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('alerting'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('alerting'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('alarmierungsart'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('alarmierungsart'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('data1'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('data1'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('einsatzart'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('einsatzart'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('tickerkat'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('tickerkat'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('einsatzkategorie'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('einsatzkategorie'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('address'); ?></div>
@@ -114,27 +114,27 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
             </div> 
 			
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('date1'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('date1'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('alarmierungszeit'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('alarmierungszeit'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('date2'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('date2'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('ausfahrtszeit'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('ausfahrtszeit'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('date3'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('date3'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('einsatzende'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('einsatzende'); ?></div>
 			</div>
      </div>
     		<div class="fltlft well" style="width:80%;">
     		<br/><h1><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZKRAEFTE'); ?> :</h1>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('boss'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('boss'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('einsatzleiter'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('einsatzleiter'); ?></div>
 			</div>
 			<div class="control-group">
-				<div class="control-label"><?php echo $this->form->getLabel('boss2'); ?></div>
-				<div class="controls"><?php echo $this->form->getInput('boss2'); ?></div>
+				<div class="control-label"><?php echo $this->form->getLabel('einsatzfuehrer'); ?></div>
+				<div class="controls"><?php echo $this->form->getInput('einsatzfuehrer'); ?></div>
 			</div>
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('people'); ?></div>

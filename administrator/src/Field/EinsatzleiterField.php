@@ -41,7 +41,7 @@ class EinsatzleiterField extends FormField
     $address = [];
 
     $db = Factory::getDBO();
-    $query = 'SELECT id, boss as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY boss ORDER BY boss';
+    $query = 'SELECT id, einsatzleiter as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY einsatzleiter ORDER BY einsatzleiter';
     $db->setQuery($query);
     $arrayDb = $db->loadObjectList();
 
@@ -50,12 +50,12 @@ class EinsatzleiterField extends FormField
     if (count($arrayDb)):
       $array[] = JHTML::_('select.option', '', 'Einsatzleiter auswählen', 'title', 'title');
       $array = array_merge($array, $arrayDb);
-      $html[] .= '<br/><br/>' . JHTML::_('select.genericlist', $array, 'boss', 'onchange="changeText_einsatzleiter()" ', 'title', 'title', '0');
+      $html[] .= '<br/><br/>' . JHTML::_('select.genericlist', $array, 'einsatzleiter', 'onchange="changeText_einsatzleiter()" ', 'title', 'title', '0');
 
       $html[] .=
         '<script type="text/javascript">
 function changeText_einsatzleiter(){
-    var userInput1 = document.getElementById("boss").value;
+    var userInput1 = document.getElementById("einsatzleiter").value;
 	document.getElementById("' .
         $this->id .
         '").value = userInput1;

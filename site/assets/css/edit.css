@@ -77,7 +77,7 @@
   float: right;
 }
 
-#jform_tickerkat_chzn {
+#jform_einsatzkategorie_chzn {
   width: 380px !important;
 }
 #jform_address {
@@ -89,10 +89,10 @@
 #jform_vehicles_chzn {
   width: 380px !important;
 }
-#jform_data1_chzn {
+#jform_einsatzart_chzn {
   width: 380px !important;
 }
-#jform_alerting_chzn {
+#jform_alarmierungsart_chzn {
   width: 380px !important;
 }
 #adresse_chzn {

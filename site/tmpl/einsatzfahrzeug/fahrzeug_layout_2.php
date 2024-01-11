@@ -91,17 +91,22 @@ use Joomla\CMS\Router\Route;
   // letzter Einsatz
   // letzter Einsatz
   // letzter Einsatz
+  // letzter Einsatz
+  // letzter Einsatz
+  // letzter Einsatz
+  // letzter Einsatz
+  // letzter Einsatz
+  // letzter Einsatz
 
- // letzter Einsatz
  $database = Factory::getDBO();
- $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $this->item->id . '",vehicles) AND (state ="1" OR state="2") ORDER BY date1 DESC';
+ $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $this->item->id . '",vehicles) AND (state ="1" OR state="2") ORDER BY alarmierungszeit DESC';
  $database->setQuery($query);
  $total = $database->loadObjectList();
  ?>
 	<?php if ($total): ?>
 	<tr class="fahrzeug_box_3">
 	<td><strong>Letzter Eintrag:</strong></td>
-	<td><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date('d.m.Y', strtotime($total[0]->date1)); ?></a></td>
+	<td><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date('d.m.Y', strtotime($total[0]->alarmierungszeit)); ?></a></td>
 	</tr> 
 	<?php endif; ?>
 <?php endif; ?>

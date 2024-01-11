@@ -84,12 +84,12 @@ class EinsatzkomponenteModelEinsatzkarte extends ListModel
         $query->where('a.id = ' . (int) substr($search, 3));
       } else {
         $search = $db->Quote('%' . $db->escape($search, true) . '%');
-        $query->where('( a.address LIKE ' . $search . '  OR  a.summary LIKE ' . $search . '  OR  a.boss LIKE ' . $search . '  OR  a.boss2 LIKE ' . $search . '  OR  a.desc LIKE ' . $search . ' )');
+        $query->where('( a.address LIKE ' . $search . '  OR  a.summary LIKE ' . $search . '  OR  a.einsatzleiter LIKE ' . $search . '  OR  a.einsatzfuehrer LIKE ' . $search . '  OR  a.desc LIKE ' . $search . ' )');
       }
     }
 
-    //Filtering data1
-    //Filtering alerting
+    //Filtering einsatzart
+    //Filtering alarmierungsart
     //Filtering updatedate
     $filter_updatedate_from = $this->state->get('filter.updatedate.from');
     if ($filter_updatedate_from) {

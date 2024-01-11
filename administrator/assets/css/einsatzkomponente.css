@@ -76,7 +76,7 @@
   padding-left: 60px !important;
 }
 
-.backend_tickerkat {
+.backend_einsatzkategorie {
   display: none;
 }
 .backend_einsatzfoto {
@@ -84,7 +84,7 @@
 }
 
 .backend_kat_style,
-.backend_alerting_style,
+.backend_alarmierungsart_style,
 .backend_data_style,
 .backend_foto_style,
 .backend_gmap_icon_orga {

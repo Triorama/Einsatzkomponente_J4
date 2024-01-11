@@ -36,7 +36,7 @@ use Joomla\CMS\Date\Date;
 				<?php endif; ?>
 				
 				<th class='left'>
-				<!--<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATE1', 'a.date1', $listDirn, $listOrder); ?>-->
+				<!--<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALARMIERUNGSZEIT', 'a.alarmierungszeit', $listDirn, $listOrder); ?>-->
 				<?php $eiko_col = $eiko_col + 1; ?>
 				</th>
 				
@@ -85,26 +85,26 @@ use Joomla\CMS\Date\Date;
         } ?>
 		
            <!--Anzeige des Jahres-->
-           <?php if ($item->date1_year != $y && $this->params->get('display_home_jahr', '1')): ?>
+           <?php if ($item->alarmierungszeit_year != $y && $this->params->get('display_home_jahr', '1')): ?>
 		   <tr class="eiko_einsatzarchiv_jahr_tr"><td class="eiko_einsatzarchiv_jahr_td" colspan="<?php echo $eiko_col; ?>">
-           <?php $y = $item->date1_year; ?>
+           <?php $y = $item->alarmierungszeit_year; ?>
            <?php $m = '';
              /* reset month for new year */
              ?>
 		   <?php echo '<div class="eiko_einsatzarchiv_jahr_div">'; ?>
-           <?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_MAIN_3') . ' ' . $item->date1_year . ''; ?>  
+           <?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_MAIN_3') . ' ' . $item->alarmierungszeit_year . ''; ?>  
            <?php echo '</div>'; ?>
            </td></tr>
            <?php endif; ?>
            <!--Anzeige des Jahres ENDE-->
 
            <!--Anzeige des Monatsnamen-->
-           <?php if (($item->date1_month != $m || $item->date1_year != $y) && $this->params->get('display_home_monat', '1')): ?>
-           <?php $y = $item->date1_year;
+           <?php if (($item->alarmierungszeit_month != $m || $item->alarmierungszeit_year != $y) && $this->params->get('display_home_monat', '1')): ?>
+           <?php $y = $item->alarmierungszeit_year;
              // $y may not have been set before if display_home_jahr is 0
              ?>
 		   <tr class="eiko_einsatzarchiv_monat_tr"><td class="eiko_einsatzarchiv_monat_td" colspan="<?php echo $eiko_col; ?>">
-           <?php $m = $item->date1_month; ?>
+           <?php $m = $item->alarmierungszeit_month; ?>
 		   <?php echo '<div class="eiko_einsatzarchiv_monat_div">'; ?>
            <?php echo '<b>' . (new Date())->monthToString($m) . '</b>'; ?>
            <?php echo '</div>'; ?>
@@ -116,11 +116,11 @@ use Joomla\CMS\Date\Date;
 
            <?php if ($this->params->get('display_home_number', '1')): ?>
            <?php if ($this->params->get('display_home_marker', '1')): ?>
-        <td class="eiko_td_marker_main_1 eiko_td_marker_color_<?php echo $item->data1_id; ?>" style="width:35px;">
+        <td class="eiko_td_marker_main_1 eiko_td_marker_color_<?php echo $item->einsatzart_id; ?>" style="width:35px;">
            <?php else: ?>
 		   <td class="eiko_td_marker_main_1">
            <?php endif; ?>
-			<?php echo '<span style="white-space: nowrap;margin-left:5px !important;" class="eiko_span_marker_main_1">' . Text::_('COM_EINSATZKOMPONENTE_NR') . ' ' . EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1, $item->data1_id) . '</span>'; ?> 
+			<?php echo '<span style="white-space: nowrap;margin-left:5px !important;" class="eiko_span_marker_main_1">' . Text::_('COM_EINSATZKOMPONENTE_NR') . ' ' . EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->alarmierungszeit, $item->einsatzart_id) . '</span>'; ?> 
 			</td>
            <?php endif; ?>
 		   
@@ -132,27 +132,27 @@ use Joomla\CMS\Date\Date;
 					<?php if ($this->params->get('display_home_links', '1')): ?>
 		   			<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>">
 					<?php endif; ?>
-					<span class="eiko_nowrap eiko_data1"><b><?php echo $item->data1; ?></b></span>
+					<span class="eiko_nowrap eiko_einsatzart"><b><?php echo $item->einsatzart; ?></b></span>
 					<?php if ($this->params->get('display_home_links', '1')): ?>
 					</a>
 					<?php endif; ?>
 					<?php if ($this->params->get('display_home_alertimage', '0')): ?>
 					<img class="eiko_icon_3 " src="<?php
      echo JURI::Root();
-     echo $item->alerting_image;
-     ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNG_UEBER'); ?>: <?php echo $item->alerting; ?>" />
+     echo $item->alarmierungsart_image;
+     ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNG_UEBER'); ?>: <?php echo $item->alarmierungsart; ?>" />
 					<?php endif; ?>
 					<?php if ($this->params->get('display_list_icon')): ?>
 					<img class="eiko_icon_3 " src="<?php
      echo JURI::Root();
      echo $item->list_icon;
-     ?>" alt="<?php echo $item->list_icon; ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZART'); ?>: <?php echo $item->data1; ?>"/>
+     ?>" alt="<?php echo $item->list_icon; ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZART'); ?>: <?php echo $item->einsatzart; ?>"/>
 					<?php endif; ?>
-					<?php if ($this->params->get('display_tickerkat_icon')): ?>
+					<?php if ($this->params->get('display_einsatzkategorie_icon')): ?>
 					<img class="eiko_icon_3 " src="<?php
      echo JURI::Root();
-     echo $item->tickerkat_image;
-     ?>" alt="<?php echo $item->tickerkat; ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_KATEGORIE'); ?>: <?php echo $item->tickerkat; ?>"/>
+     echo $item->einsatzkategorie_image;
+     ?>" alt="<?php echo $item->einsatzkategorie; ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_KATEGORIE'); ?>: <?php echo $item->einsatzkategorie; ?>"/>
 					<?php endif; ?>
 					<br /></br>
 					
@@ -186,9 +186,9 @@ endif; ?> <?php
 					
 					<?php echo '<i class="icon-arrow-right-4" ></i> <b>' . $item->summary . '</b>'; ?>
 					<br />
-					<?php echo '<i class="icon-calendar" ></i> ' . date('d.m.Y ', $item->date1); ?>
+					<?php echo '<i class="icon-calendar" ></i> ' . date('d.m.Y ', $item->alarmierungszeit); ?>
 					<br />
-					<?php echo '<i class="icon-clock" ></i> ' . date('H:i ', $item->date1); ?>Uhr		
+					<?php echo '<i class="icon-clock" ></i> ' . date('H:i ', $item->alarmierungszeit); ?>Uhr		
 					</br>	
 					
 					<?php if ($item->address): ?>
@@ -336,11 +336,11 @@ echo $item->image;
    ?> 
 					
             <tr id="tr<?php echo $item->id; ?>" class="eiko_tr_zusatz_main_1" style=" display:none;" >
-            <td class="eiko_td_marker_gradient_<?php echo $item->data1_id; ?>">
+            <td class="eiko_td_marker_gradient_<?php echo $item->einsatzart_id; ?>">
             </td>
             <td colspan="<?php echo $eiko_col - 1; ?>" class="eiko_td_zusatz_main_1">
 			<div id ="div<?php echo $item->id; ?>" style="display:none;">
-            <h3 style="text-decoration:underline;"><?php echo Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSZEIT'); ?> </h3><?php echo date('d.m.Y', $item->date1); ?> um <?php echo date('H:i', $item->date1); ?> Uhr
+            <h3 style="text-decoration:underline;"><?php echo Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSZEIT'); ?> </h3><?php echo date('d.m.Y', $item->alarmierungszeit); ?> um <?php echo date('H:i', $item->alarmierungszeit); ?> Uhr
             <h3 style="text-decoration:underline;"><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZKRAEFTE'); ?> </h3><?php echo $auswahl_orga; ?><br/>
 		   <?php if ($item->desc): ?>
 			<?php jimport('joomla.html.content'); ?>  
@@ -357,7 +357,7 @@ echo $item->image;
 	<?php endif; ?>
      <!-- Zusatzinformation Kurzinfo ENDE -->
 
-      <?php $marker_colors[$item->data1_id] = $item->marker;
+      <?php $marker_colors[$item->einsatzart_id] = $item->marker;
       //add marker color to array to create CSS from
       ?>
 

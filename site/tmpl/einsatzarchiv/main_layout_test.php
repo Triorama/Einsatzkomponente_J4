@@ -63,20 +63,20 @@ use Joomla\CMS\HTML\HTMLHelper;
 	<?php } ?>
           <div class="col-md-4">
             <h2 class="eiko_h2">
-					<?php if ($this->params->get('display_tickerkat_icon')): ?>
+					<?php if ($this->params->get('display_einsatzkategorie_icon')): ?>
 					<img class="eiko_icon " src="<?php
      echo JURI::Root();
-     echo $item->tickerkat_image;
-     ?>" alt="<?php echo $item->tickerkat; ?>" title="Kategorie: <?php echo $item->tickerkat; ?>"/>
+     echo $item->einsatzkategorie_image;
+     ?>" alt="<?php echo $item->einsatzkategorie; ?>" title="Kategorie: <?php echo $item->einsatzkategorie; ?>"/>
 					<?php endif; ?>
 			<?php echo $item->summary; ?></h2>
 
 			
 		<?php $date_image = $this->params->get('display_home_date_image', '1'); ?>
            <?php if ($date_image == '0' || $date_image == '2'): ?>
-               <p><i class="icon-calendar"></i> <?php echo date('d.m.Y', $item->date1); ?>
+               <p><i class="icon-calendar"></i> <?php echo date('d.m.Y', $item->alarmierungszeit); ?>
                <?php if ($date_image == '2'): ?>
-               <i class="icon-clock"></i> <?php echo date('H:i', $item->date1); ?>Uhr</p>
+               <i class="icon-clock"></i> <?php echo date('H:i', $item->alarmierungszeit); ?>Uhr</p>
                <?php endif; ?>
        <?php endif; ?>
 

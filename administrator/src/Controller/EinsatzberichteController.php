@@ -72,10 +72,7 @@ class EinsatzberichteController extends AdminController
     $cid = Factory::getApplication()->input->get('cid', [], 'array');
 
     if (!is_array($cid) || count($cid) < 1) {
-      Factory::getApplication()->enqueueMessage(
-        Text::_($this->text_prefix . '_NO_ITEM_SELECTED'),
-        'error'
-      );
+      Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
     } else {
       // Get the model.
       $model = $this->getModel();
@@ -118,26 +115,20 @@ class EinsatzberichteController extends AdminController
     }
     $this->postDeleteHook($model, $cid);
 
-    $this->setRedirect(
-      Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false)
-    );
+    $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
   }
 
   public function sendMail()
   {
     // Check for request forgeries
     Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
-    require_once JPATH_SITE .
-      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
+    require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
     // Get items to remove from the request.
     $cid = Factory::getApplication()->input->get('cid', [], 'array');
 
     if (!is_array($cid) || count($cid) < 1) {
-      Factory::getApplication()->enqueueMessage(
-        Text::_($this->text_prefix . '_NO_ITEM_SELECTED'),
-        'error'
-      );
+      Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
     } else {
       //$model = $this->getModel();
       $params = ComponentHelper::getParams('com_einsatzkomponente');
@@ -153,24 +144,19 @@ class EinsatzberichteController extends AdminController
   {
     // Check for request forgeries
     Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
-    require_once JPATH_SITE .
-      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
+    require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
     // Get items to remove from the request.
     $cid = Factory::getApplication()->input->get('cid', [], 'array');
 
     if (!is_array($cid) || count($cid) < 1) {
-      Factory::getApplication()->enqueueMessage(
-        Text::_($this->text_prefix . '_NO_ITEM_SELECTED'),
-        'error'
-      );
+      Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
     } else {
       $params = ComponentHelper::getParams('com_einsatzkomponente');
       // Make sure the item ids are integers
       jimport('joomla.utilities.arrayhelper');
       ArrayHelper::toInteger($cid);
-      require_once JPATH_SITE .
-        '/administrator/components/com_einsatzkomponente/helpers/article.php'; // Helper-class laden
+      require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/article.php'; // Helper-class laden
       $msg = count($cid) . ' Artikel erstellt';
       $this->setRedirect('index.php?option=com_einsatzkomponente&view=einsatzberichte', $msg);
     }
@@ -179,17 +165,13 @@ class EinsatzberichteController extends AdminController
   {
     // Check for request forgeries
     Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
-    require_once JPATH_SITE .
-      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
+    require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
     // Get items to remove from the request.
     $cid = Factory::getApplication()->input->get('cid', [], 'array');
 
     if (!is_array($cid) || count($cid) < 1) {
-      Factory::getApplication()->enqueueMessage(
-        Text::_($this->text_prefix . '_NO_ITEM_SELECTED'),
-        'error'
-      );
+      Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
     } else {
       $msg = EinsatzkomponenteHelper::pdf($cid);
       $this->setRedirect('index.php?option=com_einsatzkomponente&view=einsatzberichte', $msg);

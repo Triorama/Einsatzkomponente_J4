@@ -113,7 +113,7 @@ endif;
 
 // Einsatzarten als Kategorie setzen
 $db = Factory::getDBO();
-$query = 'SELECT COUNT(r.data1) as total,r.data1,rd.marker,rd.marker,rd.icon,rd.title as einsatzart FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.data1 = rd.id WHERE r.state = "1" AND rd.state = "1" GROUP BY r.data1';
+$query = 'SELECT COUNT(r.einsatzart) as total,r.einsatzart,rd.marker,rd.marker,rd.icon,rd.title as einsatzart FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.einsatzart = rd.id WHERE r.state = "1" AND rd.state = "1" GROUP BY r.einsatzart';
 $db->setQuery($query);
 $pie = $db->loadObjectList();
 //print_r ($pie);
@@ -124,29 +124,29 @@ $cat_count = '';
 $catbox = '';
 $i = 0;
 while ($i < count($pie)) {
-  $catinit .= 'show("' . $pie[$i]->data1 . '");';
-  $cat_count .= 'cat_count("' . $pie[$i]->data1 . '");';
+  $catinit .= 'show("' . $pie[$i]->einsatzart . '");';
+  $cat_count .= 'cat_count("' . $pie[$i]->einsatzart . '");';
 
-  //$catbox .= '<span class="label"><input type="checkbox" id="'.$pie[$i]->data1.'box" onClick="boxclick(this,&#39;'.$pie[$i]->data1.'&#39;)" />&nbsp;&nbsp;<img src="'.JURI::base().$pie[$i]->icon.'" width="16px" height="16px" /><strong>'.$pie[$i]->data1.'</strong> </span> ';
+  //$catbox .= '<span class="label"><input type="checkbox" id="'.$pie[$i]->einsatzart.'box" onClick="boxclick(this,&#39;'.$pie[$i]->einsatzart.'&#39;)" />&nbsp;&nbsp;<img src="'.JURI::base().$pie[$i]->icon.'" width="16px" height="16px" /><strong>'.$pie[$i]->einsatzart.'</strong> </span> ';
 
-  //$catbox .= '<div class="btn-group btn-group-xs eiko_gmap_toolbar"><label for="'.$pie[$i]->data1.'box"><button type="button" class="btn btn-default btn-xs " onClick="boxclick(&#39;'.$pie[$i]->data1.'&#39;)"  id="div_'.$pie[$i]->data1.'"><input type="checkbox" class="eiko_gmap_checkbox" id="'.$pie[$i]->data1.'box" /><img src="'.JURI::base().$pie[$i]->icon.'" width="32px" height="32px" />&nbsp;'.$pie[$i]->einsatzart.'<span class="pull-right" style ="font-size:9px;" ><span class="eiko_gmap_count" id="'.$pie[$i]->data1.'count"></span> / '.$pie[$i]->total.' Einsätze</span></button></label></div>';
+  //$catbox .= '<div class="btn-group btn-group-xs eiko_gmap_toolbar"><label for="'.$pie[$i]->einsatzart.'box"><button type="button" class="btn btn-default btn-xs " onClick="boxclick(&#39;'.$pie[$i]->einsatzart.'&#39;)"  id="div_'.$pie[$i]->einsatzart.'"><input type="checkbox" class="eiko_gmap_checkbox" id="'.$pie[$i]->einsatzart.'box" /><img src="'.JURI::base().$pie[$i]->icon.'" width="32px" height="32px" />&nbsp;'.$pie[$i]->einsatzart.'<span class="pull-right" style ="font-size:9px;" ><span class="eiko_gmap_count" id="'.$pie[$i]->einsatzart.'count"></span> / '.$pie[$i]->total.' Einsätze</span></button></label></div>';
 
   $catbox .=
     '<div class="eiko_gmap_toolbar"><label for="' .
-    $pie[$i]->data1 .
+    $pie[$i]->einsatzart .
     'box"><button type="button" class="btn btn-default btn-xs eiko_gmap_toolbar_button" onClick="boxclick(&#39;' .
-    $pie[$i]->data1 .
+    $pie[$i]->einsatzart .
     '&#39;)"  id="div_' .
-    $pie[$i]->data1 .
+    $pie[$i]->einsatzart .
     '"><input type="checkbox" class="eiko_gmap_checkbox" id="' .
-    $pie[$i]->data1 .
+    $pie[$i]->einsatzart .
     'box" /><img src="' .
     JURI::base() .
     $pie[$i]->icon .
     '" class="eiko_gmap_toolbar_icon" />&nbsp;' .
     $pie[$i]->einsatzart .
     '<span class="pull-right" style ="font-size:8px;" ><span class="eiko_gmap_count" id="' .
-    $pie[$i]->data1 .
+    $pie[$i]->einsatzart .
     'count"></span> / ' .
     $pie[$i]->total .
     ' Einsätze</span></button></label></div>';
@@ -169,7 +169,7 @@ endif;
 function getYear()
 {
   $db = Factory::getDBO();
-  $query = 'SELECT Year(date1) as id, Year(date1) as title FROM #__eiko_einsatzberichte WHERE gmap="1" AND state = "1" GROUP BY title';
+  $query = 'SELECT Year(alarmierungszeit) as id, Year(alarmierungszeit) as title FROM #__eiko_einsatzberichte WHERE gmap="1" AND state = "1" GROUP BY title';
   $db->setQuery($query);
   return $db->loadObjectList();
 }
@@ -212,7 +212,7 @@ function createHouse(latlng, label, html,index,image) {
 }
 
       // A function to create the marker and set up the event window
-function createMarker(latlng,name,html,category,image,id,date1,day,month,year,foto,itemid) {
+function createMarker(latlng,name,html,category,image,id,alarmierungszeit,day,month,year,foto,itemid) {
 var contentString = "<div align='center'><span class='label label-info' style='font-size:16px;padding: 2px 2px 2px 2px;margin:2px 2px 2px 2px;font-weight:bold;'>" + html + "</span><br/>" + name + "<br/>" + day + "." + month + "." + year + "<?php if (
   $this->params->get('display_einsatzkarte_links', '1')
 ): ?><br/>" + "<a class='btn-home' href=<?php echo Route::_('index.php?option=com_einsatzkomponente' . $this->layout_detail_link . '&view=einsatzbericht&id='); ?>"+id+">zur Detailansicht</a><?php endif; ?></div>";
@@ -251,7 +251,7 @@ var bildschatten = new google.maps.MarkerImage("<?php echo JURI::root() . '/shad
 		marker.year = year;
 		marker.month = month;
 		marker.day = day;
-		marker.date1 = date1;
+		marker.alarmierungszeit = alarmierungszeit;
 		marker.id = id;
 		marker.image = image;
         marker.itemid = itemid;
@@ -272,7 +272,7 @@ var bildschatten = new google.maps.MarkerImage("<?php echo JURI::root() . '/shad
         monatend = document.getElementById("selectendmonth").value;
 		var n=0;
         for (var i=0; i<gmarkers.length; i++) {
-          if (gmarkers[i].mycategory == category && gmarkers[i].date1 >= jahr + "-" + monat + "-00 00:00:00" && gmarkers[i].date1 <= jahrend + "-" + monatend + "-31 23:59:59") {
+          if (gmarkers[i].mycategory == category && gmarkers[i].alarmierungszeit >= jahr + "-" + monat + "-00 00:00:00" && gmarkers[i].alarmierungszeit <= jahrend + "-" + monatend + "-31 23:59:59") {
 			n++;  
             gmarkers[i].setVisible(true);
 			
@@ -308,7 +308,7 @@ var bildschatten = new google.maps.MarkerImage("<?php echo JURI::root() . '/shad
         monatend = document.getElementById("selectendmonth").value;
 		var n=0;
         for (var i=0; i<gmarkers.length; i++) {
-          if (gmarkers[i].mycategory == category && gmarkers[i].date1 >= jahr + "-" + monat + "-00 00:00:00" && gmarkers[i].date1 <= jahrend + "-" + monatend + "-31 23:59:59") {
+          if (gmarkers[i].mycategory == category && gmarkers[i].alarmierungszeit >= jahr + "-" + monat + "-00 00:00:00" && gmarkers[i].alarmierungszeit <= jahrend + "-" + monatend + "-31 23:59:59") {
 			n++;  
           }
 		  
@@ -353,7 +353,7 @@ var bildschatten = new google.maps.MarkerImage("<?php echo JURI::root() . '/shad
         jahrend = document.getElementById("selectendyear").value;
         monatend = document.getElementById("selectendmonth").value;
         for (var i=0; i<gmarkers.length; i++) {
-          if (gmarkers[i].date1 >= jahr + "-" + monat + "-00 00:00:00" && gmarkers[i].date1 <= jahrend + "-" + monatend + "-31 23:59:59") {
+          if (gmarkers[i].alarmierungszeit >= jahr + "-" + monat + "-00 00:00:00" && gmarkers[i].alarmierungszeit <= jahrend + "-" + monatend + "-31 23:59:59") {
 			  box =  document.getElementById(gmarkers[i].mycategory+"box").checked;
 			  if (box == true) { 
               gmarkers[i].setVisible(true);
@@ -417,13 +417,13 @@ $hide = 0;
 while ($i < count($reports)) {
   $rSummary = strlen($reports[$i]->summary) > 100 ? substr($reports[$i]->summary, 0, strrpos(substr($reports[$i]->summary, 0, 100 + 1), ' ')) : $reports[$i]->summary;
   $rSummary = htmlspecialchars($rSummary, ENT_QUOTES);
-  $year = date('Y', strtotime($reports[$i]->date1)); ### 111225
-  $month = date('m', strtotime($reports[$i]->date1)); ### 111225
-  $day = date('d', strtotime($reports[$i]->date1)); ### 111225
+  $year = date('Y', strtotime($reports[$i]->alarmierungszeit)); ### 111225
+  $month = date('m', strtotime($reports[$i]->alarmierungszeit)); ### 111225
+  $day = date('d', strtotime($reports[$i]->alarmierungszeit)); ### 111225
   if ($reports[$i]->gmap and $reports[$i]->gmap_report_latitude != '0') { ?>
 
-var marker = createMarker(new google.maps.LatLng(<?php echo $reports[$i]->gmap_report_latitude; ?>,<?php echo $reports[$i]->gmap_report_longitude; ?>),"<?php echo $rSummary; ?>","<?php echo $reports[$i]->einsatzart; ?>","<?php echo $reports[$i]->data1; ?>","<?php echo $reports[$i]
-  ->icon; ?>","<?php echo $reports[$i]->id; ?>","<?php echo $reports[$i]->date1; ?>","<?php echo $day; ?>","<?php echo $month; ?>","<?php echo $year; ?>","<?php echo $reports[$i]->image; ?>","");
+var marker = createMarker(new google.maps.LatLng(<?php echo $reports[$i]->gmap_report_latitude; ?>,<?php echo $reports[$i]->gmap_report_longitude; ?>),"<?php echo $rSummary; ?>","<?php echo $reports[$i]->einsatzart; ?>","<?php echo $reports[$i]->einsatzart; ?>","<?php echo $reports[$i]
+  ->icon; ?>","<?php echo $reports[$i]->id; ?>","<?php echo $reports[$i]->alarmierungszeit; ?>","<?php echo $day; ?>","<?php echo $month; ?>","<?php echo $year; ?>","<?php echo $reports[$i]->image; ?>","");
 <?php } else {$hide++;}
   $i++;
 }

@@ -107,22 +107,22 @@ if (isset($data['view']->filterForm)) {
   endif; ?>
 		<?php endif; ?>
 
-		<?php if ($params->get('show_filter_data1', '1')): ?>
-		<?php echo $filters['filter_data1']->input; ?>
+		<?php if ($params->get('show_filter_einsatzart', '1')): ?>
+		<?php echo $filters['filter_einsatzart']->input; ?>
 		<?php if ($params->get('show_filter_linebreak', '0')):
     echo '<br/>';
   endif; ?>
 		<?php endif; ?>
 
-		<?php if ($params->get('show_filter_tickerkat', '1')): ?>
-		<?php echo $filters['filter_tickerkat']->input; ?>
+		<?php if ($params->get('show_filter_einsatzkategorie', '1')): ?>
+		<?php echo $filters['filter_einsatzkategorie']->input; ?>
 		<?php if ($params->get('show_filter_linebreak', '0')):
     echo '<br/>';
   endif; ?>
 		<?php endif; ?>
 
-		<?php if ($params->get('show_filter_alerting', '1')): ?>
-		<?php echo $filters['filter_alerting']->input; ?>
+		<?php if ($params->get('show_filter_alarmierungsart', '1')): ?>
+		<?php echo $filters['filter_alarmierungsart']->input; ?>
 		<?php if ($params->get('show_filter_linebreak', '0')):
     echo '<br/>';
   endif; ?>
@@ -151,13 +151,13 @@ if (isset($data['view']->filterForm)) {
       case 'vehicles':
         $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG') . '</span> ';
         break;
-      case 'alerting':
+      case 'alarmierungsart':
         $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSART') . '</span> ';
         break;
-      case 'data1':
+      case 'einsatzart':
         $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_EINSATZART') . '</span> ';
         break;
-      case 'tickerkat':
+      case 'einsatzkategorie':
         $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_KATEGORIE') . '</span> ';
         break;
       case 'auswahl_orga':

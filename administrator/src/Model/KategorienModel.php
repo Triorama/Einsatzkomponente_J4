@@ -82,7 +82,7 @@ class KategorienModel extends ListModel
     $query = $db->getQuery(true);
     // Select the required fields from the table.
     $query->select($this->getState('list.select', 'a.*'));
-    $query->from('#__eiko_tickerkat AS a');
+    $query->from('#__eiko_einsatzkategorie AS a');
     // Join over the user field 'created_by'
     $query->select('created_by.name AS created_by');
     $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');

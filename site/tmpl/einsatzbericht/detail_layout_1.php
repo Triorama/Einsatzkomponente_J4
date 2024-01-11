@@ -38,7 +38,7 @@ $vehicles_images = '';
             <!--Headline-->
         	<h1 class="eiko_headline_2">
 			
-			<?php if ($this->params->get('display_detail_tickerkat_icon', '1') == '1'): ?> 
+			<?php if ($this->params->get('display_detail_einsatzkategorie_icon', '1') == '1'): ?> 
             <?php if (isset($this->tickerKat->image)): ?>
         	<img  class="eiko_img-rounded_2 eiko_list_icon_2 mobile_hide_320" src="<?php
          echo JURI::Root();
@@ -66,8 +66,8 @@ $vehicles_images = '';
             <!--Headline ENDE-->
             
             <!--Einsatzkategorie-->
-			<?php if ($this->params->get('display_detail_tickerkat', '1') == '1'): ?> 
-            <?php if ($this->item->tickerkat): ?>
+			<?php if ($this->params->get('display_detail_einsatzkategorie', '1') == '1'): ?> 
+            <?php if ($this->item->einsatzkategorie): ?>
         	<span class="eiko_einsatzkategorie_2"><!--<?php echo Text::_('COM_EINSATZKOMPONENTE_KATEGORIE'); ?> --><?php echo Text::_($this->tickerKat->title); ?></span>
             <?php endif; ?>
             <?php endif; ?>
@@ -75,7 +75,7 @@ $vehicles_images = '';
 			
             <!--Einsatzart-->
 			<?php if ($this->params->get('display_detail_einsatzart', '0') == '1'): ?> 
-            <?php if ($this->item->data1): ?>
+            <?php if ($this->item->einsatzart): ?>
         	<br /><span class="eiko_einsatzart_2"><!--<?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZART'); ?> --><?php echo Text::_($this->einsatzlogo->title); ?></span>
             <?php endif; ?>
             <?php endif; ?>
@@ -145,37 +145,37 @@ $vehicles_images = '';
               </span></td>
             </tr>
             <tr>
-              <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_date1_label_2">
+              <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_alarmierungszeit_label_2">
 			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE'); ?> 
               </span></td>
-              <td class="eiko_td2_2"><span class="eiko_date1_value_2"><?php echo date('d.m.Y', strtotime($this->item->date1)) . ''; ?></span></td>
+              <td class="eiko_td2_2"><span class="eiko_alarmierungszeit_value_2"><?php echo date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ''; ?></span></td>
             </tr>
-				<?php if ($this->params->get('display_alertingtime', '1')): ?>
+				<?php if ($this->params->get('display_alarmierungsarttime', '1')): ?>
 				<tr>
-              <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_date1_time_label_2">
-			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE1'); ?> 
+              <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_alarmierungszeit_time_label_2">
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALARMIERUNGSZEIT'); ?> 
               </span></td>
-              <td class="eiko_td1_2"><span class="eiko_date1_time_value_2"><?php echo date('H:i', strtotime($this->item->date1)) . ' Uhr'; ?></span></td>
+              <td class="eiko_td1_2"><span class="eiko_alarmierungszeit_time_value_2"><?php echo date('H:i', strtotime($this->item->alarmierungszeit)) . ' Uhr'; ?></span></td>
             </tr>
 				<?php endif; ?>
-            <?php if ($this->item->date2 > 1): ?>
+            <?php if ($this->item->ausfahrtszeit > 1): ?>
             <tr class="mobile_hide_320">
-              <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_date1_time_label_2">
+              <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_alarmierungszeit_time_label_2">
 			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMESTART'); ?>: 
               </span></td>
-              <td class="eiko_td1_2"><span class="eiko_date1_time_value_2"><?php echo date('H:i', strtotime($this->item->date2)) . ' Uhr'; ?></span></td>
+              <td class="eiko_td1_2"><span class="eiko_alarmierungszeit_time_value_2"><?php echo date('H:i', strtotime($this->item->ausfahrtszeit)) . ' Uhr'; ?></span></td>
             </tr>
 				<?php endif; ?>
-            <?php if ($this->item->date3 > 1): ?>
+            <?php if ($this->item->einsatzende > 1): ?>
             <tr class="mobile_hide_320">
-              <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_date3_label_2">
+              <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_einsatzende_label_2">
 			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMEEND'); ?> 
               </span></td>
-              <td class="eiko_td2_2"><span class="eiko_date3_value_2"><?php echo date('H:i', strtotime($this->item->date3)) . ' Uhr'; ?></span></td>
+              <td class="eiko_td2_2"><span class="eiko_einsatzende_value_2"><?php echo date('H:i', strtotime($this->item->einsatzende)) . ' Uhr'; ?></span></td>
             </tr>
             <?php endif; ?>
             
-            <?php if ($this->params->get('display_einsatzdauer', '1') && $this->item->date3 > 1): ?>
+            <?php if ($this->params->get('display_einsatzdauer', '1') && $this->item->einsatzende > 1): ?>
 				<tr class="mobile_hide_320">
 	              <td class="eiko_td1_2 mobile_hide_320">
 	              	<span class="eiko_einsatzdauer_label_2">
@@ -192,28 +192,28 @@ $vehicles_images = '';
 	            </tr>
 		<?php endif; ?>
             
-            <?php if ($this->item->alerting): ?>
+            <?php if ($this->item->alarmierungsart): ?>
             <tr class="mobile_hide_320">
               <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_alarmart_label_2">
-			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING'); ?>
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALARMIERUNGSART'); ?>
               </span></td>
               <td class="eiko_td1_2"><span class="eiko_alarmart_value_2"><?php echo $this->alarmierungsart->title; ?></span></td>
             </tr>
             <?php endif; ?>
-            <?php if ($this->item->boss2): ?>
+            <?php if ($this->item->einsatzfuehrer): ?>
             <tr class="mobile_hide_320">
-              <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_boss2_label_2">
-			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2'); ?> 
+              <td class="eiko_td2_2 mobile_hide_320"><span class="eiko_einsatzfuehrer_label_2">
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZFUEHRER'); ?> 
               </span></td>
-              <td class="eiko_td2_2"><span class="eiko_boss2_value_2"><?php echo $this->item->boss2; ?></span></td>
+              <td class="eiko_td2_2"><span class="eiko_einsatzfuehrer_value_2"><?php echo $this->item->einsatzfuehrer; ?></span></td>
             </tr>
             <?php endif; ?>
-            <?php if ($this->item->boss): ?>
+            <?php if ($this->item->einsatzleiter): ?>
             <tr class="mobile_hide_320">
-              <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_boss_label_2">
-			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS'); ?> 
+              <td class="eiko_td1_2 mobile_hide_320"><span class="eiko_einsatzleiter_label_2">
+			  <?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZLEITER'); ?> 
               </span></td>
-              <td class="eiko_td1_2"><span class="eiko_boss_value_2"><?php echo $this->item->boss; ?></span></td>
+              <td class="eiko_td1_2"><span class="eiko_einsatzleiter_value_2"><?php echo $this->item->einsatzleiter; ?></span></td>
             </tr>
             <?php endif; ?>
             <?php if ($this->item->people): ?>
@@ -364,7 +364,7 @@ $vehicles_images = '';
 <!--Titelbild mit Highslide JS-->
 <?php if ($this->item->image): ?>
 <?php $this->item->image = preg_replace('%thumbs/%', '', $this->item->image, 1); ?>
-<a href="<?php echo JURI::Root() . $this->item->image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php echo date('d.m.Y - H:i', strtotime($this->item->date1)) .
+<a href="<?php echo JURI::Root() . $this->item->image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php echo date('d.m.Y - H:i', strtotime($this->item->alarmierungszeit)) .
    ' Uhr'; ?>' });" alt ="<?php echo $this->einsatzlogo->title; ?>">
                   <img class="eiko_img-rounded_2 eiko_detail_image_2" src="<?php echo JURI::Root() . $this->item->image; ?>"  alt="<?php echo $this->einsatzlogo->title; ?>" title="<?php echo $this->einsatzlogo->title; ?>" alt ="<?php echo $this->einsatzlogo->title; ?>"/>
                   </a>
@@ -459,7 +459,7 @@ endif; ?>
               <li>
                 <div class="thumbnail eiko_thumbnail_2" style="max-width:<?php echo $thumbwidth; ?>;)">
     			<a href="<?php echo $fileName_image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php
- echo date('d.m.Y - H:i', strtotime($this->item->date1)) . ' Uhr';
+ echo date('d.m.Y - H:i', strtotime($this->item->alarmierungszeit)) . ' Uhr';
  if ($this->images[$i]->comment):
    echo '<br/>Bild-Info: ' . $this->images[$i]->comment;
  endif;

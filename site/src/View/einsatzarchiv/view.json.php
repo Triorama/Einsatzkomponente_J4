@@ -63,7 +63,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
         endif;
 
         if (isset($item->einsatznummer)):
-          $item->einsatznummer = EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1, $item->data1_id);
+          $item->einsatznummer = EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->alarmierungszeit, $item->einsatzart_id);
         endif;
 
         // url link to article
@@ -74,15 +74,15 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
           $item->auswahl_orga = str_replace(',', ' +++ ', $item->auswahl_orga);
         endif;
 
-        if ($item->date1):
-          $item->date1 = date('d.m.Y H:i', $item->date1);
+        if ($item->alarmierungszeit):
+          $item->alarmierungszeit = date('d.m.Y H:i', $item->alarmierungszeit);
         endif;
 
-        /* 			if ($item->date2) :
-		    $item->date2 = date('d.m.Y H:i', $item->date2);
+        /* 			if ($item->ausfahrtszeit) :
+		    $item->ausfahrtszeit = date('d.m.Y H:i', $item->ausfahrtszeit);
 			endif;
-			if ($item->date3) :
-		    $item->date3 = date('d.m.Y H:i', $item->date3);
+			if ($item->einsatzende) :
+		    $item->einsatzende = date('d.m.Y H:i', $item->einsatzende);
 			endif;
  */
       }

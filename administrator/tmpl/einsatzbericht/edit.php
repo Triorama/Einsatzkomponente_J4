@@ -55,8 +55,8 @@ if (!$this->item->id == 0) {
 			</div>
 			<div class="col-lg-4">
 					<h1>Einsatzkräfte :</h1>
-						<?php echo $this->form->renderField('boss'); ?>
-						<?php echo $this->form->renderField('boss2'); ?>
+						<?php echo $this->form->renderField('einsatzleiter'); ?>
+						<?php echo $this->form->renderField('einsatzfuehrer'); ?>
 						<?php echo $this->form->renderField('people'); ?>
 						<?php echo $this->form->renderField('auswahl_orga'); ?>
 						<?php echo $this->form->renderField('vehicles'); ?>

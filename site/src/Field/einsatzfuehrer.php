@@ -41,7 +41,7 @@ class FormFieldEinsatzfuehrer extends FormField
     $params = ComponentHelper::getParams('com_einsatzkomponente');
 
     $db = Factory::getDBO();
-    $query = 'SELECT id, boss2 as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY boss2 ORDER BY boss2';
+    $query = 'SELECT id, einsatzfuehrer as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY einsatzfuehrer ORDER BY einsatzfuehrer';
     $db->setQuery($query);
     $arrayDb = $db->loadObjectList();
 

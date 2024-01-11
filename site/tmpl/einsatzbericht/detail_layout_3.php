@@ -29,7 +29,7 @@ $this->item->created_by = $user->get('username');
     
     <div class="post-inner group">
 	
-    <h1 class=""><?php echo $this->item->summary; ?> - <?php echo date('d.m.Y', strtotime($this->item->date1)) . ''; ?></h1>
+    <h1 class=""><?php echo $this->item->summary; ?> - <?php echo date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ''; ?></h1>
 	<p class="" style="font-size:smaller;">Bericht veröffentlicht von   
 		<span class="vcard author">
 			<span class="">
@@ -51,19 +51,19 @@ $this->item->created_by = $user->get('username');
         <div class="">
           <p>
 		  
-		  <strong>Datum:</strong> <?php echo date('d.m.Y', strtotime($this->item->date1)) . ''; ?>&nbsp;<br>
+		  <strong>Datum:</strong> <?php echo date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ''; ?>&nbsp;<br>
 		  
-		  <strong>Alarmzeit:</strong> <?php echo date('H:i', strtotime($this->item->date1)) . ' Uhr'; ?><br>
+		  <strong>Alarmzeit:</strong> <?php echo date('H:i', strtotime($this->item->alarmierungszeit)) . ' Uhr'; ?><br>
 		  
 		  <strong>Alarmierungsart:</strong> <?php echo $this->alarmierungsart->title; ?><br>
 		  
-          <?php if ($this->params->get('display_einsatzdauer', '1') && $this->item->date3 > 1): ?>
+          <?php if ($this->params->get('display_einsatzdauer', '1') && $this->item->einsatzende > 1): ?>
 		  <strong>Dauer:</strong> <?php echo $this->einsatzdauer; ?><br>
 		  <?php endif; ?>
 		  
             <!--Einsatzkategorie-->
-			<?php if ($this->params->get('display_detail_tickerkat', '1') == '1'): ?> 
-            <?php if ($this->item->tickerkat): ?>
+			<?php if ($this->params->get('display_detail_einsatzkategorie', '1') == '1'): ?> 
+            <?php if ($this->item->einsatzkategorie): ?>
 			<strong>Kategorie:</strong> <?php echo Text::_($this->tickerKat->title); ?><br>
             <?php endif; ?>
             <?php endif; ?>
@@ -71,7 +71,7 @@ $this->item->created_by = $user->get('username');
 			
             <!--Einsatzart-->
 			<?php if ($this->params->get('display_detail_einsatzart', '0') == '1'): ?> 
-            <?php if ($this->item->data1): ?>
+            <?php if ($this->item->einsatzart): ?>
 			<strong>Art:</strong> <?php echo Text::_($this->einsatzlogo->title); ?><br>
             <?php endif; ?>
             <?php endif; ?>
@@ -248,7 +248,7 @@ $this->item->created_by = $user->get('username');
 <?php if ($this->item->image): ?>
 <?php $this->item->image = preg_replace('%thumbs/%', '', $this->item->image, 1); ?>
 
-				<a href="<?php echo JURI::Root() . $this->item->image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php echo date('d.m.Y - H:i', strtotime($this->item->date1)) .
+				<a href="<?php echo JURI::Root() . $this->item->image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php echo date('d.m.Y - H:i', strtotime($this->item->alarmierungszeit)) .
    ' Uhr'; ?>' });" alt ="<?php echo $this->einsatzlogo->title; ?>">
                   <img class="eiko_img-rounded_2 eiko_detail_image_3 alignleft_detail_3" src="<?php echo JURI::Root() . $this->item->image; ?>"  alt="<?php echo $this->einsatzlogo->title; ?>" title="<?php echo $this->einsatzlogo->title; ?>" alt ="<?php echo $this->einsatzlogo->title; ?>"/>
                   </a>
@@ -314,7 +314,7 @@ $this->item->created_by = $user->get('username');
               <li>
                 <div class="thumbnail eiko_thumbnail_2" style="max-width:<?php echo $thumbwidth; ?>;)">
     			<a href="<?php echo $fileName_image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php
- echo date('d.m.Y - H:i', strtotime($this->item->date1)) . ' Uhr';
+ echo date('d.m.Y - H:i', strtotime($this->item->alarmierungszeit)) . ' Uhr';
  if ($this->images[$i]->comment):
    echo '<br/>Bild-Info: ' . $this->images[$i]->comment;
  endif;

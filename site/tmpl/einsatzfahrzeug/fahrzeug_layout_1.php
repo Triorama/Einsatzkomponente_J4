@@ -146,15 +146,23 @@ if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomp
        // letzter Einsatz
        // letzter Einsatz
        // letzter Einsatz
+       // letzter Einsatz
+       // letzter Einsatz
+       // letzter Einsatz
+       // letzter Einsatz
+       // letzter Einsatz
+       // letzter Einsatz
+       // letzter Einsatz
+       // letzter Einsatz
 
       $database = Factory::getDBO();
-      $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $this->item->id . '",vehicles) AND (state ="1" OR state="2") ORDER BY date1 DESC';
+      $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $this->item->id . '",vehicles) AND (state ="1" OR state="2") ORDER BY alarmierungszeit DESC';
       $database->setQuery($query);
       $total = $database->loadObjectList();
       ?>
 						<?php if ($total): ?>
 						<br/><li><?php echo Text::_('COM_EINSATZKOMPONENTE_LETZTER_EINTRAG'); ?> : 
-						<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date('d.m.Y', strtotime($total[0]->date1)); ?></a></li>
+						<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date('d.m.Y', strtotime($total[0]->alarmierungszeit)); ?></a></li>
 						<?php endif; ?>
 					<?php endif; ?>
 <!-- Ausrüstung anzeigen -->  

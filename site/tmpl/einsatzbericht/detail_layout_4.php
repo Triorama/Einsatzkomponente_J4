@@ -71,7 +71,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
   </tr>
 
   <tr>
-    <td class="layout4_row_9" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_ALERTING'); ?></td>
+    <td class="layout4_row_9" width="250px"><?php echo Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSART'); ?></td>
     <td class="layout4_row_9">
     Alarmierung per
 <?php if ($this->alarmierungsart->image): ?>
@@ -101,14 +101,14 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
      ',' .
      Text::_('COM_EINSATZKOMPONENTE_SAMSTAG')
  );
- $date2 = $wochentage[date('w', strtotime($this->item->date1))];
+ $ausfahrtszeit = $wochentage[date('w', strtotime($this->item->alarmierungszeit))];
  ?>
 	
-    am <?php echo $date2 . ', ' . date('d.m.Y', strtotime($this->item->date1)) . ''; ?>, um <?php echo date('H:i', strtotime($this->item->date1)) . ' ' . Text::_('COM_EINSATZKOMPONENTE_UHR'); ?>
+    am <?php echo $ausfahrtszeit . ', ' . date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ''; ?>, um <?php echo date('H:i', strtotime($this->item->alarmierungszeit)) . ' ' . Text::_('COM_EINSATZKOMPONENTE_UHR'); ?>
     </td>
   </tr>
 
- <?php if ($this->params->get('display_einsatzdauer', '1') && $this->item->date3 > 1): ?>
+ <?php if ($this->params->get('display_einsatzdauer', '1') && $this->item->einsatzende > 1): ?>
   <tr>
     <td class="layout4_row_100" width="250px">
     	<?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZDAUER'); ?>
@@ -370,7 +370,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
               <li>
                 <div class="thumbnail eiko_thumbnail_2" style="max-width:<?php echo $thumbwidth; ?>;)">
     			<a href="<?php echo $fileName_image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php
- echo date('d.m.Y - H:i', strtotime($this->item->date1)) . ' Uhr';
+ echo date('d.m.Y - H:i', strtotime($this->item->alarmierungszeit)) . ' Uhr';
  if ($this->images[$i]->comment):
    echo '<br/>Bild-Info: ' . $this->images[$i]->comment;
  endif;

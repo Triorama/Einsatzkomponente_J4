@@ -304,8 +304,8 @@ function sendMail_auto($cid, $status)
   $query = $db->getQuery(true);
   $query
     ->select('*')
-    ->from('#__eiko_tickerkat')
-    ->where('id = "' . $result[0]->tickerkat . '"  AND state = "1" ');
+    ->from('#__eiko_einsatzkategorie')
+    ->where('id = "' . $result[0]->einsatzkategorie . '"  AND state = "1" ');
   $db->setQuery($query);
   $kat = $db->loadObject();
 

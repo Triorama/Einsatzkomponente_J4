@@ -203,12 +203,12 @@ if (!empty($this->extra_sidebar)) {
 
 
     $database = Factory::getDBO();
-    $query = 'SELECT count(id) FROM #__eiko_einsatzberichte WHERE tickerkat = "' . $item->id . '" and (state="1" OR state="2")  ';
+    $query = 'SELECT count(id) FROM #__eiko_einsatzberichte WHERE einsatzkategorie = "' . $item->id . '" and (state="1" OR state="2")  ';
     $database->setQuery($query);
     $mission = $database->loadResult();
     ?> 
 				<td>
-				<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichte&filter_tickerkat=' . (int) $item->id); ?>">
+				<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichte&filter_einsatzkategorie=' . (int) $item->id); ?>">
 				<?php echo '<span class="badge">' . $mission . '</span>'; ?>
 				</a>
 				</td>

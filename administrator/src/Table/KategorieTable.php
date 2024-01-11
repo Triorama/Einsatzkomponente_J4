@@ -27,7 +27,7 @@ class KategorieTable extends Table
    */
   public function __construct(&$db)
   {
-    parent::__construct('#__eiko_tickerkat', 'id', $db);
+    parent::__construct('#__eiko_einsatzkategorie', 'id', $db);
     // Set the alias since the column is called state
     $this->setColumnAlias('published', 'state');
   }

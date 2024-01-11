@@ -40,13 +40,13 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
         ?>"  alt="" title=""/>
 		<?php echo $this->tickerKat->title; ?></h1>
         
-            <?php if ($this->item->tickerkat): ?>
+            <?php if ($this->item->einsatzkategorie): ?>
         	<span class="einsatzdetails_sub_headline">Einsatzart: <?php echo Text::_($this->einsatzlogo->title); ?></span>
             <?php endif; ?>
         
         <hr/>
 
-        <span style="font-weight: bold;"><u>Datum &amp; Uhrzeit:</u></span> <?php echo date('d.m.Y - H:i', strtotime($this->item->date1)) . ' Uhr'; ?>
+        <span style="font-weight: bold;"><u>Datum &amp; Uhrzeit:</u></span> <?php echo date('d.m.Y - H:i', strtotime($this->item->alarmierungszeit)) . ' Uhr'; ?>
 			<?php if ($this->params->get('display_detail_hits', '1')): ?>
             <span class="badge pull-right small">Zugriffe: <?php echo $this->item->counter; ?></span>
             <?php endif; ?>
@@ -268,7 +268,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
               <li>
                 <div class="thumbnail eiko_thumbnail_2" style="max-width:<?php echo $thumbwidth; ?>;)">
     			<a href="<?php echo $fileName_image; ?>" rel="highslide[<?php echo $this->item->id; ?>]" class="highslide" onClick="return hs.expand(this, { captionText: '<?php echo $this->einsatzlogo->title; ?> am <?php
- echo date('d.m.Y - H:i', strtotime($this->item->date1)) . ' Uhr';
+ echo date('d.m.Y - H:i', strtotime($this->item->alarmierungszeit)) . ' Uhr';
  if ($this->images[$i]->comment):
    echo '<br/>Bild-Info: ' . $this->images[$i]->comment;
  endif;

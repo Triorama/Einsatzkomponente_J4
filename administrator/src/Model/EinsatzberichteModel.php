@@ -34,22 +34,22 @@ class EinsatzberichteModel extends ListModel
         'a.id',
         'ordering',
         'a.ordering',
-        'alerting',
-        'a.alerting',
-        'tickerkat',
-        'a.tickerkat',
-        'data1',
-        'a.data1',
+        'alarmierungsart',
+        'a.alarmierungsart',
+        'einsatzkategorie',
+        'a.einsatzkategorie',
+        'einsatzart',
+        'a.einsatzart',
         'image',
         'a.image',
         'images',
         'a.images',
-        'date1',
-        'a.date1',
-        'date2',
-        'a.date2',
-        'date3',
-        'a.date3',
+        'alarmierungszeit',
+        'a.alarmierungszeit',
+        'ausfahrtszeit',
+        'a.ausfahrtszeit',
+        'einsatzende',
+        'a.einsatzende',
         'address',
         'a.address',
         'summary',
@@ -60,10 +60,10 @@ class EinsatzberichteModel extends ListModel
         'a.vehicles',
         'ausruestung',
         'a.ausruestung',
-        'boss',
-        'a.boss',
-        'boss2',
-        'a.boss2',
+        'einsatzleiter',
+        'a.einsatzleiter',
+        'einsatzfuehrer',
+        'a.einsatzfuehrer',
         'people',
         'a.people',
         'desc',
@@ -132,112 +132,40 @@ class EinsatzberichteModel extends ListModel
     $search = $this->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
 
-    $published = $this->getUserStateFromRequest(
-      $this->context . '.filter.state',
-      'filter_published',
-      '',
-      'string'
-    );
+    $published = $this->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
     $this->setState('filter.state', $published);
 
-    //Filtering alerting
-    $this->setState(
-      'filter.alerting',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.alerting',
-        'filter_alerting',
-        '',
-        'string'
-      )
-    );
+    //Filtering alarmierungsart
+    $this->setState('filter.alarmierungsart', $this->getUserStateFromRequest($this->context . '.filter.alarmierungsart', 'filter_alarmierungsart', '', 'string'));
 
-    //Filtering tickerkat
-    $this->setState(
-      'filter.tickerkat',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.tickerkat',
-        'filter_tickerkat',
-        '',
-        'string'
-      )
-    );
+    //Filtering einsatzkategorie
+    $this->setState('filter.einsatzkategorie', $this->getUserStateFromRequest($this->context . '.filter.einsatzkategorie', 'filter_einsatzkategorie', '', 'string'));
 
-    //Filtering data1
-    $this->setState(
-      'filter.data1',
-      $this->getUserStateFromRequest($this->context . '.filter.data1', 'filter_data1', '', 'string')
-    );
+    //Filtering einsatzart
+    $this->setState('filter.einsatzart', $this->getUserStateFromRequest($this->context . '.filter.einsatzart', 'filter_einsatzart', '', 'string'));
 
-    //Filtering date1
-    $this->setState(
-      'filter.date1.from',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.date1.from',
-        'filter_from_date1',
-        '',
-        'string'
-      )
-    );
-    $this->setState(
-      'filter.date1.to',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.date1.to',
-        'filter_to_date1',
-        '',
-        'string'
-      )
-    );
+    //Filtering alarmierungszeit
+    $this->setState('filter.alarmierungszeit.from', $this->getUserStateFromRequest($this->context . '.filter.alarmierungszeit.from', 'filter_from_alarmierungszeit', '', 'string'));
+    $this->setState('filter.alarmierungszeit.to', $this->getUserStateFromRequest($this->context . '.filter.alarmierungszeit.to', 'filter_to_alarmierungszeit', '', 'string'));
 
     //Filtering auswahl_orga
-    $this->setState(
-      'filter.auswahl_orga',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.auswahl_orga',
-        'filter_auswahl_orga',
-        '',
-        'string'
-      )
-    );
+    $this->setState('filter.auswahl_orga', $this->getUserStateFromRequest($this->context . '.filter.auswahl_orga', 'filter_auswahl_orga', '', 'string'));
 
     //Filtering ausruestung
-    $this->setState(
-      'filter.ausruestung',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.ausruestung',
-        'filter_ausruestung',
-        '',
-        'string'
-      )
-    );
+    $this->setState('filter.ausruestung', $this->getUserStateFromRequest($this->context . '.filter.ausruestung', 'filter_ausruestung', '', 'string'));
 
     //Filtering created_by
-    $this->setState(
-      'filter.created_by',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.created_by',
-        'filter_created_by',
-        '',
-        'string'
-      )
-    );
+    $this->setState('filter.created_by', $this->getUserStateFromRequest($this->context . '.filter.created_by', 'filter_created_by', '', 'string'));
 
     //Filtering modified_by
-    $this->setState(
-      'filter.modified_by',
-      $this->getUserStateFromRequest(
-        $this->context . '.filter.modified_by',
-        'filter_modified_by',
-        '',
-        'string'
-      )
-    );
+    $this->setState('filter.modified_by', $this->getUserStateFromRequest($this->context . '.filter.modified_by', 'filter_modified_by', '', 'string'));
 
     // Load the parameters.
     $params = ComponentHelper::getParams('com_einsatzkomponente');
     $this->setState('params', $params);
 
     // List state information.
-    parent::populateState('a.date1', 'desc');
+    parent::populateState('a.alarmierungszeit', 'desc');
   }
 
   /**
@@ -279,36 +207,21 @@ class EinsatzberichteModel extends ListModel
     // Join over the users for the checked out user
     //$query->select("uc.name AS editor");
     //$query->join("LEFT", "#__users AS uc ON uc.id=a.checked_out");
-    // Join over the foreign key 'alerting'
+    // Join over the foreign key 'alarmierungsart'
     $query->select('#__eiko_alarmierungsarten_1662662.title AS alarmierungsarten_title_1662662');
-    $query->join(
-      'LEFT',
-      '#__eiko_alarmierungsarten AS #__eiko_alarmierungsarten_1662662 ON #__eiko_alarmierungsarten_1662662.id = a.alerting'
-    );
-    // Join over the foreign key 'tickerkat'
-    $query->select('#__eiko_tickerkat_1662677.title AS einsatzkategorien_title_1662677');
-    $query->join(
-      'LEFT',
-      '#__eiko_tickerkat AS #__eiko_tickerkat_1662677 ON #__eiko_tickerkat_1662677.id = a.tickerkat'
-    );
-    // Join over the foreign key 'data1'
+    $query->join('LEFT', '#__eiko_alarmierungsarten AS #__eiko_alarmierungsarten_1662662 ON #__eiko_alarmierungsarten_1662662.id = a.alarmierungsart');
+    // Join over the foreign key 'einsatzkategorie'
+    $query->select('#__eiko_einsatzkategorie_1662677.title AS einsatzkategorien_title_1662677');
+    $query->join('LEFT', '#__eiko_einsatzkategorie AS #__eiko_einsatzkategorie_1662677 ON #__eiko_einsatzkategorie_1662677.id = a.einsatzkategorie');
+    // Join over the foreign key 'einsatzart'
     $query->select('#__eiko_einsatzarten_1662650.title AS einsatzarten_title_1662650');
-    $query->join(
-      'LEFT',
-      '#__eiko_einsatzarten AS #__eiko_einsatzarten_1662650 ON #__eiko_einsatzarten_1662650.id = a.data1'
-    );
+    $query->join('LEFT', '#__eiko_einsatzarten AS #__eiko_einsatzarten_1662650 ON #__eiko_einsatzarten_1662650.id = a.einsatzart');
     // Join over the foreign key 'auswahl_orga'
     $query->select('#__eiko_organisationen_1662678.name AS organisationen_name_1662678');
-    $query->join(
-      'LEFT',
-      '#__eiko_organisationen AS #__eiko_organisationen_1662678 ON #__eiko_organisationen_1662678.id = a.auswahl_orga'
-    );
+    $query->join('LEFT', '#__eiko_organisationen AS #__eiko_organisationen_1662678 ON #__eiko_organisationen_1662678.id = a.auswahl_orga');
     // Join over the foreign key 'auswahl_orga'
     $query->select('#__eiko_ausruestung_1662678.name AS ausruestung_name_1662678');
-    $query->join(
-      'LEFT',
-      '#__eiko_ausruestung AS #__eiko_ausruestung_1662678 ON #__eiko_ausruestung_1662678.id = a.ausruestung'
-    );
+    $query->join('LEFT', '#__eiko_ausruestung AS #__eiko_ausruestung_1662678 ON #__eiko_ausruestung_1662678.id = a.ausruestung');
     // Join over the user field 'created_by'
     $query->select('created_by.name AS created_by');
     $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -332,11 +245,11 @@ class EinsatzberichteModel extends ListModel
       } else {
         $search = $db->Quote('%' . $db->escape($search, true) . '%');
         $query->where(
-          '( a.alerting LIKE ' .
+          '( a.alarmierungsart LIKE ' .
             $search .
-            '  OR  a.tickerkat LIKE ' .
+            '  OR  a.einsatzkategorie LIKE ' .
             $search .
-            ' OR  a.data1 LIKE ' .
+            ' OR  a.einsatzart LIKE ' .
             $search .
             ' OR  a.address LIKE ' .
             $search .
@@ -348,9 +261,9 @@ class EinsatzberichteModel extends ListModel
             $search .
             '  OR  a.ausruestung LIKE ' .
             $search .
-            '  OR  a.boss LIKE ' .
+            '  OR  a.einsatzleiter LIKE ' .
             $search .
-            '  OR a.boss2 LIKE ' .
+            '  OR a.einsatzfuehrer LIKE ' .
             $search .
             '  OR a.desc LIKE ' .
             $search .
@@ -359,32 +272,32 @@ class EinsatzberichteModel extends ListModel
       }
     }
 
-    //Filtering alerting
-    $filter_alerting = $this->state->get('filter.alerting');
-    if ($filter_alerting) {
-      $query->where("a.alerting = '" . $db->escape($filter_alerting) . "'");
+    //Filtering alarmierungsart
+    $filter_alarmierungsart = $this->state->get('filter.alarmierungsart');
+    if ($filter_alarmierungsart) {
+      $query->where("a.alarmierungsart = '" . $db->escape($filter_alarmierungsart) . "'");
     }
 
-    //Filtering tickerkat
-    $filter_tickerkat = $this->state->get('filter.tickerkat');
-    if ($filter_tickerkat) {
-      $query->where("a.tickerkat = '" . $db->escape($filter_tickerkat) . "'");
+    //Filtering einsatzkategorie
+    $filter_einsatzkategorie = $this->state->get('filter.einsatzkategorie');
+    if ($filter_einsatzkategorie) {
+      $query->where("a.einsatzkategorie = '" . $db->escape($filter_einsatzkategorie) . "'");
     }
 
-    //Filtering data1
-    $filter_data1 = $this->state->get('filter.data1');
-    if ($filter_data1) {
-      $query->where("a.data1 = '" . $db->escape($filter_data1) . "'");
+    //Filtering einsatzart
+    $filter_einsatzart = $this->state->get('filter.einsatzart');
+    if ($filter_einsatzart) {
+      $query->where("a.einsatzart = '" . $db->escape($filter_einsatzart) . "'");
     }
 
-    //Filtering date1
-    $filter_date1_from = $this->state->get('filter.date1.from');
-    if ($filter_date1_from) {
-      $query->where("a.date1 >= '" . $db->escape($filter_date1_from) . "'");
+    //Filtering alarmierungszeit
+    $filter_alarmierungszeit_from = $this->state->get('filter.alarmierungszeit.from');
+    if ($filter_alarmierungszeit_from) {
+      $query->where("a.alarmierungszeit >= '" . $db->escape($filter_alarmierungszeit_from) . "'");
     }
-    $filter_date1_to = $this->state->get('filter.date1.to');
-    if ($filter_date1_to) {
-      $query->where("a.date1 <= '" . $db->escape($filter_date1_to) . "'");
+    $filter_alarmierungszeit_to = $this->state->get('filter.alarmierungszeit.to');
+    if ($filter_alarmierungszeit_to) {
+      $query->where("a.alarmierungszeit <= '" . $db->escape($filter_alarmierungszeit_to) . "'");
     }
 
     //Filtering auswahl_orga
@@ -432,8 +345,8 @@ class EinsatzberichteModel extends ListModel
     $items = parent::getItems();
 
     foreach ($items as $oneItem) {
-      if (isset($oneItem->alerting)) {
-        $values = explode(',', $oneItem->alerting);
+      if (isset($oneItem->alarmierungsart)) {
+        $values = explode(',', $oneItem->alarmierungsart);
 
         $textValue = [];
         foreach ($values as $value) {
@@ -450,11 +363,11 @@ class EinsatzberichteModel extends ListModel
           }
         }
 
-        $oneItem->alerting = !empty($textValue) ? implode(', ', $textValue) : $oneItem->alerting;
+        $oneItem->alarmierungsart = !empty($textValue) ? implode(', ', $textValue) : $oneItem->alarmierungsart;
       }
 
-      if (isset($oneItem->tickerkat)) {
-        $values = explode(',', $oneItem->tickerkat);
+      if (isset($oneItem->einsatzkategorie)) {
+        $values = explode(',', $oneItem->einsatzkategorie);
 
         $textValue = [];
         foreach ($values as $value) {
@@ -462,7 +375,7 @@ class EinsatzberichteModel extends ListModel
           $query = $db->getQuery(true);
           $query
             ->select('title')
-            ->from('#__eiko_tickerkat')
+            ->from('#__eiko_einsatzkategorie')
             ->where('id = ' . $db->quote($db->escape($value)));
           $db->setQuery($query);
           $results = $db->loadObject();
@@ -471,11 +384,11 @@ class EinsatzberichteModel extends ListModel
           }
         }
 
-        $oneItem->tickerkat = !empty($textValue) ? implode(', ', $textValue) : $oneItem->tickerkat;
+        $oneItem->einsatzkategorie = !empty($textValue) ? implode(', ', $textValue) : $oneItem->einsatzkategorie;
       }
 
-      if (isset($oneItem->data1)) {
-        $values = explode(',', $oneItem->data1);
+      if (isset($oneItem->einsatzart)) {
+        $values = explode(',', $oneItem->einsatzart);
 
         $textValue = [];
         foreach ($values as $value) {
@@ -488,12 +401,12 @@ class EinsatzberichteModel extends ListModel
           $db->setQuery($query);
           $results = $db->loadObject();
           if ($results) {
-            $oneItem->data1_id = $results->id;
+            $oneItem->einsatzart_id = $results->id;
             $textValue[] = $results->title;
           }
         }
 
-        $oneItem->data1 = !empty($textValue) ? implode(', ', $textValue) : $oneItem->data1;
+        $oneItem->einsatzart = !empty($textValue) ? implode(', ', $textValue) : $oneItem->einsatzart;
       }
 
       if (isset($oneItem->images)) {
@@ -535,9 +448,7 @@ class EinsatzberichteModel extends ListModel
           }
         }
         //$textValue = array_reverse($textValue);
-        $oneItem->auswahl_orga = !empty($textValue)
-          ? implode('<br/>', $textValue)
-          : $oneItem->auswahl_orga;
+        $oneItem->auswahl_orga = !empty($textValue) ? implode('<br/>', $textValue) : $oneItem->auswahl_orga;
       }
 
       if (isset($oneItem->vehicles)) {
@@ -579,13 +490,11 @@ class EinsatzberichteModel extends ListModel
           }
         }
 
-        $oneItem->ausruestung = !empty($textValue)
-          ? implode(', ', $textValue)
-          : $oneItem->ausruestung;
+        $oneItem->ausruestung = !empty($textValue) ? implode(', ', $textValue) : $oneItem->ausruestung;
       }
 
-      if (isset($oneItem->boss_ftm)) {
-        $values = explode(',', $oneItem->boss_ftm);
+      if (isset($oneItem->einsatzleiter_ftm)) {
+        $values = explode(',', $oneItem->einsatzleiter_ftm);
 
         $textValue = [];
         foreach ($values as $value) {
@@ -602,11 +511,11 @@ class EinsatzberichteModel extends ListModel
           }
         }
 
-        $oneItem->boss_ftm = !empty($textValue) ? implode(', ', $textValue) : $oneItem->boss_ftm;
+        $oneItem->einsatzleiter_ftm = !empty($textValue) ? implode(', ', $textValue) : $oneItem->einsatzleiter_ftm;
       }
 
-      if (isset($oneItem->boss2_ftm)) {
-        $values = explode(',', $oneItem->boss2_ftm);
+      if (isset($oneItem->einsatzfuehrer_ftm)) {
+        $values = explode(',', $oneItem->einsatzfuehrer_ftm);
 
         $textValue = [];
         foreach ($values as $value) {
@@ -623,7 +532,7 @@ class EinsatzberichteModel extends ListModel
           }
         }
 
-        $oneItem->boss2_ftm = !empty($textValue) ? implode(', ', $textValue) : $oneItem->boss2_ftm;
+        $oneItem->einsatzfuehrer_ftm = !empty($textValue) ? implode(', ', $textValue) : $oneItem->einsatzfuehrer_ftm;
       }
 
       if (isset($oneItem->people_ftm)) {
@@ -644,16 +553,10 @@ class EinsatzberichteModel extends ListModel
           }
         }
 
-        $oneItem->people_ftm = !empty($textValue)
-          ? implode(', ', $textValue)
-          : $oneItem->people_ftm;
+        $oneItem->people_ftm = !empty($textValue) ? implode(', ', $textValue) : $oneItem->people_ftm;
       }
-      $oneItem->status_fb = Text::_(
-        'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($oneItem->status_fb)
-      );
-      $oneItem->status = Text::_(
-        'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($oneItem->status)
-      );
+      $oneItem->status_fb = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($oneItem->status_fb));
+      $oneItem->status = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($oneItem->status));
 
       // if (isset($oneItem->article_id)) {
       // $values = explode(',', $oneItem->article_id);

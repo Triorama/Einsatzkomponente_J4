@@ -127,13 +127,18 @@ echo $item->image;
 
      // letzter Einsatz
 
+     // letzter Einsatz
+
      $database = Factory::getDBO();
-     $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $item->id . '",vehicles) AND (state ="1" OR state="2") ORDER BY date1 DESC';
+     $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $item->id . '",vehicles) AND (state ="1" OR state="2") ORDER BY alarmierungszeit DESC';
      $database->setQuery($query);
      $total = $database->loadObjectList();
      ?>
 					<?php if ($total): ?>
-					<td  class="eiko_fahrzeug_letzter_einsatz  mobile_hide_480"><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date('d.m.Y', strtotime($total[0]->date1)); ?></a></td>
+					<td  class="eiko_fahrzeug_letzter_einsatz  mobile_hide_480"><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date(
+  'd.m.Y',
+  strtotime($total[0]->alarmierungszeit)
+); ?></a></td>
 					<?php else: ?>
 					<td><?php echo '-'; ?></td>
 					<?php endif; ?>

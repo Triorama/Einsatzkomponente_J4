@@ -75,12 +75,12 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $params = ComponentHelper::getParams('com_einsatzkomponente');
     $ex_einsatzart = $params->get('display_home_number_excl_einsatzart', '');
 
-    $query = 'SELECT COUNT(*) AS total,state FROM #__eiko_einsatzberichte WHERE (date1 BETWEEN "' . date('Y', $selectedDate) . '-01-01 00:00:00" AND "' . date('Y-m-d H:i:s', $selectedDate) . '") AND (state = "1" OR state = "2") and data1 !="' . $ex_einsatzart . '"  ';
+    $query = 'SELECT COUNT(*) AS total,state FROM #__eiko_einsatzberichte WHERE (alarmierungszeit BETWEEN "' . date('Y', $selectedDate) . '-01-01 00:00:00" AND "' . date('Y-m-d H:i:s', $selectedDate) . '") AND (state = "1" OR state = "2") and einsatzart !="' . $ex_einsatzart . '"  ';
     $db = Factory::getDBO();
     $db->setQuery($query);
     $result = $db->loadObjectList();
 
-    $query = 'SELECT state FROM #__eiko_einsatzberichte WHERE (date1 = "' . date('Y-m-d H:i:s', $selectedDate) . '") AND (state = "1" OR state = "2" OR state = "2") and data1 !="' . $ex_einsatzart . '"  ';
+    $query = 'SELECT state FROM #__eiko_einsatzberichte WHERE (alarmierungszeit = "' . date('Y-m-d H:i:s', $selectedDate) . '") AND (state = "1" OR state = "2" OR state = "2") and einsatzart !="' . $ex_einsatzart . '"  ';
     $db = Factory::getDBO();
     $db->setQuery($query);
     $result_state = $db->loadResult();
@@ -98,9 +98,9 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Einsatzdaten für ein bestimmtes Jahr aus der DB holen<br />
     $query =
-      'SELECT COUNT(r.id) as total FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.data1 = rd.id LEFT JOIN #__eiko_alarmierungsarten re ON re.id = r.alerting WHERE r.date1 LIKE "' .
+      'SELECT COUNT(r.id) as total FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.einsatzart = rd.id LEFT JOIN #__eiko_alarmierungsarten re ON re.id = r.alarmierungsart WHERE r.alarmierungszeit LIKE "' .
       $selectedYear .
-      '%" AND (r.state = "1" OR r.state = "2") and rd.state = "1" and re.state ="1" GROUP BY r.id ORDER BY r.date1 DESC ';
+      '%" AND (r.state = "1" OR r.state = "2") and rd.state = "1" and re.state ="1" GROUP BY r.id ORDER BY r.alarmierungszeit DESC ';
     $db = Factory::getDBO();
     $db->setQuery($query);
     $result = $db->loadObjectList();
@@ -111,9 +111,9 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Einsatzdaten für ein bestimmtes Jahr aus der DB holen<br />
     $query =
-      'SELECT COUNT(r.id) as total,r.people,r.id,r.image as foto,rd.marker,r.address,r.summary,r.date1,r.data1,r.counter,r.alerting,r.presse,r.presse2,r.presse3,r.gmap_report_latitude,r.gmap_report_longitude,re.image,re.title as alarmierungsart,rd.list_icon,rd.icon,r.desc,r.auswahl_orga,r.ausruestung,r.state,rd.title as einsatzart,r.tickerkat,r.gmap FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.data1 = rd.id LEFT JOIN #__eiko_alarmierungsarten re ON re.id = r.alerting WHERE r.date1 LIKE "' .
+      'SELECT COUNT(r.id) as total,r.people,r.id,r.image as foto,rd.marker,r.address,r.summary,r.alarmierungszeit,r.einsatzart,r.counter,r.alarmierungsart,r.presse,r.presse2,r.presse3,r.gmap_report_latitude,r.gmap_report_longitude,re.image,re.title as alarmierungsart,rd.list_icon,rd.icon,r.desc,r.auswahl_orga,r.ausruestung,r.state,rd.title as einsatzart,r.einsatzkategorie,r.gmap FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.einsatzart = rd.id LEFT JOIN #__eiko_alarmierungsarten re ON re.id = r.alarmierungsart WHERE r.alarmierungszeit LIKE "' .
       $selectedYear .
-      '%" AND (r.state = "1" OR r.state = "2") and rd.state = "1" and re.state ="1" GROUP BY r.id ORDER BY r.date1 DESC LIMIT ' .
+      '%" AND (r.state = "1" OR r.state = "2") and rd.state = "1" and re.state ="1" GROUP BY r.id ORDER BY r.alarmierungszeit DESC LIMIT ' .
       $limitstart .
       ',' .
       $limit .
@@ -128,7 +128,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : letze x Einsatzdaten laden
     $query =
-      'SELECT r.id,r.image as foto,rd.marker,r.address,r.summary,r.auswahl_orga,r.ausruestung,r.desc,r.date1,r.data1,r.counter,r.alerting,r.presse,re.image,rd.list_icon,r.auswahl_orga,r.state,rd.title as einsatzart,r.tickerkat FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.data1 = rd.id LEFT JOIN #__eiko_alarmierungsarten re ON re.id = r.alerting WHERE (r.state = "1" OR r.state = "2") and rd.state = "1" and re.state = "1" ORDER BY r.date1 DESC LIMIT ' .
+      'SELECT r.id,r.image as foto,rd.marker,r.address,r.summary,r.auswahl_orga,r.ausruestung,r.desc,r.alarmierungszeit,r.einsatzart,r.counter,r.alarmierungsart,r.presse,re.image,rd.list_icon,r.auswahl_orga,r.state,rd.title as einsatzart,r.einsatzkategorie FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.einsatzart = rd.id LEFT JOIN #__eiko_alarmierungsarten re ON re.id = r.alarmierungsart WHERE (r.state = "1" OR r.state = "2") and rd.state = "1" and re.state = "1" ORDER BY r.alarmierungszeit DESC LIMIT ' .
       $x .
       ' ';
     $db = Factory::getDBO();
@@ -141,7 +141,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Alle Jahreszahlen aller Einsätze zusammenfassen
     $db = Factory::getDBO();
-    $query = 'SELECT Year(date1) as id, Year(date1) as title FROM #__eiko_einsatzberichte WHERE (state="1" OR state = "2") GROUP BY title ORDER BY date1 DESC';
+    $query = 'SELECT Year(alarmierungszeit) as id, Year(alarmierungszeit) as title FROM #__eiko_einsatzberichte WHERE (state="1" OR state = "2") GROUP BY title ORDER BY alarmierungszeit DESC';
     $db->setQuery($query);
     $result = $db->loadObjectList();
     return $result;
@@ -216,13 +216,13 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Den Einsatz vor dem aktuellen Einsatz ermitteln
     if ($selectedOrga == 'alle Organisationen'):
-      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 < "' . $cur_date . '"  AND state="1" ORDER BY date1 desc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE alarmierungszeit < "' . $cur_date . '"  AND state="1" ORDER BY alarmierungszeit desc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
       return $result;
     else:
-      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 < "' . $cur_date . '" AND auswahl_orga LIKE "%' . $selectedOrga . '%"  AND state="1" ORDER BY date1 desc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE alarmierungszeit < "' . $cur_date . '" AND auswahl_orga LIKE "%' . $selectedOrga . '%"  AND state="1" ORDER BY alarmierungszeit desc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
@@ -234,13 +234,13 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Den Einsatz nach dem aktuellen Einsatz ermitteln
     if ($selectedOrga == 'alle Organisationen'):
-      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 > "' . $cur_date . '"  AND state="1" ORDER BY date1 asc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE alarmierungszeit > "' . $cur_date . '"  AND state="1" ORDER BY alarmierungszeit asc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
       return $result;
     else:
-      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 > "' . $cur_date . '"  AND auswahl_orga LIKE "%' . $selectedOrga . '%"  AND state="1" ORDER BY date1 asc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE alarmierungszeit > "' . $cur_date . '"  AND auswahl_orga LIKE "%' . $selectedOrga . '%"  AND state="1" ORDER BY alarmierungszeit asc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
@@ -248,7 +248,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     endif;
   }
 
-  public static function getEinsatzlogo($data1)
+  public static function getEinsatzlogo($einsatzart)
   {
     // Funktion : Daten für Einsatzlogo holen
     $db = Factory::getDBO();
@@ -256,7 +256,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $query
       ->select('*')
       ->from('#__eiko_einsatzarten')
-      ->where('id = "' . $data1 . '"  AND state = "1" ');
+      ->where('id = "' . $einsatzart . '"  AND state = "1" ');
     $db->setQuery($query);
     $result = $db->loadObject();
     return $result;
@@ -269,7 +269,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $query = $db->getQuery(true);
     $query
       ->select('*')
-      ->from('#__eiko_tickerkat')
+      ->from('#__eiko_einsatzkategorie')
       ->where('id = "' . $kat . '"  AND state = "1" ');
     $db->setQuery($query);
     $result = $db->loadObject();
@@ -277,7 +277,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     return $result;
   }
 
-  public static function getAlarmierungsart($alerting)
+  public static function getAlarmierungsart($alarmierungsart)
   {
     // Funktion : Daten für Einsatzlogo holen
     $db = Factory::getDBO();
@@ -285,7 +285,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $query
       ->select('*')
       ->from('#__eiko_alarmierungsarten')
-      ->where('id = "' . $alerting . '"  AND state = "1" ');
+      ->where('id = "' . $alarmierungsart . '"  AND state = "1" ');
     $db->setQuery($query);
     $result = $db->loadObject();
     return $result;
@@ -977,7 +977,7 @@ checkUtilVersion(4);
 
         $mailer->setSubject('' . $orga[0] . '  +++ ' . $result[0]->summary . ' +++');
 
-        $kat = EinsatzkomponenteHelper::getTickerKat($result[0]->tickerkat);
+        $kat = EinsatzkomponenteHelper::getTickerKat($result[0]->einsatzkategorie);
 
         $link = Route::_(Uri::root() . 'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . $result[0]->id . '&Itemid=' . $params->get('homelink', ''));
 
@@ -1129,13 +1129,13 @@ checkUtilVersion(4);
       $db = Factory::getDBO();
       $query =
         "SELECT eb.id as id, eb.counter as counter, aa.title as alarmart, tk.title as einsatzkat, 
-					  ea.title as einsatzart, eb.address as ort, eb.date1 as startd, eb.date2 as fahrd, 
-					  eb.date3 as endd, eb.boss as el, eb.boss2 as ef, eb.people as pers, eb.auswahl_orga as orgas, 
+					  ea.title as einsatzart, eb.address as ort, eb.alarmierungszeit as startd, eb.ausfahrtszeit as fahrd, 
+					  eb.einsatzende as endd, eb.einsatzleiter as el, eb.einsatzfuehrer as ef, eb.people as pers, eb.auswahl_orga as orgas, 
 					  eb.vehicles as fahrz, eb.ausruestung as ausruest, eb.summary as kurzt, eb.desc as langt 
 					FROM #__eiko_einsatzberichte eb 
-					INNER JOIN #__eiko_einsatzarten ea ON ea.id = eb.data1 
-					INNER JOIN #__eiko_alarmierungsarten aa ON aa.id = eb.alerting
-					INNER JOIN #__eiko_tickerkat tk ON tk.id = eb.tickerkat
+					INNER JOIN #__eiko_einsatzarten ea ON ea.id = eb.einsatzart 
+					INNER JOIN #__eiko_alarmierungsarten aa ON aa.id = eb.alarmierungsart
+					INNER JOIN #__eiko_einsatzkategorie tk ON tk.id = eb.einsatzkategorie
 					WHERE eb.id = " . $rep_id;
       $db->setQuery($query);
       $einsatz = $db->loadObjectList();
@@ -1284,11 +1284,11 @@ checkUtilVersion(4);
         }
       }
       if ($params->get('pdf_show_alarmart') == 1) {
-        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING') . ':'));
+        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALARMIERUNGSART') . ':'));
         $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($alarmart), 0, 1);
       }
       if ($params->get('pdf_show_einsatzart') == 1) {
-        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1') . ':'));
+        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZART') . ':'));
         $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($einsatzart), 0, 1);
       }
       if ($params->get('pdf_show_einsatzkat') == 1) {
@@ -1304,7 +1304,7 @@ checkUtilVersion(4);
         $pdf->Cell($breite_inhalt, $hoehe, $beginn, 0, 1);
       }
       if ($params->get('pdf_show_ausfahrzeit') == 1 and $ausrueck != '0000-00-00 00:00:00') {
-        $pdf->Cell($breite_beschriftung, $hoehe, Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE2') . ':');
+        $pdf->Cell($breite_beschriftung, $hoehe, Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSFAHRTSZEIT') . ':');
         $pdf->Cell($breite_inhalt, $hoehe, $ausrueck, 0, 1);
       }
       if ($params->get('pdf_show_einsatzende') == 1 and $ende != '0000-00-00 00:00:00') {
@@ -1313,13 +1313,13 @@ checkUtilVersion(4);
       }
       if ($params->get('pdf_show_einsatzleiter') == 1) {
         if ($einsatzleiter) {
-          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS') . ':'));
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZLEITER') . ':'));
           $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($einsatzleiter), 0, 1);
         }
       }
       if ($params->get('pdf_show_einsatzfuehrer') == 1) {
         if ($einsatzführer) {
-          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2') . ':'));
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_EINSATZFUEHRER') . ':'));
           $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($einsatzführer), 0, 1);
         }
       }
@@ -1393,10 +1393,10 @@ checkUtilVersion(4);
     return $msg;
   }
 
-  public static function getEinsatzdauer($date1, $date3)
+  public static function getEinsatzdauer($alarmierungszeit, $einsatzende)
   {
     $einsatzdauer = '';
-    $diff = strtotime($date3) - strtotime($date1);
+    $diff = strtotime($einsatzende) - strtotime($alarmierungszeit);
     $diff = $diff / 60;
 
     if ($diff < 60):
@@ -1410,7 +1410,7 @@ checkUtilVersion(4);
       // den Minutenanteil
       // die verbleibenden Sekunden
     else:
-      $diffDate = strtotime($date3) - strtotime($date1);
+      $diffDate = strtotime($einsatzende) - strtotime($alarmierungszeit);
       $days = floor($diffDate / 24 / 60 / 60);
       $diffDate = $diffDate - $days * 24 * 60 * 60;
       $hours = floor($diffDate / 60 / 60);

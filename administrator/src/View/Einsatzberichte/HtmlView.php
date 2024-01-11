@@ -65,10 +65,7 @@ class HtmlView extends BaseHtmlView
   {
     $canDo = EinsatzkomponenteHelper::getActions($this->state->get('filter.category_id'));
 
-    ToolbarHelper::title(
-      Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE'),
-      'einsatzberichte.png'
-    );
+    ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE'), 'einsatzberichte.png');
 
     if ($canDo->get('core.create')) {
       ToolbarHelper::addNew('einsatzbericht.add', 'JTOOLBAR_NEW');
@@ -80,32 +77,14 @@ class HtmlView extends BaseHtmlView
     if ($canDo->get('core.edit.state')) {
       if (isset($this->items[0]->state)) {
         ToolbarHelper::divider();
-        ToolbarHelper::custom(
-          'einsatzberichte.publish',
-          'publish.png',
-          'publish_f2.png',
-          'JTOOLBAR_PUBLISH',
-          true
-        );
-        ToolbarHelper::custom(
-          'einsatzberichte.unpublish',
-          'unpublish.png',
-          'unpublish_f2.png',
-          'JTOOLBAR_UNPUBLISH',
-          true
-        );
+        ToolbarHelper::custom('einsatzberichte.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+        ToolbarHelper::custom('einsatzberichte.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
       } elseif (isset($this->items[0])) {
         //If this component does not use state then show a direct delete button as we can not trash
         ToolbarHelper::deleteList('', 'einsatzberichte.delete', 'JTOOLBAR_DELETE');
       }
       if (isset($this->items[0]->checked_out)) {
-        ToolbarHelper::custom(
-          'einsatzberichte.checkin',
-          'checkin.png',
-          'checkin_f2.png',
-          'JTOOLBAR_CHECKIN',
-          true
-        );
+        ToolbarHelper::custom('einsatzberichte.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
       }
     }
 
@@ -123,40 +102,19 @@ class HtmlView extends BaseHtmlView
     if ($canDo->get('core.admin')) {
       ToolbarHelper::preferences('com_einsatzkomponente');
       //if (params->get('send_mail_backend','0')) :
-      ToolbarHelper::custom(
-        'einsatzberichte.sendMail',
-        'edit',
-        'edit',
-        'COM_EINSATZKOMPONENTE_ALS_EMAIL_VERSENDEN',
-        true
-      );
+      ToolbarHelper::custom('einsatzberichte.sendMail', 'edit', 'edit', 'COM_EINSATZKOMPONENTE_ALS_EMAIL_VERSENDEN', true);
       //endif;
     }
 
     if ($canDo->get('core.create')) {
-      ToolbarHelper::custom(
-        'einsatzberichte.article',
-        'edit',
-        'edit',
-        'COM_EINSATZKOMPONENTE_ALS_JOOMLA_ARTIKEL_ERSTELLEN',
-        true
-      );
+      ToolbarHelper::custom('einsatzberichte.article', 'edit', 'edit', 'COM_EINSATZKOMPONENTE_ALS_JOOMLA_ARTIKEL_ERSTELLEN', true);
     }
-    ToolbarHelper::custom(
-      'einsatzberichte.pdf',
-      'upload',
-      'upload',
-      'COM_EINSATZKOMPONENTE_ALS_PDF_EXPORTIEREN',
-      true
-    );
+    ToolbarHelper::custom('einsatzberichte.pdf', 'upload', 'upload', 'COM_EINSATZKOMPONENTE_ALS_PDF_EXPORTIEREN', true);
 
     if ($canDo->get('core.create')):
       if (isset($this->items[0]->state)) {
         ToolbarHelper::divider();
-        ToolbarHelper::archiveList(
-          'einsatzberichte.archive',
-          'COM_EINSATZKOMPONENTE_ALS_FOLGEEINSATZ_MARKIEREN'
-        );
+        ToolbarHelper::archiveList('einsatzberichte.archive', 'COM_EINSATZKOMPONENTE_ALS_FOLGEEINSATZ_MARKIEREN');
       }
     endif;
 
@@ -191,30 +149,18 @@ class HtmlView extends BaseHtmlView
       }
     }
 
-    Sidebar::addFilter(
-      '$auswahl_orga',
-      'filter_auswahl_orga',
-      HTMLHelper::_(
-        'select.options',
-        $options,
-        'value',
-        'text',
-        $this->state->get('filter.auswahl_orga')
-      ),
-      true
-    );
+    Sidebar::addFilter('$auswahl_orga', 'filter_auswahl_orga', HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.auswahl_orga')), true);
 
-    //Filter for the field tickerkat;
+    //Filter for the field einsatzkategorie;
     $options = [];
-    Form::addFormPath(JPATH_COMPONENT . '/models/forms');
     $form = Form::getInstance('com_einsatzkomponente.einsatzbericht', 'einsatzbericht');
 
-    $field = $form->getField('tickerkat');
+    $field = $form->getField('einsatzkategorie');
 
-    $query = $form->getFieldAttribute('filter_tickerkat', 'query');
-    $translate = $form->getFieldAttribute('filter_tickerkat', 'translate');
-    $key = $form->getFieldAttribute('filter_tickerkat', 'key_field');
-    $value = $form->getFieldAttribute('filter_tickerkat', 'value_field');
+    $query = $form->getFieldAttribute('filter_einsatzkategorie', 'query');
+    $translate = $form->getFieldAttribute('filter_einsatzkategorie', 'translate');
+    $key = $form->getFieldAttribute('filter_einsatzkategorie', 'key_field');
+    $value = $form->getFieldAttribute('filter_einsatzkategorie', 'value_field');
 
     // Get the database object.
     $db = Factory::getDBO();
@@ -234,30 +180,18 @@ class HtmlView extends BaseHtmlView
       }
     }
 
-    Sidebar::addFilter(
-      '$tickerkat',
-      'filter_tickerkat',
-      HTMLHelper::_(
-        'select.options',
-        $options,
-        'value',
-        'text',
-        $this->state->get('filter.tickerkat')
-      ),
-      true
-    );
+    Sidebar::addFilter('$einsatzkategorie', 'filter_einsatzkategorie', HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.einsatzkategorie')), true);
 
-    //Filter for the field data1;
+    //Filter for the field einsatzart;
     $options = [];
-    Form::addFormPath(JPATH_COMPONENT . '/models/forms');
     $form = Form::getInstance('com_einsatzkomponente.einsatzbericht', 'einsatzbericht');
 
-    $field = $form->getField('data1');
+    $field = $form->getField('einsatzart');
 
-    $query = $form->getFieldAttribute('filter_data1', 'query');
-    $translate = $form->getFieldAttribute('filter_data1', 'translate');
-    $key = $form->getFieldAttribute('filter_data1', 'key_field');
-    $value = $form->getFieldAttribute('filter_data1', 'value_field');
+    $query = $form->getFieldAttribute('filter_einsatzart', 'query');
+    $translate = $form->getFieldAttribute('filter_einsatzart', 'translate');
+    $key = $form->getFieldAttribute('filter_einsatzart', 'key_field');
+    $value = $form->getFieldAttribute('filter_einsatzart', 'value_field');
 
     // Get the database object.
     $db = Factory::getDBO();
@@ -277,23 +211,18 @@ class HtmlView extends BaseHtmlView
       }
     }
 
-    Sidebar::addFilter(
-      '$data1',
-      'filter_data1',
-      HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.data1')),
-      true
-    );
+    Sidebar::addFilter('$einsatzart', 'filter_einsatzart', HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.einsatzart')), true);
 
-    //Filter for the field alerting;
+    //Filter for the field alarmierungsart;
     $options = [];
     $form = Form::getInstance('com_einsatzkomponente.einsatzbericht', 'einsatzbericht');
 
-    $field = $form->getField('alerting');
+    $field = $form->getField('alarmierungsart');
 
-    $query = $form->getFieldAttribute('filter_alerting', 'query');
-    $translate = $form->getFieldAttribute('filter_alerting', 'translate');
-    $key = $form->getFieldAttribute('filter_alerting', 'key_field');
-    $value = $form->getFieldAttribute('filter_alerting', 'value_field');
+    $query = $form->getFieldAttribute('filter_alarmierungsart', 'query');
+    $translate = $form->getFieldAttribute('filter_alarmierungsart', 'translate');
+    $key = $form->getFieldAttribute('filter_alarmierungsart', 'key_field');
+    $value = $form->getFieldAttribute('filter_alarmierungsart', 'value_field');
 
     // Get the database object.
     $db = Factory::getDBO();
@@ -313,39 +242,14 @@ class HtmlView extends BaseHtmlView
       }
     }
 
-    Sidebar::addFilter(
-      '$alerting',
-      'filter_alerting',
-      HTMLHelper::_(
-        'select.options',
-        $options,
-        'value',
-        'text',
-        $this->state->get('filter.alerting')
-      ),
-      true
-    );
+    Sidebar::addFilter('$alarmierungsart', 'filter_alarmierungsart', HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.alarmierungsart')), true);
 
-    //Filter for the field date1
+    //Filter for the field alarmierungszeit
     $this->extra_sidebar .= '<div class="div_side_filter">';
-    $this->extra_sidebar .= '<small><label for="filter_from_date1">ab Datum</label></small>';
-    $this->extra_sidebar .= HTMLHelper::_(
-      'calendar',
-      $this->state->get('filter.date1.from'),
-      'filter_from_date1',
-      'filter_from_date1',
-      '%Y-%m-%d',
-      ['style' => 'width:142px;', 'onchange' => 'this.form.submit();']
-    );
-    $this->extra_sidebar .= '<small><label for="filter_to_date1">bis Datum</label></small>';
-    $this->extra_sidebar .= HTMLHelper::_(
-      'calendar',
-      $this->state->get('filter.date1.to'),
-      'filter_to_date1',
-      'filter_to_date1',
-      '%Y-%m-%d',
-      ['style' => 'width:142px;', 'onchange' => 'this.form.submit();']
-    );
+    $this->extra_sidebar .= '<small><label for="filter_from_alarmierungszeit">ab Datum</label></small>';
+    $this->extra_sidebar .= HTMLHelper::_('calendar', $this->state->get('filter.alarmierungszeit.from'), 'filter_from_alarmierungszeit', 'filter_from_alarmierungszeit', '%Y-%m-%d', ['style' => 'width:142px;', 'onchange' => 'this.form.submit();']);
+    $this->extra_sidebar .= '<small><label for="filter_to_alarmierungszeit">bis Datum</label></small>';
+    $this->extra_sidebar .= HTMLHelper::_('calendar', $this->state->get('filter.alarmierungszeit.to'), 'filter_to_alarmierungszeit', 'filter_to_alarmierungszeit', '%Y-%m-%d', ['style' => 'width:142px;', 'onchange' => 'this.form.submit();']);
     $this->extra_sidebar .= '<hr class="hr-condensed">';
     $this->extra_sidebar .= '</div>';
 
@@ -354,39 +258,18 @@ class HtmlView extends BaseHtmlView
     $options[] = HTMLHelper::_('select.option', '0', 'JUNPUBLISHED');
     $options[] = HTMLHelper::_('select.option', '2', 'COM_EINSATZKOMPONENTE_FOLGEEINSATZ');
     $options[] = HTMLHelper::_('select.option', '*', 'JALL');
-    Sidebar::addFilter(
-      Text::_('JOPTION_SELECT_PUBLISHED'),
-      'filter_published',
-      HTMLHelper::_(
-        'select.options',
-        $options,
-        'value',
-        'text',
-        $this->state->get('filter.state'),
-        true
-      )
-    );
+    Sidebar::addFilter(Text::_('JOPTION_SELECT_PUBLISHED'), 'filter_published', HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.state'), true));
 
     //Filter for the field created_by
     $this->extra_sidebar .= '<div class="div_side_filter">';
     $this->extra_sidebar .= '<small><label for="filter_created_by">Erstellt von</label></small>';
-    $this->extra_sidebar .= ListHelper::users(
-      'filter_created_by',
-      $this->state->get('filter.created_by'),
-      1,
-      'onchange="this.form.submit();"'
-    );
+    $this->extra_sidebar .= ListHelper::users('filter_created_by', $this->state->get('filter.created_by'), 1, 'onchange="this.form.submit();"');
     $this->extra_sidebar .= '</div>';
 
     //Filter for the field modified_by
     $this->extra_sidebar .= '<div class="div_side_filter">';
     $this->extra_sidebar .= '<small><label for="filter_modified_by">Bearbeitet von</label></small>';
-    $this->extra_sidebar .= ListHelper::users(
-      'filter_modified_by',
-      $this->state->get('filter.modified_by'),
-      1,
-      'onchange="this.form.submit();"'
-    );
+    $this->extra_sidebar .= ListHelper::users('filter_modified_by', $this->state->get('filter.modified_by'), 1, 'onchange="this.form.submit();"');
     $this->extra_sidebar .= '</div>';
   }
 
@@ -395,10 +278,10 @@ class HtmlView extends BaseHtmlView
     return [
       'a.id' => Text::_('JGRID_HEADING_ID'),
       'a.ordering' => Text::_('JGRID_HEADING_ORDERING'),
-      'a.alerting' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALERTING'),
-      'a.tickerkat' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_TICKERKAT'),
-      'a.data1' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATA1'),
-      'a.date1' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATE1'),
+      'a.alarmierungsart' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALARMIERUNGSART'),
+      'a.einsatzkategorie' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_EINSATZKATEGORIE'),
+      'a.einsatzart' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_EINSATZART'),
+      'a.alarmierungszeit' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALARMIERUNGSZEIT'),
       'a.summary' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_SUMMARY'),
       'a.auswahl_orga' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_auswahl_orga'),
       'a.gmap' => Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_GMAP'),

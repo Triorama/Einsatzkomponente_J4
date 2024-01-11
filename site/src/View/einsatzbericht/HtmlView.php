@@ -52,17 +52,17 @@ class EinsatzkomponenteViewEinsatzbericht extends HtmlView
     $this->item = $this->get('Data');
 
     $this->images = EinsatzkomponenteHelper::getEinsatzbilder($this->item->id);
-    $this->prev_id = EinsatzkomponenteHelper::getPrev_id($this->item->date1, $selectedOrga);
-    $this->next_id = EinsatzkomponenteHelper::getNext_id($this->item->date1, $selectedOrga);
+    $this->prev_id = EinsatzkomponenteHelper::getPrev_id($this->item->alarmierungszeit, $selectedOrga);
+    $this->next_id = EinsatzkomponenteHelper::getNext_id($this->item->alarmierungszeit, $selectedOrga);
 
     $this->params = $app->getParams('com_einsatzkomponente');
     $this->form = $this->get('Form');
     $this->gmap_config = EinsatzkomponenteHelper::load_gmap_config(); // GMap-Config aus helper laden
-    $this->einsatzlogo = EinsatzkomponenteHelper::getEinsatzlogo($this->item->data1);
-    $this->tickerKat = EinsatzkomponenteHelper::getTickerKat($this->item->tickerkat);
-    $this->alarmierungsart = EinsatzkomponenteHelper::getAlarmierungsart($this->item->alerting);
-    $this->einsatzdauer = EinsatzkomponenteHelper::getEinsatzdauer($this->item->date1, $this->item->date3);
-    $this->einsatznummer = EinsatzkomponenteHelper::ermittle_einsatz_nummer(strtotime($this->item->date1), $this->item->data1);
+    $this->einsatzlogo = EinsatzkomponenteHelper::getEinsatzlogo($this->item->einsatzart);
+    $this->tickerKat = EinsatzkomponenteHelper::getTickerKat($this->item->einsatzkategorie);
+    $this->alarmierungsart = EinsatzkomponenteHelper::getAlarmierungsart($this->item->alarmierungsart);
+    $this->einsatzdauer = EinsatzkomponenteHelper::getEinsatzdauer($this->item->alarmierungszeit, $this->item->einsatzende);
+    $this->einsatznummer = EinsatzkomponenteHelper::ermittle_einsatz_nummer(strtotime($this->item->alarmierungszeit), $this->item->einsatzart);
     // Get active menu
     $app = Factory::getApplication();
     $menus = $app->getMenu();
@@ -275,11 +275,11 @@ class EinsatzkomponenteViewEinsatzbericht extends HtmlView
 
  if ($this->item->summary) {
    $summary = strip_tags($this->item->summary);
-   $opengraph .= '<meta property="og:description" content="Datum: ' . date('d.m.Y', strtotime($this->item->date1)) . ' --- Ort: ' . $this->item->address . ' --- ' . $summary . '" />';
+   $opengraph .= '<meta property="og:description" content="Datum: ' . date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ' --- Ort: ' . $this->item->address . ' --- ' . $summary . '" />';
  }
  if ($this->item->desc) {
    $desc = strip_tags($this->item->desc);
-   $opengraph .= '<meta property="og:description" content="Datum: ' . date('d.m.Y', strtotime($this->item->date1)) . ' --- Ort: ' . $this->item->address . ' --- ' . $desc . '" />';
+   $opengraph .= '<meta property="og:description" content="Datum: ' . date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ' --- Ort: ' . $this->item->address . ' --- ' . $desc . '" />';
  }
 
  if ($this->einsatzlogo->list_icon):
@@ -393,11 +393,11 @@ class EinsatzkomponenteViewEinsatzbericht extends HtmlView
 
     if ($this->item->summary) {
       $summary = strip_tags($this->item->summary);
-      $this->document->setDescription('Datum: ' . date('d.m.Y', strtotime($this->item->date1)) . ' --- Ort: #' . $this->item->address . ' --- #' . $summary);
+      $this->document->setDescription('Datum: ' . date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ' --- Ort: #' . $this->item->address . ' --- #' . $summary);
     }
     if ($this->item->desc) {
       $desc = strip_tags($this->item->desc);
-      $this->document->setDescription('Datum: ' . date('d.m.Y', strtotime($this->item->date1)) . ' --- Ort: #' . $this->item->address . ' --- #' . $desc);
+      $this->document->setDescription('Datum: ' . date('d.m.Y', strtotime($this->item->alarmierungszeit)) . ' --- Ort: #' . $this->item->address . ' --- #' . $desc);
     }
 
     if ($this->params->get('menu-meta_keywords')) {
