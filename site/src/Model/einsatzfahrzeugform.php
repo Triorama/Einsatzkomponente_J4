@@ -43,9 +43,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
 
     // Load state from the request userState on edit or from the passed variable on default
     if (Factory::getApplication()->input->get('layout') == 'edit') {
-      $id = Factory::getApplication()->getUserState(
-        'com_einsatzkomponente.edit.einsatzfahrzeug.id'
-      );
+      $id = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
     } else {
       $id = Factory::getApplication()->input->get('id');
       Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id', $id);
@@ -91,19 +89,12 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
         $id = $table->id;
 
         if ($id) {
-          $canEdit =
-            $user->authorise('core.edit', 'com_einsatzkomponente. einsatzfahrzeug.' . $id) ||
-            $user->authorise('core.create', 'com_einsatzkomponente. einsatzfahrzeug.' . $id);
+          $canEdit = $user->authorise('core.edit', 'com_einsatzkomponente. einsatzfahrzeug.' . $id) || $user->authorise('core.create', 'com_einsatzkomponente. einsatzfahrzeug.' . $id);
         } else {
-          $canEdit =
-            $user->authorise('core.edit', 'com_einsatzkomponente') ||
-            $user->authorise('core.create', 'com_einsatzkomponente');
+          $canEdit = $user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.create', 'com_einsatzkomponente');
         }
 
-        if (
-          !$canEdit &&
-          $user->authorise('core.edit.own', 'com_einsatzkomponente.einsatzfahrzeug.' . $id)
-        ) {
+        if (!$canEdit && $user->authorise('core.edit.own', 'com_einsatzkomponente.einsatzfahrzeug.' . $id)) {
           $canEdit = $user->id == $table->created_by;
         }
 
@@ -136,11 +127,8 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
    *
    * @return  JTable|boolean JTable if found, boolean false on failure
    */
-  public function getTable(
-    $type = 'Einsatzfahrzeug',
-    $prefix = 'EinsatzkomponenteTable',
-    $config = []
-  ) {
+  public function getTable($type = 'Einsatzfahrzeug', $prefix = 'EinsatzkomponenteTable', $config = [])
+  {
     $this->addTablePath(JPATH_ADMINISTRATOR . '/components/com_einsatzkomponente/tables');
 
     return Table::getInstance($type, $prefix, $config);
@@ -259,10 +247,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
    */
   protected function loadFormData()
   {
-    $data = Factory::getApplication()->getUserState(
-      'com_einsatzkomponente.edit.einsatzfahrzeug.data',
-      []
-    );
+    $data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.data', []);
 
     if (empty($data)) {
       $data = $this->getData();
@@ -289,18 +274,9 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
 
     if ($id) {
       // Check the user can edit this item
-      $authorised =
-        $user->authorise('core.edit', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) ||
-        ($authorised = $user->authorise(
-          'core.edit.own',
-          'com_einsatzkomponente.einsatzfahrzeug.' . $id
-        ));
+      $authorised = $user->authorise('core.edit', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) || ($authorised = $user->authorise('core.edit.own', 'com_einsatzkomponente.einsatzfahrzeug.' . $id));
 
-      if (
-        $user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) !==
-          true &&
-        $state == 1
-      ) {
+      if ($user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) !== true && $state == 1) {
         // The user cannot edit the state of the item.
         $data['state'] = 0;
       }
@@ -308,11 +284,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
       // Check the user can create new items in this section
       $authorised = $user->authorise('core.create', 'com_einsatzkomponente');
 
-      if (
-        $user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) !==
-          true &&
-        $state == 1
-      ) {
+      if ($user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) !== true && $state == 1) {
         // The user cannot edit the state of the item.
         $data['state'] = 0;
       }
@@ -344,12 +316,7 @@ class EinsatzkomponenteModelEinsatzfahrzeugForm extends FormModel
   {
     $id = !empty($data['id']) ? $data['id'] : (int) $this->getState('einsatzfahrzeug.id');
 
-    if (
-      Factory::getUser()->authorise(
-        'core.delete',
-        'com_einsatzkomponente.einsatzfahrzeug.' . $id
-      ) !== true
-    ) {
+    if (Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzfahrzeug.' . $id) !== true) {
       throw new Exception(403, Text::_('ALERTNOAUTHOR'));
     }
 

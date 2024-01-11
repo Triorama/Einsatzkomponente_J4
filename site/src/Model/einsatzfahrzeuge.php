@@ -171,9 +171,7 @@ class EinsatzkomponenteModelEinsatzfahrzeuge extends ListModel
     }
 
     // Receive & set filters
-    if (
-      $filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')
-    ) {
+    if ($filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')) {
       foreach ($filters as $name => $value) {
         $this->setState('filter.' . $name, $value);
       }
@@ -234,16 +232,10 @@ class EinsatzkomponenteModelEinsatzfahrzeuge extends ListModel
 
     // Join over the foreign key 'department'
     $query->select('#__eiko_organisationen_2190080.name AS organisationen_name_2190080');
-    $query->join(
-      'LEFT',
-      '#__eiko_organisationen AS #__eiko_organisationen_2190080 ON #__eiko_organisationen_2190080.id = a.department'
-    );
+    $query->join('LEFT', '#__eiko_organisationen AS #__eiko_organisationen_2190080 ON #__eiko_organisationen_2190080.id = a.department');
     // Join over the foreign key 'ausruestung'
     $query->select('#__eiko_ausruestung_2190081.name AS ausruestungen_name_2190081');
-    $query->join(
-      'LEFT',
-      '#__eiko_ausruestung AS #__eiko_ausruestung_2190081 ON #__eiko_ausruestung_2190081.id = a.ausruestung'
-    );
+    $query->join('LEFT', '#__eiko_ausruestung AS #__eiko_ausruestung_2190081 ON #__eiko_ausruestung_2190081.id = a.ausruestung');
 
     // Join over the created by field 'created_by'
     $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -365,9 +357,7 @@ class EinsatzkomponenteModelEinsatzfahrzeuge extends ListModel
           $item->ausruestung = ArrayHelper::fromObject($item->ausruestung);
         }
 
-        $values = is_array($item->ausruestung)
-          ? $item->ausruestung
-          : explode(',', $item->ausruestung);
+        $values = is_array($item->ausruestung) ? $item->ausruestung : explode(',', $item->ausruestung);
         $textValue = [];
 
         foreach ($values as $value) {

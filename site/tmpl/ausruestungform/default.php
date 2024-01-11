@@ -50,19 +50,12 @@ if ($this->params->get('eiko')): ?>
     }
 </script>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
-); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="ausruestung-form" class="form-validate">
 
     <div class="form-horizontal">
         <?php echo HTMLHelper::_('bootstrap.startTabSet', 'myTab', ['active' => 'general']); ?>
 
-        <?php echo HTMLHelper::_(
-          'bootstrap.addTab',
-          'myTab',
-          'general',
-          Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)
-        ); ?>
+        <?php echo HTMLHelper::_('bootstrap.addTab', 'myTab', 'general', Text::_('COM_EINSATZKOMPONENTE_TITLE_AUSRUESTUNG', true)); ?>
         <div class="row-fluid">
             <div class="span10 form-horizontal">
                 <fieldset class="adminform">
@@ -86,10 +79,8 @@ if ($this->params->get('eiko')): ?>
 				<?php } else { ?>
 					<input type="hidden" name="jform[created_by]" value="<?php echo $this->item->created_by; ?>" />
 
-				<?php } ?>				<input type="hidden" name="jform[checked_out]" value="<?php echo $this->item
-      ->checked_out; ?>" />
-				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item
-      ->checked_out_time; ?>" />
+				<?php } ?>				<input type="hidden" name="jform[checked_out]" value="<?php echo $this->item->checked_out; ?>" />
+				<input type="hidden" name="jform[checked_out_time]" value="<?php echo $this->item->checked_out_time; ?>" />
 				<input type="hidden" name="jform[ordering]" value="<?php echo $this->item->ordering; ?>" />
 				<input type="hidden" name="jform[state]" value="<?php echo $this->item->state; ?>" />
 
@@ -104,14 +95,8 @@ if ($this->params->get('eiko')): ?>
 
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="validate btn btn-primary"><?php echo Text::_(
-                  'JSUBMIT'
-                ); ?></button>
-                <a class="btn" href="<?php echo Route::_(
-                  'index.php?option=com_einsatzkomponente&task=ausruestungform.cancel'
-                ); ?>" title="<?php echo Text::_('JCANCEL'); ?>"><?php echo Text::_(
-  'JCANCEL'
-); ?></a>
+                <button type="submit" class="validate btn btn-primary"><?php echo Text::_('JSUBMIT'); ?></button>
+                <a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestungform.cancel'); ?>" title="<?php echo Text::_('JCANCEL'); ?>"><?php echo Text::_('JCANCEL'); ?></a>
             </div>
         </div>
         

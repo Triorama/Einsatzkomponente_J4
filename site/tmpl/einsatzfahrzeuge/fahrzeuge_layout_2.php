@@ -15,11 +15,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Factory;
 ?>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge&Itemid=' .
-    $this->params->get('vehiclelink', '') .
-    ''
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge&Itemid=' . $this->params->get('vehiclelink', '') . ''); ?>" method="post" name="adminForm" id="adminForm">
 
 	<?php echo LayoutHelper::render('default_filter', ['view' => $this], dirname(__FILE__)); ?>
 	<table class="table table-striped" id="einsatzfahrzeugList">
@@ -32,193 +28,67 @@ use Joomla\CMS\Factory;
 			<?php endif; ?>
 
 							<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_NAME',
-      'a.name',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_NAME', 'a.name', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL1_LABEL',
-      'a.detail1_label',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL1_LABEL', 'a.detail1_label', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL1',
-      'a.detail1',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL1', 'a.detail1', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL2_LABEL',
-      'a.detail2_label',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL2_LABEL', 'a.detail2_label', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL2',
-      'a.detail2',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL2', 'a.detail2', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL3_LABEL',
-      'a.detail3_label',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL3_LABEL', 'a.detail3_label', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL3',
-      'a.detail3',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL3', 'a.detail3', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL4_LABEL',
-      'a.detail4_label',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL4_LABEL', 'a.detail4_label', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL4',
-      'a.detail4',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL4', 'a.detail4', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL5_LABEL',
-      'a.detail5_label',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL5_LABEL', 'a.detail5_label', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL5',
-      'a.detail5',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL5', 'a.detail5', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL6_LABEL',
-      'a.detail6_label',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL6_LABEL', 'a.detail6_label', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL6',
-      'a.detail6',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL6', 'a.detail6', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL7_LABEL',
-      'a.detail7_label',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL7_LABEL', 'a.detail7_label', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL7',
-      'a.detail7',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DETAIL7', 'a.detail7', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DEPARTMENT',
-      'a.department',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DEPARTMENT', 'a.department', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_AUSRUESTUNG',
-      'a.ausruestung',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_AUSRUESTUNG', 'a.ausruestung', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_LINK',
-      'a.link',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_LINK', 'a.link', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_IMAGE',
-      'a.image',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_IMAGE', 'a.image', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DESC',
-      'a.desc',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_DESC', 'a.desc', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_CREATED_BY',
-      'a.created_by',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZFAHRZEUGE_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
 				</th>
 
 
@@ -256,16 +126,7 @@ use Joomla\CMS\Factory;
 				<?php if (isset($this->items[0]->state)): ?>
 					<?php $class = $canEdit || $canChange ? 'active' : 'disabled'; ?>
 					<td class="center">
-	<a class="btn btn-micro <?php echo $class; ?>" href="<?php echo $canEdit || $canChange
-  ? Route::_(
-    'index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.publish&id=' .
-      $item->id .
-      '&state=' .
-      ($item->state + 1) % 2,
-    false,
-    2
-  )
-  : '#'; ?>">
+	<a class="btn btn-micro <?php echo $class; ?>" href="<?php echo $canEdit || $canChange ? Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.publish&id=' . $item->id . '&state=' . ($item->state + 1) % 2, false, 2) : '#'; ?>">
 		<?php if ($item->state == 1): ?>
 			<i class="icon-publish"></i>
 		<?php else: ?>
@@ -277,18 +138,9 @@ use Joomla\CMS\Factory;
 
 								<td>
 				<?php if (isset($item->checked_out) && $item->checked_out): ?>
-					<?php echo HTMLHelper::_(
-       'jgrid.checkedout',
-       $i,
-       $item->editor,
-       $item->checked_out_time,
-       'einsatzfahrzeuge.',
-       $canCheckin
-     ); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzfahrzeuge.', $canCheckin); ?>
 				<?php endif; ?>
-				<a href="<?php echo Route::_(
-      'index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&id=' . (int) $item->id
-    ); ?>">
+				<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&id=' . (int) $item->id); ?>">
 				<?php echo $this->escape($item->name); ?></a>
 				</td>
 				<td>
@@ -381,11 +233,7 @@ use Joomla\CMS\Factory;
 								<?php if ($canEdit || $canDelete): ?>
 					<td class="center">
 						<?php if ($canEdit): ?>
-							<a href="<?php echo Route::_(
-         'index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.edit&id=' . $item->id,
-         false,
-         2
-       ); ?>" class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
+							<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.edit&id=' . $item->id, false, 2); ?>" class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
 						<?php endif; ?>
 						<?php if ($canDelete): ?>
 							<button data-item-id="<?php echo $item->id; ?>" class="btn btn-mini delete-button" type="button"><i class="icon-trash" ></i></button>
@@ -399,11 +247,7 @@ use Joomla\CMS\Factory;
 	</table>
 
 	<?php if ($canCreate): ?>
-		<a href="<?php echo Route::_(
-    'index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.edit&id=0',
-    false,
-    2
-  ); ?>"
+		<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.edit&id=0', false, 2); ?>"
 		   class="btn btn-success btn-small"><i
 				class="icon-plus"></i>
 			<?php echo Text::_('COM_EINSATZKOMPONENTE_ADD'); ?></a>
@@ -426,11 +270,7 @@ use Joomla\CMS\Factory;
 		var item_id = jQuery(this).attr('data-item-id');
 		<?php if ($canDelete): ?>
 		if (confirm("<?php echo Text::_('COM_EINSATZKOMPONENTE_WIRKLICH_LOESCHEN'); ?>")) {
-			window.location.href = '<?php echo Route::_(
-     'index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.remove&id=',
-     false,
-     2
-   ); ?>' + item_id;
+			window.location.href = '<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.remove&id=', false, 2); ?>' + item_id;
 		}
 		<?php endif; ?>
 	}

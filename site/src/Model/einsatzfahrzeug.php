@@ -41,9 +41,7 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
 
     // Load state from the request userState on edit or from the passed variable on default
     if (Factory::getApplication()->input->get('layout') == 'edit') {
-      $id = Factory::getApplication()->getUserState(
-        'com_einsatzkomponente.edit.einsatzfahrzeug.id'
-      );
+      $id = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
     } else {
       $id = Factory::getApplication()->input->get('id');
       Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id', $id);
@@ -104,9 +102,7 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
       if (is_object($this->_item->department)) {
         $this->_item->department = JArrayHelper::fromObject($this->_item->department);
       }
-      $values = is_array($this->_item->department)
-        ? $this->_item->department
-        : explode(',', $this->_item->department);
+      $values = is_array($this->_item->department) ? $this->_item->department : explode(',', $this->_item->department);
 
       $textValue = [];
       foreach ($values as $value) {
@@ -123,18 +119,14 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
         }
       }
 
-      $this->_item->department = !empty($textValue)
-        ? implode(', ', $textValue)
-        : $this->_item->department;
+      $this->_item->department = !empty($textValue) ? implode(', ', $textValue) : $this->_item->department;
     }
 
     if (isset($this->_item->ausruestung) && $this->_item->ausruestung != '') {
       if (is_object($this->_item->ausruestung)) {
         $this->_item->ausruestung = JArrayHelper::fromObject($this->_item->ausruestung);
       }
-      $values = is_array($this->_item->ausruestung)
-        ? $this->_item->ausruestung
-        : explode(',', $this->_item->ausruestung);
+      $values = is_array($this->_item->ausruestung) ? $this->_item->ausruestung : explode(',', $this->_item->ausruestung);
 
       $textValue = [];
       foreach ($values as $value) {
@@ -151,9 +143,7 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
         }
       }
 
-      $this->_item->ausruestung = !empty($textValue)
-        ? implode(', ', $textValue)
-        : $this->_item->ausruestung;
+      $this->_item->ausruestung = !empty($textValue) ? implode(', ', $textValue) : $this->_item->ausruestung;
     }
     if (isset($this->_item->created_by)) {
       $this->_item->created_by_name = Factory::getUser($this->_item->created_by)->name;
@@ -171,11 +161,8 @@ class EinsatzkomponenteModelEinsatzfahrzeug extends ItemModel
    *
    * @return  JTable|bool JTable if success, false on failure.
    */
-  public function getTable(
-    $type = 'Einsatzfahrzeug',
-    $prefix = 'EinsatzkomponenteTable',
-    $config = []
-  ) {
+  public function getTable($type = 'Einsatzfahrzeug', $prefix = 'EinsatzkomponenteTable', $config = [])
+  {
     $this->addTablePath(JPATH_ADMINISTRATOR . '/components/com_einsatzkomponente/tables');
 
     return Table::getInstance($type, $prefix, $config);

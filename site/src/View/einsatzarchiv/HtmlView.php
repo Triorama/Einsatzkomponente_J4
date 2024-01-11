@@ -16,10 +16,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 
 jimport('joomla.application.component.view');
-JLoader::import(
-  'helpers.einsatzkomponente',
-  JPATH_SITE . '/administrator/components/com_einsatzkomponente'
-);
+JLoader::import('helpers.einsatzkomponente', JPATH_SITE . '/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE . '/administrator/components/com_einsatzkomponente');
 /**
  * View class for a list of Einsatzkomponente.
@@ -61,10 +58,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
     // Import CSS
     $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
     $document->addStyleSheet('components/com_einsatzkomponente/assets/css/responsive.css');
-    HTMLHelper::_(
-      'stylesheet',
-      'components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
-    );
+    HTMLHelper::_('stylesheet', 'components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
     HTMLHelper::_('stylesheet', 'components/com_einsatzkomponente/assets/css/responsive.css');
 
     // Bootstrap laden
@@ -96,25 +90,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
         $einsatzorte = '[';
         foreach ($this->items as $i => $item):
           if ($item->gmap and $item->state == '1'):
-            $einsatzorte =
-              $einsatzorte .
-              '["' .
-              $item->summary .
-              '",' .
-              $item->gmap_report_latitude .
-              ',' .
-              $item->gmap_report_longitude .
-              ',' .
-              $i .
-              ',"' .
-              $item->icon .
-              '","' .
-              $item->summary .
-              '","' .
-              $item->id .
-              '","' .
-              $item->address .
-              '"],';
+            $einsatzorte = $einsatzorte . '["' . $item->summary . '",' . $item->gmap_report_latitude . ',' . $item->gmap_report_longitude . ',' . $i . ',"' . $item->icon . '","' . $item->summary . '","' . $item->id . '","' . $item->address . '"],';
           endif;
         endforeach;
         $einsatzorte = substr($einsatzorte, 0, strlen($einsatzorte) - 1);
@@ -133,50 +109,19 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
         for ($i = 0; $i < count($orga); $i++) {
           $orga_image = $orga[$i]->gmap_icon_orga;
           if (!$orga_image):
-            $orga_image =
-              'images/com_einsatzkomponente/images/map/icons/' .
-              $this->params->get('einsatzkarte_orga_image', 'haus_rot.png');
+            $orga_image = 'images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png');
           endif;
           if ($i == $n - 1) {
-            $organisationen =
-              $organisationen .
-              '["' .
-              $orga[$i]->name .
-              '",' .
-              $orga[$i]->gmap_latitude .
-              ',' .
-              $orga[$i]->gmap_longitude .
-              ',' .
-              $i .
-              ',"' .
-              $orga_image .
-              '"]';
+            $organisationen = $organisationen . '["' . $orga[$i]->name . '",' . $orga[$i]->gmap_latitude . ',' . $orga[$i]->gmap_longitude . ',' . $i . ',"' . $orga_image . '"]';
           } else {
-            $organisationen =
-              $organisationen .
-              '["' .
-              $orga[$i]->name .
-              '",' .
-              $orga[$i]->gmap_latitude .
-              ',' .
-              $orga[$i]->gmap_longitude .
-              ',' .
-              $i .
-              ',"' .
-              $orga_image .
-              '"';
+            $organisationen = $organisationen . '["' . $orga[$i]->name . '",' . $orga[$i]->gmap_latitude . ',' . $orga[$i]->gmap_longitude . ',' . $i . ',"' . $orga_image . '"';
             $organisationen = $organisationen . '],';
           }
         }
         $organisationen = substr($organisationen, 0, strlen($organisationen) - 1);
         $organisationen = $organisationen . ' ];';
       else:
-        $organisationen =
-          '[["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' .
-          $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') .
-          '"],["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' .
-          $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') .
-          '"] ]';
+        $organisationen = '[["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') . '"],["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') . '"] ]';
       endif;
       $display_map_route = 'false';
 
@@ -185,12 +130,10 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
       $einsatzgebiet = '[ ';
       for ($i = 0; $i < count($alarmareas) - 1; $i++) {
         $areas = explode(',', $alarmareas[$i]);
-        $einsatzgebiet =
-          $einsatzgebiet . 'new google.maps.LatLng(' . $areas[0] . ',' . $areas[1] . '),';
+        $einsatzgebiet = $einsatzgebiet . 'new google.maps.LatLng(' . $areas[0] . ',' . $areas[1] . '),';
       }
       $areas = explode(',', $alarmareas[0]);
-      $einsatzgebiet =
-        $einsatzgebiet . 'new google.maps.LatLng(' . $areas[0] . ',' . $areas[1] . '),';
+      $einsatzgebiet = $einsatzgebiet . 'new google.maps.LatLng(' . $areas[0] . ',' . $areas[1] . '),';
       $einsatzgebiet = substr($einsatzgebiet, 0, strlen($einsatzgebiet) - 1);
       $einsatzgebiet = $einsatzgebiet . ' ]';
       if (!$this->params->get('display_home_einsatzgebiet', '1')):
@@ -201,9 +144,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
       $marker1_title = ''; // leer
       $marker1_lat = '1'; // leer
       $marker1_lng = '1'; // leer
-      $marker1_image =
-        '../../images/com_einsatzkomponente/images/map/icons/' .
-        $this->params->get('detail_pointer1_image', 'circle.png');
+      $marker1_image = '../../images/com_einsatzkomponente/images/map/icons/' . $this->params->get('detail_pointer1_image', 'circle.png');
       $marker2_title = ''; // leer
       $marker2_lat = ''; // leer
       $marker2_lng = ''; // leer
@@ -216,11 +157,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
       $gmap_onload = $this->gmap_config->gmap_onload;
       $zoom_control = 'true';
 
-      HTMLHelper::_(
-        'script',
-        '//maps.googleapis.com/maps/api/js?key=' .
-          $this->params->get('gmapkey', 'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E')
-      );
+      HTMLHelper::_('script', '//maps.googleapis.com/maps/api/js?key=' . $this->params->get('gmapkey', 'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'));
 
       Factory::getDocument()->addScriptDeclaration(
         EinsatzkomponenteHelper::getGmap(
@@ -257,23 +194,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
         $this->einsatzorte = '[';
         foreach ($this->items as $i => $item):
           if ($item->gmap and $item->state == '1'):
-            $this->einsatzorte =
-              $this->einsatzorte .
-              '{"name":"' .
-              $item->summary .
-              '","lat":"' .
-              $item->gmap_report_latitude .
-              '","lon":"' .
-              $item->gmap_report_longitude .
-              '","i":"' .
-              $i .
-              '","icon":"' .
-              $item->icon .
-              '","id":"' .
-              $item->id .
-              '","address":"' .
-              $item->address .
-              '"},';
+            $this->einsatzorte = $this->einsatzorte . '{"name":"' . $item->summary . '","lat":"' . $item->gmap_report_latitude . '","lon":"' . $item->gmap_report_longitude . '","i":"' . $i . '","icon":"' . $item->icon . '","id":"' . $item->id . '","address":"' . $item->address . '"},';
           endif;
         endforeach;
         $this->einsatzorte = substr($this->einsatzorte, 0, strlen($this->einsatzorte) - 1);
@@ -289,52 +210,19 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
         for ($i = 0; $i < count($orga); $i++) {
           $orga_image = $orga[$i]->gmap_icon_orga;
           if (!$orga_image):
-            $orga_image =
-              'images/com_einsatzkomponente/images/map/icons/' .
-              $this->params->get('einsatzkarte_orga_image', 'haus_rot.png');
+            $orga_image = 'images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png');
           endif;
           if ($i == $n - 1) {
-            $this->organisationen =
-              $this->organisationen .
-              '{"name":"' .
-              $orga[$i]->name .
-              '","lat":"' .
-              $orga[$i]->gmap_latitude .
-              '","lon":"' .
-              $orga[$i]->gmap_longitude .
-              '","i":"' .
-              $i .
-              '","icon":"' .
-              $orga_image .
-              '","id":"' .
-              $orga[$i]->id .
-              '"}';
+            $this->organisationen = $this->organisationen . '{"name":"' . $orga[$i]->name . '","lat":"' . $orga[$i]->gmap_latitude . '","lon":"' . $orga[$i]->gmap_longitude . '","i":"' . $i . '","icon":"' . $orga_image . '","id":"' . $orga[$i]->id . '"}';
           } else {
-            $this->organisationen =
-              $this->organisationen .
-              '{"name":"' .
-              $orga[$i]->name .
-              '","lat":"' .
-              $orga[$i]->gmap_latitude .
-              '","lon":"' .
-              $orga[$i]->gmap_longitude .
-              '","i":"' .
-              $i .
-              '","icon":"' .
-              $orga_image .
-              '","id":"' .
-              $orga[$i]->id .
-              '"';
+            $this->organisationen = $this->organisationen . '{"name":"' . $orga[$i]->name . '","lat":"' . $orga[$i]->gmap_latitude . '","lon":"' . $orga[$i]->gmap_longitude . '","i":"' . $i . '","icon":"' . $orga_image . '","id":"' . $orga[$i]->id . '"';
             $this->organisationen = $this->organisationen . '},';
           }
         }
         $this->organisationen = substr($this->organisationen, 0, strlen($this->organisationen) - 1);
         $this->organisationen = $this->organisationen . ']';
       else:
-        $this->organisationen =
-          '[{"name:"","lat":"1","lon":"1","i"="0","icon":"images/com_einsatzkomponente/images/map/icons/' .
-          $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') .
-          '"}]';
+        $this->organisationen = '[{"name:"","lat":"1","lon":"1","i"="0","icon":"images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') . '"}]';
       endif;
 
       $alarmareas1 = $this->gmap_config->gmap_alarmarea; // Einsatzgebiet  ---->
@@ -357,10 +245,8 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
     $this->version = EinsatzkomponenteHelper::getVersion();
 
     //----Modulposition laden ----
-    $this->modulepos_1 =
-      '<div class="mod_eiko1">' . EinsatzkomponenteHelper::module('eiko1') . '</div>';
-    $this->modulepos_2 =
-      '<div class="mod_eiko2">' . EinsatzkomponenteHelper::module('eiko2') . '</div>';
+    $this->modulepos_1 = '<div class="mod_eiko1">' . EinsatzkomponenteHelper::module('eiko1') . '</div>';
+    $this->modulepos_2 = '<div class="mod_eiko2">' . EinsatzkomponenteHelper::module('eiko2') . '</div>';
 
     // Check for errors.
     if (count($errors = $this->get('Errors'))) {

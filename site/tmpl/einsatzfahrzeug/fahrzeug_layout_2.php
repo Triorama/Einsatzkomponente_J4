@@ -28,13 +28,10 @@ use Joomla\CMS\Router\Route;
 
 <tr class="fahrzeug_box_3">
 <td colspan="2" align="center">
-<p><img src="./<?php echo $this->item->image; ?>" alt="<?php echo $this->item
-  ->name; ?>" width="100%" class="eiko_fahrzeug_detail_image" /></p>
+<p><img src="./<?php echo $this->item->image; ?>" alt="<?php echo $this->item->name; ?>" width="100%" class="eiko_fahrzeug_detail_image" /></p>
 </td>
 </tr>
-<tr class="fahrzeug_box_5" ><th class="fahrzeug_box_2" colspan="2"><?php echo Text::_(
-  'Fahrzeugdaten'
-); ?></th></tr>
+<tr class="fahrzeug_box_5" ><th class="fahrzeug_box_2" colspan="2"><?php echo Text::_('Fahrzeugdaten'); ?></th></tr>
 <?php if ($this->item->name): ?>
 <tr class="fahrzeug_box_3">
 <td><strong>Abk&uuml;rzung:</strong></td>
@@ -92,25 +89,19 @@ use Joomla\CMS\Router\Route;
 <?php if ($this->params->get('show_fahrzeuge_einsatz', '1')): ?>
 	<?php // letzter Einsatz
   // letzter Einsatz
+  // letzter Einsatz
+  // letzter Einsatz
 
  // letzter Einsatz
  $database = Factory::getDBO();
- $query =
-   'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' .
-   $this->item->id .
-   '",vehicles) AND (state ="1" OR state="2") ORDER BY date1 DESC';
+ $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $this->item->id . '",vehicles) AND (state ="1" OR state="2") ORDER BY date1 DESC';
  $database->setQuery($query);
  $total = $database->loadObjectList();
  ?>
 	<?php if ($total): ?>
 	<tr class="fahrzeug_box_3">
 	<td><strong>Letzter Eintrag:</strong></td>
-	<td><a href="<?php echo Route::_(
-   'index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' .
-     $this->params->get('homelink', '') .
-     '&id=' .
-     (int) $total[0]->id
- ); ?>"><?php echo date('d.m.Y', strtotime($total[0]->date1)); ?></a></td>
+	<td><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date('d.m.Y', strtotime($total[0]->date1)); ?></a></td>
 	</tr> 
 	<?php endif; ?>
 <?php endif; ?>
@@ -129,9 +120,7 @@ use Joomla\CMS\Router\Route;
 
 	<table class="fahrzeug_box_7">
 	<tr><td>
-		<input type="button" class="btn eiko_back_button" value="<?php echo Text::_(
-    'COM_EINSATZKOMPONENTE_ZURUECK'
-  ); ?>" onClick="history.back();">
+		<input type="button" class="btn eiko_back_button" value="<?php echo Text::_('COM_EINSATZKOMPONENTE_ZURUECK'); ?>" onClick="history.back();">
 	</td></tr>
 	</table>
     
@@ -149,10 +138,7 @@ use Joomla\CMS\Router\Route;
 
  defined('_JEXEC') or die();
  $canEdit = Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente.' . $this->item->id);
- if (
-   !$canEdit &&
-   Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)
- ) {
+ if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)) {
    $canEdit = Factory::getUser()->id == $this->item->created_by;
  }
  ?>
@@ -262,22 +248,10 @@ use Joomla\CMS\Router\Route;
 		</table>
 	</div>
 	<?php if ($canEdit): ?>
-		<a class="btn" href="<?php echo Route::_(
-    'index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' . $this->item->id
-  ); ?>"><?php echo Text::_('COM_EINSATZKOMPONENTE_EDIT_ITEM'); ?></a>
+		<a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' . $this->item->id); ?>"><?php echo Text::_('COM_EINSATZKOMPONENTE_EDIT_ITEM'); ?></a>
 	<?php endif; ?>
-								<?php if (
-          Factory::getUser()->authorise(
-            'core.delete',
-            'com_einsatzkomponente.einsatzfahrzeug.' . $this->item->id
-          )
-        ): ?>
-									<a class="btn" href="<?php echo Route::_(
-           'index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.remove&id=' .
-             $this->item->id,
-           false,
-           2
-         ); ?>"><?php echo Text::_('COM_EINSATZKOMPONENTE_DELETE_ITEM'); ?></a>
+								<?php if (Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzfahrzeug.' . $this->item->id)): ?>
+									<a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.remove&id=' . $this->item->id, false, 2); ?>"><?php echo Text::_('COM_EINSATZKOMPONENTE_DELETE_ITEM'); ?></a>
 								<?php endif; ?>
 	<?php else:echo Text::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');endif; ?>
 -->

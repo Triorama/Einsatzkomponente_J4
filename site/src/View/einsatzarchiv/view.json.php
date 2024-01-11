@@ -31,8 +31,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
    */
   public function display($tpl = null)
   {
-    require_once JPATH_SITE .
-      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
+    require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
     $app = Factory::getApplication();
 
     $this->state = $this->get('State');
@@ -60,31 +59,16 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
 
         if ($item->desc):
           $item->desc = strip_tags($item->desc);
-          $item->desc =
-            strlen($item->desc) > $this->params->get('rss_chars', '1000')
-              ? substr(
-                  $item->desc,
-                  0,
-                  strrpos(substr($item->desc, 0, $this->params->get('rss_chars', '1000') + 1), ' ')
-                ) . ' ...'
-              : $item->desc;
+          $item->desc = strlen($item->desc) > $this->params->get('rss_chars', '1000') ? substr($item->desc, 0, strrpos(substr($item->desc, 0, $this->params->get('rss_chars', '1000') + 1), ' ')) . ' ...' : $item->desc;
         endif;
 
         if (isset($item->einsatznummer)):
-          $item->einsatznummer = EinsatzkomponenteHelper::ermittle_einsatz_nummer(
-            $item->date1,
-            $item->data1_id
-          );
+          $item->einsatznummer = EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1, $item->data1_id);
         endif;
 
         // url link to article
         // & used instead of &amp; as this is converted by feed creator
-        $link = Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht' .
-            $this->layout_detail_link .
-            '&id=' .
-            $item->id
-        );
+        $link = Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht' . $this->layout_detail_link . '&id=' . $item->id);
 
         if ($item->auswahl_orga):
           $item->auswahl_orga = str_replace(',', ' +++ ', $item->auswahl_orga);

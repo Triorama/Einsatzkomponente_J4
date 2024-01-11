@@ -15,10 +15,7 @@ use Joomla\CMS\Router\Route;
 use Joomla\CMS\Document\Feed\FeedItem;
 
 jimport('joomla.application.component.view');
-JLoader::import(
-  'helpers.einsatzkomponente',
-  JPATH_SITE . '/administrator/components/com_einsatzkomponente'
-);
+JLoader::import('helpers.einsatzkomponente', JPATH_SITE . '/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE . '/administrator/components/com_einsatzkomponente');
 
 /**
@@ -58,9 +55,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
     // Because the application sets a default page title,
     // we need to get it from the menu item itself
     $menu = $menus->getActive();
-    $this->document->link = Route::_(
-      'index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid=' . $menu->id
-    );
+    $this->document->link = Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid=' . $menu->id);
     $i = 0;
     foreach ($this->items as $item) {
       if ($this->params->get('rss_items', '2') == $i):
@@ -72,23 +67,11 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
       $summary = $this->escape($item->summary);
       $title = html_entity_decode($summary);
       $desc = strip_tags($item->desc);
-      $desc =
-        strlen($desc) > $this->params->get('rss_chars', '1000')
-          ? substr(
-              $desc,
-              0,
-              strrpos(substr($desc, 0, $this->params->get('rss_chars', '1000') + 1), ' ')
-            ) . ' ...'
-          : $desc;
+      $desc = strlen($desc) > $this->params->get('rss_chars', '1000') ? substr($desc, 0, strrpos(substr($desc, 0, $this->params->get('rss_chars', '1000') + 1), ' ')) . ' ...' : $desc;
       $nr = EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1, $item->data1_id);
       // url link to article
       // & used instead of &amp; as this is converted by feed creator
-      $link = Route::_(
-        'index.php?option=com_einsatzkomponente&view=einsatzbericht' .
-          $this->layout_detail_link .
-          '&id=' .
-          $item->id
-      );
+      $link = Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht' . $this->layout_detail_link . '&id=' . $item->id);
 
       //$auswahl_orga=  implode(',',$this->auswahl_orga);
       $item->auswahl_orga = str_replace(',', ' +++ ', $item->auswahl_orga);
@@ -105,12 +88,7 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
       $rss_item->description .= '<table>';
 
       if ($item->date1 > 1 and $this->params->get('display_rss_alerttime', '0')):
-        $rss_item->description .=
-          '<tr><td><b>Alarmierung am</b>: ' .
-          date('d.m.Y', $item->date1) .
-          ' um ' .
-          date('H:i', $item->date1) .
-          ' Uhr</td></tr>';
+        $rss_item->description .= '<tr><td><b>Alarmierung am</b>: ' . date('d.m.Y', $item->date1) . ' um ' . date('H:i', $item->date1) . ' Uhr</td></tr>';
       endif;
 
       if ($desc):
@@ -118,39 +96,25 @@ class EinsatzkomponenteViewEinsatzarchiv extends HtmlView
       endif;
 
       if ($item->auswahl_orga and $this->params->get('display_rss_orgas', '1')):
-        $rss_item->description .=
-          '<tr><td><b>Einsatzkräfte</b>: +++ ' . $item->auswahl_orga . ' +++</td></tr>';
+        $rss_item->description .= '<tr><td><b>Einsatzkräfte</b>: +++ ' . $item->auswahl_orga . ' +++</td></tr>';
       endif;
 
       if ($item->vehicles and $this->params->get('display_rss_vehicles', '0')):
-        $rss_item->description .=
-          '<tr><td><b>Einsatzfahrzeuge</b>: +++ ' . $item->vehicles . ' +++</td></tr>';
+        $rss_item->description .= '<tr><td><b>Einsatzfahrzeuge</b>: +++ ' . $item->vehicles . ' +++</td></tr>';
       endif;
 
       if ($item->people and $this->params->get('display_rss_people', '0')):
-        $rss_item->description .=
-          '<tr><td><b>Mannschaftsstärke</b>: ' . $item->people . '</td></tr>';
+        $rss_item->description .= '<tr><td><b>Mannschaftsstärke</b>: ' . $item->people . '</td></tr>';
       endif;
 
       if ($item->date3 > 1 and $this->params->get('display_rss_time', '0')):
-        $einsatzdauer = EinsatzkomponenteHelper::getEinsatzdauer(
-          date('d.m.Y H:i', $item->date1),
-          $item->date3
-        );
+        $einsatzdauer = EinsatzkomponenteHelper::getEinsatzdauer(date('d.m.Y H:i', $item->date1), $item->date3);
         $rss_item->description .= '<tr><td><b>Einsatzdauer</b>: ' . $einsatzdauer . '</td></tr>';
       endif;
 
       if ($this->params->get('display_rss_image', '0')):
         if ($item->image):
-          $rss_item->description .=
-            '<tr><td><img src="' .
-            JURI::base() .
-            $item->image .
-            '" width="' .
-            $this->params->get('rss_image_width', '250px') .
-            '" height="' .
-            $this->params->get('rss_image_height', '') .
-            ' "/></td></tr>';
+          $rss_item->description .= '<tr><td><img src="' . JURI::base() . $item->image . '" width="' . $this->params->get('rss_image_width', '250px') . '" height="' . $this->params->get('rss_image_height', '') . ' "/></td></tr>';
         endif;
       endif;
 

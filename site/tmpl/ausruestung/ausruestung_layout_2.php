@@ -13,10 +13,7 @@ use Joomla\CMS\Language\Text;
 use Joomla\CMS\Router\Route;
 
 $canEdit = Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente.' . $this->item->id);
-if (
-  !$canEdit &&
-  Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)
-) {
+if (!$canEdit && Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente' . $this->item->id)) {
   $canEdit = Factory::getUser()->id == $this->item->created_by;
 }
 ?>
@@ -34,8 +31,7 @@ if (
 </tr>
 <tr>
 			<th><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_AUSRUESTUNG_IMAGE'); ?></th>
-			<td><img src="<?php echo $this->item->image; ?>" alt="<?php echo $this->item
-  ->name; ?>" style="width: 100%;" </td>
+			<td><img src="<?php echo $this->item->image; ?>" alt="<?php echo $this->item->name; ?>" style="width: 100%;" </td>
 </tr>
 <tr>
 			<th><?php echo Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_AUSRUESTUNG_BESCHREIBUNG'); ?></th>
@@ -54,20 +50,9 @@ if (
         </table>
     </div>
     <?php if ($canEdit && $this->item->checked_out == 0): ?>
-		<a class="btn" href="<?php echo Route::_(
-    'index.php?option=com_einsatzkomponente&view=ausruestungform&id=' . $this->item->id
-  ); ?>"><?php echo Text::_('Bearbeiten'); ?></a>
+		<a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&id=' . $this->item->id); ?>"><?php echo Text::_('Bearbeiten'); ?></a>
 	<?php endif; ?>
-								<?php if (
-          Factory::getUser()->authorise(
-            'core.delete',
-            'com_einsatzkomponente.ausruestung.' . $this->item->id
-          )
-        ): ?>
-									<a class="btn" href="<?php echo Route::_(
-           'index.php?option=com_einsatzkomponente&task=ausruestung.remove&id=' . $this->item->id,
-           false,
-           2
-         ); ?>"><?php echo Text::_('L�schen'); ?></a>
+								<?php if (Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.ausruestung.' . $this->item->id)): ?>
+									<a class="btn" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestung.remove&id=' . $this->item->id, false, 2); ?>"><?php echo Text::_('L�schen'); ?></a>
 								<?php endif; ?>
     <?php else:echo Text::_('COM_EINSATZKOMPONENTE_ITEM_NOT_LOADED');endif; ?>

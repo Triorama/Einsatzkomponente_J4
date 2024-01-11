@@ -30,24 +30,7 @@ class EinsatzkomponenteModelAusruestungen extends ListModel
   public function __construct($config = [])
   {
     if (empty($config['filter_fields'])) {
-      $config['filter_fields'] = [
-        'id',
-        'a.id',
-        'name',
-        'a.name',
-        'image',
-        'a.image',
-        'beschreibung',
-        'a.beschreibung',
-        'created_by',
-        'a.created_by',
-        'ordering',
-        'a.ordering',
-        'state',
-        'a.state',
-        'params',
-        'a.params',
-      ];
+      $config['filter_fields'] = ['id', 'a.id', 'name', 'a.name', 'image', 'a.image', 'beschreibung', 'a.beschreibung', 'created_by', 'a.created_by', 'ordering', 'a.ordering', 'state', 'a.state', 'params', 'a.params'];
     }
     parent::__construct($config);
   }
@@ -65,11 +48,7 @@ class EinsatzkomponenteModelAusruestungen extends ListModel
     $app = Factory::getApplication();
 
     // List state information
-    $limit = $app->getUserStateFromRequest(
-      'global.list.limit',
-      'limit',
-      $app->getCfg('list_limit')
-    );
+    $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
     $this->setState('list.limit', $limit);
 
     $limitstart = $app->input->getInt('limitstart', 0);
@@ -131,9 +110,7 @@ class EinsatzkomponenteModelAusruestungen extends ListModel
     }
 
     // Receive & set filters
-    if (
-      $filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')
-    ) {
+    if ($filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')) {
       foreach ($filters as $name => $value) {
         $this->setState('filter.' . $name, $value);
       }
@@ -295,7 +272,6 @@ class EinsatzkomponenteModelAusruestungen extends ListModel
    */
   private function isValidDate($date)
   {
-    return preg_match("/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/", $date) &&
-      date_create($date);
+    return preg_match("/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/", $date) && date_create($date);
   }
 }

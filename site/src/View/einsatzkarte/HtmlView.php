@@ -13,10 +13,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Language\Text;
 jimport('joomla.application.component.view');
-JLoader::import(
-  'helpers.einsatzkomponente',
-  JPATH_SITE . '/administrator/components/com_einsatzkomponente'
-);
+JLoader::import('helpers.einsatzkomponente', JPATH_SITE . '/administrator/components/com_einsatzkomponente');
 JLoader::import('helpers.osm', JPATH_SITE . '/administrator/components/com_einsatzkomponente');
 /**
  * View class for a list of Einsatzkomponente.
@@ -46,8 +43,7 @@ class EinsatzkomponenteViewEinsatzkarte extends HtmlView
     $this->params = $app->getParams('com_einsatzkomponente');
     $this->gmap_config = EinsatzkomponenteHelper::load_gmap_config(); // GMap-Config aus helper laden
 
-    require_once JPATH_SITE .
-      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
+    require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
     $aktuelles_Datum = getdate();
 
@@ -83,12 +79,8 @@ class EinsatzkomponenteViewEinsatzkarte extends HtmlView
       $document->addStyleSheet($this->baseurl . '/media/jui/css/icomoon.css');
     endif;
     if ($this->params->get('display_einsatzkarte_bootstrap', '0') == '2'):
-      $document->addStyleSheet(
-        'components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css'
-      );
-      $document->addStyleSheet(
-        'components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css'
-      );
+      $document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css');
+      $document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css');
     endif;
 
     // Import CSS aus Optionen

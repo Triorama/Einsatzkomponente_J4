@@ -9,8 +9,5 @@
 // no direct access
 defined('_JEXEC') or die();
 
-require_once JPATH_SITE .
-  '/components/com_einsatzkomponente/views/einsatzbericht/tmpl/' .
-  $this->params->get('detail_layout', 'detail_layout_1.php') .
-  '';
+require_once JPATH_SITE . '/components/com_einsatzkomponente/views/einsatzbericht/tmpl/' . $this->params->get('detail_layout', 'detail_layout_1.php') . '';
 ?> 

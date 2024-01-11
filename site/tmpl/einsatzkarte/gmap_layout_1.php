@@ -69,8 +69,7 @@ $gmapconfig = $this->gmap_config;
 if ($this->params->get('display_einsatzkarte_organisationen', '1')):
   // Feuerwehrliste aus DB holen
   $db = Factory::getDBO();
-  $query =
-    'SELECT id, name,gmap_icon_orga,gmap_latitude,gmap_longitude,link,detail1 FROM #__eiko_organisationen WHERE state=1 ORDER BY id';
+  $query = 'SELECT id, name,gmap_icon_orga,gmap_latitude,gmap_longitude,link,detail1 FROM #__eiko_organisationen WHERE state=1 ORDER BY id';
   $db->setQuery($query);
   $orga = $db->loadObjectList();
 
@@ -79,50 +78,19 @@ if ($this->params->get('display_einsatzkarte_organisationen', '1')):
   for ($i = 0; $i < count($orga); $i++) {
     $orga_image = $orga[$i]->gmap_icon_orga;
     if (!$orga_image):
-      $orga_image =
-        'images/com_einsatzkomponente/images/map/icons/' .
-        $this->params->get('einsatzkarte_orga_image', 'haus_rot.png');
+      $orga_image = 'images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png');
     endif;
     if ($i == $n - 1) {
-      $organisationen =
-        $organisationen .
-        '["' .
-        $orga[$i]->name .
-        '",' .
-        $orga[$i]->gmap_latitude .
-        ',' .
-        $orga[$i]->gmap_longitude .
-        ',' .
-        $i .
-        ',"' .
-        $orga_image .
-        '"]';
+      $organisationen = $organisationen . '["' . $orga[$i]->name . '",' . $orga[$i]->gmap_latitude . ',' . $orga[$i]->gmap_longitude . ',' . $i . ',"' . $orga_image . '"]';
     } else {
-      $organisationen =
-        $organisationen .
-        '["' .
-        $orga[$i]->name .
-        '",' .
-        $orga[$i]->gmap_latitude .
-        ',' .
-        $orga[$i]->gmap_longitude .
-        ',' .
-        $i .
-        ',"' .
-        $orga_image .
-        '"';
+      $organisationen = $organisationen . '["' . $orga[$i]->name . '",' . $orga[$i]->gmap_latitude . ',' . $orga[$i]->gmap_longitude . ',' . $i . ',"' . $orga_image . '"';
       $organisationen = $organisationen . '],';
     }
   }
   $organisationen = substr($organisationen, 0, strlen($organisationen) - 1);
   $organisationen = $organisationen . ' ];';
 else:
-  $organisationen =
-    '[["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' .
-    $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') .
-    '"],["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' .
-    $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') .
-    '"] ]';
+  $organisationen = '[["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') . '"],["",1,1,0,"images/com_einsatzkomponente/images/map/icons/' . $this->params->get('einsatzkarte_orga_image', 'haus_rot.png') . '"] ]';
 endif;
 
 //echo $organisationen;break;
@@ -133,8 +101,7 @@ if ($this->params->get('display_einsatzkarte_einsatzgebiet', '1')):
   $einsatzgebiet = '[ ';
   for ($i = 0; $i < count($alarmareas) - 1; $i++) {
     $areas = explode(',', $alarmareas[$i]);
-    $einsatzgebiet =
-      $einsatzgebiet . 'new google.maps.LatLng(' . $areas[0] . ',' . $areas[1] . '),';
+    $einsatzgebiet = $einsatzgebiet . 'new google.maps.LatLng(' . $areas[0] . ',' . $areas[1] . '),';
   }
   $areas = explode(',', $alarmareas[0]);
   $einsatzgebiet = $einsatzgebiet . 'new google.maps.LatLng(' . $areas[0] . ',' . $areas[1] . '),';
@@ -146,8 +113,7 @@ endif;
 
 // Einsatzarten als Kategorie setzen
 $db = Factory::getDBO();
-$query =
-  'SELECT COUNT(r.data1) as total,r.data1,rd.marker,rd.marker,rd.icon,rd.title as einsatzart FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.data1 = rd.id WHERE r.state = "1" AND rd.state = "1" GROUP BY r.data1';
+$query = 'SELECT COUNT(r.data1) as total,r.data1,rd.marker,rd.marker,rd.icon,rd.title as einsatzart FROM #__eiko_einsatzberichte r JOIN #__eiko_einsatzarten rd ON r.data1 = rd.id WHERE r.state = "1" AND rd.state = "1" GROUP BY r.data1';
 $db->setQuery($query);
 $pie = $db->loadObjectList();
 //print_r ($pie);
@@ -209,17 +175,13 @@ $totalRecords = $total[0]->total;
 function getYear()
 {
   $db = Factory::getDBO();
-  $query =
-    'SELECT Year(date1) as id, Year(date1) as title FROM #__eiko_einsatzberichte WHERE gmap="1" AND state = "1" GROUP BY title';
+  $query = 'SELECT Year(date1) as id, Year(date1) as title FROM #__eiko_einsatzberichte WHERE gmap="1" AND state = "1" GROUP BY title';
   $db->setQuery($query);
   return $db->loadObjectList();
 }
 ?>
 
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $this->params->get(
-  'gmapkey',
-  'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'
-); ?>"></script> 
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $this->params->get('gmapkey', 'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'); ?>"></script> 
  
     
     <script type="text/javascript">
@@ -260,9 +222,7 @@ function createHouse(latlng, label, html,index,image) {
 function createMarker(latlng,name,html,category,image,id,date1,day,month,year,foto,itemid) {
 var contentString = "<div align='center'><span class='label label-info' style='font-size:16px;padding: 2px 2px 2px 2px;margin:2px 2px 2px 2px;font-weight:bold;'>" + html + "</span><br/>" + name + "<br/>" + day + "." + month + "." + year + "<?php if (
   $this->params->get('display_einsatzkarte_links', '1')
-): ?><br/>" + "<a class='btn-home' href=<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente' . $this->layout_detail_link . '&view=einsatzbericht&id='
-); ?>"+id+"><?php echo Text::_('COM_EINSATZKOMPONENTE_DETAILS'); ?></a><?php endif; ?></div>";
+): ?><br/>" + "<a class='btn-home' href=<?php echo Route::_('index.php?option=com_einsatzkomponente' . $this->layout_detail_link . '&view=einsatzbericht&id='); ?>"+id+"><?php echo Text::_('COM_EINSATZKOMPONENTE_DETAILS'); ?></a><?php endif; ?></div>";
 
 var detailString = "<table style='height:100px;'><tr><td width='88%'><div style=' background-color:#ffffff;' align='left'><span style='font-size:14px;padding: 2px 2px 2px 2px;margin:2px 2px 2px 2px;font-weight:bold;color:#fff;background-color:#ff0000;'>" + html + "</span>" + "<p></p>Einsatzdatum : " + day + "." + month + "." + year + "<p></p><strong>" + name + "</strong> " + "" + "<p></p>" + "<p align='left'>" + "<a href=<?php echo Route::_(
   'index.php?option=com_reports2&all=0'
@@ -275,22 +235,11 @@ var detailString = "<table style='height:100px;'><tr><td width='88%'><div style=
 ); ?>" + "&view=show&Itemid=" + itemid + "&gmaplink=1&id=" + id + "> zum Detailbericht <\/a></p></div></td><td style='padding-right:20px;margin-right:20px;'><img style='border:1px solid;' src='/" + foto + "' height='90' /></td></tr></table>";
 }
 
-var bild = new google.maps.MarkerImage("<?php echo JURI::root() .
-  '/'; ?>"+ image,null, null, null, new google.maps.Size(<?php echo $this->params->get(
+var bild = new google.maps.MarkerImage("<?php echo JURI::root() . '/'; ?>"+ image,null, null, null, new google.maps.Size(<?php echo $this->params->get('einsatzkarte_gmap_icon', 14); ?>, <?php echo $this->params->get('einsatzkarte_gmap_icon', 14); ?>));
+var bildschatten = new google.maps.MarkerImage("<?php echo JURI::root() . '/shadow-'; ?>"+ image,new google.maps.Size(<?php echo $this->params->get('einsatzkarte_gmap_icon', 14); ?>, <?php echo $this->params->get(
   'einsatzkarte_gmap_icon',
   14
-); ?>, <?php echo $this->params->get('einsatzkarte_gmap_icon', 14); ?>));
-var bildschatten = new google.maps.MarkerImage("<?php echo JURI::root() .
-  '/shadow-'; ?>"+ image,new google.maps.Size(<?php echo $this->params->get(
-  'einsatzkarte_gmap_icon',
-  14
-); ?>, <?php echo $this->params->get(
-  'einsatzkarte_gmap_icon',
-  14
-); ?>), null, null, new google.maps.Size(<?php echo $this->params->get(
-  'einsatzkarte_gmap_icon',
-  14
-); ?>, <?php echo $this->params->get('einsatzkarte_gmap_icon', 14); ?>));
+); ?>), null, null, new google.maps.Size(<?php echo $this->params->get('einsatzkarte_gmap_icon', 14); ?>, <?php echo $this->params->get('einsatzkarte_gmap_icon', 14); ?>));
 
   // Marker sizes are expressed as a Size of X,Y
   // where the origin of the image (0,0) is located
@@ -471,23 +420,14 @@ $i = 0;
 $hide = 0;
 
 while ($i < count($reports)) {
-  $rSummary =
-    strlen($reports[$i]->summary) > 100
-      ? substr($reports[$i]->summary, 0, strrpos(substr($reports[$i]->summary, 0, 100 + 1), ' '))
-      : $reports[$i]->summary;
+  $rSummary = strlen($reports[$i]->summary) > 100 ? substr($reports[$i]->summary, 0, strrpos(substr($reports[$i]->summary, 0, 100 + 1), ' ')) : $reports[$i]->summary;
   $rSummary = htmlspecialchars($rSummary, ENT_QUOTES);
   $year = date('Y', strtotime($reports[$i]->date1)); ### 111225
   $month = date('m', strtotime($reports[$i]->date1)); ### 111225
   $day = date('d', strtotime($reports[$i]->date1)); ### 111225
   if ($reports[$i]->gmap and $reports[$i]->gmap_report_latitude != '0') { ?>
-var marker = createMarker(new google.maps.LatLng(<?php echo $reports[$i]
-  ->gmap_report_latitude; ?>,<?php echo $reports[$i]
-  ->gmap_report_longitude; ?>),"<?php echo $rSummary; ?>","<?php echo $reports[$i]
-  ->einsatzart; ?>","<?php echo $reports[$i]->data1; ?>","<?php echo $reports[$i]
-  ->icon; ?>","<?php echo $reports[$i]->id; ?>","<?php echo $reports[$i]
-  ->date1; ?>","<?php echo $day; ?>","<?php echo $month; ?>","<?php echo $year; ?>","<?php echo $reports[
-  $i
-]->image; ?>","");
+var marker = createMarker(new google.maps.LatLng(<?php echo $reports[$i]->gmap_report_latitude; ?>,<?php echo $reports[$i]->gmap_report_longitude; ?>),"<?php echo $rSummary; ?>","<?php echo $reports[$i]->einsatzart; ?>","<?php echo $reports[$i]->data1; ?>","<?php echo $reports[$i]
+  ->icon; ?>","<?php echo $reports[$i]->id; ?>","<?php echo $reports[$i]->date1; ?>","<?php echo $day; ?>","<?php echo $month; ?>","<?php echo $year; ?>","<?php echo $reports[$i]->image; ?>","");
 <?php } else {$hide++;}
   $i++;
 }
@@ -500,11 +440,7 @@ var infowindow = new google.maps.InfoWindow(
   });
   for (var i = 0; i < homes.length; i++) {
     var homi = homes[i];
-	var image = new google.maps.MarkerImage("<?php echo JURI::root() .
-   '/'; ?>"+ homi[4],null, null, null, new google.maps.Size(<?php echo $this->params->get(
-  'einsatzkarte_gmap_icon_orga',
-  24
-); ?>, <?php echo $this->params->get('einsatzkarte_gmap_icon_orga', 24); ?>));
+	var image = new google.maps.MarkerImage("<?php echo JURI::root() . '/'; ?>"+ homi[4],null, null, null, new google.maps.Size(<?php echo $this->params->get('einsatzkarte_gmap_icon_orga', 24); ?>, <?php echo $this->params->get('einsatzkarte_gmap_icon_orga', 24); ?>));
     var myLatLng = new google.maps.LatLng(homi[1], homi[2]);
     var marker = createHouse(myLatLng,homi[0],'',homi[3],image);
     
@@ -577,13 +513,7 @@ polygon.setMap(map);
 <?php
 $Mona = [];
 for ($i = 0; $i < 12; $i++):
-  $Mona[$i] = JHTML::_(
-    'select.option',
-    sprintf('%02d', $i + 1),
-    JTEXT::_((new JDate())->monthToString($i + 1)),
-    'id',
-    'title'
-  );
+  $Mona[$i] = JHTML::_('select.option', sprintf('%02d', $i + 1), JTEXT::_((new JDate())->monthToString($i + 1)), 'id', 'title');
 endfor;
 $years = getyear();
 ?>
@@ -594,89 +524,40 @@ $years = getyear();
 
 <div class="well row-fluid" id="catbox"> 
  <?php
- echo JHTML::_(
-   'select.genericlist',
-   $Mona,
-   'selectstartmonth',
-   'class="eiko_gmap_month_select" onchange=selectdate() ',
-   'id',
-   'title',
-   $Monat
- );
- echo JHTML::_(
-   'select.genericlist',
-   $years,
-   'selectstartyear',
-   'class="eiko_gmap_year_select" onchange=selectdate() ',
-   'id',
-   'title',
-   $selectedYear
- );
+ echo JHTML::_('select.genericlist', $Mona, 'selectstartmonth', 'class="eiko_gmap_month_select" onchange=selectdate() ', 'id', 'title', $Monat);
+ echo JHTML::_('select.genericlist', $years, 'selectstartyear', 'class="eiko_gmap_year_select" onchange=selectdate() ', 'id', 'title', $selectedYear);
  echo ' ' . Text::_('COM_EINSATZKOMPONENTE_BIS') . ' ';
- echo JHTML::_(
-   'select.genericlist',
-   $Mona,
-   'selectendmonth',
-   'class="eiko_gmap_month_select" onchange=selectdate() ',
-   'id',
-   'title',
-   $Monat
- );
- echo JHTML::_(
-   'select.genericlist',
-   $years,
-   'selectendyear',
-   'class="eiko_gmap_year_select" onchange=selectdate() ',
-   'id',
-   'title',
-   $selectedYear
- );
+ echo JHTML::_('select.genericlist', $Mona, 'selectendmonth', 'class="eiko_gmap_month_select" onchange=selectdate() ', 'id', 'title', $Monat);
+ echo JHTML::_('select.genericlist', $years, 'selectendyear', 'class="eiko_gmap_year_select" onchange=selectdate() ', 'id', 'title', $selectedYear);
  ?>
 
-<button type="button" id="einsatzarten_flip" class="btn btn-sm"><?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_EINSATZARTEN_AUSWAEHLEN'
-); ?></button>
+<button type="button" id="einsatzarten_flip" class="btn btn-sm"><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZARTEN_AUSWAEHLEN'); ?></button>
 
 </div>
 
-<?php echo '<div class="well row-fluid btn-toolbar" id="einsatzarten_panel">' .
-  $catbox .
-  '</div>'; ?>
+<?php echo '<div class="well row-fluid btn-toolbar" id="einsatzarten_panel">' . $catbox . '</div>'; ?>
 
   <div class="row-fluid">
  <?php if ($this->params->get('display_einsatzkarte_sidebar', '1')): ?>
-<div class="well eiko_gmap_sidebar span6" id="side_bar" style="height: <?php echo $this->params->get(
-  'einsatzkarte_map_height',
-  '450'
-); ?>px"></div>
+<div class="well eiko_gmap_sidebar span6" id="side_bar" style="height: <?php echo $this->params->get('einsatzkarte_map_height', '450'); ?>px"></div>
 <?php endif; ?>
  <?php if (!$this->params->get('display_einsatzkarte_sidebar', '1')): ?>
-<div class="well eiko_gmap_sidebar span6" id="side_bar" style="display:none;height: <?php echo $this->params->get(
-  'einsatzkarte_map_height',
-  '450'
-); ?>px"></div>
+<div class="well eiko_gmap_sidebar span6" id="side_bar" style="display:none;height: <?php echo $this->params->get('einsatzkarte_map_height', '450'); ?>px"></div>
 <?php endif; ?>
  <?php if ($this->params->get('display_einsatzkarte_map', '1')): ?>
-<div class="well eiko_gmap_map well span6" id="map" style="height: <?php echo $this->params->get(
-  'einsatzkarte_map_height',
-  '450'
-); ?>px"></div>
+<div class="well eiko_gmap_map well span6" id="map" style="height: <?php echo $this->params->get('einsatzkarte_map_height', '450'); ?>px"></div>
 <?php endif; ?>
  <?php if (!$this->params->get('display_einsatzkarte_map', '1')): ?>
 <div class="well eiko_gmap_map well span6" id="map" style="display:none;"></div>
 <?php endif; ?>
 </div>
 <?php if ($hide): ?>
-<div class="eiko_privat"><span class="glyphicon glyphicon-info-sign"></span> <?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_EINSAETZE_KARTE_1'
-); ?> <?php echo $hide; ?> <?php echo Text::_('COM_EINSATZKOMPONENTE_EINSAETZE_KARTE_2'); ?></div>
+<div class="eiko_privat"><span class="glyphicon glyphicon-info-sign"></span> <?php echo Text::_('COM_EINSATZKOMPONENTE_EINSAETZE_KARTE_1'); ?> <?php echo $hide; ?> <?php echo Text::_('COM_EINSATZKOMPONENTE_EINSAETZE_KARTE_2'); ?></div>
 <?php endif; ?>
 
 <div class="row-fluid">
 
-<div class="span6" id="details" style="display:none;"><?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_EINSAETZE_DATEN_LESEN'
-); ?> ...</div>
+<div class="span6" id="details" style="display:none;"><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSAETZE_DATEN_LESEN'); ?> ...</div>
 <!--Höhe der sidebar-tabelle an catbox-tabelle anpassen --> 
 
 </div>

@@ -40,8 +40,7 @@ class EinsatzkomponenteViewOrganisation extends HtmlView
    */
   public function display($tpl = null)
   {
-    require_once JPATH_SITE .
-      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
+    require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php'; // Helper-class laden
 
     $app = Factory::getApplication();
     $user = Factory::getUser();
@@ -62,12 +61,8 @@ class EinsatzkomponenteViewOrganisation extends HtmlView
       $document->addStyleSheet($this->baseurl . '/media/jui/css/icomoon.css');
     endif;
     if ($this->params->get('display_orga_bootstrap', '0') == '2'):
-      $document->addStyleSheet(
-        'components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css'
-      );
-      $document->addStyleSheet(
-        'components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css'
-      );
+      $document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css');
+      $document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css');
     endif;
 
     // Import CSS aus Optionen

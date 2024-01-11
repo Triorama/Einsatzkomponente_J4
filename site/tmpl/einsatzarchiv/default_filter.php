@@ -22,21 +22,15 @@ $data['options'] = !empty($data['options']) ? $data['options'] : [];
 
 // Set some basic options
 $customOptions = [
-  'filtersHidden' => isset($data['options']['filtersHidden'])
-    ? $data['options']['filtersHidden']
-    : empty($data['view']->activeFilters),
-  'defaultLimit' => isset($data['options']['defaultLimit'])
-    ? $data['options']['defaultLimit']
-    : Factory::getApplication()->get('list_limit', 20),
+  'filtersHidden' => isset($data['options']['filtersHidden']) ? $data['options']['filtersHidden'] : empty($data['view']->activeFilters),
+  'defaultLimit' => isset($data['options']['defaultLimit']) ? $data['options']['defaultLimit'] : Factory::getApplication()->get('list_limit', 20),
   'searchFieldSelector' => '#filter_search',
   'orderFieldSelector' => '#list_fullordering',
 ];
 
 $data['options'] = array_unique(array_merge($customOptions, $data['options']));
 
-$formSelector = !empty($data['options']['formSelector'])
-  ? $data['options']['formSelector']
-  : '#adminForm';
+$formSelector = !empty($data['options']['formSelector']) ? $data['options']['formSelector'] : '#adminForm';
 $filters = false;
 if (isset($data['view']->filterForm)) {
   $filters = $data['view']->filterForm->getGroup('filter');
@@ -62,15 +56,11 @@ if (isset($data['view']->filterForm)) {
 		
 
 		<?php if ($params->get('show_filter_search', '1')): ?>
-            <!--<label for="filter_search" class="element-invisible" aria-invalid="false"><?php echo Text::_(
-              'COM_EINSATZKOMPONENTE_SUCHEN'
-            ); ?></label> -->
+            <!--<label for="filter_search" class="element-invisible" aria-invalid="false"><?php echo Text::_('COM_EINSATZKOMPONENTE_SUCHEN'); ?></label> -->
 
             <div class="btn-wrapper input-append">
                 <?php echo $filters['filter_search']->input; ?>
-                <button type="submit" class="btn " title="" data-original-title="<?php echo Text::_(
-                  'COM_EINSATZKOMPONENTE_SUCHEN'
-                ); ?>">
+                <button type="submit" class="btn " title="" data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SUCHEN'); ?>">
                     <i class="icon-search"></i>
                 </button>
             </div>
@@ -80,20 +70,14 @@ if (isset($data['view']->filterForm)) {
             <!-- <div class="btn-wrapper hidden-phone"> -->
             	<div class="btn-wrapper"> 
                 <button type="button" class="btn  js-stools-btn-filter" title=""
-                        data-original-title="<?php echo Text::_(
-                          'COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'
-                        ); ?>">
-                    <?php echo Text::_(
-                      'COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'
-                    ); ?> <i class="caret"></i>
+                        data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'); ?>">
+                    <?php echo Text::_('COM_EINSATZKOMPONENTE_FILTER_AUSWAEHLEN'); ?> <i class="caret"></i>
                 </button>
             </div>
             <?php endif; ?>
             <!-- <div class="btn-wrapper hidden-phone"> -->
             	<div class="btn-wrapper"> 
-                <button type="button" class="btn  js-stools-btn-clear" title="" data-original-title="<?php echo Text::_(
-                  'COM_EINSATZKOMPONENTE_ALLE_FILTER_ZURUECKSETZEN'
-                ); ?>">
+                <button type="button" class="btn  js-stools-btn-clear" title="" data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_ALLE_FILTER_ZURUECKSETZEN'); ?>">
                     <?php echo Text::_('COM_EINSATZKOMPONENTE_ALLE_FILTER_ZURUECKSETZEN'); ?>
                 </button>
             </div>
@@ -165,38 +149,22 @@ if (isset($data['view']->filterForm)) {
 						
 				<?php switch ($fieldName) {
       case 'vehicles':
-        $active_name .=
-          '<span class="label label-info">' .
-          Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG') .
-          '</span> ';
+        $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_FAHRZEUG') . '</span> ';
         break;
       case 'alerting':
-        $active_name .=
-          '<span class="label label-info">' .
-          Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSART') .
-          '</span> ';
+        $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSART') . '</span> ';
         break;
       case 'data1':
-        $active_name .=
-          '<span class="label label-info">' .
-          Text::_('COM_EINSATZKOMPONENTE_EINSATZART') .
-          '</span> ';
+        $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_EINSATZART') . '</span> ';
         break;
       case 'tickerkat':
-        $active_name .=
-          '<span class="label label-info">' .
-          Text::_('COM_EINSATZKOMPONENTE_KATEGORIE') .
-          '</span> ';
+        $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_KATEGORIE') . '</span> ';
         break;
       case 'auswahl_orga':
-        $active_name .=
-          '<span class="label label-info">' .
-          Text::_('COM_EINSATZKOMPONENTE_ORGANISATION') .
-          '</span> ';
+        $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_ORGANISATION') . '</span> ';
         break;
       case 'year':
-        $active_name .=
-          '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_JAHR') . '</span> ';
+        $active_name .= '<span class="label label-info">' . Text::_('COM_EINSATZKOMPONENTE_JAHR') . '</span> ';
         break;
       default:
         $active_name = '';

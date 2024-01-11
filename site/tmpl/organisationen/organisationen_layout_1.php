@@ -26,17 +26,12 @@ $canCheckin = $user->authorise('core.manage', 'com_einsatzkomponente');
 $canChange = $user->authorise('core.edit.state', 'com_einsatzkomponente');
 $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 
-require_once JPATH_SITE .
-  '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php';
+require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php';
 
 // Helper-class laden
 ?>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=organisationen&Itemid=' .
-    $this->params->get('orgalink', '') .
-    ''
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisationen&Itemid=' . $this->params->get('orgalink', '') . ''); ?>" method="post" name="adminForm" id="adminForm">
 
 	<?php
 //echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__));
@@ -46,22 +41,10 @@ require_once JPATH_SITE .
 		<tr>
 
 							<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_ORGANISATIONEN_NAME',
-      'a.name',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_ORGANISATIONEN_NAME', 'a.name', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_DESC',
-      'a.detail1',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_DESC', 'a.detail1', $listDirn, $listOrder); ?>
 				</th>
 				<th class=''>
 				<?php echo HTMLHelper::_('grid.sort', '', 'a.detail2', $listDirn, $listOrder); ?>
@@ -103,18 +86,9 @@ require_once JPATH_SITE .
 
 				<td>
 				<?php if (isset($item->checked_out) && $item->checked_out): ?>
-					<?php echo HTMLHelper::_(
-       'jgrid.checkedout',
-       $i,
-       $item->editor,
-       $item->checked_out_time,
-       'organisationen.',
-       $canCheckin
-     ); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'organisationen.', $canCheckin); ?>
 				<?php endif; ?>
-				<a href="<?php echo Route::_(
-      'index.php?option=com_einsatzkomponente&view=organisation&id=' . (int) $item->id
-    ); ?>">
+				<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisation&id=' . (int) $item->id); ?>">
 				<?php echo $this->escape($item->name); ?></a>
 				</td>
 				<td>
@@ -130,20 +104,12 @@ require_once JPATH_SITE .
 
 
     $database = Factory::getDBO();
-    $query =
-      'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' .
-      $item->id .
-      '",auswahl_orga) AND (state ="1" OR state="2") ORDER BY date1 DESC';
+    $query = 'SELECT * FROM #__eiko_einsatzberichte WHERE FIND_IN_SET ("' . $item->id . '",auswahl_orga) AND (state ="1" OR state="2") ORDER BY date1 DESC';
     $database->setQuery($query);
     $total = $database->loadObjectList();
     ?>
 				<?php if ($total): ?>
-				<td><a href="<?php echo Route::_(
-      'index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' .
-        $this->params->get('homelink', '') .
-        '&id=' .
-        (int) $total[0]->id
-    ); ?>"><?php echo date('d.m.Y', strtotime($total[0]->date1)); ?></a></td>
+				<td><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&Itemid=' . $this->params->get('homelink', '') . '&id=' . (int) $total[0]->id); ?>"><?php echo date('d.m.Y', strtotime($total[0]->date1)); ?></a></td>
 				<?php else: ?>
 				<td><?php echo '-'; ?></td>
 				<?php endif; ?>
@@ -152,11 +118,7 @@ require_once JPATH_SITE .
 								<?php if ($canEdit || $canDelete): ?>
 					<td class="center">
 						<?php if ($canEdit): ?>
-							<a href="<?php echo Route::_(
-         'index.php?option=com_einsatzkomponente&task=organisationform.edit&id=' . (int) $item->id,
-         false,
-         2
-       ); ?>" class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
+							<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisationform.edit&id=' . (int) $item->id, false, 2); ?>" class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
 						<?php endif; ?>
 						<?php
           //if ($canDelete):
@@ -172,9 +134,7 @@ require_once JPATH_SITE .
 			
 <?php if ($this->params->get('show_orga_fahrzeuge', '1')): ?>
 <tr>
-<td  style="border:0px !important;" colspan="<?php echo isset($this->items[0])
-  ? count(get_object_vars($this->items[0]))
-  : 10; ?>">
+<td  style="border:0px !important;" colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
 <?php
 $orga_fahrzeuge = EinsatzkomponenteHelper::getOrga_fahrzeuge($item->id);
 $array = [];
@@ -191,36 +151,22 @@ endforeach;
 				
 		<?php if ($this->params->get('display_orga_fhz_links', '1')): ?>
 					<?php if (!$value->link): ?>
-					<a target="_self" href="<?php echo Route::_(
-       'index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid=' .
-         $this->params->get('vehiclelink', '') .
-         '&id=' .
-         (int) $value->id
-     ); ?>">
-					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="margin-right:10px;width:<?php echo $this->params->get(
-       'display_home_image_width',
-       '80px'
-     ); ?>;" src="<?php
+					<a target="_self" href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid=' . $this->params->get('vehiclelink', '') . '&id=' . (int) $value->id); ?>">
+					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="margin-right:10px;width:<?php echo $this->params->get('display_home_image_width', '80px'); ?>;" src="<?php
 echo JURI::Root();
 echo $value->image;
 ?>" title="<?php echo $value->name; ?>"/>
 					</a>
 					<?php else: ?>
 					<a target="_blank" href="<?php echo $value->link; ?>">
-					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="margin-right:10px;width:<?php echo $this->params->get(
-       'display_home_image_width',
-       '80px'
-     ); ?>;" src="<?php
+					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="margin-right:10px;width:<?php echo $this->params->get('display_home_image_width', '80px'); ?>;" src="<?php
 echo JURI::Root();
 echo $value->image;
 ?>" title="<?php echo $value->name; ?>"/>
 					</a>
 					<?php endif; ?>		
                     <?php else: ?>	
-					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="margin-right:10px;width:<?php echo $this->params->get(
-       'display_home_image_width',
-       '80px'
-     ); ?>;" src="<?php
+					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="margin-right:10px;width:<?php echo $this->params->get('display_home_image_width', '80px'); ?>;" src="<?php
 echo JURI::Root();
 echo $value->image;
 ?>" title="<?php echo $value->name; ?>"/>
@@ -235,11 +181,7 @@ echo $value->image;
 	</table>
 
 	<?php if ($canCreate): ?>
-		<a href="<?php echo Route::_(
-    'index.php?option=com_einsatzkomponente&task=organisationform.edit&id=0',
-    false,
-    2
-  ); ?>"
+		<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisationform.edit&id=0', false, 2); ?>"
 		   class="btn btn-success btn-small"><i
 				class="icon-plus"></i>
 			<?php echo Text::_('COM_EINSATZKOMPONENTE_ADD'); ?></a>
@@ -262,11 +204,7 @@ echo $value->image;
 		var item_id = jQuery(this).attr('data-item-id');
 		<?php if ($canDelete): ?>
 		if (confirm("<?php echo Text::_('COM_EINSATZKOMPONENTE_WIRKLICH_LOESCHEN'); ?>")) {
-			window.location.href = '<?php echo Route::_(
-     'index.php?option=com_einsatzkomponente&task=organisationform.remove&id=',
-     false,
-     2
-   ); ?>' + item_id;
+			window.location.href = '<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisationform.remove&id=', false, 2); ?>' + item_id;
 		}
 		<?php endif; ?>
 	}

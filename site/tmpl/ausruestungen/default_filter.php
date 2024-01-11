@@ -19,21 +19,15 @@ $data['options'] = !empty($data['options']) ? $data['options'] : [];
 
 // Set some basic options
 $customOptions = [
-  'filtersHidden' => isset($data['options']['filtersHidden'])
-    ? $data['options']['filtersHidden']
-    : empty($data['view']->activeFilters),
-  'defaultLimit' => isset($data['options']['defaultLimit'])
-    ? $data['options']['defaultLimit']
-    : Factory::getApplication()->get('list_limit', 20),
+  'filtersHidden' => isset($data['options']['filtersHidden']) ? $data['options']['filtersHidden'] : empty($data['view']->activeFilters),
+  'defaultLimit' => isset($data['options']['defaultLimit']) ? $data['options']['defaultLimit'] : Factory::getApplication()->get('list_limit', 20),
   'searchFieldSelector' => '#filter_search',
   'orderFieldSelector' => '#list_fullordering',
 ];
 
 $data['options'] = array_unique(array_merge($customOptions, $data['options']));
 
-$formSelector = !empty($data['options']['formSelector'])
-  ? $data['options']['formSelector']
-  : '#adminForm';
+$formSelector = !empty($data['options']['formSelector']) ? $data['options']['formSelector'] : '#adminForm';
 $filters = false;
 if (isset($data['view']->filterForm)) {
   $filters = $data['view']->filterForm->getGroup('filter');
@@ -48,9 +42,7 @@ JHtml::_('searchtools.form', $formSelector, $data['options']);
 		<div class="js-stools-container-bar">
 			<?php if ($filters): ?>
 				<label for="filter_search" class="element-invisible"
-				       aria-invalid="false"><?php echo Text::_(
-             'COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'
-           ); ?></label>
+				       aria-invalid="false"><?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'); ?></label>
 
 				<div class="btn-wrapper input-append">
 					<?php echo $filters['filter_search']->input; ?>

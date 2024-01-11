@@ -45,27 +45,17 @@ use Joomla\CMS\Factory;
       <h4>Einsatzgebiet</h4>
 	  
       <?php if ($this->params->get('gmap_action', '0') == '1'): ?>
-        <div id="map-canvas" style="width:100%; height:<?php echo $this->params->get(
-          'home_map_height',
-          '300px'
-        ); ?>;">
+        <div id="map-canvas" style="width:100%; height:<?php echo $this->params->get('home_map_height', '300px'); ?>;">
           <noscript>Dieser Teil der Seite erfordert die JavaScript Unterstützung Ihres Browsers!</noscript>
         </div>
       <?php endif; ?>
 	  
       <?php if ($this->params->get('gmap_action', '0') == '2'): ?>
-        <div id="map_canvas" style="width:100%; height:<?php echo $this->params->get(
-          'home_map_height',
-          '300px'
-        ); ?>;">
+        <div id="map_canvas" style="width:100%; height:<?php echo $this->params->get('home_map_height', '300px'); ?>;">
           <noscript>Dieser Teil der Seite erfordert die JavaScript Unterstützung Ihres Browsers!</noscript>
         </div>
 			<?php OsmHelper::installOsmMap(); ?>
-			<?php OsmHelper::callOsmMap(
-     $this->gmap_config->gmap_zoom_level,
-     $this->gmap_config->start_lat,
-     $this->gmap_config->start_lang
-   ); ?>
+			<?php OsmHelper::callOsmMap($this->gmap_config->gmap_zoom_level, $this->gmap_config->start_lat, $this->gmap_config->start_lang); ?>
 			
 			<?php if ($this->params->get('display_home_missions', '1')): ?>
 			<?php if ($this->params->get('display_detail_map_for_only_user', '0')): ?>
@@ -96,34 +86,18 @@ jQuery(document).ready(function () {
 function deleteItem() {
     var item_id = jQuery(this).attr('data-item-id');
     if (confirm("<?php echo Text::_('COM_EINSATZKOMPONENTE_WIRKLICH_LOESCHEN'); ?>")) {
-        window.location.href = '<?php echo Route::_(
-          'index.php?option=com_einsatzkomponente&task=einsatzberichtform.remove&id=',
-          false,
-          2
-        ); ?>' + item_id;
+        window.location.href = '<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzberichtform.remove&id=', false, 2); ?>' + item_id;
     }
 }
 </script>
 
- /* create CSS rules for marker colors */<?php if (
-   $this->params->get('display_home_marker', '1') &&
-   !empty($marker_colors)
- ) {
-   JLoader::register(
-     'EinsatzkomponenteFrontendHelper',
-     JPATH_COMPONENT_SITE . '/helpers/einsatzkomponente.php'
-   );
+ /* create CSS rules for marker colors */<?php if ($this->params->get('display_home_marker', '1') && !empty($marker_colors)) {
+   JLoader::register('EinsatzkomponenteFrontendHelper', JPATH_COMPONENT_SITE . '/helpers/einsatzkomponente.php');
    $markers_css = '';
    foreach ($marker_colors as $id => $color) {
      $rgba = EinsatzkomponenteFrontendHelper::hex2rgba($color, 0.7);
      $markers_css .= '.eiko_td_marker_color_' . $id . ' {background-color: ' . $color . ';}' . "\n";
-     $markers_css .=
-       '.eiko_td_marker_gradient_' .
-       $id .
-       ' {background: linear-gradient(to bottom, ' .
-       $rgba .
-       ' 0%,rgba(125,185,232,0) 100%);}' .
-       "\n";
+     $markers_css .= '.eiko_td_marker_gradient_' . $id . ' {background: linear-gradient(to bottom, ' . $rgba . ' 0%,rgba(125,185,232,0) 100%);}' . "\n";
    }
    Factory::getDocument()->addStyleDeclaration($markers_css);
  } ?>

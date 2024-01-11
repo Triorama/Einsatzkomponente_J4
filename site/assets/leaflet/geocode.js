@@ -49,12 +49,7 @@ L.Control.OSMGeocoder = L.Control.extend({
 
     container = this._container = L.DomUtil.create('div')
 
-    L.DomEvent.addListener(Geocode, 'click', L.DomEvent.stopPropagation).addListener(
-      Geocode,
-      'click',
-      this._geocode,
-      this
-    )
+    L.DomEvent.addListener(Geocode, 'click', L.DomEvent.stopPropagation).addListener(Geocode, 'click', this._geocode, this)
 
     return container
   },

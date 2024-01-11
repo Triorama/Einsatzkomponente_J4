@@ -3,6 +3,7 @@
 Component for Joomla4.X
 
 <b>Einsatzkomponente für das Joomla-CMS V4.x</b>
+
 Nicht zur Installation auf Produktiv System geeignet. Nur zu Testzwecken!!!
 
 BETA-Version !! 

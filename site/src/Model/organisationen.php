@@ -178,9 +178,7 @@ class EinsatzkomponenteModelOrganisationen extends ListModel
     $this->setState('filter.orga', $params->get('filter_orga', ''));
     $app->setUserState($this->context . '.filter.orga', $params->get('filter_orga', ''));
 
-    if (
-      $filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')
-    ) {
+    if ($filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')) {
       foreach ($filters as $name => $value) {
         $this->setState('filter.' . $name, $value);
       }

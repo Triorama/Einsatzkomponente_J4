@@ -51,21 +51,15 @@ $options = $data['options'];
 
 // Set some basic options
 $customOptions = [
-  'filtersHidden' => isset($options['filtersHidden'])
-    ? $options['filtersHidden']
-    : empty($data['view']->activeFilters) && !$filtered,
-  'defaultLimit' => isset($options['defaultLimit'])
-    ? $options['defaultLimit']
-    : Factory::getApplication()->get('list_limit', 20),
+  'filtersHidden' => isset($options['filtersHidden']) ? $options['filtersHidden'] : empty($data['view']->activeFilters) && !$filtered,
+  'defaultLimit' => isset($options['defaultLimit']) ? $options['defaultLimit'] : Factory::getApplication()->get('list_limit', 20),
   'searchFieldSelector' => '#filter_search',
   'orderFieldSelector' => '#list_fullordering',
 ];
 
 $data['options'] = array_unique(array_merge($customOptions, $data['options']));
 
-$formSelector = !empty($data['options']['formSelector'])
-  ? $data['options']['formSelector']
-  : '#adminForm';
+$formSelector = !empty($data['options']['formSelector']) ? $data['options']['formSelector'] : '#adminForm';
 
 // Load search tools
 HTMLHelper::_('searchtools.form', $formSelector, $data['options']);
@@ -74,32 +68,24 @@ HTMLHelper::_('searchtools.form', $formSelector, $data['options']);
 <div class="js-stools clearfix">
 	<div class="clearfix">
 		<div class="js-stools-container-bar">
-			<label for="filter_search" class="element-invisible" aria-invalid="false"><?php echo Text::_(
-     'COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'
-   ); ?></label>
+			<label for="filter_search" class="element-invisible" aria-invalid="false"><?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'); ?></label>
 
 			<div class="btn-wrapper input-append">
 				<?php echo $filters['filter_search']->input; ?>
-				<button type="submit" class="btn hasTooltip" title="" data-original-title="<?php echo Text::_(
-      'COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'
-    ); ?>">
+				<button type="submit" class="btn hasTooltip" title="" data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_SUBMIT'); ?>">
 					<i class="icon-search"></i>
 				</button>
 			</div>
 			<?php if ($filters): ?>
 				<div class="btn-wrapper hidden-phone">
-					<button type="button" class="btn hasTooltip js-stools-btn-filter" title="" data-original-title="<?php echo Text::_(
-       'COM_EINSATZKOMPONENTE_SEARCH_TOOLS_DESC'
-     ); ?>">
+					<button type="button" class="btn hasTooltip js-stools-btn-filter" title="" data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_TOOLS_DESC'); ?>">
 						<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_TOOLS'); ?> <i class="caret"></i>
 					</button>
 				</div>
 			<?php endif; ?>
 
 			<div class="btn-wrapper">
-				<button type="button" class="btn hasTooltip js-stools-btn-clear" title="" data-original-title="<?php echo Text::_(
-      'COM_EINSATZKOMPONENTE_SEARCH_FILTER_CLEAR'
-    ); ?>" onclick="jQuery(this).closest('form').find('input').val('');">
+				<button type="button" class="btn hasTooltip js-stools-btn-clear" title="" data-original-title="<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_CLEAR'); ?>" onclick="jQuery(this).closest('form').find('input').val('');">
 					<?php echo Text::_('COM_EINSATZKOMPONENTE_SEARCH_FILTER_CLEAR'); ?>
 				</button>
 			</div>

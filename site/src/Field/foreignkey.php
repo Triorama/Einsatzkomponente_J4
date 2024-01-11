@@ -73,11 +73,7 @@ class FormFieldForeignKey extends FormField
 
         //Iterate through all the results
         foreach ($results as $result) {
-          $options[] = HTMLHelper::_(
-            'select.option',
-            $result->{$this->key_field},
-            $result->{$this->value_field}
-          );
+          $options[] = HTMLHelper::_('select.option', $result->{$this->key_field}, $result->{$this->value_field});
         }
 
         $value = $this->value;
@@ -97,16 +93,7 @@ class FormFieldForeignKey extends FormField
           array_unshift($options, HTMLHelper::_('select.option', '', ''));
         }
 
-        $html = HTMLHelper::_(
-          'select.genericlist',
-          $options,
-          $this->name,
-          $input_options,
-          'value',
-          'text',
-          $value,
-          $this->id
-        );
+        $html = HTMLHelper::_('select.genericlist', $options, $this->name, $input_options, 'value', 'text', $value, $this->id);
         break;
     }
     return $html;

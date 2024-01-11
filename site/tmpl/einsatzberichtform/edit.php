@@ -40,10 +40,7 @@ $gmap_config = EinsatzkomponenteHelper::load_gmap_config(); // GMap-Config aus h
 if (!$this->item->id == 0):
   if ($params->get('eiko')):
     $db = Factory::getDBO();
-    $query =
-      'SELECT id, thumb, comment FROM #__eiko_images WHERE report_id="' .
-      $this->item->id .
-      '" AND state="1" ORDER BY ordering ASC';
+    $query = 'SELECT id, thumb, comment FROM #__eiko_images WHERE report_id="' . $this->item->id . '" AND state="1" ORDER BY ordering ASC';
     $db->setQuery($query);
     $rImages = $db->loadObjectList();
   endif;
@@ -63,26 +60,18 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
 } ?>
 
 
-<input type="button" class="btn eiko_back_button" value="<?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_ZURUECK'
-); ?>" onClick="history.back();">
+<input type="button" class="btn eiko_back_button" value="<?php echo Text::_('COM_EINSATZKOMPONENTE_ZURUECK'); ?>" onClick="history.back();">
 
 
 <div class="einsatzbericht-edit front-end-edit">
     <?php if (!empty($this->item->id)): ?>
 		<?php if ($this->copy == 0): ?>
         <h1>Einsatzbericht bearbeiten ID-Nr.<?php echo $this->item->id; ?></h1>
-		<?php Factory::getApplication()->setUserState(
-    'com_einsatzkomponente.edit.einsatzbericht.copy',
-    0
-  ); ?>
+		<?php Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.copy', 0); ?>
 		<?php endif; ?>
 		<?php if (!$this->copy == 0): ?>
         <h1>Einsatzbericht ID-Nr.<?php echo $this->item->id; ?> kopieren</h1>
-		<?php Factory::getApplication()->setUserState(
-    'com_einsatzkomponente.edit.einsatzbericht.copy',
-    1
-  ); ?>
+		<?php Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.copy', 1); ?>
 		<?php endif; ?>
 			
     <?php else: ?>
@@ -95,9 +84,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
  ?>
 
     <?php endif; ?>
-    <form id="form-einsatzbericht" action="<?php echo Route::_(
-      'index.php?option=com_einsatzkomponente&task=einsatzbericht.save'
-    ); ?>" method="post" class="form-validate" enctype="multipart/form-data">
+    <form id="form-einsatzbericht" action="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzbericht.save'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
 	<div class="fltlft well" style="width:80%;">
 			<div class="control-group">
 				<div class="control-label"><?php echo $this->form->getLabel('id'); ?></div>
@@ -159,11 +146,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
 			</div>
 			<?php foreach ((array) $this->item->auswahl_orga as $value):
      if (!is_array($value)):
-       echo '<input type="hidden" class="auswahl_orga" name="jform[auswahl_orgahidden][' .
-         $value .
-         ']" value="' .
-         $value .
-         '" />';
+       echo '<input type="hidden" class="auswahl_orga" name="jform[auswahl_orgahidden][' . $value . ']" value="' . $value . '" />';
      endif;
    endforeach; ?>
 			<script type="text/javascript">
@@ -182,11 +165,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
 			</div>
 			<?php foreach ((array) $this->item->vehicles as $value):
      if (!is_array($value)):
-       echo '<input type="hidden" class="vehicles" name="jform[vehicleshidden][' .
-         $value .
-         ']" value="' .
-         $value .
-         '" />';
+       echo '<input type="hidden" class="vehicles" name="jform[vehicleshidden][' . $value . ']" value="' . $value . '" />';
      endif;
    endforeach; ?>
 			<script type="text/javascript">
@@ -217,11 +196,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
 			
 			<?php foreach ((array) $this->item->ausruestung as $value):
      if (!is_array($value)):
-       echo '<input type="hidden" class="ausruestung" name="jform[ausruestunghidden][' .
-         $value .
-         ']" value="' .
-         $value .
-         '" />';
+       echo '<input type="hidden" class="ausruestung" name="jform[ausruestunghidden][' . $value . ']" value="' . $value . '" />';
      endif;
    endforeach; ?>
 			<script type="text/javascript">
@@ -288,9 +263,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
             <!-- This is where the new file field will appear -->
 			</div>
 
-		    <br/><input class="btn btn-default btn-xs dropdown-toggle" type="button" id="add-file-field" name="add" value="<?php echo Text::_(
-        'COM_EINSATZKOMPONENTE_WEITERES_BILD'
-      ); ?>" />
+		    <br/><input class="btn btn-default btn-xs dropdown-toggle" type="button" id="add-file-field" name="add" value="<?php echo Text::_('COM_EINSATZKOMPONENTE_WEITERES_BILD'); ?>" />
         <!-- Here u can add image for add button(Like Below) just call the id="add-file-field" into ur image tag thats it..-->
         <!--<img src="images/add_icon.png"  id="add-file-field" name="add" style="margin-top:21px;"/>-->
 		<!--http://www.fyneworks.com/jquery/multifile/-->
@@ -299,17 +272,11 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
 			<div class="control-group" style="height:100px;">
 			<?php echo Text::_('COM_EINSATZKOMPONENTE_BILDERUPLOAD_BILDERGALERIE'); ?>:
 			<div id="text">
-            <div ><input title ="<?php echo Text::_(
-              'COM_EINSATZKOMPONENTE_ONLY_PREMIUM'
-            ); ?>" multiple class="" name="data[]" id="file"  disabled type="file"/></div>
-			<span style="font-weight:bold;color:#ff0000;"><?php echo Text::_(
-     'COM_EINSATZKOMPONENTE_ONLY_PREMIUM'
-   ); ?></span>
+            <div ><input title ="<?php echo Text::_('COM_EINSATZKOMPONENTE_ONLY_PREMIUM'); ?>" multiple class="" name="data[]" id="file"  disabled type="file"/></div>
+			<span style="font-weight:bold;color:#ff0000;"><?php echo Text::_('COM_EINSATZKOMPONENTE_ONLY_PREMIUM'); ?></span>
 			</div>
 
-		    <br/><input class="btn btn-default btn-xs dropdown-toggle"  disabled type="button" id="add-file-field" name="add" value="<?php echo Text::_(
-        'COM_EINSATZKOMPONENTE_WEITERES_BILD'
-      ); ?>" />
+		    <br/><input class="btn btn-default btn-xs dropdown-toggle"  disabled type="button" id="add-file-field" name="add" value="<?php echo Text::_('COM_EINSATZKOMPONENTE_WEITERES_BILD'); ?>" />
 			</div>
 		<?php endif; ?>		
 			</div>
@@ -323,15 +290,11 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
      $fileName = JURI::base() . $rImages[$i]->thumb; ?>   
             <li class="span2">  
             <div class="thumbnail">
-            <a href="index.php?option=com_einsatzkomponente&task=einsatzbilderbearbeiten.edit&id=<?php echo $rImages[
-              $i
-            ]->id; ?>" target="_self" class="thumbnail" title ="<?php echo $rImages[$i]
-  ->comment; ?>">
+            <a href="index.php?option=com_einsatzkomponente&task=einsatzbilderbearbeiten.edit&id=<?php echo $rImages[$i]->id; ?>" target="_self" class="thumbnail" title ="<?php echo $rImages[$i]->comment; ?>">
 			<img data-src="holder.js/300x200" src="<?php echo $fileName; ?>"  alt="" title="<?php echo $fileName; ?>"/>
             </a>
             <h5 class="label label-info">Bild ID.Nr. <?php echo $rImages[$i]->id; ?></h5>
-            <?php if ($rImages[$i]->comment): ?>Kommentar:<p><?php echo $rImages[$i]
-  ->comment; ?></p><?php endif; ?>
+            <?php if ($rImages[$i]->comment): ?>Kommentar:<p><?php echo $rImages[$i]->comment; ?></p><?php endif; ?>
             </div>
             </li>
 			<?php
@@ -370,17 +333,12 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/edit.css')
                 
                 
             <!--Slider für GMap-Ortsangabe-->
-            <?php if (
-              $params->get('gmap_action', '0') == '1' or
-              $params->get('gmap_action', '0') == '2'
-            ): ?>
+            <?php if ($params->get('gmap_action', '0') == '1' or $params->get('gmap_action', '0') == '2'): ?>
 			<div class="fltlft well" style="width:80%;">
             <h1><?php echo Text::_('COM_EINSATZKOMPONENTE_MARKIERE_EINSATZORT'); ?> :</h1>
             <div class="control-group" id="map_canvas" style="width:100%;max-width:600px;height:400px;border:1px solid;">Karte</div>
 			<div class="control-group">
-            <div class="control-label"><?php echo Text::_(
-              'COM_EINSATZKOMPONENTE_COORDS'
-            ); ?>:</div><div class="controls"><?php
+            <div class="control-label"><?php echo Text::_('COM_EINSATZKOMPONENTE_COORDS'); ?>:</div><div class="controls"><?php
 echo $this->form->getInput('gmap_report_latitude');
 echo $this->form->getInput('gmap_report_longitude');
 ?></div>
@@ -433,9 +391,7 @@ echo $this->form->getInput('gmap_report_longitude');
 		<div>
 			<button type="submit" class="validate"><span><?php echo Text::_('JSUBMIT'); ?></span></button>
 			<?php echo Text::_('COM_EINSATZKOMPONENTE_OR'); ?>
-			<a href="<?php echo Route::_(
-     'index.php?option=com_einsatzkomponente&task=einsatzbericht.cancel'
-   ); ?>" title="<?php echo Text::_('JCANCEL'); ?>"><?php echo Text::_('JCANCEL'); ?></a>
+			<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzbericht.cancel'); ?>" title="<?php echo Text::_('JCANCEL'); ?>"><?php echo Text::_('JCANCEL'); ?></a>
 			<input type='hidden' name="action" value="Filedata" />
 			<input type="hidden" name="option" value="com_einsatzkomponente" />
 			<input type="hidden" name="task" value="einsatzbericht.save" />
@@ -460,8 +416,7 @@ echo $this->form->getInput('gmap_report_longitude');
 
 	  
 function codeAddress2() {
-    var address = document.getElementById("jform_address").value+"<?php echo ' ' .
-      $params->get('ort_geocode', ''); ?>";
+    var address = document.getElementById("jform_address").value+"<?php echo ' ' . $params->get('ort_geocode', ''); ?>";
     geocoder.geocode( { 'address': address}, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         map.setCenter(results[0].geometry.location);

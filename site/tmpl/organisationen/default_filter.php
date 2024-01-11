@@ -50,21 +50,15 @@ $options = $data['options'];
 
 // Set some basic options
 $customOptions = [
-  'filtersHidden' => isset($options['filtersHidden'])
-    ? $options['filtersHidden']
-    : empty($data['view']->activeFilters) && !$filtered,
-  'defaultLimit' => isset($options['defaultLimit'])
-    ? $options['defaultLimit']
-    : Factory::getApplication()->get('list_limit', 20),
+  'filtersHidden' => isset($options['filtersHidden']) ? $options['filtersHidden'] : empty($data['view']->activeFilters) && !$filtered,
+  'defaultLimit' => isset($options['defaultLimit']) ? $options['defaultLimit'] : Factory::getApplication()->get('list_limit', 20),
   'searchFieldSelector' => '#filter_search',
   'orderFieldSelector' => '#list_fullordering',
 ];
 
 $data['options'] = array_unique(array_merge($customOptions, $data['options']));
 
-$formSelector = !empty($data['options']['formSelector'])
-  ? $data['options']['formSelector']
-  : '#adminForm';
+$formSelector = !empty($data['options']['formSelector']) ? $data['options']['formSelector'] : '#adminForm';
 
 // Load search tools
 JHtml::_('searchtools.form', $formSelector, $data['options']);

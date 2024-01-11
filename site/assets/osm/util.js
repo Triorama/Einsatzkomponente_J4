@@ -183,13 +183,7 @@ function checkForPermalink() {
  */
 function var_dump(obj) {
   if (typeof obj == 'object') {
-    return (
-      'Type: ' +
-      typeof obj +
-      (obj.constructor ? '\nConstructor: ' + obj.constructor : '') +
-      '\nValue: ' +
-      obj
-    )
+    return 'Type: ' + typeof obj + (obj.constructor ? '\nConstructor: ' + obj.constructor : '') + '\nValue: ' + obj
   } else {
     return 'Type: ' + typeof obj + '\nValue: ' + obj
   }
@@ -251,10 +245,7 @@ function drawPolygon(coordinates, style) {
 function createPointsArrayFromCoordinates(coordinates) {
   var points = new Array()
   for (var i = 0; i < coordinates.length; ++i) {
-    var lonlat = new OpenLayers.LonLat(coordinates[i][0], coordinates[i][1]).transform(
-      new OpenLayers.Projection('EPSG:4326'),
-      new OpenLayers.Projection('EPSG:900913')
-    )
+    var lonlat = new OpenLayers.LonLat(coordinates[i][0], coordinates[i][1]).transform(new OpenLayers.Projection('EPSG:4326'), new OpenLayers.Projection('EPSG:900913'))
     points.push(new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat))
   }
   return points
@@ -268,8 +259,6 @@ function createPointsArrayFromCoordinates(coordinates) {
 function checkUtilVersion(version) {
   var thisFileVersion = 4
   if (version != thisFileVersion) {
-    alert(
-      "map.html and util.js versions do not match.\n\nPlease reload the page using your browsers 'reload' feature.\n\nIf the problem persists and you are the owner of this site, you may need to update the map's files."
-    )
+    alert("map.html and util.js versions do not match.\n\nPlease reload the page using your browsers 'reload' feature.\n\nIf the problem persists and you are the owner of this site, you may need to update the map's files.")
   }
 }

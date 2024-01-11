@@ -52,9 +52,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
     }
 
     // Redirect to the edit screen.
-    $this->setRedirect(
-      Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit', false)
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit', false));
   }
 
   /**
@@ -107,12 +105,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -127,12 +120,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
       $this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -148,9 +136,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
     $this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
     $menu = Factory::getApplication()->getMenu();
     $item = $menu->getActive();
-    $url = empty($item->link)
-      ? 'index.php?option=com_einsatzkomponente&view=ausruestungen'
-      : $item->link;
+    $url = empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=ausruestungen' : $item->link;
     $this->setRedirect(Route::_($url, false));
 
     // Flush the data from the session.
@@ -174,9 +160,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
     $menu = Factory::getApplication()->getMenu();
     $item = $menu->getActive();
-    $url = empty($item->link)
-      ? 'index.php?option=com_einsatzkomponente&view=ausruestungen'
-      : $item->link;
+    $url = empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=ausruestungen' : $item->link;
     $this->setRedirect(Route::_($url, false));
   }
 
@@ -209,12 +193,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -229,12 +208,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.ausruestung.id');
       $this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -250,9 +224,7 @@ class EinsatzkomponenteControllerAusruestungForm extends EinsatzkomponenteContro
     $this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
     $menu = Factory::getApplication()->getMenu();
     $item = $menu->getActive();
-    $url = empty($item->link)
-      ? 'index.php?option=com_einsatzkomponente&view=ausruestungen'
-      : $item->link;
+    $url = empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=ausruestungen' : $item->link;
     $this->setRedirect(Route::_($url, false));
 
     // Flush the data from the session.

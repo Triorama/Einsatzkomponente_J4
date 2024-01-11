@@ -54,8 +54,7 @@ hs.lang = {
   moveTitle: 'Verschieben',
   fullExpandText: 'Vollbild',
   number: 'Bild %1 von %2',
-  restoreTitle:
-    'Klick um das Bild zu schließen, klick und ziehe um zu verschieben. Benutze Pfeiltasten für vor und zurück.',
+  restoreTitle: 'Klick um das Bild zu schließen, klick und ziehe um zu verschieben. Benutze Pfeiltasten für vor und zurück.',
 }
 
 // gallery config object

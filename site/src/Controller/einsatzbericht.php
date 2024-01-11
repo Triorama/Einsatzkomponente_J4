@@ -47,14 +47,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
       $model->checkin($previousId);
     }
     // Redirect to the edit screen.
-    $this->setRedirect(
-      Route::_(
-        'index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' .
-          $editId .
-          '',
-        false
-      )
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $editId . '', false));
   }
   /**
    * Method to save a user's profile data.
@@ -65,9 +58,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
   public function save()
   {
     // Check for request forgeries.
-    echo 'upload_max_filesize: ' . ini_get('upload_max_filesize'),
-      '<br/>post_max_size: ',
-      ini_get('post_max_size');
+    echo 'upload_max_filesize: ' . ini_get('upload_max_filesize'), '<br/>post_max_size: ', ini_get('post_max_size');
     Session::checkToken() or jexit(Text::_('JINVALID_TOKEN'));
     // Initialise variables.
     $app = Factory::getApplication();
@@ -98,12 +89,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
       $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $id, false));
       return false;
     }
     // Attempt to save the data.
@@ -115,12 +101,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
       $this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -150,8 +131,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
         $article = $data['einsatzticker'];
         if ($article):
           Session::checkToken() or die(Text::_('JINVALID_TOKEN'));
-          require_once JPATH_SITE .
-            '/administrator/components/com_einsatzkomponente/helpers/article.php'; // Helper-class laden
+          require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/article.php'; // Helper-class laden
         endif;
       endif;
     }
@@ -206,9 +186,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
     //echo 'Task :'.JFactory::getApplication()->input->get('task').'<br/>';break;
 
     //$this->setRedirect(JRoute::_($item->link, false));
-    $this->setRedirect(
-      Route::_('index.php?option=com_einsatzkomponente&Itemid=' . $item . '', false)
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&Itemid=' . $item . '', false));
     // Flush the data from the session.
     $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', null);
   }
@@ -222,9 +200,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
     $item = $menu->getActive()->id;
     $params = ComponentHelper::getParams('com_einsatzkomponente');
     $this->setMessage(Text::_('Einsatzeingabe abgebrochen'));
-    $this->setRedirect(
-      Route::_('index.php?option=com_einsatzkomponente&Itemid=' . $item . '', false)
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&Itemid=' . $item . '', false));
   }
 
   public function remove()
@@ -260,12 +236,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
       $app->setUserState('com_einsatzkomponente.edit.einsatzbericht.data', $data);
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
     // Attempt to save the data.
@@ -277,12 +248,7 @@ class EinsatzkomponenteControllerEinsatzbericht extends EinsatzkomponenteControl
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
       $this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -343,13 +309,7 @@ function sendMail_auto($cid, $status)
   $db->setQuery($query);
   $kat = $db->loadObject();
 
-  $link = Route::_(
-    JURI::root() .
-      'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' .
-      $result[0]->id .
-      '&Itemid=' .
-      $params->get('homelink', '')
-  );
+  $link = Route::_(JURI::root() . 'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . $result[0]->id . '&Itemid=' . $params->get('homelink', ''));
 
   $body = '' . '<h2>+++ ' . $result[0]->summary . ' +++</h2>';
   if ($params->get('send_mail_kat', '0')):
@@ -371,11 +331,7 @@ function sendMail_auto($cid, $status)
   endif;
   if ($result[0]->image):
     if ($params->get('send_mail_image', '0')):
-      $body .=
-        '<img src="' .
-        JURI::root() .
-        $result[0]->image .
-        '" style="margin-left:10px;float:right;height:50%;" alt="Einsatzbild"/>';
+      $body .= '<img src="' . JURI::root() . $result[0]->image . '" style="margin-left:10px;float:right;height:50%;" alt="Einsatzbild"/>';
     endif;
   endif;
   $body .= '</div>';

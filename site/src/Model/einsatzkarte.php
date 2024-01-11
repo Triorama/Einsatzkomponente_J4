@@ -38,11 +38,7 @@ class EinsatzkomponenteModelEinsatzkarte extends ListModel
     // Initialise variables.
     $app = Factory::getApplication();
     // List state information
-    $limit = $app->getUserStateFromRequest(
-      'global.list.limit',
-      'limit',
-      $app->getCfg('list_limit')
-    );
+    $limit = $app->getUserStateFromRequest('global.list.limit', 'limit', $app->getCfg('list_limit'));
     $this->setState('list.limit', $limit);
     $limitstart = Factory::getApplication()->input->getInt('limitstart', 0);
     $this->setState('list.start', $limitstart);
@@ -88,19 +84,7 @@ class EinsatzkomponenteModelEinsatzkarte extends ListModel
         $query->where('a.id = ' . (int) substr($search, 3));
       } else {
         $search = $db->Quote('%' . $db->escape($search, true) . '%');
-        $query->where(
-          '( a.address LIKE ' .
-            $search .
-            '  OR  a.summary LIKE ' .
-            $search .
-            '  OR  a.boss LIKE ' .
-            $search .
-            '  OR  a.boss2 LIKE ' .
-            $search .
-            '  OR  a.desc LIKE ' .
-            $search .
-            ' )'
-        );
+        $query->where('( a.address LIKE ' . $search . '  OR  a.summary LIKE ' . $search . '  OR  a.boss LIKE ' . $search . '  OR  a.boss2 LIKE ' . $search . '  OR  a.desc LIKE ' . $search . ' )');
       }
     }
 

@@ -9,8 +9,5 @@
 // no direct access
 defined('_JEXEC') or die();
 
-require_once JPATH_SITE .
-  '/components/com_einsatzkomponente/views/einsatzkarte/tmpl/' .
-  $this->params->get('gmap_layout', 'gmap_layout_1.php') .
-  '';
+require_once JPATH_SITE . '/components/com_einsatzkomponente/views/einsatzkarte/tmpl/' . $this->params->get('gmap_layout', 'gmap_layout_1.php') . '';
 ?> 

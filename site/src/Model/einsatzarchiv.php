@@ -173,19 +173,13 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
       $app->setUserState($this->context . '.filter.year', $params->get('filter_year', ''));
 
       $this->setState('filter.auswahl_orga', $params->get('filter_auswahl_orga', ''));
-      $app->setUserState(
-        $this->context . '.filter.auswahl_orga',
-        $params->get('filter_auswahl_orga', '')
-      );
+      $app->setUserState($this->context . '.filter.auswahl_orga', $params->get('filter_auswahl_orga', ''));
 
       $this->setState('filter.alerting', $params->get('filter_alerting', ''));
       $app->setUserState($this->context . '.filter.alerting', $params->get('filter_alerting', ''));
 
       $this->setState('filter.tickerkat', $params->get('filter_tickerkat', ''));
-      $app->setUserState(
-        $this->context . '.filter.tickerkat',
-        $params->get('filter_tickerkat', '')
-      );
+      $app->setUserState($this->context . '.filter.tickerkat', $params->get('filter_tickerkat', ''));
 
       $this->setState('filter.data1', $params->get('filter_data1', ''));
       $app->setUserState($this->context . '.filter.data1', $params->get('filter_data1', ''));
@@ -193,26 +187,15 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
       $this->setState('filter.vehicles', $params->get('filter_vehicles', ''));
       $app->setUserState($this->context . '.filter.vehicles', $params->get('filter_vehicles', ''));
 
-      $this->setState(
-        'filter.date1_from_dateformat',
-        $params->get('filter_date1_from_dateformat', '')
-      );
-      $app->setUserState(
-        $this->context . '.filter.date1_from_dateformat',
-        $params->get('filter_date1_from_dateformat', '')
-      );
+      $this->setState('filter.date1_from_dateformat', $params->get('filter_date1_from_dateformat', ''));
+      $app->setUserState($this->context . '.filter.date1_from_dateformat', $params->get('filter_date1_from_dateformat', ''));
 
       $this->setState('filter.date1_to_dateformat', $params->get('filter_date1_to_dateformat', ''));
-      $app->setUserState(
-        $this->context . '.filter.date1_to_dateformat',
-        $params->get('filter_date1_to_dateformat', '')
-      );
+      $app->setUserState($this->context . '.filter.date1_to_dateformat', $params->get('filter_date1_to_dateformat', ''));
     endif;
 
     // Receive & set filters
-    if (
-      $filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')
-    ) {
+    if ($filters = $app->getUserStateFromRequest($this->context . '.filter', 'filter', [], 'array')) {
       foreach ($filters as $name => $value) {
         $this->setState('filter.' . $name, $value);
         //echo 'filter.'.$name.': '.$value.'<br/>';
@@ -245,37 +228,22 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
 
     // Join over the foreign key 'alerting'
     $query->select('#__eiko_alarmierungsarten_1662662.title AS alarmierungsarten_title_1662662');
-    $query->join(
-      'LEFT',
-      '#__eiko_alarmierungsarten AS #__eiko_alarmierungsarten_1662662 ON #__eiko_alarmierungsarten_1662662.id = a.alerting'
-    );
+    $query->join('LEFT', '#__eiko_alarmierungsarten AS #__eiko_alarmierungsarten_1662662 ON #__eiko_alarmierungsarten_1662662.id = a.alerting');
     // Join over the foreign key 'tickerkat'
     $query->select('#__eiko_tickerkat_1662677.title AS einsatzkategorien_title_1662677');
-    $query->join(
-      'LEFT',
-      '#__eiko_tickerkat AS #__eiko_tickerkat_1662677 ON #__eiko_tickerkat_1662677.id = a.tickerkat'
-    );
+    $query->join('LEFT', '#__eiko_tickerkat AS #__eiko_tickerkat_1662677 ON #__eiko_tickerkat_1662677.id = a.tickerkat');
     // Join over the foreign key 'data1'
     $query->select('#__eiko_einsatzarten_1662650.title AS einsatzarten_title_1662650');
-    $query->join(
-      'LEFT',
-      '#__eiko_einsatzarten AS #__eiko_einsatzarten_1662650 ON #__eiko_einsatzarten_1662650.id = a.data1'
-    );
+    $query->join('LEFT', '#__eiko_einsatzarten AS #__eiko_einsatzarten_1662650 ON #__eiko_einsatzarten_1662650.id = a.data1');
     // Join over the foreign key 'images'
     //	$query->select('#__eiko_images_1662871.image AS einsatzbildmanager_image_1662871');
     //	$query->join('LEFT', '#__eiko_images AS #__eiko_images_1662871 ON #__eiko_images_1662871.id = a.images');
     // Join over the foreign key 'auswahlorga'
     $query->select('#__eiko_organisationen_1662678.name AS organisationen_name_1662678');
-    $query->join(
-      'LEFT',
-      '#__eiko_organisationen AS #__eiko_organisationen_1662678 ON #__eiko_organisationen_1662678.id = a.auswahl_orga'
-    );
+    $query->join('LEFT', '#__eiko_organisationen AS #__eiko_organisationen_1662678 ON #__eiko_organisationen_1662678.id = a.auswahl_orga');
     // Join over the foreign key 'vehicles'
     $query->select('#__eiko_fahrzeuge_1662679.name AS einsatzfahrzeuge_name_1662679');
-    $query->join(
-      'LEFT',
-      '#__eiko_fahrzeuge AS #__eiko_fahrzeuge_1662679 ON #__eiko_fahrzeuge_1662679.id = a.vehicles'
-    );
+    $query->join('LEFT', '#__eiko_fahrzeuge AS #__eiko_fahrzeuge_1662679 ON #__eiko_fahrzeuge_1662679.id = a.vehicles');
     // Join over the foreign key 'ausruestung'
     //	$query->select('#__eiko_ausruestung_1662798.name AS ausruestungen_name_1662798');
     //	$query->join('LEFT', '#__eiko_ausruestung AS #__eiko_ausruestung_1662798 ON #__eiko_ausruestung_1662798.id = a.ausruestung');
@@ -290,10 +258,7 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
     //	$query->join('LEFT', '#__eiko_fahrzeuge AS #__eiko_fahrzeuge_1662879 ON #__eiko_fahrzeuge_1662879.id = a.people_ftm');
     // Join over the foreign key 'article_id'
     $query->select('#__content_1662648.title AS content_title_1662648');
-    $query->join(
-      'LEFT',
-      '#__content AS #__content_1662648 ON #__content_1662648.id = a.article_id'
-    );
+    $query->join('LEFT', '#__content AS #__content_1662648 ON #__content_1662648.id = a.article_id');
     // Join over the created by field 'created_by'
     $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
     // Join over the modified by field 'created_by'
@@ -320,19 +285,7 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
         $query->where('a.id = ' . (int) substr($search, 3));
       } else {
         $search = $db->Quote('%' . $db->escape($search, true) . '%');
-        $query->where(
-          '( a.address LIKE ' .
-            $search .
-            '  OR  a.summary LIKE ' .
-            $search .
-            '  OR  a.boss LIKE ' .
-            $search .
-            '  OR  a.boss2 LIKE ' .
-            $search .
-            '  OR  a.desc LIKE ' .
-            $search .
-            ' )'
-        );
+        $query->where('( a.address LIKE ' . $search . '  OR  a.summary LIKE ' . $search . '  OR  a.boss LIKE ' . $search . '  OR  a.boss2 LIKE ' . $search . '  OR  a.desc LIKE ' . $search . ' )');
       }
     }
 
@@ -358,25 +311,11 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
 
     //Checking "_dateformat"
     $filter_date1_from = $this->state->get('filter.date1_from_dateformat');
-    if (
-      $filter_date1_from &&
-      preg_match(
-        "/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/",
-        $filter_date1_from
-      ) &&
-      date_create($filter_date1_from)
-    ) {
+    if ($filter_date1_from && preg_match("/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/", $filter_date1_from) && date_create($filter_date1_from)) {
       $query->where('a.date1 >= ' . $db->quote($filter_date1_from));
     }
     $filter_date1_to = $this->state->get('filter.date1_to_dateformat');
-    if (
-      $filter_date1_to &&
-      preg_match(
-        "/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/",
-        $filter_date1_to
-      ) &&
-      date_create($filter_date1_to)
-    ) {
+    if ($filter_date1_to && preg_match("/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/", $filter_date1_to) && date_create($filter_date1_to)) {
       $query->where('a.date1 <= ' . $db->quote($filter_date1_to));
     }
 
@@ -559,9 +498,7 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
         if (is_object($item->auswahl_orga)) {
           $item->auswahl_orga = JArrayHelper::fromObject($item->auswahl_orga);
         }
-        $values = is_array($item->auswahl_orga)
-          ? $item->auswahl_orga
-          : explode(',', $item->auswahl_orga);
+        $values = is_array($item->auswahl_orga) ? $item->auswahl_orga : explode(',', $item->auswahl_orga);
 
         $textValue = [];
         foreach ($values as $value) {
@@ -704,12 +641,8 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
       //		$item->people_ftm = !empty($textValue) ? implode(', ', $textValue) : $item->people_ftm;
 
       //		}
-      $item->status_fb = Text::_(
-        'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($item->status_fb)
-      );
-      $item->status = Text::_(
-        'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($item->status)
-      );
+      $item->status_fb = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_FB_OPTION_' . strtoupper($item->status_fb));
+      $item->status = Text::_('COM_EINSATZKOMPONENTE_EINSATZBERICHTE_STATUS_OPTION_' . strtoupper($item->status));
 
       if (isset($item->article_id) && $item->article_id != '') {
         if (is_object($item->article_id)) {
@@ -769,7 +702,6 @@ class EinsatzkomponenteModelEinsatzarchiv extends ListModel
    */
   private function isValidDate($date)
   {
-    return preg_match("/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/", $date) &&
-      date_create($date);
+    return preg_match("/^(19|20)\d\d[-](0[1-9]|1[012])[-](0[1-9]|[12][0-9]|3[01])$/", $date) && date_create($date);
   }
 }

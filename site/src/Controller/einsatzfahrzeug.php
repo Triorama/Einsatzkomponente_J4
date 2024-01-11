@@ -55,9 +55,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeug extends EinsatzkomponenteContro
     }
 
     // Redirect to the edit screen.
-    $this->setRedirect(
-      Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit', false)
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit', false));
   }
 
   /**
@@ -76,10 +74,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeug extends EinsatzkomponenteContro
     // Checking if the user can remove object
     $user = Factory::getUser();
 
-    if (
-      $user->authorise('core.edit', 'com_einsatzkomponente') ||
-      $user->authorise('core.edit.state', 'com_einsatzkomponente')
-    ) {
+    if ($user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.edit.state', 'com_einsatzkomponente')) {
       $model = $this->getModel('Einsatzfahrzeug', Site);
 
       // Get the user data.
@@ -107,9 +102,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeug extends EinsatzkomponenteContro
 
       if (!$item) {
         // If there isn't any menu item active, redirect to list view
-        $this->setRedirect(
-          Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge', false)
-        );
+        $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge', false));
       } else {
         $this->setRedirect(Route::_($item->link . $menuitemid, false));
       }

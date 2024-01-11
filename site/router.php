@@ -48,10 +48,7 @@ class EinsatzkomponenteRouter extends RouterView
       $this->attachRule(new NomenuRules($this));
     } else {
       JLoader::register('EinsatzkomponenteRulesLegacy', __DIR__ . '/helpers/legacyrouter.php');
-      JLoader::register(
-        'EinsatzkomponenteHelpersEinsatzkomponente',
-        __DIR__ . '/helpers/einsatzkomponente.php'
-      );
+      JLoader::register('EinsatzkomponenteHelpersEinsatzkomponente', __DIR__ . '/helpers/einsatzkomponente.php');
       $this->attachRule(new EinsatzkomponenteRulesLegacy($this));
     }
   }

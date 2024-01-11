@@ -56,9 +56,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
     }
 
     // Redirect to the edit screen.
-    $this->setRedirect(
-      Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit', false)
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit', false));
   }
 
   /**
@@ -113,12 +111,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit&id=' . $id, false));
     }
 
     // Attempt to save the data.
@@ -132,12 +125,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
       $this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeugform&layout=edit&id=' . $id, false));
     }
 
     // Check in the profile.
@@ -152,9 +140,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
     $this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_SAVED_SUCCESSFULLY'));
     $menu = Factory::getApplication()->getMenu();
     $item = $menu->getActive();
-    $url = empty($item->link)
-      ? 'index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge'
-      : $item->link;
+    $url = empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge' : $item->link;
     $this->setRedirect(Route::_($url, false));
 
     // Flush the data from the session.
@@ -185,9 +171,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 
     $menu = Factory::getApplication()->getMenu();
     $item = $menu->getActive();
-    $url = empty($item->link)
-      ? 'index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge'
-      : $item->link;
+    $url = empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge' : $item->link;
     $this->setRedirect(Route::_($url, false));
   }
 
@@ -227,12 +211,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&layout=edit&id=' . $id, false));
     }
 
     // Attempt to save the data.
@@ -246,12 +225,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzfahrzeug.id');
       $this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&layout=edit&id=' . $id, false));
     }
 
     // Check in the profile.
@@ -266,9 +240,7 @@ class EinsatzkomponenteControllerEinsatzfahrzeugForm extends EinsatzkomponenteCo
     $this->setMessage(Text::_('COM_EINSATZKOMPONENTE_ITEM_DELETED_SUCCESSFULLY'));
     $menu = Factory::getApplication()->getMenu();
     $item = $menu->getActive();
-    $url = empty($item->link)
-      ? 'index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge'
-      : $item->link;
+    $url = empty($item->link) ? 'index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge' : $item->link;
     $this->setRedirect(Route::_($url, false));
 
     // Flush the data from the session.

@@ -40,9 +40,7 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 <?php endif; ?>
 
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=ausruestungen'
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestungen'); ?>" method="post" name="adminForm" id="adminForm">
 
     <?php
 //echo JLayoutHelper::render('default_filter', array('view' => $this), dirname(__FILE__));
@@ -69,17 +67,13 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
     </thead>
     <tfoot>
     <tr>
-        <td colspan="<?php echo isset($this->items[0])
-          ? count(get_object_vars($this->items[0]))
-          : 10; ?>">
+        <td colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
             <?php echo $this->pagination->getListFooter(); ?>
         </td>
     </tr>
 		<?php if (!$this->params->get('eiko')): ?>
         <tr><!-- Bitte das Copyright nicht entfernen. Danke. -->
-        <td colspan="<?php echo isset($this->items[0])
-          ? count(get_object_vars($this->items[0]))
-          : 10; ?>">
+        <td colspan="<?php echo isset($this->items[0]) ? count(get_object_vars($this->items[0])) : 10; ?>">
 			<span class="copyright">Einsatzkomponente V<?php echo $this->version; ?>  (C) 2016 by Ralf Meyer ( <a class="copyright_link" href="https://einsatzkomponente.de" target="_blank">www.einsatzkomponente.de</a> )</span></td>
         </tr>
 	<?php endif; ?>
@@ -106,28 +100,15 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 				
             	<td>
 				<?php if (isset($item->checked_out) && $item->checked_out): ?>
-					<?php echo HTMLHelper::_(
-       'jgrid.checkedout',
-       $i,
-       $item->editor,
-       $item->checked_out_time,
-       'ausruestungen.',
-       $canCheckin
-     ); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'ausruestungen.', $canCheckin); ?>
 				<?php endif; ?>
 				
 				<?php if ($this->params->get('show_ausruestung_detail_link', '1')): ?>
-				<a href="<?php echo Route::_(
-      'index.php?option=com_einsatzkomponente&view=ausruestung&id=' . (int) $item->id
-    ); ?>">
-				<?php echo '<span style="font-size:20px;font-weight:bold;">' .
-      $this->escape($item->name) .
-      '</span>'; ?></a>
+				<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&id=' . (int) $item->id); ?>">
+				<?php echo '<span style="font-size:20px;font-weight:bold;">' . $this->escape($item->name) . '</span>'; ?></a>
 				<?php endif; ?>
 				<?php if (!$this->params->get('show_ausruestung_detail_link', '1')): ?>
-				<?php echo '<span style="color:#d63b37;font-size:20px;font-weight:bold;">' .
-      $this->escape($item->name) .
-      '</span>'; ?>
+				<?php echo '<span style="color:#d63b37;font-size:20px;font-weight:bold;">' . $this->escape($item->name) . '</span>'; ?>
 				<?php endif; ?>
 				<br/>
 				<?php if ($item->beschreibung): ?>
@@ -144,20 +125,14 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 					<?php echo $Desc; ?>
 				<?php endif; ?>
 				
-				<p><a href="<?php echo Route::_(
-      'index.php?option=com_einsatzkomponente&view=ausruestung&id=' . (int) $item->id
-    ); ?>" class="btn btn-primary" role="button">Details</a></p>
+				<p><a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=ausruestung&id=' . (int) $item->id); ?>" class="btn btn-primary" role="button">Details</a></p>
 				</td>
 
 
             				<?php if ($canEdit || $canDelete): ?>
 					<td class="center">
 						<?php if ($canEdit): ?>
-							<a href="<?php echo Route::_(
-         'index.php?option=com_einsatzkomponente&task=ausruestungform.edit&id=' . $item->id,
-         false,
-         2
-       ); ?>" class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
+							<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestungform.edit&id=' . $item->id, false, 2); ?>" class="btn btn-mini" type="button"><i class="icon-edit" ></i></a>
 						<?php endif; ?>
 						<?php if ($canDelete): ?>
 							<button data-item-id="<?php echo $item->id; ?>" class="btn btn-mini delete-button" type="button"><i class="icon-trash" ></i></button>
@@ -171,11 +146,7 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
     </table>
 
     <?php if ($canCreate): ?>
-        <a href="<?php echo Route::_(
-          'index.php?option=com_einsatzkomponente&task=ausruestungform.edit&id=0',
-          false,
-          2
-        ); ?>"
+        <a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestungform.edit&id=0', false, 2); ?>"
            class="btn btn-success btn-small"><i
                 class="icon-plus"></i> <?php echo Text::_('com_einsatzkomponente_ADD_ITEM'); ?></a>
     <?php endif; ?>
@@ -196,11 +167,7 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
     function deleteItem() {
         var item_id = jQuery(this).attr('data-item-id');
         if (confirm("<?php echo Text::_('com_einsatzkomponente_DELETE_MESSAGE'); ?>")) {
-            window.location.href = '<?php echo Route::_(
-              'index.php?option=com_einsatzkomponente&task=ausruestungform.remove&id=',
-              false,
-              2
-            ); ?>' + item_id;
+            window.location.href = '<?php echo Route::_('index.php?option=com_einsatzkomponente&task=ausruestungform.remove&id=', false, 2); ?>' + item_id;
         }
     }
 </script>

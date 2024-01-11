@@ -54,9 +54,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 		}
 	}
 </script>
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
-); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -83,18 +81,13 @@ echo Text::_('Zugeordnete Fahrzeuge :');
 echo '</div>';
 echo '<div class="controls"><ul class="adminformlist">';
 $database = Factory::getDBO();
-$query =
-  'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' .
-  $this->item->id .
-  '" ORDER BY ordering,state ASC ';
+$query = 'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' . $this->item->id . '" ORDER BY ordering,state ASC ';
 $database->setQuery($query);
 $total = $database->loadObjectList();
 if ($total) {
   foreach ($total as $totale):
     echo '<li>';
-    echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' .
-      $totale->id .
-      '); ">';
+    echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' . $totale->id . '); ">';
     echo $totale->name;
     if ($totale->detail2):
       echo ' ( ' . $totale->detail2 . ' )';
@@ -310,9 +303,7 @@ endif; ?>
 					</button>
 				<?php endif; ?>
 				<a class="btn"
-				   href="<?php echo Route::_(
-         'index.php?option=com_einsatzkomponente&task=organisationform.cancel'
-       ); ?>"
+				   href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisationform.cancel'); ?>"
 				   title="<?php echo Text::_('JCANCEL'); ?>">
 					<?php echo Text::_('JCANCEL'); ?>
 				</a>

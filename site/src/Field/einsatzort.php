@@ -39,8 +39,7 @@ class FormFieldEinsatzort extends FormField
     $id = Factory::getApplication()->input->getVar('id', 0);
 
     $db = Factory::getDBO();
-    $query =
-      'SELECT id, address as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY address ORDER BY address';
+    $query = 'SELECT id, address as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY address ORDER BY address';
     $db->setQuery($query);
     $addressDb = $db->loadObjectList();
 
@@ -51,41 +50,15 @@ class FormFieldEinsatzort extends FormField
     //$db->setQuery($query);
     //$coords = $db->loadObjectList();
 
-    $html[] =
-      '<input class="control-label" type="text"  name="' .
-      $this->name .
-      '"  id="' .
-      $this->id .
-      '"  value="' .
-      $this->value .
-      '" size="' .
-      $this->size .
-      '" />';
+    $html[] = '<input class="control-label" type="text"  name="' . $this->name . '"  id="' . $this->id . '"  value="' . $this->value . '" size="' . $this->size . '" />';
     if ($params->get('gmap_action', '0')):
-      $html[] =
-        '<button type="button" id="Geocode" value="Geocode" onclick="codeAddress2()" class="hasTooltip control-label btn btn-danger btn-sm" title="Koordinaten automatisch anhand der Adresse ermitteln">Geocode</button>&nbsp;';
+      $html[] = '<button type="button" id="Geocode" value="Geocode" onclick="codeAddress2()" class="hasTooltip control-label btn btn-danger btn-sm" title="Koordinaten automatisch anhand der Adresse ermitteln">Geocode</button>&nbsp;';
     endif;
 
     if (count($addressDb)):
-      $address[] = JHTML::_(
-        'select.option',
-        '',
-        Text::_('COM_EINSATZKOMPONENTE_ADRESSE_AUSWAEHLEN'),
-        'title',
-        'title'
-      );
+      $address[] = JHTML::_('select.option', '', Text::_('COM_EINSATZKOMPONENTE_ADRESSE_AUSWAEHLEN'), 'title', 'title');
       $address = array_merge($address, $addressDb);
-      $html[] .=
-        '</br></br>' .
-        JHTML::_(
-          'select.genericlist',
-          $address,
-          'adresse',
-          'onchange="changeText_einsatzort()" ',
-          'title',
-          'title',
-          '0'
-        );
+      $html[] .= '</br></br>' . JHTML::_('select.genericlist', $address, 'adresse', 'onchange="changeText_einsatzort()" ', 'title', 'title', '0');
 
       if ($params->get('gmap_action', '0')):
         $html[] .=

@@ -49,12 +49,8 @@ class EinsatzkomponenteViewAusruestung extends HtmlView
       $document->addStyleSheet($this->baseurl . '/media/jui/css/icomoon.css');
     endif;
     if ($this->params->get('display_ausruestung_bootstrap', '0') == '2'):
-      $document->addStyleSheet(
-        'components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css'
-      );
-      $document->addStyleSheet(
-        'components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css'
-      );
+      $document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap.min.css');
+      $document->addStyleSheet('components/com_einsatzkomponente/assets/css/bootstrap/bootstrap-responsive.min.css');
     endif;
 
     // Import CSS aus Optionen

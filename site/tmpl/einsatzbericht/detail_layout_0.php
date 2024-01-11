@@ -127,10 +127,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
             
             <?php if ($this->item->gmap_report_latitude != '0'): ?> 
 			<?php if ($this->params->get('gmap_action', '0') == '1'): ?>
-  			<li><div id="map-canvas" style="width:100%; height:<?php echo $this->params->get(
-       'detail_map_height',
-       '250px'
-     ); ?>;">
+  			<li><div id="map-canvas" style="width:100%; height:<?php echo $this->params->get('detail_map_height', '250px'); ?>;">
     		<noscript>Dieser Teil der Seite erfordert die JavaScript Unterstützung Ihres Browsers!</noscript>
 			</div></li>
             <?php endif; ?>
@@ -138,10 +135,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 				<li><body onLoad="drawmap();"></body>
 				<!--<div id="descriptionToggle" onClick="toggleInfo()">Informationen zur Karte anzeigen</div>
 				<div id="description" class="">Einsatzkarte</div>-->
-				<div id="map" style="width:100%; height:<?php echo $this->params->get(
-      'detail_map_height',
-      '250px'
-    ); ?>;"></div> 
+				<div id="map" style="width:100%; height:<?php echo $this->params->get('detail_map_height', '250px'); ?>;"></div> 
     		<noscript>Dieser Teil der Seite erfordert die JavaScript Unterstützung Ihres Browsers!</noscript>
             <?php endif; ?>
             <?php endif; ?>
@@ -151,11 +145,7 @@ $lang->load('com_einsatzkomponente', JPATH_ADMINISTRATOR);
 		<?php
   $plugin = PluginHelper::getPlugin('content', 'myshariff');
   if ($plugin):
-    echo JHTML::_(
-      'content.prepare',
-
-      '{myshariff}'
-    );
+    echo JHTML::_('content.prepare', '{myshariff}');
   endif;
   ?>
 

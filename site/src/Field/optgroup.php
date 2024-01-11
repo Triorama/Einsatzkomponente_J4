@@ -40,10 +40,7 @@ class FormFieldoptgroup extends FormField
     $html[] .= '<option>&nbsp;</option>';
     foreach ($orgs as $org) {
       $html[] .= '<optgroup label="' . $org->name . '">';
-      $query =
-        'SELECT id,name from #__eiko_fahrzeuge where department = "' .
-        $org->id .
-        '" and state = 1 order by ordering ASC';
+      $query = 'SELECT id,name from #__eiko_fahrzeuge where department = "' . $org->id . '" and state = 1 order by ordering ASC';
       $db->setQuery($query);
       $vehicles = $db->loadObjectList();
 
@@ -52,31 +49,21 @@ class FormFieldoptgroup extends FormField
         foreach ($vehicles as $vehicle) {
           $v[] .= $vehicle->id;
         }
-        $html[] .=
-          '<option value="' . implode(',', $v) . '">' . $org->name . ' ( alle Fahrzeuge)</option>';
+        $html[] .= '<option value="' . implode(',', $v) . '">' . $org->name . ' ( alle Fahrzeuge)</option>';
       }
 
       foreach ($vehicles as $vehicle) {
-        $html[] .=
-          '<option value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' ( ' .
-          $org->name .
-          ' ) </option>';
+        $html[] .= '<option value="' . $vehicle->id . '">' . $vehicle->name . ' ( ' . $org->name . ' ) </option>';
       }
       $html[] .= '</optgroup>';
     }
 
-    $query =
-      'SELECT id,name from #__eiko_fahrzeuge where department = "" and state = 1 order by ordering ASC';
+    $query = 'SELECT id,name from #__eiko_fahrzeuge where department = "" and state = 1 order by ordering ASC';
     $db->setQuery($query);
     if ($vehicles = $db->loadObjectList()):
       $html[] .= '<optgroup label="sonstige">';
       foreach ($vehicles as $vehicle) {
-        $html[] .=
-          '<option value="' . $vehicle->id . '">' . $vehicle->name . ' ( sonstige ) </option>';
+        $html[] .= '<option value="' . $vehicle->id . '">' . $vehicle->name . ' ( sonstige ) </option>';
       }
       $html[] .= '</optgroup>';
     endif;
@@ -86,14 +73,7 @@ class FormFieldoptgroup extends FormField
     if ($vehicles = $db->loadObjectList()):
       $html[] .= '<optgroup label="außer Dienst">';
       foreach ($vehicles as $vehicle) {
-        $html[] .=
-          '<option value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' - a.D. ( ID ' .
-          $vehicle->id .
-          ' ) </option>';
+        $html[] .= '<option value="' . $vehicle->id . '">' . $vehicle->name . ' - a.D. ( ID ' . $vehicle->id . ' ) </option>';
       }
       $html[] .= '</optgroup>';
     endif;

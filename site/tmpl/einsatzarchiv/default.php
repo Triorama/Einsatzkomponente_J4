@@ -38,16 +38,11 @@ $canDelete = $user->authorise('core.delete', 'com_einsatzkomponente');
 <!--Page Heading-->
 <?php if ($this->params->get('show_page_heading', 1)): ?>
 <div class="page-header eiko_header_main">
-<h1 class="eiko_header_main_h1"> <?php echo $this->escape(
-  $this->params->get('page_heading')
-); ?> </h1> 
+<h1 class="eiko_header_main_h1"> <?php echo $this->escape($this->params->get('page_heading')); ?> </h1> 
 </div>
 <br/>
 <?php endif; ?>
 
-<?php require_once JPATH_SITE .
-  '/components/com_einsatzkomponente/views/einsatzarchiv/tmpl/' .
-  $this->params->get('main_layout', 'main_layout_1.php') .
-  '';
+<?php require_once JPATH_SITE . '/components/com_einsatzkomponente/views/einsatzarchiv/tmpl/' . $this->params->get('main_layout', 'main_layout_1.php') . '';
 
 ?>

@@ -88,11 +88,8 @@ class EinsatzkomponenteModelEinsatzbericht extends FormModel
     return $this->_item;
   }
 
-  public function getTable(
-    $type = 'Einsatzbericht',
-    $prefix = 'EinsatzkomponenteTable',
-    $config = []
-  ) {
+  public function getTable($type = 'Einsatzbericht', $prefix = 'EinsatzkomponenteTable', $config = [])
+  {
     $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
     return Table::getInstance($type, $prefix, $config);
   }
@@ -200,9 +197,7 @@ class EinsatzkomponenteModelEinsatzbericht extends FormModel
     $user = Factory::getUser();
     if ($id) {
       //Check the user can edit this item
-      $authorised =
-        $user->authorise('core.edit', 'com_einsatzkomponente') ||
-        ($authorised = $user->authorise('core.edit.own', 'com_einsatzkomponente.einsatzbericht'));
+      $authorised = $user->authorise('core.edit', 'com_einsatzkomponente') || ($authorised = $user->authorise('core.edit.own', 'com_einsatzkomponente.einsatzbericht'));
       if ($user->authorise('core.edit.state', 'com_einsatzkomponente') !== true) {
         //The user cannot edit the state of the item.
         $data['state'] = 0;
@@ -222,15 +217,10 @@ class EinsatzkomponenteModelEinsatzbericht extends FormModel
 
     // Einsatz kopieren
     if ($user->authorise('core.create', 'com_einsatzkomponente') == true) {
-      $copy = Factory::getApplication()->getUserState(
-        'com_einsatzkomponente.edit.einsatzbericht.copy'
-      );
+      $copy = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.copy');
       if (!$copy == 0):
         Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.id', 0);
-        Factory::getApplication()->setUserState(
-          'com_einsatzkomponente.edit.einsatzbericht.copy',
-          0
-        );
+        Factory::getApplication()->setUserState('com_einsatzkomponente.edit.einsatzbericht.copy', 0);
         $data['id'] = 0;
       endif;
     }
@@ -273,8 +263,7 @@ class EinsatzkomponenteModelEinsatzbericht extends FormModel
           }
           // Wasserzeichen speichern  ENDE
 
-          require_once JPATH_SITE .
-            '/administrator/components/com_einsatzkomponente/helpers/upload.php'; // Helper-class laden
+          require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/upload.php'; // Helper-class laden
         endif;
       endif;
 

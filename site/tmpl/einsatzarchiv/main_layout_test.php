@@ -31,11 +31,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 
 <?php echo '<span class="mobile_hide_320">' . $this->modulepos_2 . '</span>'; ?>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid=' .
-    $this->params->get('homelink', '') .
-    ''
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid=' . $this->params->get('homelink', '') . ''); ?>" method="post" name="adminForm" id="adminForm">
 
     <?php echo LayoutHelper::render('default_filter', ['view' => $this], dirname(__FILE__)); ?>
 
@@ -91,20 +87,11 @@ use Joomla\CMS\HTML\HTMLHelper;
 		   <p>
 		   <?php if ($item->image): ?>
 					<?php if (isset($item->checked_out) && $item->checked_out): ?>
-					<?php echo HTMLHelper::_(
-       'jgrid.checkedout',
-       $i,
-       $item->editor,
-       $item->checked_out_time,
-       'einsatzarchiv.',
-       $canCheckin
-     ); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
 					<?php endif; ?> 
 					
 					<?php if ($this->params->get('display_home_links_3', '0')): ?>
-					<a href="<?php echo Route::_(
-       'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
-     ); ?>">
+					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>">
 					<?php endif; ?> 
 
 					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php
@@ -118,24 +105,14 @@ use Joomla\CMS\HTML\HTMLHelper;
            <?php endif; ?>
 		   <?php if (!$item->image and $this->params->get('display_home_image_nopic', '0')): ?>
 					<?php if (isset($item->checked_out) && $item->checked_out): ?>
-					<?php echo HTMLHelper::_(
-       'jgrid.checkedout',
-       $i,
-       $item->editor,
-       $item->checked_out_time,
-       'einsatzarchiv.',
-       $canCheckin
-     ); ?>
+					<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
 					<?php endif; ?> 
 					
 					<?php if ($this->params->get('display_home_links_3', '0')): ?>
-					<a href="<?php echo Route::_(
-       'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
-     ); ?>">
+					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>">
 					<?php endif; ?> 
 
-					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php echo JURI::Root() .
-       'images/com_einsatzkomponente/einsatzbilder/nopic.png'; ?>"/>
+					<img  class="img-rounded eiko_img_einsatzbild_main_5" src="<?php echo JURI::Root() . 'images/com_einsatzkomponente/einsatzbilder/nopic.png'; ?>"/>
 					
 					<?php if ($this->params->get('display_home_links_3', '0')): ?>
 					</a>
@@ -155,10 +132,7 @@ use Joomla\CMS\HTML\HTMLHelper;
 			<?php jimport('joomla.html.content'); ?>  
 			<?php $desc = strip_tags($item->desc); ?>
 			<?php $Desc = JHTML::_('content.prepare', $desc); ?>
-			<?php $Desc =
-     strlen($Desc) > '200'
-       ? substr($Desc, 0, strrpos(substr($Desc, 0, '200' + 1), ' ')) . ' ...'
-       : $Desc; ?>
+			<?php $Desc = strlen($Desc) > '200' ? substr($Desc, 0, strrpos(substr($Desc, 0, '200' + 1), ' ')) . ' ...' : $Desc; ?>
 			<?php echo $Desc; ?>
             <?php endif; ?>
             <p><a class="btn btn-secondary" href="#" role="button">weitere Details &raquo;</a></p>

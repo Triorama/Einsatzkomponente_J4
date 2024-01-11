@@ -23,32 +23,14 @@ use Joomla\CMS\HTML\HTMLHelper;
         <?php $show = false; ?>
         <?php foreach ($this->items as $item): ?>
                 
-				<?php if (
-      $item->state == 1 ||
-      ($item->state == 0 &&
-        Factory::getUser()->authorise(
-          'core.edit.own',
-          ' com_einsatzkomponente.organisation.' . $item->id
-        ))
-    ):
+				<?php if ($item->state == 1 || ($item->state == 0 && Factory::getUser()->authorise('core.edit.own', ' com_einsatzkomponente.organisation.' . $item->id))):
       $show = true; ?>
 							<li>
-								<a href="<?php echo Route::_(
-          'index.php?option=com_einsatzkomponente&view=organisation&id=' . (int) $item->id
-        ); ?>"><?php echo $item->name; ?></a>
+								<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=organisation&id=' . (int) $item->id); ?>"><?php echo $item->name; ?></a>
 								<?php
-        if (
-          Factory::getUser()->authorise(
-            'core.edit.state',
-            'com_einsatzkomponente.organisation' . $item->id
-          )
-        ): ?>
-										<a href="javascript:document.getElementById('form-organisation-state-<?php echo $item->id; ?>').submit()"><?php if (
-  $item->state == 1
-): ?>Unpublish<?php else: ?>Publish<?php endif; ?></a>
-										<form id="form-organisation-state-<?php echo $item->id; ?>" style="display:inline" action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&task=organisation.save'
-); ?>" method="post" class="form-validate" enctype="multipart/form-data">
+        if (Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente.organisation' . $item->id)): ?>
+										<a href="javascript:document.getElementById('form-organisation-state-<?php echo $item->id; ?>').submit()"><?php if ($item->state == 1): ?>Unpublish<?php else: ?>Publish<?php endif; ?></a>
+										<form id="form-organisation-state-<?php echo $item->id; ?>" style="display:inline" action="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisation.save'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
 											<input type="hidden" name="jform[id]" value="<?php echo $item->id; ?>" />
 											<input type="hidden" name="jform[ordering]" value="<?php echo $item->ordering; ?>" />
 											<input type="hidden" name="jform[name]" value="<?php echo $item->name; ?>" />
@@ -63,16 +45,9 @@ use Joomla\CMS\HTML\HTMLHelper;
 											<?php echo HTMLHelper::_('form.token'); ?>
 										</form>
 									<?php endif;
-        if (
-          Factory::getUser()->authorise(
-            'core.delete',
-            'com_einsatzkomponente.organisation' . $item->id
-          )
-        ): ?>
+        if (Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.organisation' . $item->id)): ?>
 										<a href="javascript:document.getElementById('form-organisation-delete-<?php echo $item->id; ?>').submit()">Delete</a>
-										<form id="form-organisation-delete-<?php echo $item->id; ?>" style="display:inline" action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&task=organisation.remove'
-); ?>" method="post" class="form-validate" enctype="multipart/form-data">
+										<form id="form-organisation-delete-<?php echo $item->id; ?>" style="display:inline" action="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=organisation.remove'); ?>" method="post" class="form-validate" enctype="multipart/form-data">
 											<input type="hidden" name="jform[id]" value="<?php echo $item->id; ?>" />
 											<input type="hidden" name="jform[ordering]" value="<?php echo $item->ordering; ?>" />
 											<input type="hidden" name="jform[name]" value="<?php echo $item->name; ?>" />

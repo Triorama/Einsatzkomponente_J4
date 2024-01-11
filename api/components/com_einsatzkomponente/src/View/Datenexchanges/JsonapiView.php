@@ -26,16 +26,7 @@ class JsonApiView extends BaseApiView
    * @var  array
    * @since  4.0.0
    */
-  protected $fieldsToRenderItem = [
-    'id',
-    'ordering',
-    'state',
-    'file',
-    'dateityp',
-    'info',
-    'createdate',
-    'updatedate',
-  ];
+  protected $fieldsToRenderItem = ['id', 'ordering', 'state', 'file', 'dateityp', 'info', 'createdate', 'updatedate'];
 
   /**
    * The fields to render items in the documents
@@ -43,14 +34,5 @@ class JsonApiView extends BaseApiView
    * @var  array
    * @since  4.0.0
    */
-  protected $fieldsToRenderList = [
-    'id',
-    'ordering',
-    'state',
-    'file',
-    'dateityp',
-    'info',
-    'createdate',
-    'updatedate',
-  ];
+  protected $fieldsToRenderList = ['id', 'ordering', 'state', 'file', 'dateityp', 'info', 'createdate', 'updatedate'];
 }

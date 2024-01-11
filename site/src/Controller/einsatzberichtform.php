@@ -52,9 +52,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
     }
 
     // Redirect to the edit screen.
-    $this->setRedirect(
-      Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit', false)
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit', false));
   }
 
   /**
@@ -104,12 +102,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -124,12 +117,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
       $this->setMessage(Text::sprintf('Save failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -188,12 +176,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -222,16 +205,8 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-      $this->setMessage(
-        Text::sprintf('Status konnte nicht geändert werden', $model->getError()),
-        'warning'
-      );
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setMessage(Text::sprintf('Status konnte nicht geändert werden', $model->getError()), 'warning');
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -277,12 +252,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
 
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
 
@@ -297,12 +267,7 @@ class EinsatzkomponenteControllerEinsatzberichtForm extends EinsatzkomponenteCon
       // Redirect back to the edit screen.
       $id = (int) $app->getUserState('com_einsatzkomponente.edit.einsatzbericht.id');
       $this->setMessage(Text::sprintf('Delete failed', $model->getError()), 'warning');
-      $this->setRedirect(
-        Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id,
-          false
-        )
-      );
+      $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&layout=edit&id=' . $id, false));
       return false;
     }
 

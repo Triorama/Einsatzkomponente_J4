@@ -78,18 +78,11 @@ class EinsatzkomponenteModelAusruestungForm extends FormModel
         $user = Factory::getUser();
         $id = $table->id;
         if ($id) {
-          $canEdit =
-            $user->authorise('core.edit', 'com_einsatzkomponente.ausruestung.' . $id) ||
-            $user->authorise('core.create', 'com_einsatzkomponente.ausruestung.' . $id);
+          $canEdit = $user->authorise('core.edit', 'com_einsatzkomponente.ausruestung.' . $id) || $user->authorise('core.create', 'com_einsatzkomponente.ausruestung.' . $id);
         } else {
-          $canEdit =
-            $user->authorise('core.edit', 'com_einsatzkomponente') ||
-            $user->authorise('core.create', 'com_einsatzkomponente');
+          $canEdit = $user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.create', 'com_einsatzkomponente');
         }
-        if (
-          !$canEdit &&
-          $user->authorise('core.edit.own', 'com_einsatzkomponente.ausruestung.' . $id)
-        ) {
+        if (!$canEdit && $user->authorise('core.edit.own', 'com_einsatzkomponente.ausruestung.' . $id)) {
           $canEdit = $user->id == $table->created_by;
         }
 
@@ -212,10 +205,7 @@ class EinsatzkomponenteModelAusruestungForm extends FormModel
    */
   protected function loadFormData()
   {
-    $data = Factory::getApplication()->getUserState(
-      'com_einsatzkomponente.edit.ausruestung.data',
-      []
-    );
+    $data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.ausruestung.data', []);
     if (empty($data)) {
       $data = $this->getData();
     }
@@ -238,26 +228,15 @@ class EinsatzkomponenteModelAusruestungForm extends FormModel
 
     if ($id) {
       //Check the user can edit this item
-      $authorised =
-        $user->authorise('core.edit', 'com_einsatzkomponente.ausruestung.' . $id) ||
-        ($authorised = $user->authorise(
-          'core.edit.own',
-          'com_einsatzkomponente.ausruestung.' . $id
-        ));
-      if (
-        $user->authorise('core.edit.state', 'com_einsatzkomponente.ausruestung.' . $id) !== true &&
-        $state == 1
-      ) {
+      $authorised = $user->authorise('core.edit', 'com_einsatzkomponente.ausruestung.' . $id) || ($authorised = $user->authorise('core.edit.own', 'com_einsatzkomponente.ausruestung.' . $id));
+      if ($user->authorise('core.edit.state', 'com_einsatzkomponente.ausruestung.' . $id) !== true && $state == 1) {
         //The user cannot edit the state of the item.
         $data['state'] = 0;
       }
     } else {
       //Check the user can create new items in this section
       $authorised = $user->authorise('core.create', 'com_einsatzkomponente');
-      if (
-        $user->authorise('core.edit.state', 'com_einsatzkomponente.ausruestung.' . $id) !== true &&
-        $state == 1
-      ) {
+      if ($user->authorise('core.edit.state', 'com_einsatzkomponente.ausruestung.' . $id) !== true && $state == 1) {
         //The user cannot edit the state of the item.
         $data['state'] = 0;
       }
@@ -279,10 +258,7 @@ class EinsatzkomponenteModelAusruestungForm extends FormModel
   function delete($data)
   {
     $id = !empty($data['id']) ? $data['id'] : (int) $this->getState('ausruestung.id');
-    if (
-      Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.ausruestung.' . $id) !==
-      true
-    ) {
+    if (Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.ausruestung.' . $id) !== true) {
       throw new Exception(Text::_('ALERTNOAUTHOR'), 403);
       return false;
     }

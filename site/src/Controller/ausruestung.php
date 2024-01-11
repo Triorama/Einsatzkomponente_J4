@@ -51,9 +51,7 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
     }
 
     // Redirect to the edit screen.
-    $this->setRedirect(
-      Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit', false)
-    );
+    $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungform&layout=edit', false));
   }
 
   /**
@@ -69,10 +67,7 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
 
     //Checking if the user can remove object
     $user = Factory::getUser();
-    if (
-      $user->authorise('core.edit', 'com_einsatzkomponente') ||
-      $user->authorise('core.edit.state', 'com_einsatzkomponente')
-    ) {
+    if ($user->authorise('core.edit', 'com_einsatzkomponente') || $user->authorise('core.edit.state', 'com_einsatzkomponente')) {
       $model = $this->getModel('Ausruestung', Site);
 
       // Get the user data.
@@ -99,9 +94,7 @@ class EinsatzkomponenteControllerAusruestung extends EinsatzkomponenteController
       $item = $menu->getActive();
       if (!$item) {
         // If there isn't any menu item active, redirect to list view
-        $this->setRedirect(
-          Route::_('index.php?option=com_einsatzkomponente&view=ausruestungen', false)
-        );
+        $this->setRedirect(Route::_('index.php?option=com_einsatzkomponente&view=ausruestungen', false));
       } else {
         $this->setRedirect(Route::_($item->link . $menuitemid, false));
       }

@@ -17,8 +17,7 @@ if (!hs) {
       fullExpandTitle: 'Expand to actual size (f)',
       creditsText: 'Powered by <i>Highslide JS</i>',
       creditsTitle: 'Go to the Highslide JS homepage',
-      restoreTitle:
-        'Click to close image, click and drag to move. Use arrow keys for next and previous.',
+      restoreTitle: 'Click to close image, click and drag to move. Use arrow keys for next and previous.',
     },
     // See http://highslide.com/ref for examples of settings
     graphicsDir: 'highslide/graphics/',
@@ -101,14 +100,7 @@ if (!hs) {
     pendingOutlines: {},
     clones: {},
     onReady: [],
-    uaVersion: /Trident\/4\.0/.test(navigator.userAgent)
-      ? 8
-      : parseFloat(
-          (navigator.userAgent.toLowerCase().match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [
-            0,
-            '0',
-          ])[1]
-        ),
+    uaVersion: /Trident\/4\.0/.test(navigator.userAgent) ? 8 : parseFloat((navigator.userAgent.toLowerCase().match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [0, '0'])[1]),
     ie: document.all && !window.opera,
     //ie : navigator && /MSIE [678]/.test(navigator.userAgent), // ie9 compliant?
     safari: /Safari/.test(navigator.userAgent),
@@ -255,11 +247,7 @@ if (!hs) {
       var p = a.getParams ? a.getParams() : null
       a.getParams = null
 
-      return p && typeof p[param] != 'undefined'
-        ? p[param]
-        : typeof hs[param] != 'undefined'
-          ? hs[param]
-          : null
+      return p && typeof p[param] != 'undefined' ? p[param] : typeof hs[param] != 'undefined' ? hs[param] : null
     },
 
     getSrc: function (a) {
@@ -411,8 +399,7 @@ if (!hs) {
     },
 
     reOrder: function () {
-      for (var i = 0; i < hs.expanders.length; i++)
-        if (hs.expanders[i] && hs.expanders[i].isExpanded) hs.focusTopmost()
+      for (var i = 0; i < hs.expanders.length; i++) if (hs.expanders[i] && hs.expanders[i].isExpanded) hs.focusTopmost()
     },
 
     mouseClickHandler: function (e) {
@@ -455,8 +442,7 @@ if (!hs) {
         hs.removeEventListener(document, 'mousemove', hs.dragHandler)
 
         if (hs.dragArgs) {
-          if (hs.styleRestoreCursor && hs.dragArgs.type == 'image')
-            hs.dragArgs.exp.content.style.cursor = hs.styleRestoreCursor
+          if (hs.styleRestoreCursor && hs.dragArgs.type == 'image') hs.dragArgs.exp.content.style.cursor = hs.styleRestoreCursor
           var hasDragged = hs.dragArgs.hasDragged
 
           if (!hasDragged && !hs.hasFocused && !/(move|resize)/.test(hs.dragArgs.type)) {
@@ -483,8 +469,7 @@ if (!hs) {
       a.dY = e.clientY - a.clickY
 
       var distance = Math.sqrt(Math.pow(a.dX, 2) + Math.pow(a.dY, 2))
-      if (!a.hasDragged)
-        a.hasDragged = (a.type != 'image' && distance > 0) || distance > (hs.dragSensitivity || 5)
+      if (!a.hasDragged) a.hasDragged = (a.type != 'image' && distance > 0) || distance > (hs.dragSensitivity || 5)
 
       if (a.hasDragged && e.clientX > 5 && e.clientY > 5) {
         if (a.type == 'resize') exp.resize(a)
@@ -504,8 +489,7 @@ if (!hs) {
         if (!e.relatedTarget) e.relatedTarget = over ? e.fromElement : e.toElement // ie
         var exp = hs.getExpander(e.target)
         if (!exp.isExpanded) return
-        if (!exp || !e.relatedTarget || hs.getExpander(e.relatedTarget, true) == exp || hs.dragArgs)
-          return
+        if (!exp || !e.relatedTarget || hs.getExpander(e.relatedTarget, true) == exp || hs.dragArgs) return
         for (var i = 0; i < exp.overlays.length; i++)
           (function () {
             var o = hs.$('hsId' + exp.overlays[i])
@@ -545,11 +529,7 @@ if (!hs) {
     },
 
     preloadFullImage: function (i) {
-      if (
-        hs.continuePreloading &&
-        hs.preloadTheseImages[i] &&
-        hs.preloadTheseImages[i] != 'undefined'
-      ) {
+      if (hs.continuePreloading && hs.preloadTheseImages[i] && hs.preloadTheseImages[i] != 'undefined') {
         var img = document.createElement('img')
         img.onload = function () {
           img = null
@@ -574,8 +554,7 @@ if (!hs) {
       else hs.preloadFullImage(0)
 
       // preload cursor
-      if (hs.restoreCursor)
-        var cur = hs.createElement('img', { src: hs.graphicsDir + hs.restoreCursor })
+      if (hs.restoreCursor) var cur = hs.createElement('img', { src: hs.graphicsDir + hs.restoreCursor })
     },
 
     init: function () {
@@ -586,8 +565,7 @@ if (!hs) {
         hs.getPageSize()
         for (var x in hs.langDefaults) {
           if (typeof hs[x] != 'undefined') hs.lang[x] = hs[x]
-          else if (typeof hs.lang[x] == 'undefined' && typeof hs.langDefaults[x] != 'undefined')
-            hs.lang[x] = hs.langDefaults[x]
+          else if (typeof hs.lang[x] == 'undefined' && typeof hs.langDefaults[x] != 'undefined') hs.lang[x] = hs.langDefaults[x]
         }
 
         hs.container = hs.createElement(
@@ -633,10 +611,7 @@ if (!hs) {
         }
 
         hs.hideSelects = hs.ieLt7
-        hs.hideIframes =
-          (window.opera && hs.uaVersion < 9) ||
-          navigator.vendor == 'KDE' ||
-          (hs.ieLt7 && hs.uaVersion < 5.5)
+        hs.hideIframes = (window.opera && hs.uaVersion < 9) || navigator.vendor == 'KDE' || (hs.ieLt7 && hs.uaVersion < 5.5)
       }
     },
     ready: function () {
@@ -756,8 +731,7 @@ if (!hs) {
 
       _default: function (fx) {
         try {
-          if (fx.elem.style && fx.elem.style[fx.prop] != null)
-            fx.elem.style[fx.prop] = fx.now + fx.unit
+          if (fx.elem.style && fx.elem.style[fx.prop] != null) fx.elem.style[fx.prop] = fx.now + fx.unit
           else fx.elem[fx.prop] = fx.now
         } catch (e) {}
       },
@@ -810,13 +784,7 @@ if (!hs) {
       var src = hs.graphicsDir + (hs.outlinesDir || 'outlines/') + this.outlineType + '.png'
 
       var appendTo = hs.safari && hs.uaVersion < 525 ? hs.container : null
-      this.graphic = hs.createElement(
-        'img',
-        null,
-        { position: 'absolute', top: '-9999px' },
-        appendTo,
-        true
-      ) // for onload trigger
+      this.graphic = hs.createElement('img', null, { position: 'absolute', top: '-9999px' }, appendTo, true) // for onload trigger
 
       var pThis = this
       this.graphic.onload = function () {
@@ -834,21 +802,12 @@ if (!hs) {
         if (pos[i]) {
           if (this.hasAlphaImageLoader) {
             var w = i == 1 || i == 7 ? '100%' : this.graphic.width + 'px'
-            var div = hs.createElement(
-              'div',
-              null,
-              { width: '100%', height: '100%', position: 'relative', overflow: 'hidden' },
-              this.td[i],
-              true
-            )
+            var div = hs.createElement('div', null, { width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }, this.td[i], true)
             hs.createElement(
               'div',
               null,
               {
-                filter:
-                  "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale, src='" +
-                  this.graphic.src +
-                  "')",
+                filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale, src='" + this.graphic.src + "')",
                 position: 'absolute',
                 width: w,
                 height: this.graphic.height + 'px',
@@ -860,13 +819,11 @@ if (!hs) {
             )
           } else {
             hs.setStyles(this.td[i], {
-              background:
-                'url(' + this.graphic.src + ') ' + pos[i][0] * o + 'px ' + pos[i][1] * o + 'px',
+              background: 'url(' + this.graphic.src + ') ' + pos[i][0] * o + 'px ' + pos[i][1] * o + 'px',
             })
           }
 
-          if (window.opera && (i == 3 || i == 5))
-            hs.createElement('div', null, dim, this.td[i], true)
+          if (window.opera && (i == 3 || i == 5)) hs.createElement('div', null, dim, this.td[i], true)
 
           hs.setStyles(this.td[i], dim)
         }
@@ -900,8 +857,7 @@ if (!hs) {
         width: pos.w >= 0 ? pos.w + 'px' : 0,
         height: pos.h >= 0 ? pos.h + 'px' : 0,
       })
-      if (this.hasAlphaImageLoader)
-        this.td[3].style.height = this.td[5].style.height = this.td[4].style.height
+      if (this.hasAlphaImageLoader) this.td[3].style.height = this.td[5].style.height = this.td[4].style.height
     },
 
     destroy: function (hide) {
@@ -947,9 +903,7 @@ if (!hs) {
       this.marginMax = hs['margin' + this.ucrb]
     },
     calcThumb: function () {
-      this.t = this.exp.el[this.wh]
-        ? parseInt(this.exp.el[this.wh])
-        : this.exp.el['offset' + this.ucwh]
+      this.t = this.exp.el[this.wh] ? parseInt(this.exp.el[this.wh]) : this.exp.el['offset' + this.ucwh]
       this.tpos = this.exp.tpos[this.dim]
       this.tb = (this.exp.el['offset' + this.ucwh] - this.t) / 2
       if (this.tpos == 0 || this.tpos == -1) {
@@ -963,13 +917,10 @@ if (!hs) {
       // size and position
       this.pos = this.tpos - this.cb + this.tb
 
-      if (this.maxHeight && this.dim == 'x')
-        exp.maxWidth = Math.min(exp.maxWidth || this.full, (exp.maxHeight * this.full) / exp.y.full)
+      if (this.maxHeight && this.dim == 'x') exp.maxWidth = Math.min(exp.maxWidth || this.full, (exp.maxHeight * this.full) / exp.y.full)
 
       this.size = Math.min(this.full, exp['max' + this.ucwh] || this.full)
-      this.minSize = exp.allowSizeReduction
-        ? Math.min(exp['min' + this.ucwh], this.full)
-        : this.full
+      this.minSize = exp.allowSizeReduction ? Math.min(exp['min' + this.ucwh], this.full) : this.full
       if (exp.isImage && exp.useBox) {
         this.size = exp[this.wh]
         this.imgSize = this.full
@@ -1046,8 +997,7 @@ if (!hs) {
     hs.expanders[key] = this
     if (!hs.allowMultipleInstances && !hs.upcoming) {
       if (hs.expanders[key - 1]) hs.expanders[key - 1].close()
-      if (typeof hs.focusKey != 'undefined' && hs.expanders[hs.focusKey])
-        hs.expanders[hs.focusKey].close()
+      if (typeof hs.focusKey != 'undefined' && hs.expanders[hs.focusKey]) hs.expanders[hs.focusKey].close()
     }
 
     // initiate metrics
@@ -1074,8 +1024,7 @@ if (!hs) {
     )
 
     this.wrapper.onmouseover = this.wrapper.onmouseout = hs.wrapperMouseHandler
-    if (this.contentType == 'image' && this.outlineWhileAnimating == 2)
-      this.outlineWhileAnimating = 0
+    if (this.contentType == 'image' && this.outlineWhileAnimating == 2) this.outlineWhileAnimating = 0
 
     // get the outline
     if (!this.outlineType) {
@@ -1300,11 +1249,7 @@ if (!hs) {
       var x = this.x,
         y = this.y
       if (this.overlayBox) {
-        while (
-          y.size > this.minHeight &&
-          x.size > this.minWidth &&
-          y.get('wsize') > y.get('fitsize')
-        ) {
+        while (y.size > this.minHeight && x.size > this.minWidth && y.get('wsize') > y.get('fitsize')) {
           y.size -= 10
           if (ratio) x.size = y.size * ratio
           this.sizeOverlayBox(0, 1)
@@ -1404,11 +1349,7 @@ if (!hs) {
       var p = hs.page,
         mX = hs.mouse.x + p.scrollLeft,
         mY = hs.mouse.y + p.scrollTop
-      this.mouseIsOver =
-        this.x.pos < mX &&
-        mX < this.x.pos + this.x.get('wsize') &&
-        this.y.pos < mY &&
-        mY < this.y.pos + this.y.get('wsize')
+      this.mouseIsOver = this.x.pos < mX && mX < this.x.pos + this.x.get('wsize') && this.y.pos < mY && mY < this.y.pos + this.y.get('wsize')
       if (this.overlayBox) this.showOverlays()
     },
 
@@ -1424,8 +1365,7 @@ if (!hs) {
 
     preloadNext: function () {
       var next = this.getAdjacentAnchor(1)
-      if (next && next.onclick.toString().match(/hs\.expand/))
-        var img = hs.createElement('img', { src: hs.getSrc(next) })
+      if (next && next.onclick.toString().match(/hs\.expand/)) var img = hs.createElement('img', { src: hs.getSrc(next) })
     },
 
     getAdjacentAnchor: function (op) {
@@ -1467,8 +1407,7 @@ if (!hs) {
       for (var i = 0; i < types.length; i++) {
         var type = types[i],
           s = null
-        if (!this[type + 'Id'] && this.thumbsUserSetId)
-          this[type + 'Id'] = type + '-for-' + this.thumbsUserSetId
+        if (!this[type + 'Id'] && this.thumbsUserSetId) this[type + 'Id'] = type + '-for-' + this.thumbsUserSetId
         if (this[type + 'Id']) this[type] = hs.getNode(this[type + 'Id'])
         if (!this[type] && !this[type + 'Text'] && this[type + 'Eval'])
           try {
@@ -1492,8 +1431,7 @@ if (!hs) {
           }
         }
 
-        if (!this[type] && s)
-          this[type] = hs.createElement('div', { className: 'highslide-' + type, innerHTML: s })
+        if (!this[type] && s) this[type] = hs.createElement('div', { className: 'highslide-' + type, innerHTML: s })
 
         if (addOverlay && this[type]) {
           var o = { position: type == 'heading' ? 'above' : 'below' }
@@ -1514,12 +1452,7 @@ if (!hs) {
       var els = document.getElementsByTagName(tagName)
       var prop = tagName == '*' ? 'overflow' : 'visibility'
       for (var i = 0; i < els.length; i++) {
-        if (
-          prop == 'visibility' ||
-          document.defaultView.getComputedStyle(els[i], '').getPropertyValue('overflow') ==
-            'auto' ||
-          els[i].getAttribute('hidden-by') != null
-        ) {
+        if (prop == 'visibility' || document.defaultView.getComputedStyle(els[i], '').getPropertyValue('overflow') == 'auto' || els[i].getAttribute('hidden-by') != null) {
           var hiddenBy = els[i].getAttribute('hidden-by')
           if (visibility == 'visible' && hiddenBy) {
             hiddenBy = hiddenBy.replace('[' + this.key + ']', '')
@@ -1531,12 +1464,8 @@ if (!hs) {
             elPos.w = els[i].offsetWidth
             elPos.h = els[i].offsetHeight
 
-            var clearsX =
-              elPos.x + elPos.w < this.x.get('opos') ||
-              elPos.x > this.x.get('opos') + this.x.get('osize')
-            var clearsY =
-              elPos.y + elPos.h < this.y.get('opos') ||
-              elPos.y > this.y.get('opos') + this.y.get('osize')
+            var clearsX = elPos.x + elPos.w < this.x.get('opos') || elPos.x > this.x.get('opos') + this.x.get('osize')
+            var clearsY = elPos.y + elPos.h < this.y.get('opos') || elPos.y > this.y.get('opos') + this.y.get('osize')
             var wrapperKey = hs.getWrapperKey(els[i])
             if (!clearsX && !clearsY && wrapperKey != this.key) {
               // element falls behind image
@@ -1547,10 +1476,7 @@ if (!hs) {
               } else if (hiddenBy.indexOf('[' + this.key + ']') == -1) {
                 els[i].setAttribute('hidden-by', hiddenBy + '[' + this.key + ']')
               }
-            } else if (
-              (hiddenBy == '[' + this.key + ']' || hs.focusKey == wrapperKey) &&
-              wrapperKey != this.key
-            ) {
+            } else if ((hiddenBy == '[' + this.key + ']' || hs.focusKey == wrapperKey) && wrapperKey != this.key) {
               // on move
               els[i].setAttribute('hidden-by', '')
               els[i].style[prop] = els[i].origProp || ''
@@ -1580,9 +1506,7 @@ if (!hs) {
       this.content.title = hs.lang.restoreTitle
 
       if (hs.restoreCursor) {
-        hs.styleRestoreCursor = window.opera
-          ? 'pointer'
-          : 'url(' + hs.graphicsDir + hs.restoreCursor + '), pointer'
+        hs.styleRestoreCursor = window.opera ? 'pointer' : 'url(' + hs.graphicsDir + hs.restoreCursor + '), pointer'
         if (hs.ieLt7 && hs.uaVersion < 6) hs.styleRestoreCursor = 'hand'
         this.content.style.cursor = hs.styleRestoreCursor
       }
@@ -1681,8 +1605,7 @@ if (!hs) {
 
       if (this.gotOverlays) {
         this.positionOverlay(overlay)
-        if (!overlay.hideOnMouseOut || this.mouseIsOver)
-          hs.animate(overlay, { opacity: overlay.opacity }, overlay.dur)
+        if (!overlay.hideOnMouseOut || this.mouseIsOver) hs.animate(overlay, { opacity: overlay.opacity }, overlay.dur)
       }
       hs.push(this.overlays, hs.idCounter - 1)
     },
@@ -1759,11 +1682,7 @@ if (!hs) {
         var o = hs.overlays[i],
           tId = o.thumbnailId,
           sg = o.slideshowGroup
-        if (
-          (!tId && !sg) ||
-          (tId && tId == this.thumbsUserSetId) ||
-          (sg && sg === this.slideshowGroup)
-        ) {
+        if ((!tId && !sg) || (tId && tId == this.thumbsUserSetId) || (sg && sg === this.slideshowGroup)) {
           this.createOverlay(o)
         }
       }
@@ -1923,12 +1842,7 @@ if (!hs) {
   // set handlers
   hs.addEventListener(document, 'ready', function () {
     if (hs.expandCursor) {
-      var style = hs.createElement(
-          'style',
-          { type: 'text/css' },
-          null,
-          document.getElementsByTagName('HEAD')[0]
-        ),
+      var style = hs.createElement('style', { type: 'text/css' }, null, document.getElementsByTagName('HEAD')[0]),
         backCompat = document.compatMode == 'BackCompat'
 
       function addRule(sel, dec) {
@@ -1940,21 +1854,9 @@ if (!hs) {
         }
       }
       function fix(prop) {
-        return (
-          'expression( ( ( ignoreMe = document.documentElement.' +
-          prop +
-          ' ? document.documentElement.' +
-          prop +
-          ' : document.body.' +
-          prop +
-          " ) ) + 'px' );"
-        )
+        return 'expression( ( ( ignoreMe = document.documentElement.' + prop + ' ? document.documentElement.' + prop + ' : document.body.' + prop + " ) ) + 'px' );"
       }
-      if (hs.expandCursor)
-        addRule(
-          '.highslide img',
-          'cursor: url(' + hs.graphicsDir + hs.expandCursor + '), pointer !important;'
-        )
+      if (hs.expandCursor) addRule('.highslide img', 'cursor: url(' + hs.graphicsDir + hs.expandCursor + '), pointer !important;')
     }
   })
   hs.addEventListener(window, 'resize', function () {

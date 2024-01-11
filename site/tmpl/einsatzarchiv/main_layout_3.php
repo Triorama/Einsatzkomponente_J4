@@ -18,11 +18,7 @@ use Joomla\CMS\Date\Date;
 
 <?php echo '<span class="mobile_hide_320">' . $this->modulepos_2 . '</span>'; ?>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid=' .
-    $this->params->get('homelink', '') .
-    ''
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv&Itemid=' . $this->params->get('homelink', '') . ''); ?>" method="post" name="adminForm" id="adminForm">
 
    <?php echo LayoutHelper::render('default_filter', ['view' => $this], dirname(__FILE__)); ?>
    
@@ -40,25 +36,13 @@ use Joomla\CMS\Date\Date;
 				<?php endif; ?>
 				
 				<th class='left'>
-				<!--<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATE1',
-      'a.date1',
-      $listDirn,
-      $listOrder
-    ); ?>-->
+				<!--<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATE1', 'a.date1', $listDirn, $listOrder); ?>-->
 				<?php $eiko_col = $eiko_col + 1; ?>
 				</th>
 				
 				<?php if ($this->params->get('display_home_image')): ?>
 				<th class='left mobile_hide_480 '>
-				<!--<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_IMAGE',
-      'a.image',
-      $listDirn,
-      $listOrder
-    ); ?>-->
+				<!--<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_IMAGE', 'a.image', $listDirn, $listOrder); ?>-->
 				<?php $eiko_col = $eiko_col + 1; ?>
 				</th>
 				<?php endif; ?>
@@ -77,11 +61,7 @@ use Joomla\CMS\Date\Date;
     <?php if ($canCreate): ?>
         <tr>
         <td colspan="<?php echo $eiko_col; ?>">
-        <a href="<?php echo Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=0&addlink=1',
-          false,
-          2
-        ); ?>"
+        <a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=0&addlink=1', false, 2); ?>"
            class="btn btn-success btn-small"><i
                 class="icon-plus"></i> <?php echo Text::_('COM_EINSATZKOMPONENTE_ADD'); ?></a>
 		</td></tr>
@@ -112,20 +92,14 @@ use Joomla\CMS\Date\Date;
              /* reset month for new year */
              ?>
 		   <?php echo '<div class="eiko_einsatzarchiv_jahr_div">'; ?>
-           <?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_MAIN_3') .
-             ' ' .
-             $item->date1_year .
-             ''; ?>  
+           <?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_MAIN_3') . ' ' . $item->date1_year . ''; ?>  
            <?php echo '</div>'; ?>
            </td></tr>
            <?php endif; ?>
            <!--Anzeige des Jahres ENDE-->
 
            <!--Anzeige des Monatsnamen-->
-           <?php if (
-             ($item->date1_month != $m || $item->date1_year != $y) &&
-             $this->params->get('display_home_monat', '1')
-           ): ?>
+           <?php if (($item->date1_month != $m || $item->date1_year != $y) && $this->params->get('display_home_monat', '1')): ?>
            <?php $y = $item->date1_year;
              // $y may not have been set before if display_home_jahr is 0
              ?>
@@ -146,11 +120,7 @@ use Joomla\CMS\Date\Date;
            <?php else: ?>
 		   <td class="eiko_td_marker_main_1">
            <?php endif; ?>
-			<?php echo '<span style="white-space: nowrap;margin-left:5px !important;" class="eiko_span_marker_main_1">' .
-     Text::_('COM_EINSATZKOMPONENTE_NR') .
-     ' ' .
-     EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1, $item->data1_id) .
-     '</span>'; ?> 
+			<?php echo '<span style="white-space: nowrap;margin-left:5px !important;" class="eiko_span_marker_main_1">' . Text::_('COM_EINSATZKOMPONENTE_NR') . ' ' . EinsatzkomponenteHelper::ermittle_einsatz_nummer($item->date1, $item->data1_id) . '</span>'; ?> 
 			</td>
            <?php endif; ?>
 		   
@@ -160,9 +130,7 @@ use Joomla\CMS\Date\Date;
 		   <td class="eiko_td_datum_main_1" style="max-width:200px !important;"> 
 		   
 					<?php if ($this->params->get('display_home_links', '1')): ?>
-		   			<a href="<?php echo Route::_(
-          'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
-        ); ?>">
+		   			<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>">
 					<?php endif; ?>
 					<span class="eiko_nowrap eiko_data1"><b><?php echo $item->data1; ?></b></span>
 					<?php if ($this->params->get('display_home_links', '1')): ?>
@@ -172,25 +140,19 @@ use Joomla\CMS\Date\Date;
 					<img class="eiko_icon_3 " src="<?php
      echo JURI::Root();
      echo $item->alerting_image;
-     ?>" title="<?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_ALARMIERUNG_UEBER'
-); ?>: <?php echo $item->alerting; ?>" />
+     ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNG_UEBER'); ?>: <?php echo $item->alerting; ?>" />
 					<?php endif; ?>
 					<?php if ($this->params->get('display_list_icon')): ?>
 					<img class="eiko_icon_3 " src="<?php
      echo JURI::Root();
      echo $item->list_icon;
-     ?>" alt="<?php echo $item->list_icon; ?>" title="<?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_EINSATZART'
-); ?>: <?php echo $item->data1; ?>"/>
+     ?>" alt="<?php echo $item->list_icon; ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZART'); ?>: <?php echo $item->data1; ?>"/>
 					<?php endif; ?>
 					<?php if ($this->params->get('display_tickerkat_icon')): ?>
 					<img class="eiko_icon_3 " src="<?php
      echo JURI::Root();
      echo $item->tickerkat_image;
-     ?>" alt="<?php echo $item->tickerkat; ?>" title="<?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_KATEGORIE'
-); ?>: <?php echo $item->tickerkat; ?>"/>
+     ?>" alt="<?php echo $item->tickerkat; ?>" title="<?php echo Text::_('COM_EINSATZKOMPONENTE_KATEGORIE'); ?>: <?php echo $item->tickerkat; ?>"/>
 					<?php endif; ?>
 					<br /></br>
 					
@@ -206,13 +168,8 @@ use Joomla\CMS\Date\Date;
 					<?php $vehicles = count($vehicles); ?>
 		  			<?php $auswahl_orga = explode(',', $item->auswahl_orga); ?>
 					<?php $auswahl_orga = count($auswahl_orga); ?>
-					<?php $strength =
-       $people * $this->params->get('einsatzstaerke_people', '0.5') +
-       $vehicles * $this->params->get('einsatzstaerke_vehicles', '2') +
-       $auswahl_orga * $this->params->get('einsatzstaerke_orga', '15'); ?>
-					<div class="progress progress-danger progress-striped " style="margin-top:-12px;margin-bottom:5px;color:#000000 !important;width:180px;" title="<?php echo JText::_(
-       'COM_EINSATZKOMPONENTE_EINSATZKRAFT'
-     ); ?>: <?php if ($auswahl_orga):
+					<?php $strength = $people * $this->params->get('einsatzstaerke_people', '0.5') + $vehicles * $this->params->get('einsatzstaerke_vehicles', '2') + $auswahl_orga * $this->params->get('einsatzstaerke_orga', '15'); ?>
+					<div class="progress progress-danger progress-striped " style="margin-top:-12px;margin-bottom:5px;color:#000000 !important;width:180px;" title="<?php echo JText::_('COM_EINSATZKOMPONENTE_EINSATZKRAFT'); ?>: <?php if ($auswahl_orga):
   echo $auswahl_orga; ?> <?php echo JText::_('COM_EINSATZKOMPONENTE_ORGANISATIONEN'); ?> //<?php
 endif; ?> <?php
  if ($vehicles):
@@ -242,10 +199,7 @@ endif; ?> <?php
 					<?php if ($this->params->get('display_home_image')): ?>
 						</br>	
 						<?php $images = $item->images; ?>
-						<?php echo '<i class="icon-image" ></i> ' .
-        Text::_('COM_EINSATZKOMPONENTE_EINSATZFOTOS') .
-        ': ' .
-        $images; ?>
+						<?php echo '<i class="icon-image" ></i> ' . Text::_('COM_EINSATZKOMPONENTE_EINSATZFOTOS') . ': ' . $images; ?>
 					<?php endif; ?>
 
 					<?php if ($this->params->get('display_home_presse', '0')): ?>
@@ -259,29 +213,19 @@ endif; ?> <?php
      ?>" title="" />
 					<?php else: ?>
 							
-							<?php echo '<i class="icon-file-2" ></i> ' .
-         Text::_('COM_EINSATZKOMPONENTE_WEITERE_PRESSELINKS') .
-         ''; ?>
+							<?php echo '<i class="icon-file-2" ></i> ' . Text::_('COM_EINSATZKOMPONENTE_WEITERE_PRESSELINKS') . ''; ?>
 					<?php endif; ?>					
 						<?php endif; ?>
 					<?php endif; ?>
 			
 					<?php if ($this->params->get('display_home_counter', '1')): ?>
 						</br>	
-						<?php echo '<span class="" title="Dieser Bericht wurde bereits ' .
-        $item->counter .
-        ' mal gelesen." ><i class="icon-eye" ></i> ' .
-        Text::_('COM_EINSATZKOMPONENTE_ZUGRIFFE') .
-        ': ' .
-        $item->counter .
-        '</span>'; ?>
+						<?php echo '<span class="" title="Dieser Bericht wurde bereits ' . $item->counter . ' mal gelesen." ><i class="icon-eye" ></i> ' . Text::_('COM_EINSATZKOMPONENTE_ZUGRIFFE') . ': ' . $item->counter . '</span>'; ?>
 					<?php endif; ?>
 </br>
 					<!-- Button Kurzinfo --> 
 					<?php if ($this->params->get('display_home_info', '1')): ?>
-					<input type="button" class="btn btn-info" onClick="jQuery.toggle<?php echo $item->id; ?>(div<?php echo $item->id; ?>)" value="<?php echo JTEXT::_(
-  'COM_EINSATZKOMPONENTE_KURZINFO'
-); ?>"></input>
+					<input type="button" class="btn btn-info" onClick="jQuery.toggle<?php echo $item->id; ?>(div<?php echo $item->id; ?>)" value="<?php echo JTEXT::_('COM_EINSATZKOMPONENTE_KURZINFO'); ?>"></input>
 					<script type="text/javascript">
 					jQuery.toggle<?php echo $item->id; ?> = function(query)
 						{
@@ -293,11 +237,7 @@ endif; ?> <?php
 					
 				<!-- Button Detaillink --> 
 				<?php if ($this->params->get('display_home_links', '1')): ?>
-				<a href="<?php echo Route::_(
-      'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
-    ); ?>" type="button" class="btn btn-primary"><?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_DETAILS'
-); ?></a>	
+				<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>" type="button" class="btn btn-primary"><?php echo Text::_('COM_EINSATZKOMPONENTE_DETAILS'); ?></a>	
 				<?php endif; ?>
 			</td>
 			
@@ -308,25 +248,13 @@ endif; ?> <?php
 		   
 			<?php if ($item->image): ?>
 					<?php if (isset($item->checked_out) && $item->checked_out): ?>
-						<?php echo HTMLHelper::_(
-        'jgrid.checkedout',
-        $i,
-        $item->editor,
-        $item->checked_out_time,
-        'einsatzarchiv.',
-        $canCheckin
-      ); ?>
+						<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
 					<?php endif; ?> 
 					
 				<?php if ($this->params->get('display_home_links_3', '0')): ?>
-					<a href="<?php echo Route::_(
-       'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
-     ); ?>">
+					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>">
 				<?php endif; ?> 
-						<img  class="img-rounded eiko_img_einsatzbild_main_1" style="width:<?php echo $this->params->get(
-        'display_home_image_width',
-        '150px'
-      ); ?>;" src="<?php
+						<img  class="img-rounded eiko_img_einsatzbild_main_1" style="width:<?php echo $this->params->get('display_home_image_width', '150px'); ?>;" src="<?php
 echo JURI::Root();
 echo $item->image;
 ?>"/> 
@@ -336,26 +264,13 @@ echo $item->image;
            <?php endif; ?>
 			<?php if (!$item->image and $this->params->get('display_home_image_nopic', '0')): ?>
 					<?php if (isset($item->checked_out) && $item->checked_out): ?>
-						<?php echo HTMLHelper::_(
-        'jgrid.checkedout',
-        $i,
-        $item->editor,
-        $item->checked_out_time,
-        'einsatzarchiv.',
-        $canCheckin
-      ); ?>
+						<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzarchiv.', $canCheckin); ?>
 					<?php endif; ?> 
 					
 				<?php if ($this->params->get('display_home_links_3', '0')): ?>
-					<a href="<?php echo Route::_(
-       'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
-     ); ?>">
+					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>">
 				<?php endif; ?> 
-					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="width:<?php echo $this->params->get(
-       'display_home_image_width',
-       '150px'
-     ); ?>;" src="<?php echo JURI::Root() .
-  'images/com_einsatzkomponente/einsatzbilder/nopic.png'; ?>"/>
+					<img  class="img-rounded eiko_img_einsatzbild_main_1" style="width:<?php echo $this->params->get('display_home_image_width', '150px'); ?>;" src="<?php echo JURI::Root() . 'images/com_einsatzkomponente/einsatzbilder/nopic.png'; ?>"/>
 				<?php if ($this->params->get('display_home_links_3', '0')): ?>
 					</a>
 				<?php endif; ?> 
@@ -368,10 +283,7 @@ echo $item->image;
 				<img class="img-rounded eiko_karte_klein" src="https://maps.googleapis.com/maps/api/staticmap?center=<?php echo $item->gmap_report_latitude; ?>,<?php echo $item->gmap_report_longitude; ?>&zoom=14&size=150x84&maptype=roadmap&markers=color:red%7Clabel:x%7C<?php echo $item->gmap_report_latitude; ?>,<?php echo $item->gmap_report_longitude; ?>&key=<?php echo $this->params->get(
   'gmapkey',
   'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'
-); ?>" width="<?php echo $this->params->get(
-  'display_home_image_width',
-  '150px'
-); ?>;" alt="Einsatzkarte <?php echo $item->summary; ?>">		  
+); ?>" width="<?php echo $this->params->get('display_home_image_width', '150px'); ?>;" alt="Einsatzkarte <?php echo $item->summary; ?>">		  
 			<?php endif; ?>
 		<?php endif; ?>
 		
@@ -391,16 +303,7 @@ echo $item->image;
                 <td class="center">
 					<?php if ($canEdit): ?>
                     <a class="btn btn-mini <?php echo $class; ?>"
-                       href="<?php echo $canChange
-                         ? Route::_(
-                           'index.php?option=com_einsatzkomponente&task=einsatzberichtform.publish&id=' .
-                             $item->id .
-                             '&state=' .
-                             ($item->state + 1) % 2,
-                           false,
-                           2
-                         )
-                         : '#'; ?>">
+                       href="<?php echo $canChange ? Route::_('index.php?option=com_einsatzkomponente&task=einsatzberichtform.publish&id=' . $item->id . '&state=' . ($item->state + 1) % 2, false, 2) : '#'; ?>">
                         <?php if ($item->state == 1): ?>
                             <i class="icon-save"></i>
                         <?php else: ?>
@@ -409,12 +312,7 @@ echo $item->image;
                     </a>
 					<?php endif; ?>
 						<?php if ($canEdit): ?>
-							<a href="<?php echo Route::_(
-         'index.php?option=com_einsatzkomponente&task=einsatzberichtform.edit&layout=edit&id=' .
-           $item->id,
-         true,
-         2
-       ); ?>" class="btn btn-mini eiko_action_button" type="button"><i class="icon-edit" ></i></a>
+							<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzberichtform.edit&layout=edit&id=' . $item->id, true, 2); ?>" class="btn btn-mini eiko_action_button" type="button"><i class="icon-edit" ></i></a>
 						<?php endif; ?>
 						<?php if ($canDelete): ?>
 							<button data-item-id="<?php echo $item->id; ?>" class="btn btn-mini delete-button" type="button"><i class="icon-trash" ></i></button>
@@ -442,31 +340,16 @@ echo $item->image;
             </td>
             <td colspan="<?php echo $eiko_col - 1; ?>" class="eiko_td_zusatz_main_1">
 			<div id ="div<?php echo $item->id; ?>" style="display:none;">
-            <h3 style="text-decoration:underline;"><?php echo Text::_(
-              'COM_EINSATZKOMPONENTE_ALARMIERUNGSZEIT'
-            ); ?> </h3><?php echo date('d.m.Y', $item->date1); ?> um <?php echo date(
-   'H:i',
-   $item->date1
- ); ?> Uhr
-            <h3 style="text-decoration:underline;"><?php echo Text::_(
-              'COM_EINSATZKOMPONENTE_EINSATZKRAEFTE'
-            ); ?> </h3><?php echo $auswahl_orga; ?><br/>
+            <h3 style="text-decoration:underline;"><?php echo Text::_('COM_EINSATZKOMPONENTE_ALARMIERUNGSZEIT'); ?> </h3><?php echo date('d.m.Y', $item->date1); ?> um <?php echo date('H:i', $item->date1); ?> Uhr
+            <h3 style="text-decoration:underline;"><?php echo Text::_('COM_EINSATZKOMPONENTE_EINSATZKRAEFTE'); ?> </h3><?php echo $auswahl_orga; ?><br/>
 		   <?php if ($item->desc): ?>
 			<?php jimport('joomla.html.content'); ?>  
 			<?php $Desc = JHTML::_('content.prepare', $item->desc); ?>
-			<h3 style="text-decoration:underline;"><?php echo Text::_(
-     'COM_EINSATZKOMPONENTE_TITLE_MAIN_3'
-   ); ?> </h3><?php echo $Desc; ?>
+			<h3 style="text-decoration:underline;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_MAIN_3'); ?> </h3><?php echo $Desc; ?>
             <?php endif; ?>
-            <br /><input type="button" class="btn btn-info" onClick="jQuery.toggle<?php echo $item->id; ?>(div<?php echo $item->id; ?>)" value="<?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_INFO_SCHLIESSEN'
-); ?>"></input>
+            <br /><input type="button" class="btn btn-info" onClick="jQuery.toggle<?php echo $item->id; ?>(div<?php echo $item->id; ?>)" value="<?php echo Text::_('COM_EINSATZKOMPONENTE_INFO_SCHLIESSEN'); ?>"></input>
 					<?php if ($this->params->get('display_home_links', '1')): ?>
-					<a href="<?php echo Route::_(
-       'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id
-     ); ?>" type="button" class="btn btn-primary"><?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_DETAILS'
-); ?></a>	
+					<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $item->id); ?>" type="button" class="btn btn-primary"><?php echo Text::_('COM_EINSATZKOMPONENTE_DETAILS'); ?></a>	
 					<?php endif; ?>
            </div> 
            </td>

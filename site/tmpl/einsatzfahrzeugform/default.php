@@ -38,9 +38,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 		}
 	}
 </script>
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
-); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzfahrzeug-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="einsatzfahrzeug-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -116,9 +114,7 @@ $document->addStyleSheet('components/com_einsatzkomponente/assets/css/einsatzkom
 					</button>
 				<?php endif; ?>
 				<a class="btn"
-				   href="<?php echo Route::_(
-         'index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.cancel'
-       ); ?>"
+				   href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzfahrzeugform.cancel'); ?>"
 				   title="<?php echo Text::_('JCANCEL'); ?>">
 					<?php echo Text::_('JCANCEL'); ?>
 				</a>

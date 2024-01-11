@@ -93,11 +93,8 @@ class EinsatzkomponenteModelEinsatzberichtForm extends FormModel
     return $this->_item;
   }
 
-  public function getTable(
-    $type = 'Einsatzbericht',
-    $prefix = 'EinsatzkomponenteTable',
-    $config = []
-  ) {
+  public function getTable($type = 'Einsatzbericht', $prefix = 'EinsatzkomponenteTable', $config = [])
+  {
     $this->addTablePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
     return Table::getInstance($type, $prefix, $config);
   }
@@ -211,17 +208,8 @@ class EinsatzkomponenteModelEinsatzberichtForm extends FormModel
     $user = Factory::getUser();
     if ($id) {
       //Check the user can edit this item
-      $authorised =
-        $user->authorise('core.edit', 'com_einsatzkomponente.einsatzbericht' . $id) ||
-        ($authorised = $user->authorise(
-          'core.edit.own',
-          'com_einsatzkomponente.einsatzbericht' . $id
-        ));
-      if (
-        $user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzbericht' . $id) !==
-          true &&
-        $state == 1
-      ) {
+      $authorised = $user->authorise('core.edit', 'com_einsatzkomponente.einsatzbericht' . $id) || ($authorised = $user->authorise('core.edit.own', 'com_einsatzkomponente.einsatzbericht' . $id));
+      if ($user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzbericht' . $id) !== true && $state == 1) {
         //The user cannot edit the state of the item.
         $data['state'] = 0;
         $data['einsatzticker'] = 0;
@@ -229,11 +217,7 @@ class EinsatzkomponenteModelEinsatzberichtForm extends FormModel
     } else {
       //Check the user can create new items in this section
       $authorised = $user->authorise('core.create', 'com_einsatzkomponente');
-      if (
-        $user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzbericht' . $id) !==
-          true &&
-        $state == 1
-      ) {
+      if ($user->authorise('core.edit.state', 'com_einsatzkomponente.einsatzbericht' . $id) !== true && $state == 1) {
         //The user cannot edit the state of the item.
         $data['state'] = 0;
         $data['einsatzticker'] = 0;
@@ -255,10 +239,7 @@ class EinsatzkomponenteModelEinsatzberichtForm extends FormModel
   function delete($data)
   {
     $id = !empty($data['id']) ? $data['id'] : (int) $this->getState('einsatzbericht.id');
-    if (
-      Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzbericht' . $id) !==
-      true
-    ) {
+    if (Factory::getUser()->authorise('core.delete', 'com_einsatzkomponente.einsatzbericht' . $id) !== true) {
       Factory::getApplication()->enqueueMessage(Text::_('JERROR_ALERTNOAUTHOR'), 'error');
       return false;
     }
