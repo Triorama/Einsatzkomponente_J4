@@ -15,6 +15,7 @@ use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
+use Joomla\Database\DatabaseDriver;
 use Joomla\Utilities\ArrayHelper;
 
 /**
@@ -27,7 +28,7 @@ class AusruestungTable extends Table
    *
    * @param JDatabase A database connector object
    */
-  public function __construct(&$db)
+  public function __construct(DatabaseDriver $db)
   {
     parent::__construct('#__eiko_ausruestung', 'id', $db);
     // Set the alias since the column is called state
@@ -60,14 +61,7 @@ class AusruestungTable extends Table
     }
     $input = Factory::getApplication()->input;
     $task = $input->getString('task', '');
-    if (
-      ($task == 'save' || $task == 'apply') &&
-      (!Factory::getUser()->authorise(
-        'core.edit.state',
-        'com_einsatzkomponente.ausruestung.' . $array['id']
-      ) &&
-        $array['state'] == 1)
-    ) {
+    if (($task == 'save' || $task == 'apply') && (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente.ausruestung.' . $array['id']) && $array['state'] == 1)) {
       $array['state'] = 0;
     }
 
@@ -183,17 +177,7 @@ class AusruestungTable extends Table
     }
 
     // Update the publishing state for rows with the given primary keys.
-    $this->_db->setQuery(
-      'UPDATE ' .
-        $this->_tbl .
-        '' .
-        ' SET state = ' .
-        (int) $state .
-        ' WHERE (' .
-        $where .
-        ')' .
-        $checkin
-    );
+    $this->_db->setQuery('UPDATE ' . $this->_tbl . '' . ' SET state = ' . (int) $state . ' WHERE (' . $where . ')' . $checkin);
     try {
       $this->_db->execute();
     } catch (\RuntimeException $e) {

@@ -16,9 +16,7 @@ class Installer
   public function install($parent)
   {
     // $parent is the class calling this method
-    $parent
-      ->getParent()
-      ->setRedirectURL('index.php?option=com_einsatzkomponente&view=installation');
+    $parent->getParent()->setRedirectURL('index.php?option=com_einsatzkomponente&view=installation');
   }
   public function uninstall($parent)
   {
@@ -29,9 +27,7 @@ class Installer
   {
     // $parent is the class calling this method
 
-    $parent
-      ->getParent()
-      ->setRedirectURL('index.php?option=com_einsatzkomponente&view=installation');
+    $parent->getParent()->setRedirectURL('index.php?option=com_einsatzkomponente&view=installation');
   }
 
   function preflight($type, $parent)

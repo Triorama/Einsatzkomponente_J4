@@ -59,10 +59,7 @@ class HtmlView extends BaseHtmlView
   protected function addToolbar()
   {
     //require_once JPATH_COMPONENT.'/helpers/einsatzkomponente.php';
-    ToolBarHelper::title(
-      Text::_('COM_EINSATZKOMPONENTE_TITLE_KONTROLLCENTER'),
-      'organisationen.png'
-    );
+    ToolBarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_KONTROLLCENTER'), 'organisationen.png');
     ToolBarHelper::preferences('com_einsatzkomponente');
 
     //Set sidebar action - New in 3.0

@@ -19,12 +19,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
  */
 class GmapkonfigurationController extends FormController
 {
-  function __construct(
-    $config = [],
-    MVCFactoryInterface $factory = null,
-    $app = null,
-    $input = null
-  ) {
+  function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+  {
     $this->view_list = 'gmapkonfigurationen';
     $this->view = 'gmapkonfiguration';
     parent::__construct($config, $factory, $app, $input);
@@ -88,11 +84,6 @@ class GmapkonfigurationController extends FormController
     }
 
     $this->setMessage('Alle GMAP-Daten wurden auf Anfangseinstellungen zurückgesetzt');
-    $this->setRedirect(
-      Route::_(
-        'index.php?option=' . $this->option . '&view=' . $this->view . '&layout=edit&id=1',
-        false
-      )
-    );
+    $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view . '&layout=edit&id=1', false));
   }
 }

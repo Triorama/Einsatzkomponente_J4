@@ -28,24 +28,7 @@ class AusruestungenModel extends ListModel
   public function __construct($config = [])
   {
     if (empty($config['filter_fields'])) {
-      $config['filter_fields'] = [
-        'id',
-        'a.id',
-        'name',
-        'a.name',
-        'image',
-        'a.image',
-        'beschreibung',
-        'a.beschreibung',
-        'created_by',
-        'a.created_by',
-        'ordering',
-        'a.ordering',
-        'state',
-        'a.state',
-        'params',
-        'a.params',
-      ];
+      $config['filter_fields'] = ['id', 'a.id', 'name', 'a.name', 'image', 'a.image', 'beschreibung', 'a.beschreibung', 'created_by', 'a.created_by', 'ordering', 'a.ordering', 'state', 'a.state', 'params', 'a.params'];
     }
 
     parent::__construct($config);
@@ -65,12 +48,7 @@ class AusruestungenModel extends ListModel
     $search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
 
-    $published = $app->getUserStateFromRequest(
-      $this->context . '.filter.state',
-      'filter_published',
-      '',
-      'string'
-    );
+    $published = $app->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
     $this->setState('filter.state', $published);
 
     // Load the parameters.

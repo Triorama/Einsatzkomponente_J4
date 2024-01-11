@@ -14,7 +14,7 @@ defined('JPATH_BASE') or die();
 
 use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\FormHelper;
+use Joomla\Database\DatabaseInterface;
 
 /**
  * Supports an HTML select list of categories
@@ -40,19 +40,15 @@ class OptgroupField extends FormField
 
     // Initialize variables.
     $html = [];
-
-    $db = Factory::getDBO();
-    $query = 'SELECT id,name from #__eiko_organisationen where state=1 order by ordering ASC';
+    $db = Factory::getContainer()->get(DatabaseInterface::class);
+    $query = 'SELECT id,name from #__eiko_organisationen WHERE state=1 ORDER BY ordering ASC';
     $db->setQuery($query);
     $orgs = $db->loadObjectList();
     $html[] .= '<select id="' . $this->id . '" name="' . $this->name . '[]" multiple>';
     $html[] .= '<option>&nbsp;</option>';
     foreach ($orgs as $org) {
       $html[] .= '<optgroup label="' . $org->name . '">';
-      $query =
-        'SELECT id,name from #__eiko_fahrzeuge where department = "' .
-        $org->id .
-        '" and state = 1 order by ordering ASC';
+      $query = 'SELECT id,name from #__eiko_fahrzeuge where department = "' . $org->id . '" and state = 1 order by ordering ASC';
       $db->setQuery($query);
       $vehicles = $db->loadObjectList();
 
@@ -61,8 +57,7 @@ class OptgroupField extends FormField
         foreach ($vehicles as $vehicle) {
           $v[] .= $vehicle->id;
         }
-        $html[] .=
-          '<option value="' . implode(',', $v) . '">' . $org->name . ' ( alle Fahrzeuge)</option>';
+        $html[] .= '<option value="' . implode(',', $v) . '">' . $org->name . ' ( alle Fahrzeuge)</option>';
       }
 
       foreach ($vehicles as $vehicle) {
@@ -73,23 +68,13 @@ class OptgroupField extends FormField
             endif;
           }
         endif;
-        $html[] .=
-          '<option ' .
-          $selected .
-          ' value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' ( ' .
-          $org->name .
-          ' ) </option>';
+        $html[] .= '<option ' . $selected . ' value="' . $vehicle->id . '">' . $vehicle->name . ' ( ' . $org->name . ' ) </option>';
         $selected = '';
       }
       $html[] .= '</optgroup>';
     }
 
-    $query =
-      'SELECT id,name from #__eiko_fahrzeuge where department = "" and state = 1 order by ordering ASC';
+    $query = 'SELECT id,name from #__eiko_fahrzeuge WHERE department = "" AND state = 1 ORDER BY ordering ASC';
     $db->setQuery($query);
     if ($vehicles = $db->loadObjectList()):
       $html[] .= '<optgroup label="sonstige">';
@@ -101,14 +86,7 @@ class OptgroupField extends FormField
             endif;
           }
         endif;
-        $html[] .=
-          '<option ' .
-          $selected .
-          ' value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' ( sonstige ) </option>';
+        $html[] .= '<option ' . $selected . ' value="' . $vehicle->id . '">' . $vehicle->name . ' ( sonstige ) </option>';
         $selected = '';
       }
       $html[] .= '</optgroup>';
@@ -126,16 +104,7 @@ class OptgroupField extends FormField
             endif;
           }
         endif;
-        $html[] .=
-          '<option ' .
-          $selected .
-          ' value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' - a.D. ( ID ' .
-          $vehicle->id .
-          ' ) </option>';
+        $html[] .= '<option ' . $selected . ' value="' . $vehicle->id . '">' . $vehicle->name . ' - a.D. ( ID ' . $vehicle->id . ' ) </option>';
         $selected = '';
       }
       $html[] .= '</optgroup>';

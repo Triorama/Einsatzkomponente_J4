@@ -1305,12 +1305,8 @@
       label="COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_POSITION_NAVIGATION"
       description="Position der Navigations-Button der Detailansicht festlegen."
     >
-      <option value="left">
-        COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_POSITION_NAVIGATION_LEFT
-      </option>
-      <option value="right">
-        COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_POSITION_NAVIGATION_RIGHT
-      </option>
+      <option value="left">COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_POSITION_NAVIGATION_LEFT</option>
+      <option value="right">COM_EINSATZKOMPONENTE_OPTION_EINSATZ_DETAILANSICHT_POSITION_NAVIGATION_RIGHT</option>
     </field>
     <field
       name="display_detail_hits"
@@ -1705,9 +1701,7 @@
       label="COM_EINSATZKOMPONENTE_OPTION_ORGANISATIONEN_ORGANISATIONEN"
       description="Hier können Sie einstellen, ob die angezeigten Organisationen verlinkt werden sollen. (nur im Standart-Layout)"
     >
-      <option value="0">
-        COM_EINSATZKOMPONENTE_OPTION_ORGANISATIONEN_ORGANISATIONEN_OHNE_LINK
-      </option>
+      <option value="0">COM_EINSATZKOMPONENTE_OPTION_ORGANISATIONEN_ORGANISATIONEN_OHNE_LINK</option>
       <option value="1">COM_EINSATZKOMPONENTE_OPTION_ORGANISATIONEN_ORGANISATIONEN_MIT_LINK</option>
     </field>
 

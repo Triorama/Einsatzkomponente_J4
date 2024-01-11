@@ -73,18 +73,13 @@ class HtmlView extends BaseHtmlView
     $user = Factory::getUser();
     $isNew = $this->item->id == 0;
     if (isset($this->item->checked_out)) {
-      $checkedOut = !(
-        $this->item->checked_out == 0 || $this->item->checked_out == $user->get('id')
-      );
+      $checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
     } else {
       $checkedOut = false;
     }
     $canDo = EinsatzkomponenteHelper::getActions();
 
-    ToolbarHelper::title(
-      Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATION'),
-      'gmapkonfiguration.png'
-    );
+    ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATION'), 'gmapkonfiguration.png');
 
     // If not checked out, can save the item.
     if (!$checkedOut && ($canDo->get('core.edit') || $canDo->get('core.create'))) {
@@ -100,13 +95,7 @@ class HtmlView extends BaseHtmlView
     ToolbarHelper::divider();
 
     if (!$checkedOut && $canDo->get('core.admin')) {
-      ToolbarHelper::custom(
-        'gmapkonfiguration.reset',
-        'refresh.png',
-        'refresh_f2.png',
-        'COM_EINSATZKOMPONENTE_GMAP_ALLE_WERTE_ZURUECKSETZEN',
-        false
-      );
+      ToolbarHelper::custom('gmapkonfiguration.reset', 'refresh.png', 'refresh_f2.png', 'COM_EINSATZKOMPONENTE_GMAP_ALLE_WERTE_ZURUECKSETZEN', false);
     }
   }
 }

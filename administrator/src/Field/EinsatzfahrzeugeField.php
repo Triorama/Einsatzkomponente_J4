@@ -12,9 +12,8 @@ namespace EikoNamespace\Component\Einsatzkomponente\Administrator\Field;
 
 defined('JPATH_BASE') or die();
 
-use Joomla\CMS\Form\FormField;
 use Joomla\CMS\Factory;
-use Joomla\CMS\Form\FormHelper;
+use Joomla\CMS\Form\FormField;
 
 /**
  * Supports an HTML select list of categories
@@ -48,10 +47,7 @@ class EinsatzfahrzeugeField extends FormField
 
     foreach ($orgs as $org) {
       $html[] .= '<optgroup label="' . $org->name . '">';
-      $query =
-        'SELECT id,name from #__eiko_fahrzeuge where department = "' .
-        $org->id .
-        '" and state = 1 order by ordering ASC';
+      $query = 'SELECT id,name from #__eiko_fahrzeuge WHERE department = "' . $org->id . '" and state = 1 order by ordering ASC';
       $db->setQuery($query);
       $vehicles = $db->loadObjectList();
       foreach ($vehicles as $vehicle) {
@@ -62,23 +58,13 @@ class EinsatzfahrzeugeField extends FormField
             endif;
           }
         endif;
-        $html[] .=
-          '<option ' .
-          $selected .
-          ' value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' ( ' .
-          $org->name .
-          ' ) </option>';
+        $html[] .= '<option ' . $selected . ' value="' . $vehicle->id . '">' . $vehicle->name . ' ( ' . $org->name . ' ) </option>';
         $selected = '';
       }
       $html[] .= '</optgroup>';
     }
 
-    $query =
-      'SELECT id,name from #__eiko_fahrzeuge where department = "" and state = 1 order by ordering ASC';
+    $query = 'SELECT id,name from #__eiko_fahrzeuge where department = "" and state = 1 order by ordering ASC';
     $db->setQuery($query);
     if ($vehicles = $db->loadObjectList()):
       $html[] .= '<optgroup label="sonstige">';
@@ -90,14 +76,7 @@ class EinsatzfahrzeugeField extends FormField
             endif;
           }
         endif;
-        $html[] .=
-          '<option ' .
-          $selected .
-          ' value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' ( sonstige ) </option>';
+        $html[] .= '<option ' . $selected . ' value="' . $vehicle->id . '">' . $vehicle->name . ' ( sonstige ) </option>';
         $selected = '';
       }
       $html[] .= '</optgroup>';
@@ -116,16 +95,7 @@ class EinsatzfahrzeugeField extends FormField
             endif;
           }
         endif;
-        $html[] .=
-          '<option ' .
-          $selected .
-          ' value="' .
-          $vehicle->id .
-          '">' .
-          $vehicle->name .
-          ' - a.D. ( ID ' .
-          $vehicle->id .
-          ' ) </option>';
+        $html[] .= '<option ' . $selected . ' value="' . $vehicle->id . '">' . $vehicle->name . ' - a.D. ( ID ' . $vehicle->id . ' ) </option>';
         $selected = '';
       }
       $html[] .= '</optgroup>';

@@ -37,11 +37,7 @@ class EinsatzbilderbearbeitenModel extends AdminModel
     // Initialise variables.
     $app = Factory::getApplication();
     // Get the form.
-    $form = $this->loadForm(
-      'com_einsatzkomponente.einsatzbilderbearbeiten',
-      'einsatzbilderbearbeiten',
-      ['control' => 'jform', 'load_data' => $loadData]
-    );
+    $form = $this->loadForm('com_einsatzkomponente.einsatzbilderbearbeiten', 'einsatzbilderbearbeiten', ['control' => 'jform', 'load_data' => $loadData]);
     if (empty($form)) {
       return false;
     }
@@ -56,10 +52,7 @@ class EinsatzbilderbearbeitenModel extends AdminModel
   protected function loadFormData()
   {
     // Check the session for previously entered form data.
-    $data = Factory::getApplication()->getUserState(
-      'com_einsatzkomponente.edit.einsatzbilderbearbeiten.data',
-      []
-    );
+    $data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbilderbearbeiten.data', []);
     if (empty($data)) {
       $data = $this->getItem();
 

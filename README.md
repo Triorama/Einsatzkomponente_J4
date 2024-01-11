@@ -6,7 +6,7 @@ Component for Joomla4.X
 
 Nicht zur Installation auf Produktiv System geeignet. Nur zu Testzwecken!!!
 
-BETA-Version !! 
+BETA-Version !!
 Bitte vor dem Installieren ein Backup des Webspace und der Datenbank machen !
 
 ---

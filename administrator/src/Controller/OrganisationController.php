@@ -17,12 +17,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
  */
 class OrganisationController extends FormController
 {
-  function __construct(
-    $config = [],
-    MVCFactoryInterface $factory = null,
-    $app = null,
-    $input = null
-  ) {
+  function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+  {
     $this->view_list = 'organisationen';
     parent::__construct($config, $factory, $app, $input);
   }

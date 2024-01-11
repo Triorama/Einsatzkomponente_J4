@@ -35,15 +35,8 @@ $listDirn = $this->state->get('list.direction');
 $canOrder = $user->authorise('core.edit.state', 'com_einsatzkomponente');
 $saveOrder = $listOrder == 'a.ordering';
 if ($saveOrder) {
-  $saveOrderingUrl =
-    'index.php?option=com_einsatzkomponente&task=gmapkonfigurationen.saveOrderAjax&tmpl=component';
-  HTMLHelper::_(
-    'sortablelist.sortable',
-    'gmapkonfigurationList',
-    'adminForm',
-    strtolower($listDirn),
-    $saveOrderingUrl
-  );
+  $saveOrderingUrl = 'index.php?option=com_einsatzkomponente&task=gmapkonfigurationen.saveOrderAjax&tmpl=component';
+  HTMLHelper::_('sortablelist.sortable', 'gmapkonfigurationList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
 ?>
@@ -67,9 +60,7 @@ if (!empty($this->extra_sidebar)) {
   $this->sidebar .= $this->extra_sidebar;
 } ?>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=gmapkonfigurationen'
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=gmapkonfigurationen'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if (!empty($this->sidebar)): ?>
 	<div id="j-sidebar-container" class="span2">
 		<?php echo $this->sidebar; ?>
@@ -85,22 +76,11 @@ if (!empty($this->extra_sidebar)) {
 				<tr>
                 <?php if (isset($this->items[0]->ordering)): ?>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo HTMLHelper::_(
-        'grid.sort',
-        '<i class="icon-menu-2"></i>',
-        'a.ordering',
-        $listDirn,
-        $listOrder,
-        null,
-        'asc',
-        'JGRID_HEADING_ORDERING'
-      ); ?>
+						<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 					</th>
                 <?php endif; ?>
 					<th width="1%" class="hidden-phone">
-						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_(
-        'JGLOBAL_CHECK_ALL'
-      ); ?>" onclick="Joomla.checkAll(this)" />
+						<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 					</th>
                 <?php if (isset($this->items[0]->state)): ?>
 					<th width="1%" class="nowrap center">
@@ -174,21 +154,12 @@ if (!empty($this->extra_sidebar)) {
 					</td>
                 <?php if (isset($this->items[0]->state)): ?>
 					<td class="center">
-						<?php echo HTMLHelper::_(
-        'jgrid.published',
-        $item->state,
-        $i,
-        'gmapkonfigurationen.',
-        $canChange,
-        'cb'
-      ); ?>
+						<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'gmapkonfigurationen.', $canChange, 'cb'); ?>
 					</td>
                 <?php endif; ?>
                 
 				<td>
-			    <a href="<?php echo Route::_(
-         'index.php?option=com_einsatzkomponente&task=gmapkonfiguration.edit&id=' . (int) $item->id
-       ); ?>">
+			    <a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=gmapkonfiguration.edit&id=' . (int) $item->id); ?>">
                 <?php echo 'GMap-Konfiguration'; ?>
                 </a>
 				</td>

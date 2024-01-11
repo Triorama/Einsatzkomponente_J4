@@ -46,36 +46,16 @@ class SummaryField extends FormField
     $params = ComponentHelper::getParams('com_einsatzkomponente');
 
     $db = Factory::getDBO();
-    $query =
-      'SELECT id, summary as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY summary ORDER BY summary';
+    $query = 'SELECT id, summary as title FROM #__eiko_einsatzberichte WHERE state="1" GROUP BY summary ORDER BY summary';
     $db->setQuery($query);
     $arrayDb = $db->loadObjectList();
 
-    $html[] =
-      '<input class="control-label" type="text"  name="' .
-      $this->name .
-      '"  id="' .
-      $this->id .
-      '"  value="' .
-      $this->value .
-      '" size="' .
-      $this->size .
-      '" />';
+    $html[] = '<input class="control-label" type="text"  name="' . $this->name . '"  id="' . $this->id . '"  value="' . $this->value . '" size="' . $this->size . '" />';
 
     if (count($arrayDb)):
       $array[] = JHTML::_('select.option', '', 'Kurzbericht auswählen', 'title', 'title');
       $array = array_merge($array, $arrayDb);
-      $html[] .=
-        '<br/><br/>' .
-        JHTML::_(
-          'select.genericlist',
-          $array,
-          'kurzbericht',
-          'onchange="changeText_kurzbericht()" ',
-          'title',
-          'title',
-          '0'
-        );
+      $html[] .= '<br/><br/>' . JHTML::_('select.genericlist', $array, 'kurzbericht', 'onchange="changeText_kurzbericht()" ', 'title', 'title', '0');
 
       $html[] .=
         '<script type="text/javascript">

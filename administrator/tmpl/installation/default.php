@@ -12,10 +12,7 @@ use Joomla\CMS\Factory;
 use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Filesystem\Folder;
 
-HTMLHelper::_(
-  'stylesheet',
-  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
-);
+HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 $bug = '0';
 ?>
@@ -43,14 +40,10 @@ $repair_array['111'] =
 $repair_array['112'] =
   "CREATE TABLE IF NOT EXISTS `#__eiko_ausruestung` (`id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,`asset_id` INT(10) UNSIGNED NOT NULL DEFAULT '0',`name` VARCHAR(255)  NOT NULL ,`image` VARCHAR(255)  NOT NULL ,`beschreibung` TEXT NOT NULL ,`created_by` INT(11)  NOT NULL ,`checked_out` INT(11)  NOT NULL ,`checked_out_time` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',`ordering` INT(11)  NOT NULL ,`state` TINYINT(1)  NOT NULL ,PRIMARY KEY (`id`)) DEFAULT COLLATE=utf8_general_ci;";
 
-$repair_array['113'] =
-  'ALTER TABLE `#__eiko_einsatzberichte` ADD `ausruestung` TEXT NOT NULL AFTER `vehicles`;';
-$repair_array['114'] =
-  'ALTER TABLE `#__eiko_einsatzberichte` ADD `auswahl_orga` TEXT NOT NULL AFTER `tickerkat`;';
-$repair_array['115'] =
-  'ALTER TABLE `#__eiko_einsatzberichte` ADD `createdate` DATETIME NOT NULL AFTER `updatedate`;';
-$repair_array['116'] =
-  'ALTER TABLE `#__eiko_einsatzberichte` ADD `modified_by` INT(11)  NOT NULL AFTER `created_by`;';
+$repair_array['113'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `ausruestung` TEXT NOT NULL AFTER `vehicles`;';
+$repair_array['114'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `auswahl_orga` TEXT NOT NULL AFTER `tickerkat`;';
+$repair_array['115'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `createdate` DATETIME NOT NULL AFTER `updatedate`;';
+$repair_array['116'] = 'ALTER TABLE `#__eiko_einsatzberichte` ADD `modified_by` INT(11)  NOT NULL AFTER `created_by`;';
 $repair_array['117'] = 'UPDATE `#__eiko_einsatzberichte` SET `createdate` = `updatedate`;';
 $repair_array['118'] = 'UPDATE `#__eiko_einsatzberichte` SET `modified_by` = `created_by`;';
 
@@ -71,16 +64,11 @@ if ($repair):
   }
   echo '<h2>Query erfolgreich ausgeführt</h2>' . $query;
   echo '<br/><h2>Bitte 1 Minute warten ...</h2><br/><br/>';
-  ?><meta http-equiv="refresh" content="65"; url="<?php echo $_SERVER[
-  'PHP_SELF'
-]; ?>" /><?php exit();
+  ?><meta http-equiv="refresh" content="65"; url="<?php echo $_SERVER['PHP_SELF']; ?>" /><?php exit();
 endif;
 ?>
 <div align="left">
-<?php echo '<h2>' .
-  JTEXT::_('Installations- und Updatemanager für die Einsatzkomponente Version ') .
-  $params['version'] .
-  '</h2>'; ?>
+<?php echo '<h2>' . JTEXT::_('Installations- und Updatemanager für die Einsatzkomponente Version ') . $params['version'] . '</h2>'; ?>
 		<a target="_blank" href="http://www.einsatzkomponente.de/index.php"><img border=0  src="<?php echo JURI::base(); ?>components/com_einsatzkomponente/assets/images/komponentenbanner.jpg"/></a><br/><br/>
         <?php
         //if ($bug) : echo 'Backup-Fehler: Installation abgebrochen !! Wenden Sie sich an: support@einsatzkomponente.de';exit; endif;
@@ -114,26 +102,16 @@ endif;
         $discr = 'Image-Ordner für die Einsatzkomponente';
         $dir = JPATH_ROOT . '/images/com_einsatzkomponente';
         if (!Folder::exists($dir)) {
-          echo 'Der ' .
-            $discr .
-            ' <span class="label label-important">existiert nicht</span>.<br/>';
+          echo 'Der ' . $discr . ' <span class="label label-important">existiert nicht</span>.<br/>';
           $source = JPATH_ROOT . '/' . 'media/com_einsatzkomponente/';
           $target = JPATH_ROOT . '/images/com_einsatzkomponente/';
-          echo 'Kopiere:&nbsp;&nbsp;&nbsp;' .
-            $source .
-            '&nbsp;&nbsp;&nbsp;&nbsp;<b>nach:</b>&nbsp;&nbsp;&nbsp;&nbsp;' .
-            $target .
-            '<br/>';
+          echo 'Kopiere:&nbsp;&nbsp;&nbsp;' . $source . '&nbsp;&nbsp;&nbsp;&nbsp;<b>nach:</b>&nbsp;&nbsp;&nbsp;&nbsp;' . $target . '<br/>';
           Folder::copy($source, $target);
           if (!Folder::exists($dir)) {
-            echo 'Der ' .
-              $discr .
-              ' <span class="label label-important">wurde nicht erstellt !!!!</span>.<br/><br/>';
+            echo 'Der ' . $discr . ' <span class="label label-important">wurde nicht erstellt !!!!</span>.<br/><br/>';
             $bug = '1';
           } else {
-            echo 'Der ' .
-              $discr .
-              ' <span class="label label-success">wurde erstellt.</span>.<br/><br/>';
+            echo 'Der ' . $discr . ' <span class="label label-success">wurde erstellt.</span>.<br/><br/>';
           }
         } else {
           echo 'Der ' . $discr . ' <span class="label label-success">existiert</span>.<br/><br/>';

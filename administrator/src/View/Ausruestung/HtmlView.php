@@ -53,9 +53,7 @@ class HtmlView extends BaseHtmlView
     $user = Factory::getUser();
     $isNew = $this->item->id == 0;
     if (isset($this->item->checked_out)) {
-      $checkedOut = !(
-        $this->item->checked_out == 0 || $this->item->checked_out == $user->get('id')
-      );
+      $checkedOut = !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
     } else {
       $checkedOut = false;
     }
@@ -69,23 +67,11 @@ class HtmlView extends BaseHtmlView
       ToolbarHelper::save('ausruestung.save', 'JTOOLBAR_SAVE');
     }
     if (!$checkedOut && $canDo->get('core.create')) {
-      ToolbarHelper::custom(
-        'ausruestung.save2new',
-        'save-new.png',
-        'save-new_f2.png',
-        'JTOOLBAR_SAVE_AND_NEW',
-        false
-      );
+      ToolbarHelper::custom('ausruestung.save2new', 'save-new.png', 'save-new_f2.png', 'JTOOLBAR_SAVE_AND_NEW', false);
     }
     // If an existing item, can save to a copy.
     if (!$isNew && $canDo->get('core.create')) {
-      ToolbarHelper::custom(
-        'ausruestung.save2copy',
-        'save-copy.png',
-        'save-copy_f2.png',
-        'JTOOLBAR_SAVE_AS_COPY',
-        false
-      );
+      ToolbarHelper::custom('ausruestung.save2copy', 'save-copy.png', 'save-copy_f2.png', 'JTOOLBAR_SAVE_AS_COPY', false);
     }
     if (empty($this->item->id)) {
       ToolbarHelper::cancel('ausruestung.cancel', 'JTOOLBAR_CANCEL');

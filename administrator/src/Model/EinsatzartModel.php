@@ -55,10 +55,7 @@ class EinsatzartModel extends AdminModel
   protected function loadFormData()
   {
     // Check the session for previously entered form data.
-    $data = Factory::getApplication()->getUserState(
-      'com_einsatzkomponente.edit.einsatzart.data',
-      []
-    );
+    $data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzart.data', []);
     if (empty($data)) {
       $data = $this->getItem();
 

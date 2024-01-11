@@ -40,20 +40,12 @@ return new class implements ServiceProviderInterface {
    */
   public function register(Container $container)
   {
-    $container->registerServiceProvider(
-      new CategoryFactory('\\EikoNamespace\\Component\\Einsatzkomponente')
-    );
-    $container->registerServiceProvider(
-      new MVCFactory('\\EikoNamespace\\Component\\Einsatzkomponente')
-    );
-    $container->registerServiceProvider(
-      new ComponentDispatcherFactory('\\EikoNamespace\\Component\\Einsatzkomponente')
-    );
+    $container->registerServiceProvider(new CategoryFactory('\\EikoNamespace\\Component\\Einsatzkomponente'));
+    $container->registerServiceProvider(new MVCFactory('\\EikoNamespace\\Component\\Einsatzkomponente'));
+    $container->registerServiceProvider(new ComponentDispatcherFactory('\\EikoNamespace\\Component\\Einsatzkomponente'));
 
     $container->set(ComponentInterface::class, function (Container $container) {
-      $component = new EinsatzkomponenteComponent(
-        $container->get(ComponentDispatcherFactoryInterface::class)
-      );
+      $component = new EinsatzkomponenteComponent($container->get(ComponentDispatcherFactoryInterface::class));
       $component->setMVCFactory($container->get(MVCFactoryInterface::class));
 
       return $component;

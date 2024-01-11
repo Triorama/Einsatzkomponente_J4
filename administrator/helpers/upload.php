@@ -47,10 +47,7 @@ while ($count < $count_data) {
 
   $rep_id = $cid; // Einsatz_ID holen für Zuordnung der Bilder in der Datenbank
   if ($watermark_image == ''):
-    $watermark_image = Factory::getApplication()->input->getVar(
-      'watermark_image',
-      $params->get('watermark_image')
-    );
+    $watermark_image = Factory::getApplication()->input->getVar('watermark_image', $params->get('watermark_image'));
   endif;
 
   // Check ob Bilder in einen Unterordner (OrdnerName = ID-Nr.) abgespeichert werden sollen :
@@ -63,76 +60,25 @@ while ($count < $count_data) {
   $fileName = $rep_id . '-' . $fileName;
 
   // Check if dir already exists
-  if (
-    !Folder::exists(
-      JPATH_SITE .
-        '/' .
-        $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-        $rep_id_ordner
-    )
-  ) {
-    Folder::create(
-      JPATH_SITE .
-        '/' .
-        $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-        $rep_id_ordner
-    );
+  if (!Folder::exists(JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . $rep_id_ordner)) {
+    Folder::create(JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . $rep_id_ordner);
   } else {
   }
-  if (
-    !Folder::exists(
-      JPATH_SITE .
-        '/' .
-        $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-        '/thumbs' .
-        $rep_id_ordner
-    )
-  ) {
-    Folder::create(
-      JPATH_SITE .
-        '/' .
-        $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-        '/thumbs' .
-        $rep_id_ordner
-    );
+  if (!Folder::exists(JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . '/thumbs' . $rep_id_ordner)) {
+    Folder::create(JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . '/thumbs' . $rep_id_ordner);
   } else {
   }
 
-  $uploadPath =
-    JPATH_SITE .
-    '/' .
-    $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-    $rep_id_ordner .
-    '/' .
-    $fileName;
-  $uploadPath_thumb =
-    JPATH_SITE .
-    '/' .
-    $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-    '/thumbs' .
-    $rep_id_ordner .
-    '/' .
-    $fileName;
+  $uploadPath = JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . $rep_id_ordner . '/' . $fileName;
+  $uploadPath_thumb = JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . '/thumbs' . $rep_id_ordner . '/' . $fileName;
   //echo $fileTemp.' xxxx '.$uploadPath;exit;
   if (!File::upload($fileTemp, $uploadPath)) {
     echo Text::_('Bild konnte nicht verschoben werden');
     return;
   } else {
     // Check if dir already exists
-    if (
-      !Folder::exists(
-        JPATH_SITE .
-          '/' .
-          $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-          '/thumbs'
-      )
-    ) {
-      Folder::create(
-        JPATH_SITE .
-          '/' .
-          $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-          '/thumbs'
-      );
+    if (!Folder::exists(JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . '/thumbs')) {
+      Folder::create(JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . '/thumbs');
     } else {
     }
 
@@ -155,15 +101,7 @@ while ($count < $count_data) {
     }
 
     // scale image
-    list(
-      $original_breite,
-      $original_hoehe,
-      $typ,
-      $imgtag,
-      $bits,
-      $channels,
-      $mimetype,
-    ) = @getimagesize($bild);
+    list($original_breite, $original_hoehe, $typ, $imgtag, $bits, $channels, $mimetype) = @getimagesize($bild);
     $ratio = imagesx($image) / imagesy($image); // width/height
     if ($ratio > 1) {
       $width = $original_breite;
@@ -173,18 +111,7 @@ while ($count < $count_data) {
       $height = $original_hoehe;
     }
     $scaled = imagecreatetruecolor($width, $height);
-    imagecopyresampled(
-      $scaled,
-      $image,
-      0,
-      0,
-      0,
-      0,
-      $width,
-      $height,
-      imagesx($image),
-      imagesy($image)
-    );
+    imagecopyresampled($scaled, $image, 0, 0, 0, 0, $width, $height, imagesx($image), imagesy($image));
 
     imagejpeg($scaled, $bild);
     //imagedestroy($image);
@@ -192,15 +119,7 @@ while ($count < $count_data) {
 
     // thumbs erstellen und unter /thumbs abspeichern
     $bild = $uploadPath;
-    @list(
-      $original_breite,
-      $original_hoehe,
-      $typ,
-      $imgtag,
-      $bits,
-      $channels,
-      $mimetype,
-    ) = @getimagesize($bild);
+    @list($original_breite, $original_hoehe, $typ, $imgtag, $bits, $channels, $mimetype) = @getimagesize($bild);
     $speichern = $uploadPath_thumb;
     $originalbild = imagecreatefromjpeg($bild);
     $maxbreite = $params->get('thumbwidth', '100');
@@ -225,60 +144,19 @@ while ($count < $count_data) {
 
       // Thumbnail erstellen
       $thumb = imagecreatetruecolor($thumb_breite, $thumb_hoehe);
-      imagecopyresampled(
-        $thumb,
-        $originalbild,
-        0,
-        0,
-        0,
-        0,
-        $thumb_breite,
-        $thumb_hoehe,
-        $original_breite,
-        $original_hoehe
-      );
+      imagecopyresampled($thumb, $originalbild, 0, 0, 0, 0, $thumb_breite, $thumb_hoehe, $original_breite, $original_hoehe);
     } elseif ($quadratisch === 'true') {
       // Kantenlänge für quadratisches Thumbnail ermitteln
-      $originalkantenlaenge =
-        $original_breite < $original_hoehe ? $original_breite : $original_hoehe;
+      $originalkantenlaenge = $original_breite < $original_hoehe ? $original_breite : $original_hoehe;
       $tmpbild = imagecreatetruecolor($originalkantenlaenge, $originalkantenlaenge);
       if ($original_breite > $original_hoehe) {
-        imagecopy(
-          $tmpbild,
-          $originalbild,
-          0,
-          0,
-          round($original_breite - $originalkantenlaenge) / 2,
-          0,
-          $original_breite,
-          $original_hoehe
-        );
+        imagecopy($tmpbild, $originalbild, 0, 0, round($original_breite - $originalkantenlaenge) / 2, 0, $original_breite, $original_hoehe);
       } elseif ($original_breite <= $original_hoehe) {
-        imagecopy(
-          $tmpbild,
-          $originalbild,
-          0,
-          0,
-          0,
-          round($original_hoehe - $originalkantenlaenge) / 2,
-          $original_breite,
-          $original_hoehe
-        );
+        imagecopy($tmpbild, $originalbild, 0, 0, 0, round($original_hoehe - $originalkantenlaenge) / 2, $original_breite, $original_hoehe);
       }
       // Thumbnail für Einsatzliste usw. erstellen
       $thumb = imagecreatetruecolor($maxbreite, $maxbreite);
-      imagecopyresampled(
-        $thumb,
-        $tmpbild,
-        0,
-        0,
-        0,
-        0,
-        $maxbreite,
-        $maxbreite,
-        $originalkantenlaenge,
-        $originalkantenlaenge
-      );
+      imagecopyresampled($thumb, $tmpbild, 0, 0, 0, 0, $maxbreite, $maxbreite, $originalkantenlaenge, $originalkantenlaenge);
     }
 
     imagejpeg($thumb, $speichern, $qualitaet);
@@ -288,23 +166,7 @@ while ($count < $count_data) {
     chmod($uploadPath, 0644);
     chmod($uploadPath_thumb, 0644);
     $db = Factory::getDBO();
-    $query =
-      'INSERT INTO #__eiko_images SET report_id="' .
-      $rep_id .
-      '", ordering="0", comment="", params="", image="' .
-      $custompath .
-      $rep_id_ordner .
-      '/' .
-      $fileName .
-      '", thumb="' .
-      $custompath .
-      '/thumbs' .
-      $rep_id_ordner .
-      '/' .
-      $fileName .
-      '", state="1", created_by="' .
-      $user->id .
-      '"';
+    $query = 'INSERT INTO #__eiko_images SET report_id="' . $rep_id . '", ordering="0", comment="", params="", image="' . $custompath . $rep_id_ordner . '/' . $fileName . '", thumb="' . $custompath . '/thumbs' . $rep_id_ordner . '/' . $fileName . '", state="1", created_by="' . $user->id . '"';
     $db->setQuery($query);
     try {
       $db->execute();
@@ -324,9 +186,7 @@ while ($count < $count_data) {
         $query = $db->getQuery(true);
         $query->update('#__eiko_einsatzberichte');
         //$query->set('image = "'.$custompath.$rep_id_ordner.'/'.$fileName.'" ');
-        $query->set(
-          'image = "' . $custompath . '/thumbs' . $rep_id_ordner . '/' . $fileName . '" '
-        );
+        $query->set('image = "' . $custompath . '/thumbs' . $rep_id_ordner . '/' . $fileName . '" ');
         $query->where('id ="' . $rep_id . '"');
         $db->setQuery((string) $query);
 
@@ -340,20 +200,8 @@ while ($count < $count_data) {
 
     echo Text::_('Bild wurde hochgeladen') . '<br/>';
 
-    $source =
-      JPATH_SITE .
-      '/' .
-      $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-      $rep_id_ordner .
-      '/' .
-      $fileName; //the source file
-    $destination =
-      JPATH_SITE .
-      '/' .
-      $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') .
-      $rep_id_ordner .
-      '/' .
-      $fileName; //were to place the thumb
+    $source = JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . $rep_id_ordner . '/' . $fileName; //the source file
+    $destination = JPATH_SITE . '/' . $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . $rep_id_ordner . '/' . $fileName; //were to place the thumb
     $watermark = JPATH_SITE . '/' . $watermark_image . ''; //the watermark files
 
     // Einsatzbilder resizen
@@ -389,16 +237,7 @@ while ($count < $count_data) {
 
       $source_img = imagecreatefromjpeg($source);
       $watermark_img = imagecreatefrompng($watermark);
-      imagecopy(
-        $source_img,
-        $watermark_img,
-        $w_pos_x,
-        $w_pos_y,
-        0,
-        0,
-        $watermarkwidth,
-        $watermarkheight
-      );
+      imagecopy($source_img, $watermark_img, $w_pos_x, $w_pos_y, 0, 0, $watermarkwidth, $watermarkheight);
       imagejpeg($source_img, $destination, 100);
       imagedestroy($source_img);
       imagedestroy($watermark_img);

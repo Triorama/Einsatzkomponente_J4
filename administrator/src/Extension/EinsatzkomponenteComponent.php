@@ -21,9 +21,7 @@ use Joomla\CMS\HTML\HTMLRegistryAwareTrait;
 //use EikoNamespace\Component\Einsatzkomponente\Administrator\Service\HTML\AdministratorService;
 use Psr\Container\ContainerInterface;
 
-class EinsatzkomponenteComponent extends MVCComponent implements
-  BootableExtensionInterface,
-  CategoryServiceInterface
+class EinsatzkomponenteComponent extends MVCComponent implements BootableExtensionInterface, CategoryServiceInterface
 {
   use CategoryServiceTrait;
   use HTMLRegistryAwareTrait;

@@ -31,11 +31,8 @@ class OsmHelper
     return;
   }
 
-  public static function callOsmMap(
-    $zoom = '',
-    $lat = '53.26434271775887',
-    $lon = '7.5730027132448186'
-  ) {
+  public static function callOsmMap($zoom = '', $lat = '53.26434271775887', $lon = '7.5730027132448186')
+  {
     $script =
       "			
 		var myOsmDe = L.tileLayer('https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {attribution:  'Map data &copy; <a href=\"https://osm.org/copyright\"> OpenStreetMap</a> | Lizenz: <a href=\"http://opendatacommons.org/licenses/odbl/\"> Open Database License (ODbL)</a>'});
@@ -206,13 +203,8 @@ marker2.on('drag', function(e) {
     return;
   }
 
-  public static function addEinsatzortMap(
-    $lat = '53.26434271775887',
-    $lon = '7.5730027132448186',
-    $name = 'Einsatz',
-    $icon = '',
-    $id = '1'
-  ) {
+  public static function addEinsatzortMap($lat = '53.26434271775887', $lon = '7.5730027132448186', $name = 'Einsatz', $icon = '', $id = '1')
+  {
     $app = Factory::getApplication();
     $params = $app->getParams('com_einsatzkomponente');
 
@@ -371,12 +363,8 @@ marker2.on('drag', function(e) {
   public static function editPolygonMap($latlngs = '[[0,0]]', $color = 'red')
   {
     $document = Factory::getDocument();
-    $document->addStyleSheet(
-      'https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css'
-    );
-    $document->addScript(
-      'https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js'
-    );
+    $document->addStyleSheet('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css');
+    $document->addScript('https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js');
 
     $script =
       "			

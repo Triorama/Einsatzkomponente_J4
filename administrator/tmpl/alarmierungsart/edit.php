@@ -19,14 +19,9 @@ HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
-HTMLHelper::_(
-  'stylesheet',
-  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
-);
+HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 ?>
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
-); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="alarmierungsart-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="alarmierungsart-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">

@@ -44,16 +44,13 @@ class InfoField extends FormField
   protected function getInput()
   {
     $document = Factory::getDocument();
-    require_once JPATH_SITE .
-      '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php';
+    require_once JPATH_SITE . '/administrator/components/com_einsatzkomponente/helpers/einsatzkomponente.php';
     $html = [];
     $val = '';
     $val = EinsatzkomponenteHelper::getValidation();
 
     if ($val == '12'):
-      $html[] =
-        '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">x</button><span aria-hidden="true" class="icon-cancel"></span> ' .
-        Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_1');
+      $html[] = '<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">x</button><span aria-hidden="true" class="icon-cancel"></span> ' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_1');
     else:
       $html[] =
         '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">x</button><span aria-hidden="true" class="icon-cancel"></span>' .
@@ -63,16 +60,10 @@ class InfoField extends FormField
         ' : <img border=0  src="https://www.paypalobjects.com/de_DE/DE/i/btn/btn_donateCC_LG.gif" /></div></a><br/><br/>
 ';
       if ($val == '1'):
-        $html[] =
-          '<span class="label label-important">' .
-          Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_4') .
-          '</span>';
+        $html[] = '<span class="label label-important">' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_4') . '</span>';
       endif;
       if ($val == '2'):
-        $html[] =
-          '<span class="label label-important">' .
-          Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_5') .
-          '</span>';
+        $html[] = '<span class="label label-important">' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_5') . '</span>';
       endif;
     endif;
     $html[] = '<h2>Einsatzkomponente Version 3.x</h2>';
@@ -82,8 +73,7 @@ class InfoField extends FormField
       $html[] = '<h3>' . Text::_('COM_EINSATZKOMPONENTE_OPTION_INFO_6') . '</h3>';
     endif;
     $html[] = '<p></p>';
-    $html[] =
-      '<p><a href="https://www.einsatzkomponente.de/" target="_blank">Supportforum: https://www.einsatzkomponente.de/</a></p>';
+    $html[] = '<p><a href="https://www.einsatzkomponente.de/" target="_blank">Supportforum: https://www.einsatzkomponente.de/</a></p>';
     return implode($html);
   }
 }

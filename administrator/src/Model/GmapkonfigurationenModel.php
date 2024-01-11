@@ -27,26 +27,7 @@ class GmapkonfigurationenModel extends ListModel
   public function __construct($config = [])
   {
     if (empty($config['filter_fields'])) {
-      $config['filter_fields'] = [
-        'id',
-        'a.id',
-        'gmap_zoom_level',
-        'a.gmap_zoom_level',
-        'gmap_onload',
-        'a.gmap_onload',
-        'gmap_alarmarea',
-        'a.gmap_alarmarea',
-        'start_lat',
-        'a.start_lat',
-        'start_lang',
-        'a.start_lang',
-        'state',
-        'a.state',
-        'created_by',
-        'a.created_by',
-        'params',
-        'a.params',
-      ];
+      $config['filter_fields'] = ['id', 'a.id', 'gmap_zoom_level', 'a.gmap_zoom_level', 'gmap_onload', 'a.gmap_onload', 'gmap_alarmarea', 'a.gmap_alarmarea', 'start_lat', 'a.start_lat', 'start_lang', 'a.start_lang', 'state', 'a.state', 'created_by', 'a.created_by', 'params', 'a.params'];
     }
 
     parent::__construct($config);
@@ -66,12 +47,7 @@ class GmapkonfigurationenModel extends ListModel
     $search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
 
-    $published = $app->getUserStateFromRequest(
-      $this->context . '.filter.state',
-      'filter_published',
-      '',
-      'string'
-    );
+    $published = $app->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
     $this->setState('filter.state', $published);
 
     // Load the parameters.

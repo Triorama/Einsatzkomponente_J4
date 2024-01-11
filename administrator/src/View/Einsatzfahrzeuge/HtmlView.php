@@ -58,10 +58,7 @@ class HtmlView extends BaseHtmlView
   {
     $state = $this->get('State');
     $canDo = EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
-    ToolbarHelper::title(
-      Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE'),
-      'einsatzfahrzeuge.png'
-    );
+    ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE'), 'einsatzfahrzeuge.png');
 
     if ($canDo->get('core.create')) {
       ToolbarHelper::addNew('einsatzfahrzeug.add', 'JTOOLBAR_NEW');
@@ -73,20 +70,8 @@ class HtmlView extends BaseHtmlView
     if ($canDo->get('core.edit.state')) {
       if (isset($this->items[0]->state)) {
         ToolbarHelper::divider();
-        ToolbarHelper::custom(
-          'einsatzfahrzeuge.publish',
-          'publish.png',
-          'publish_f2.png',
-          'JTOOLBAR_PUBLISH',
-          true
-        );
-        ToolbarHelper::custom(
-          'einsatzfahrzeuge.unpublish',
-          'unpublish.png',
-          'unpublish_f2.png',
-          'JTOOLBAR_UNPUBLISH',
-          true
-        );
+        ToolbarHelper::custom('einsatzfahrzeuge.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+        ToolbarHelper::custom('einsatzfahrzeuge.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
       } elseif (isset($this->items[0])) {
         //If this component does not use state then show a direct delete button as we can not trash
         ToolbarHelper::deleteList('', 'einsatzfahrzeuge.delete', 'JTOOLBAR_DELETE');
@@ -96,13 +81,7 @@ class HtmlView extends BaseHtmlView
         ToolbarHelper::archiveList('einsatzfahrzeuge.archive', 'Fahrzeug a.D.');
       }
       if (isset($this->items[0]->checked_out)) {
-        ToolbarHelper::custom(
-          'einsatzfahrzeuge.checkin',
-          'checkin.png',
-          'checkin_f2.png',
-          'JTOOLBAR_CHECKIN',
-          true
-        );
+        ToolbarHelper::custom('einsatzfahrzeuge.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
       }
     }
 
@@ -129,18 +108,7 @@ class HtmlView extends BaseHtmlView
       $options[] = HTMLHelper::_('select.option', '2', 'Fahrzeug a.D.');
       $options[] = HTMLHelper::_('select.option', '-2', 'JTRASHED');
       $options[] = HTMLHelper::_('select.option', '*', 'JALL');
-      Sidebar::addFilter(
-        Text::_('JOPTION_SELECT_PUBLISHED'),
-        'filter_published',
-        HTMLHelper::_(
-          'select.options',
-          $options,
-          'value',
-          'text',
-          $this->state->get('filter.state'),
-          true
-        )
-      );
+      Sidebar::addFilter(Text::_('JOPTION_SELECT_PUBLISHED'), 'filter_published', HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.state'), true));
     endif;
 
     $this->extra_sidebar = '';

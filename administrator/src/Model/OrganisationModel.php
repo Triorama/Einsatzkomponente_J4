@@ -58,10 +58,7 @@ class OrganisationModel extends AdminModel
   protected function loadFormData()
   {
     // Check the session for previously entered form data.
-    $data = Factory::getApplication()->getUserState(
-      'com_einsatzkomponente.edit.organisation.data',
-      []
-    );
+    $data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.organisation.data', []);
     if (empty($data)) {
       $data = $this->getItem();
 

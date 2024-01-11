@@ -94,12 +94,7 @@ class EinsatzfahrzeugeModel extends ListModel
     // Load the filter state.
     $search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
-    $published = $app->getUserStateFromRequest(
-      $this->context . '.filter.state',
-      'filter_published',
-      '',
-      'string'
-    );
+    $published = $app->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
     $this->setState('filter.state', $published);
 
     // Load the parameters.
@@ -142,10 +137,7 @@ class EinsatzfahrzeugeModel extends ListModel
     $query->from('#__eiko_fahrzeuge AS a');
     // Join over the foreign key 'auswahl_orga'
     $query->select('#__eiko_ausruestung_1662678.name AS ausruestung_name_1662678');
-    $query->join(
-      'LEFT',
-      '#__eiko_ausruestung AS #__eiko_ausruestung_1662678 ON #__eiko_ausruestung_1662678.id = a.ausruestung'
-    );
+    $query->join('LEFT', '#__eiko_ausruestung AS #__eiko_ausruestung_1662678 ON #__eiko_ausruestung_1662678.id = a.ausruestung');
     // Join over the user field 'created_by'
     $query->select('created_by.name AS created_by');
     $query->join('LEFT', '#__users AS created_by ON created_by.id = a.created_by');
@@ -164,15 +156,7 @@ class EinsatzfahrzeugeModel extends ListModel
         $query->where('a.id = ' . (int) substr($search, 3));
       } else {
         $search = $db->Quote('%' . $db->escape($search, true) . '%');
-        $query->where(
-          '( a.name LIKE ' .
-            $search .
-            '  OR  a.detail1 LIKE ' .
-            $search .
-            '  OR  a.detail2 LIKE ' .
-            $search .
-            ' )'
-        );
+        $query->where('( a.name LIKE ' . $search . '  OR  a.detail1 LIKE ' . $search . '  OR  a.detail2 LIKE ' . $search . ' )');
       }
     }
 
@@ -208,9 +192,7 @@ class EinsatzfahrzeugeModel extends ListModel
           }
         }
 
-        $oneItem->ausruestung = !empty($textValue)
-          ? implode(', ', $textValue)
-          : $oneItem->ausruestung;
+        $oneItem->ausruestung = !empty($textValue) ? implode(', ', $textValue) : $oneItem->ausruestung;
       }
     }
     return $items;

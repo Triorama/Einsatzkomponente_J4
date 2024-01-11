@@ -71,10 +71,7 @@ class OrganisationenController extends AdminController
     $cid = Factory::getApplication()->input->get('cid', [], 'array');
 
     if (!is_array($cid) || count($cid) < 1) {
-      Factory::getApplication()->enqueueMessage(
-        Text::_($this->text_prefix . '_NO_ITEM_SELECTED'),
-        'error'
-      );
+      Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
     } else {
       // Get the model.
       $model = $this->getModel();
@@ -95,8 +92,6 @@ class OrganisationenController extends AdminController
       $this->postDeleteHook($model, $cid);
     endif;
 
-    $this->setRedirect(
-      Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false)
-    );
+    $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
   }
 }

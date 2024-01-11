@@ -49,16 +49,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $user = Factory::getUser();
     $result = new CMSObject();
     $assetName = 'com_einsatzkomponente';
-    $actions = [
-      'core.admin',
-      'core.manage',
-      'core.create',
-      'core.edit',
-      'core.edit.own',
-      'core.edit.state',
-      'core.edit.value',
-      'core.delete',
-    ];
+    $actions = ['core.admin', 'core.manage', 'core.create', 'core.edit', 'core.edit.own', 'core.edit.state', 'core.edit.value', 'core.delete'];
     foreach ($actions as $action) {
       $result->set($action, $user->authorise($action, $assetName));
     }
@@ -84,24 +75,12 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $params = ComponentHelper::getParams('com_einsatzkomponente');
     $ex_einsatzart = $params->get('display_home_number_excl_einsatzart', '');
 
-    $query =
-      'SELECT COUNT(*) AS total,state FROM #__eiko_einsatzberichte WHERE (date1 BETWEEN "' .
-      date('Y', $selectedDate) .
-      '-01-01 00:00:00" AND "' .
-      date('Y-m-d H:i:s', $selectedDate) .
-      '") AND (state = "1" OR state = "2") and data1 !="' .
-      $ex_einsatzart .
-      '"  ';
+    $query = 'SELECT COUNT(*) AS total,state FROM #__eiko_einsatzberichte WHERE (date1 BETWEEN "' . date('Y', $selectedDate) . '-01-01 00:00:00" AND "' . date('Y-m-d H:i:s', $selectedDate) . '") AND (state = "1" OR state = "2") and data1 !="' . $ex_einsatzart . '"  ';
     $db = Factory::getDBO();
     $db->setQuery($query);
     $result = $db->loadObjectList();
 
-    $query =
-      'SELECT state FROM #__eiko_einsatzberichte WHERE (date1 = "' .
-      date('Y-m-d H:i:s', $selectedDate) .
-      '") AND (state = "1" OR state = "2" OR state = "2") and data1 !="' .
-      $ex_einsatzart .
-      '"  ';
+    $query = 'SELECT state FROM #__eiko_einsatzberichte WHERE (date1 = "' . date('Y-m-d H:i:s', $selectedDate) . '") AND (state = "1" OR state = "2" OR state = "2") and data1 !="' . $ex_einsatzart . '"  ';
     $db = Factory::getDBO();
     $db->setQuery($query);
     $result_state = $db->loadResult();
@@ -162,8 +141,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Alle Jahreszahlen aller Einsätze zusammenfassen
     $db = Factory::getDBO();
-    $query =
-      'SELECT Year(date1) as id, Year(date1) as title FROM #__eiko_einsatzberichte WHERE (state="1" OR state = "2") GROUP BY title ORDER BY date1 DESC';
+    $query = 'SELECT Year(date1) as id, Year(date1) as title FROM #__eiko_einsatzberichte WHERE (state="1" OR state = "2") GROUP BY title ORDER BY date1 DESC';
     $db->setQuery($query);
     $result = $db->loadObjectList();
     return $result;
@@ -183,10 +161,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Alle Einsatzbilder per ID laden
     $db = Factory::getDBO();
-    $query =
-      'SELECT * FROM #__eiko_images WHERE report_id = "' .
-      $report_id .
-      '" AND state ="1" ORDER BY ordering';
+    $query = 'SELECT * FROM #__eiko_images WHERE report_id = "' . $report_id . '" AND state ="1" ORDER BY ordering';
     $db->setQuery($query);
     $result = $db->loadObjectList();
     return $result;
@@ -221,10 +196,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     endforeach;
     $data = [];
     $db = Factory::getDBO();
-    $query =
-      'SELECT gmap_latitude,gmap_longitude,name,gmap_icon_orga,ffw FROM #__eiko_organisationen WHERE state="1" and id="' .
-      $array[0] .
-      '" ';
+    $query = 'SELECT gmap_latitude,gmap_longitude,name,gmap_icon_orga,ffw FROM #__eiko_organisationen WHERE state="1" and id="' . $array[0] . '" ';
     $db->setQuery($query);
     $result = $db->loadObject();
     return $result;
@@ -233,8 +205,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
   public static function getEinsatzarten()
   {
     // Funktion : Liste der Einsatzarten aus DB holen
-    $query =
-      'SELECT id, title as title FROM #__eiko_einsatzarten WHERE state="1" ORDER BY ordering ASC';
+    $query = 'SELECT id, title as title FROM #__eiko_einsatzarten WHERE state="1" ORDER BY ordering ASC';
     $db = Factory::getDBO();
     $db->setQuery($query);
     $result = $db->loadObjectList();
@@ -245,21 +216,13 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Den Einsatz vor dem aktuellen Einsatz ermitteln
     if ($selectedOrga == 'alle Organisationen'):
-      $query =
-        'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 < "' .
-        $cur_date .
-        '"  AND state="1" ORDER BY date1 desc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 < "' . $cur_date . '"  AND state="1" ORDER BY date1 desc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
       return $result;
     else:
-      $query =
-        'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 < "' .
-        $cur_date .
-        '" AND auswahl_orga LIKE "%' .
-        $selectedOrga .
-        '%"  AND state="1" ORDER BY date1 desc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 < "' . $cur_date . '" AND auswahl_orga LIKE "%' . $selectedOrga . '%"  AND state="1" ORDER BY date1 desc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
@@ -271,21 +234,13 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Den Einsatz nach dem aktuellen Einsatz ermitteln
     if ($selectedOrga == 'alle Organisationen'):
-      $query =
-        'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 > "' .
-        $cur_date .
-        '"  AND state="1" ORDER BY date1 asc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 > "' . $cur_date . '"  AND state="1" ORDER BY date1 asc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
       return $result;
     else:
-      $query =
-        'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 > "' .
-        $cur_date .
-        '"  AND auswahl_orga LIKE "%' .
-        $selectedOrga .
-        '%"  AND state="1" ORDER BY date1 asc LIMIT 1';
+      $query = 'SELECT id,summary FROM #__eiko_einsatzberichte WHERE date1 > "' . $cur_date . '"  AND auswahl_orga LIKE "%' . $selectedOrga . '%"  AND state="1" ORDER BY date1 asc LIMIT 1';
       $db = Factory::getDBO();
       $db->setQuery($query);
       $result = $db->loadObjectList();
@@ -340,10 +295,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
   {
     // Funktion : Feuerwehrliste aus DB holen
     $db = Factory::getDBO();
-    $query =
-      'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' .
-      $orga_id .
-      '" and (state = 1 or state = 2) ORDER BY ordering';
+    $query = 'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' . $orga_id . '" and (state = 1 or state = 2) ORDER BY ordering';
     $db->setQuery($query);
     $result = $db->loadObjectList();
     return $result;
@@ -355,10 +307,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $params = ComponentHelper::getParams('com_einsatzkomponente');
     $sonstige = '';
     $sonstige_result = '';
-    $query =
-      'SELECT * from #__eiko_fahrzeuge where department = "' .
-      $orga_id .
-      '" and (state = 1 or state = 2) order by ordering ASC';
+    $query = 'SELECT * from #__eiko_fahrzeuge where department = "' . $orga_id . '" and (state = 1 or state = 2) order by ordering ASC';
     $db = Factory::getDBO();
     $db->setQuery($query);
     if ($vehicles = $db->loadObjectList()):
@@ -369,24 +318,9 @@ class EinsatzkomponenteHelper extends ComponentHelper
           endif;
           if ($params->get('display_detail_fhz_links', '1')):
             if (!$vehicle->link):
-              $sonstige .=
-                '<a href="' .
-                Route::_(
-                  'index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid=' .
-                    $params->get('vehiclelink', '') .
-                    '&id=' .
-                    $vehicle->id
-                ) .
-                '" target="_self"><li>' .
-                $vehicle->name .
-                '</li></a>';
+              $sonstige .= '<a href="' . Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid=' . $params->get('vehiclelink', '') . '&id=' . $vehicle->id) . '" target="_self"><li>' . $vehicle->name . '</li></a>';
             else:
-              $sonstige .=
-                '<a href="' .
-                $vehicle->link .
-                '" target="_self"><li>' .
-                $vehicle->name .
-                '</li></a>';
+              $sonstige .= '<a href="' . $vehicle->link . '" target="_self"><li>' . $vehicle->name . '</li></a>';
             endif;
           else:
             $sonstige .= '<li>' . $vehicle->name . '</li>';
@@ -410,10 +344,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
     $vehicles_image = '';
     $vehicles_images = '';
     $sonstige_result = '';
-    $query =
-      'SELECT * from #__eiko_fahrzeuge where department = "' .
-      $orga_id .
-      '" and (state = 1 or state = 2) order by ordering ASC';
+    $query = 'SELECT * from #__eiko_fahrzeuge where department = "' . $orga_id . '" and (state = 1 or state = 2) order by ordering ASC';
     $db = Factory::getDBO();
     $db->setQuery($query);
     if ($vehicles = $db->loadObjectList()):
@@ -426,12 +357,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
             if (!$vehicle->link):
               $vehicles_image .=
                 '<a href="' .
-                Route::_(
-                  'index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid=' .
-                    $params->get('vehiclelink', '') .
-                    '&id=' .
-                    $vehicle->id
-                ) .
+                Route::_('index.php?option=com_einsatzkomponente&view=einsatzfahrzeug&Itemid=' . $params->get('vehiclelink', '') . '&id=' . $vehicle->id) .
                 '" target="_self">&nbsp;&nbsp;<img class="eiko_img-rounded eiko_image_fahrzeugaufgebot" src="' .
                 Uri::Root() .
                 $vehicle->image .
@@ -462,19 +388,7 @@ class EinsatzkomponenteHelper extends ComponentHelper
                 ' )"/></a>';
             endif;
           else:
-            $vehicles_image .=
-              '&nbsp;&nbsp;<img class="eiko_img-rounded eiko_image_fahrzeugaufgebot" src="' .
-              Uri::Root() .
-              $vehicle->image .
-              '"  alt="' .
-              $vehicle->name .
-              '" title="' .
-              $vehicle->name .
-              '   ' .
-              $vehicle->detail2 .
-              ' (' .
-              $vehicle->department .
-              ' )"/>';
+            $vehicles_image .= '&nbsp;&nbsp;<img class="eiko_img-rounded eiko_image_fahrzeugaufgebot" src="' . Uri::Root() . $vehicle->image . '"  alt="' . $vehicle->name . '" title="' . $vehicle->name . '   ' . $vehicle->detail2 . ' (' . $vehicle->department . ' )"/>';
           endif;
         endif;
       }
@@ -910,72 +824,38 @@ checkUtilVersion(4);
    // $navbar .='<a href="'.$menu_link.'&list=1" class="btn eiko_btn_2"><strong>'.Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT').'</strong></a>';
 
    // Behebt Bug aus J3.8.4   &list=1 funktioniert in Link nicht mehr
-   $navbar .=
-     '<a href="' .
-     $menu_link .
-     '" class="btn eiko_btn_2"><strong>' .
-     Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT') .
-     '</strong></a>';
+   $navbar .= '<a href="' . $menu_link . '" class="btn eiko_btn_2"><strong>' . Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT') . '</strong></a>';
  endif;
 
  if (!$menu_link):
    //$navbar .='<a href="'.Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichte&Itemid='.$params->get('homelink','').'').'&list=1" class="btn eiko_btn_2"><strong>'.Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT').'</strong></a>';
 
    // Behebt Bug aus J3.8.4   &list=1 funktioniert in Link nicht mehr
-   $navbar .=
-     '<a href="' .
-     Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv') .
-     '" class="btn eiko_btn_2"><strong>' .
-     Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT') .
-     '</strong></a>';
+   $navbar .= '<a href="' . Route::_('index.php?option=com_einsatzkomponente&view=einsatzarchiv') . '" class="btn eiko_btn_2"><strong>' . Text::_('COM_EINSATZKOMPONENTE_UEBERSICHT') . '</strong></a>';
  endif;
 
  if ($prev_id):
-   $navbar .=
-     '<a href="' .
-     Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $prev_id) .
-     '" class="btn eiko_btn_2" title="">';
+   $navbar .= '<a href="' . Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $prev_id) . '" class="btn eiko_btn_2" title="">';
    $navbar .= '<strong>' . Text::_('COM_EINSATZKOMPONENTE_ZURUECK') . '</strong></a>';
  endif;
 
  if ($next_id):
-   $navbar .=
-     '<a href="' .
-     Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $next_id) .
-     '" class=" btn eiko_btn_2" title="">';
+   $navbar .= '<a href="' . Route::_('index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . (int) $next_id) . '" class=" btn eiko_btn_2" title="">';
    $navbar .= '<strong>' . Text::_('COM_EINSATZKOMPONENTE_NAECHSTE') . '</strong></a>';
  endif;
 
- if (
-   Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente') or
-   Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente')
- ):
+ if (Factory::getUser()->authorise('core.edit.own', 'com_einsatzkomponente') or Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente')):
    $user = Factory::getUser();
    $query = 'SELECT created_by FROM #__eiko_einsatzberichte WHERE state="1" AND id ="' . $id . '"';
    $db = Factory::getDBO();
    $db->setQuery($query);
    $result = $db->loadResult();
    if ($user->id == $result or Factory::getUser()->authorise('core.edit', 'com_einsatzkomponente')):
-     $navbar .=
-       '<a href="' .
-       Route::_(
-         'index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $id
-       ) .
-       '" class=" btn eiko_btn_2">';
+     $navbar .= '<a href="' . Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $id) . '" class=" btn eiko_btn_2">';
      $navbar .= '<strong>' . Text::_('COM_EINSATZKOMPONENTE_EDITIEREN') . '</strong></a>';
    endif;
-   if (
-     $user->id == $result or
-     Factory::getUser()->authorise('core.create', 'com_einsatzkomponente')
-   ):
-     $navbar .=
-       '<a href="' .
-       Route::_(
-         'index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' .
-           $id .
-           '&copy=1'
-       ) .
-       '" class=" btn eiko_btn_2">';
+   if ($user->id == $result or Factory::getUser()->authorise('core.create', 'com_einsatzkomponente')):
+     $navbar .= '<a href="' . Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichtform&layout=edit&id=' . $id . '&copy=1') . '" class=" btn eiko_btn_2">';
      $navbar .= '<strong>' . Text::_('COM_EINSATZKOMPONENTE_KOPIEREN') . '</strong></a>';
    endif;
  endif;
@@ -992,16 +872,7 @@ checkUtilVersion(4);
     $eikoversion = $params['version'];
     $version = new Version();
     $params = ComponentHelper::getParams('com_einsatzkomponente');
-    $response = @file(
-      'https://einsatzkomponente.joomla100.com/gateway/validation.php?validation=' .
-        $params->get('validation_key', '0') .
-        '&domain=' .
-        $_SERVER['SERVER_NAME'] .
-        '&version=' .
-        $version->getShortVersion() .
-        '&eikoversion=' .
-        $eikoversion
-    ); // Request absetzen
+    $response = @file('https://einsatzkomponente.joomla100.com/gateway/validation.php?validation=' . $params->get('validation_key', '0') . '&domain=' . $_SERVER['SERVER_NAME'] . '&version=' . $version->getShortVersion() . '&eikoversion=' . $eikoversion); // Request absetzen
     @$response_code = intval($response[1]); // Rückgabewert auslesen
     if ($response_code == '12'):
       $params->set('eiko', '1');
@@ -1021,9 +892,7 @@ checkUtilVersion(4);
       $params->set('eiko', '0');
 
       $db = Factory::getDbo();
-      $db->setQuery(
-        'SELECT manifest_cache FROM #__extensions WHERE name = "com_einsatzkomponente"'
-      );
+      $db->setQuery('SELECT manifest_cache FROM #__extensions WHERE name = "com_einsatzkomponente"');
       $paramms = json_decode($db->loadResult(), true);
       $version = $paramms['version'];
       if ($version != str_replace('Premium', '', $version)):
@@ -1110,13 +979,7 @@ checkUtilVersion(4);
 
         $kat = EinsatzkomponenteHelper::getTickerKat($result[0]->tickerkat);
 
-        $link = Route::_(
-          Uri::root() .
-            'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' .
-            $result[0]->id .
-            '&Itemid=' .
-            $params->get('homelink', '')
-        );
+        $link = Route::_(Uri::root() . 'index.php?option=com_einsatzkomponente&view=einsatzbericht&id=' . $result[0]->id . '&Itemid=' . $params->get('homelink', ''));
 
         $body = '' . '<h2>+++ ' . $result[0]->summary . ' +++</h2>';
         if ($params->get('send_mail_kat', '0')):
@@ -1138,11 +1001,7 @@ checkUtilVersion(4);
         endif;
         if ($result[0]->image):
           if ($params->get('send_mail_image', '0')):
-            $body .=
-              '<img src="' .
-              Uri::root() .
-              $result[0]->image .
-              '" style="margin-left:10px;float:right;height:50%;" alt="Einsatzbild"/>';
+            $body .= '<img src="' . Uri::root() . $result[0]->image . '" style="margin-left:10px;float:right;height:50%;" alt="Einsatzbild"/>';
           endif;
         endif;
         $body .= '</div>';
@@ -1155,13 +1014,7 @@ checkUtilVersion(4);
 
         $send = $mailer->Send();
       }
-      $msg =
-        count($cid) .
-        ' Mail(s) an ' .
-        count($recipient) .
-        ' Empfänger versendet (' .
-        $params->get('mail_empfaenger', $user->email) .
-        ')';
+      $msg = count($cid) . ' Mail(s) an ' . count($recipient) . ' Empfänger versendet (' . $params->get('mail_empfaenger', $user->email) . ')';
     }
     return $msg;
   }
@@ -1412,16 +1265,7 @@ checkUtilVersion(4);
       //Erstelle die Zellen
       if ($params->get('pdf_show_id') == 1) {
         $pdf->SetFont('Arial', '', 8);
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          utf8_decode(
-            Text::_('COM_EINSATZKOMPONENTE_LEGEND_EINSATZBERICHT') .
-              '-' .
-              Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ID') .
-              ':'
-          )
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_LEGEND_EINSATZBERICHT') . '-' . Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ID') . ':'));
         $pdf->Cell($breite_inhalt, $hoehe, $id, 0, 1);
         $pdf->SetFont('Arial', '', 10);
       }
@@ -1434,98 +1278,54 @@ checkUtilVersion(4);
       if ($params->get('pdf_show_kurzbericht') == 1) {
         if ($kurzbericht) {
           $pdf->SetFont('Arial', '', 14);
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_SUMMARY') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_SUMMARY') . ':'));
           $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($kurzbericht), 0, 1);
           $pdf->SetFont('Arial', '', 10);
         }
       }
       if ($params->get('pdf_show_alarmart') == 1) {
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING') . ':')
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ALERTING') . ':'));
         $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($alarmart), 0, 1);
       }
       if ($params->get('pdf_show_einsatzart') == 1) {
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1') . ':')
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATA1') . ':'));
         $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($einsatzart), 0, 1);
       }
       if ($params->get('pdf_show_einsatzkat') == 1) {
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_KATEGORIE') . ':')
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_KATEGORIE') . ':'));
         $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($einsatzkat), 0, 1);
       }
       if ($params->get('pdf_show_ort') == 1) {
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS') . ':')
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_ADDRESS') . ':'));
         $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($ort), 0, 1);
       }
       if ($params->get('pdf_show_alarmzeit') == 1) {
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMESTART') . ':'
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMESTART') . ':');
         $pdf->Cell($breite_inhalt, $hoehe, $beginn, 0, 1);
       }
       if ($params->get('pdf_show_ausfahrzeit') == 1 and $ausrueck != '0000-00-00 00:00:00') {
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE2') . ':'
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DATE2') . ':');
         $pdf->Cell($breite_inhalt, $hoehe, $ausrueck, 0, 1);
       }
       if ($params->get('pdf_show_einsatzende') == 1 and $ende != '0000-00-00 00:00:00') {
-        $pdf->Cell(
-          $breite_beschriftung,
-          $hoehe,
-          Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMEEND') . ':'
-        );
+        $pdf->Cell($breite_beschriftung, $hoehe, Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_TIMEEND') . ':');
         $pdf->Cell($breite_inhalt, $hoehe, $ende, 0, 1);
       }
       if ($params->get('pdf_show_einsatzleiter') == 1) {
         if ($einsatzleiter) {
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS') . ':'));
           $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($einsatzleiter), 0, 1);
         }
       }
       if ($params->get('pdf_show_einsatzfuehrer') == 1) {
         if ($einsatzführer) {
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_BOSS2') . ':'));
           $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($einsatzführer), 0, 1);
         }
       }
       if ($params->get('pdf_show_mannschaft') == 1) {
         if ($mannschaft) {
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_PEOPLE') . ':'));
           $pdf->Cell($breite_inhalt, $hoehe, $mannschaft, 0, 1);
         }
       }
@@ -1534,11 +1334,7 @@ checkUtilVersion(4);
 
       if ($params->get('pdf_show_orgas') == 1) {
         if ($organisationen) {
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSWAHLORGA') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSWAHLORGA') . ':'));
           //$pdf->Cell($breite_inhalt,$hoehe,utf8_decode($organisationen),0,1);
           $pdf->MultiCell(140, $hoehe, utf8_decode($organisationen), 0, 'LR', false);
         }
@@ -1546,11 +1342,7 @@ checkUtilVersion(4);
 
       if ($params->get('pdf_show_fahrzeuge') == 1) {
         if ($fahrzeuge) {
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_VEHICLES') . ':'));
           //$pdf->Cell($breite_inhalt,$hoehe,utf8_decode($fahrzeuge),0,1);
           $pdf->MultiCell(140, $hoehe, utf8_decode($fahrzeuge), 0, 'LR', false);
         }
@@ -1558,11 +1350,7 @@ checkUtilVersion(4);
 
       if ($params->get('pdf_show_ausruestung') == 1) {
         if ($ausruest) {
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSRUESTUNG') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_AUSRUESTUNG') . ':'));
           $pdf->Cell($breite_inhalt, $hoehe, utf8_decode($ausruest), 0, 1);
         }
       }
@@ -1571,11 +1359,7 @@ checkUtilVersion(4);
 
       if ($params->get('pdf_show_langbericht') == 1) {
         if ($bericht) {
-          $pdf->Cell(
-            $breite_beschriftung,
-            $hoehe,
-            utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DESC') . ':')
-          );
+          $pdf->Cell($breite_beschriftung, $hoehe, utf8_decode(Text::_('COM_EINSATZKOMPONENTE_FORM_LBL_EINSATZBERICHT_DESC') . ':'));
           $pdf->MultiCell(150, $hoehe, utf8_decode($bericht), 0, 1);
         }
       }
@@ -1601,11 +1385,9 @@ checkUtilVersion(4);
     }
     //Nachricht bei Erfolg
     if (count($cid) == 1) {
-      $msg =
-        count($cid) . Text::_(' Einsatz wurden in den Ordner "' . $speicherort . '" exportiert.');
+      $msg = count($cid) . Text::_(' Einsatz wurden in den Ordner "' . $speicherort . '" exportiert.');
     } else {
-      $msg =
-        count($cid) . Text::_(' Einsätze wurden in den Ordner "' . $speicherort . '" exportiert.');
+      $msg = count($cid) . Text::_(' Einsätze wurden in den Ordner "' . $speicherort . '" exportiert.');
     }
 
     return $msg;

@@ -27,26 +27,7 @@ class EinsatzbildmanagerModel extends ListModel
   public function __construct($config = [])
   {
     if (empty($config['filter_fields'])) {
-      $config['filter_fields'] = [
-        'id',
-        'a.id',
-        'ordering',
-        'a.ordering',
-        'image',
-        'a.image',
-        'report_id',
-        'a.report_id',
-        'comment',
-        'a.comment',
-        'thumb',
-        'a.thumb',
-        'state',
-        'a.state',
-        'created_by',
-        'a.created_by',
-        'params',
-        'a.params',
-      ];
+      $config['filter_fields'] = ['id', 'a.id', 'ordering', 'a.ordering', 'image', 'a.image', 'report_id', 'a.report_id', 'comment', 'a.comment', 'thumb', 'a.thumb', 'state', 'a.state', 'created_by', 'a.created_by', 'params', 'a.params'];
     }
     parent::__construct($config);
   }
@@ -62,24 +43,11 @@ class EinsatzbildmanagerModel extends ListModel
     // Load the filter state.
     $search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
-    $published = $app->getUserStateFromRequest(
-      $this->context . '.filter.state',
-      'filter_published',
-      '',
-      'string'
-    );
+    $published = $app->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
     $this->setState('filter.state', $published);
 
     //Filtering created_by
-    $this->setState(
-      'filter.created_by',
-      $app->getUserStateFromRequest(
-        $this->context . '.filter.created_by',
-        'filter_created_by',
-        '',
-        'string'
-      )
-    );
+    $this->setState('filter.created_by', $app->getUserStateFromRequest($this->context . '.filter.created_by', 'filter_created_by', '', 'string'));
 
     // Load the parameters.
     $params = ComponentHelper::getParams('com_einsatzkomponente');

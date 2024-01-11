@@ -23,15 +23,10 @@ HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
 
 // Import CSS
-HTMLHelper::_(
-  'stylesheet',
-  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
-);
+HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 ?>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
-); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="gmapkonfiguration-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="gmapkonfiguration-form" class="form-validate">
   <div class="row-fluid">
     <div class="span10 form-horizontal">
       <fieldset class="adminform">
@@ -76,20 +71,14 @@ HTMLHelper::_(
           <li><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_2'); ?></li>
 
           <li> <!-- Button to trigger modal -->
-            <button type="button" class="btn-primary" data-bs-toggle="modal" data-bs-target="#eiko-changelog"><?php echo Text::_(
-              'COM_EINSATZKOMPONENTE_GMAP_4'
-            ); ?></button>
+            <button type="button" class="btn-primary" data-bs-toggle="modal" data-bs-target="#eiko-changelog"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_4'); ?></button>
           </li>
         </ul>
       </div>
 
       <?php if ($this->params->get('gmap_action', '0') == '1'): ?>
-        <input class='btn btn-warning' type='button' onclick='clearMap();return false;' value='<?php echo Text::_(
-          'COM_EINSATZKOMPONENTE_GMAP_KOORDINATEN_LOESCHEN'
-        ); ?>' />
-        <input class='btn btn-warning' type='button' onclick='resetarea()' value='<?php echo Text::_(
-          'COM_EINSATZKOMPONENTE_GMAP_KOORDINATENLISTE_ZUUECKSETZEN'
-        ); ?>' />
+        <input class='btn btn-warning' type='button' onclick='clearMap();return false;' value='<?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATEN_LOESCHEN'); ?>' />
+        <input class='btn btn-warning' type='button' onclick='resetarea()' value='<?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_KOORDINATENLISTE_ZUUECKSETZEN'); ?>' />
       <?php endif; ?>
 
 
@@ -98,9 +87,7 @@ HTMLHelper::_(
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="eiko-changelogLabel"><?php echo Text::_(
-                'COM_EINSATZKOMPONENTE_GMAP_5'
-              ); ?></h5>
+              <h5 class="modal-title" id="eiko-changelogLabel"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_5'); ?></h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -123,9 +110,7 @@ HTMLHelper::_(
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_(
-                'COM_EINSATZKOMPONENTE_GMAP_6'
-              ); ?></button>
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_6'); ?></button>
               <!--	<button type="button" class="btn btn-primary">Save changes</button> -->
             </div>
           </div>
@@ -135,21 +120,13 @@ HTMLHelper::_(
       <hr>
   </div>
   <?php if ($this->params->get('gmap_action', '0') == '1'): ?>
-    <div id="map" style="width: 810px; height: 400px"><?php echo Text::_(
-      'COM_EINSATZKOMPONENTE_GMAP_7'
-    ); ?></div>
+    <div id="map" style="width: 810px; height: 400px"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_7'); ?></div>
   <?php endif; ?>
 
   <?php if ($this->params->get('gmap_action', '0') == '2'): ?>
-    <div id="map_canvas" style="width: 810px; height: 400px"><?php echo Text::_(
-      'COM_EINSATZKOMPONENTE_GMAP_7'
-    ); ?></div>
+    <div id="map_canvas" style="width: 810px; height: 400px"><?php echo Text::_('COM_EINSATZKOMPONENTE_GMAP_7'); ?></div>
     <?php OsmHelper::installOsmMap(); ?>
-    <?php OsmHelper::callOsmMap(
-      $this->gmap_config->gmap_zoom_level,
-      $this->gmap_config->start_lat,
-      $this->gmap_config->start_lang
-    ); ?>
+    <?php OsmHelper::callOsmMap($this->gmap_config->gmap_zoom_level, $this->gmap_config->start_lat, $this->gmap_config->start_lang); ?>
     <?php OsmHelper::addRightClickOsmMap(); ?>
     <?php OsmHelper::editPolygonMap($this->einsatzgebiet, 'blue'); ?>
   <?php endif; ?>
@@ -210,6 +187,8 @@ HTMLHelper::_(
 
   // Einsatzgebiet für GMap-Karte vorbereiten
 
+  // Einsatzgebiet für GMap-Karte vorbereiten
+
   $area = substr($this->item->gmap_alarmarea, -1);
   if ($area == '|') {
     $gmap_alarmarea = substr($this->item->gmap_alarmarea, 0, -1);
@@ -237,10 +216,7 @@ HTMLHelper::_(
 
   <!--Javascript für Gmap-Karte-->
 
-  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $this->params->get(
-    'gmapkey',
-    ''
-  ); ?>"></script>
+  <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=<?php echo $this->params->get('gmapkey', ''); ?>"></script>
 
   <script type="text/javascript">
     //<![CDATA[
@@ -405,8 +381,7 @@ HTMLHelper::_(
 
       var g = google.maps;
       var opts_map = {
-        center: new g.LatLng(<?php echo $this->item->start_lat; ?>, <?php echo $this->item
-  ->start_lang; ?>),
+        center: new g.LatLng(<?php echo $this->item->start_lat; ?>, <?php echo $this->item->start_lang; ?>),
         zoom: <?php echo $this->item->gmap_zoom_level; ?>,
         mapTypeId: g.MapTypeId.<?php echo $this->item->gmap_onload; ?>,
         streetViewControl: false,
@@ -549,8 +524,7 @@ HTMLHelper::_(
 
       markers.length = 0;
       count = 0;
-      document.getElementById('jform_gmap_alarmarea').innerHTML = '<?php echo $this->item
-        ->gmap_alarmarea; ?>';
+      document.getElementById('jform_gmap_alarmarea').innerHTML = '<?php echo $this->item->gmap_alarmarea; ?>';
 
       poly.setMap(null);
 

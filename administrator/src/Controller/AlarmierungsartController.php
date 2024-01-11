@@ -20,12 +20,8 @@ use Joomla\CMS\MVC\Factory\MVCFactoryInterface;
  */
 class AlarmierungsartController extends FormController
 {
-  function __construct(
-    $config = [],
-    MVCFactoryInterface $factory = null,
-    $app = null,
-    $input = null
-  ) {
+  function __construct($config = [], MVCFactoryInterface $factory = null, $app = null, $input = null)
+  {
     $this->view_list = 'alarmierungsarten';
     parent::__construct($config, $factory, $app, $input);
   }

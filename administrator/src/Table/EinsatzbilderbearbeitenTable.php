@@ -41,13 +41,7 @@ class EinsatzbilderbearbeitenTable extends Table
    */
   public function bind($array, $ignore = '')
   {
-    if (
-      !Factory::getUser()->authorise(
-        'core.edit.state',
-        'com_einsatzkomponente.einsatzbilderbearbeiten.' . $array['id']
-      ) &&
-      $array['state'] == 1
-    ) {
+    if (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente.einsatzbilderbearbeiten.' . $array['id']) && $array['state'] == 1) {
       $array['state'] = 0;
     }
     if (!isset($array['created_by']) || $array['created_by'] == 0) {
@@ -63,12 +57,7 @@ class EinsatzbilderbearbeitenTable extends Table
       $registry->loadArray($array['metadata']);
       $array['metadata'] = (string) $registry;
     }
-    if (
-      !Factory::getUser()->authorise(
-        'core.admin',
-        'com_einsatzkomponente.einsatzbilderbearbeiten.' . $array['id']
-      )
-    ) {
+    if (!Factory::getUser()->authorise('core.admin', 'com_einsatzkomponente.einsatzbilderbearbeiten.' . $array['id'])) {
       $actions = Factory::getACL()->getActions('com_einsatzkomponente', 'einsatzbilderbearbeiten');
       $default_actions = Factory::getACL()
         ->getAssetRules('com_einsatzkomponente.einsatzbilderbearbeiten.' . $array['id'])
@@ -153,17 +142,7 @@ class EinsatzbilderbearbeitenTable extends Table
       $checkin = ' AND (checked_out = 0 OR checked_out = ' . (int) $userId . ')';
     }
     // Update the publishing state for rows with the given primary keys.
-    $this->_db->setQuery(
-      'UPDATE ' .
-        $this->_tbl .
-        '' .
-        ' SET state = ' .
-        (int) $state .
-        ' WHERE (' .
-        $where .
-        ')' .
-        $checkin
-    );
+    $this->_db->setQuery('UPDATE ' . $this->_tbl . '' . ' SET state = ' . (int) $state . ' WHERE (' . $where . ')' . $checkin);
     try {
       $this->_db->execute();
     } catch (\RuntimeException $e) {

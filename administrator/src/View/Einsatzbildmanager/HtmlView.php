@@ -62,10 +62,7 @@ class HtmlView extends BaseHtmlView
   {
     $state = $this->get('State');
     $canDo = EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
-    ToolbarHelper::title(
-      Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER'),
-      'einsatzbildmanager.png'
-    );
+    ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER'), 'einsatzbildmanager.png');
     //Check if the form exists before showing the add/edit buttons
 
     if ($canDo->get('core.create')) {
@@ -78,20 +75,8 @@ class HtmlView extends BaseHtmlView
     if ($canDo->get('core.edit.state')) {
       if (isset($this->items[0]->state)) {
         ToolbarHelper::divider();
-        ToolbarHelper::custom(
-          'einsatzbildmanager.publish',
-          'publish.png',
-          'publish_f2.png',
-          'JTOOLBAR_PUBLISH',
-          true
-        );
-        ToolbarHelper::custom(
-          'einsatzbildmanager.unpublish',
-          'unpublish.png',
-          'unpublish_f2.png',
-          'JTOOLBAR_UNPUBLISH',
-          true
-        );
+        ToolbarHelper::custom('einsatzbildmanager.publish', 'publish.png', 'publish_f2.png', 'JTOOLBAR_PUBLISH', true);
+        ToolbarHelper::custom('einsatzbildmanager.unpublish', 'unpublish.png', 'unpublish_f2.png', 'JTOOLBAR_UNPUBLISH', true);
       } elseif (isset($this->items[0])) {
         //If this component does not use state then show a direct delete button as we can not trash
         ToolbarHelper::deleteList('', 'einsatzbildmanager.delete', 'JTOOLBAR_DELETE');
@@ -101,13 +86,7 @@ class HtmlView extends BaseHtmlView
       //			    ToolbarHelper::archiveList('einsatzbildmanager.archive','JTOOLBAR_ARCHIVE');
       //            }
       if (isset($this->items[0]->checked_out)) {
-        ToolbarHelper::custom(
-          'einsatzbildmanager.checkin',
-          'checkin.png',
-          'checkin_f2.png',
-          'JTOOLBAR_CHECKIN',
-          true
-        );
+        ToolbarHelper::custom('einsatzbildmanager.checkin', 'checkin.png', 'checkin_f2.png', 'JTOOLBAR_CHECKIN', true);
       }
     }
 
@@ -134,30 +113,14 @@ class HtmlView extends BaseHtmlView
     //Filter for the field created_by
     $this->extra_sidebar = '<div class="div_side_filter">';
     $this->extra_sidebar .= '<small><label for="filter_created_by">Erstellt von</label></small>';
-    $this->extra_sidebar .= ListHelper::users(
-      'filter_created_by',
-      $this->state->get('filter.created_by'),
-      1,
-      'onchange="this.form.submit();"'
-    );
+    $this->extra_sidebar .= ListHelper::users('filter_created_by', $this->state->get('filter.created_by'), 1, 'onchange="this.form.submit();"');
     $this->extra_sidebar .= '</div>';
 
     $options = [];
     $options[] = HTMLHelper::_('select.option', '1', 'JPUBLISHED');
     $options[] = HTMLHelper::_('select.option', '0', 'JUNPUBLISHED');
     $options[] = HTMLHelper::_('select.option', '*', 'JALL');
-    Sidebar::addFilter(
-      Text::_('JOPTION_SELECT_PUBLISHED'),
-      'filter_published',
-      HTMLHelper::_(
-        'select.options',
-        $options,
-        'value',
-        'text',
-        $this->state->get('filter.state'),
-        true
-      )
-    );
+    Sidebar::addFilter(Text::_('JOPTION_SELECT_PUBLISHED'), 'filter_published', HTMLHelper::_('select.options', $options, 'value', 'text', $this->state->get('filter.state'), true));
   }
 
   protected function getSortFields()

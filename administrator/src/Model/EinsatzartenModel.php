@@ -27,28 +27,7 @@ class EinsatzartenModel extends ListModel
   public function __construct($config = [])
   {
     if (empty($config['filter_fields'])) {
-      $config['filter_fields'] = [
-        'id',
-        'a.id',
-        'title',
-        'a.title',
-        'marker',
-        'a.marker',
-        'beschr',
-        'a.beschr',
-        'icon',
-        'a.icon',
-        'list_icon',
-        'a.list_icon',
-        'ordering',
-        'a.ordering',
-        'state',
-        'a.state',
-        'created_by',
-        'a.created_by',
-        'params',
-        'a.params',
-      ];
+      $config['filter_fields'] = ['id', 'a.id', 'title', 'a.title', 'marker', 'a.marker', 'beschr', 'a.beschr', 'icon', 'a.icon', 'list_icon', 'a.list_icon', 'ordering', 'a.ordering', 'state', 'a.state', 'created_by', 'a.created_by', 'params', 'a.params'];
     }
 
     parent::__construct($config);
@@ -68,12 +47,7 @@ class EinsatzartenModel extends ListModel
     $search = $app->getUserStateFromRequest($this->context . '.filter.search', 'filter_search');
     $this->setState('filter.search', $search);
 
-    $published = $app->getUserStateFromRequest(
-      $this->context . '.filter.state',
-      'filter_published',
-      '',
-      'string'
-    );
+    $published = $app->getUserStateFromRequest($this->context . '.filter.state', 'filter_published', '', 'string');
     $this->setState('filter.state', $published);
 
     // Load the parameters.

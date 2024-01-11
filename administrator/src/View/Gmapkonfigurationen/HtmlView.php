@@ -62,10 +62,7 @@ class HtmlView extends BaseHtmlView
     $state = $this->get('State');
     $canDo = EinsatzkomponenteHelper::getActions($state->get('filter.category_id'));
 
-    ToolbarHelper::title(
-      Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN'),
-      'gmapkonfigurationen.png'
-    );
+    ToolbarHelper::title(Text::_('COM_EINSATZKOMPONENTE_TITLE_GMAPKONFIGURATIONEN'), 'gmapkonfigurationen.png');
 
     if ($canDo->get('core.create')) {
       ToolbarHelper::addNew('gmapkonfiguration.add', 'JTOOLBAR_NEW');

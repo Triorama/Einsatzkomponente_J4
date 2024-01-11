@@ -19,10 +19,7 @@ HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('behavior.formvalidator');
 HTMLHelper::_('behavior.keepalive');
 HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_(
-  'stylesheet',
-  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
-);
+HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 $params = ComponentHelper::getParams('com_einsatzkomponente');
 ?>
@@ -36,9 +33,7 @@ $params = ComponentHelper::getParams('com_einsatzkomponente');
   $gmap_longitude = $this->gmap_config->start_lang;
 } ?>
 
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id
-); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&layout=edit&id=' . (int) $this->item->id); ?>" method="post" enctype="multipart/form-data" name="adminForm" id="organisation-form" class="form-validate">
 	<div class="row-fluid">
 		<div class="span10 form-horizontal">
             <fieldset class="adminform">
@@ -65,18 +60,13 @@ echo Text::_('COM_EINSATZKOMPONENTE_ZUGORDNETE_FAHRZEUGE') . ':';
 echo '</div>';
 echo '<div class="controls"><ul class="adminformlist">';
 $database = Factory::getDBO();
-$query =
-  'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' .
-  $this->item->id .
-  '" ORDER BY ordering,state ASC ';
+$query = 'SELECT * FROM #__eiko_fahrzeuge WHERE department = "' . $this->item->id . '" ORDER BY ordering,state ASC ';
 $database->setQuery($query);
 $total = $database->loadObjectList();
 if ($total) {
   foreach ($total as $totale):
     echo '<li>';
-    echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' .
-      $totale->id .
-      '); ">';
+    echo '<a title="Fahrzeug bearbeiten" href="index.php?option=com_einsatzkomponente&task=einsatzfahrzeug.edit&id=' . $totale->id . '); ">';
     echo $totale->name;
     if ($totale->detail2):
       echo ' ( ' . $totale->detail2 . ' )';
@@ -94,9 +84,7 @@ if ($total) {
     echo '</li>';
   endforeach;
 } else {
-  echo '<span class="label label-important">' .
-    Text::_('COM_EINSATZKOMPONENTE_KEINE_FAHRZEUGE') .
-    '</span>';
+  echo '<span class="label label-important">' . Text::_('COM_EINSATZKOMPONENTE_KEINE_FAHRZEUGE') . '</span>';
 }
 echo '</ul></div></div>';
 } else {}
@@ -154,10 +142,7 @@ echo '</ul></div></div>';
 				<div class="controls"><?php echo $this->form->getInput('created_by'); ?></div>
 			</div>
 -->            
-            <?php if (
-              $params->get('gmap_action', '0') == '1' or
-              $params->get('gmap_action', '0') == '2'
-            ): ?>
+            <?php if ($params->get('gmap_action', '0') == '1' or $params->get('gmap_action', '0') == '2'): ?>
 	           <!--Slider für Ortsangaben-->
             <?php $gmap_config = $this->gmap_config;
               // GMap-Config Daten laden
@@ -202,10 +187,7 @@ echo '</ul></div></div>';
 
               <!-- Javascript für GMap-Anzeige -->
 			  
-<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get(
-  'gmapkey',
-  'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'
-); ?>&callback=initMap&v=weekly"
+<script src="https://maps.googleapis.com/maps/api/js?key=<?php echo $params->get('gmapkey', 'AIzaSyAuUYoAYc4DI2WBwSevXMGhIwF1ql6mV4E'); ?>&callback=initMap&v=weekly"
       async
     ></script>
 

@@ -48,14 +48,7 @@ class GmapkonfigurationTable extends Table
   {
     $input = Factory::getApplication()->input;
     $task = $input->getString('task', '');
-    if (
-      ($task == 'save' || $task == 'apply') &&
-      (!Factory::getUser()->authorise(
-        'core.edit.state',
-        'com_einsatzkomponente.gmapkonfiguration.' . $array['id']
-      ) &&
-        $array['state'] == 1)
-    ) {
+    if (($task == 'save' || $task == 'apply') && (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente.gmapkonfiguration.' . $array['id']) && $array['state'] == 1)) {
       $array['state'] = 0;
     }
 
@@ -70,12 +63,7 @@ class GmapkonfigurationTable extends Table
       $registry->loadArray($array['metadata']);
       $array['metadata'] = (string) $registry;
     }
-    if (
-      !Factory::getUser()->authorise(
-        'core.admin',
-        'com_einsatzkomponente.gmapkonfiguration.' . $array['id']
-      )
-    ) {
+    if (!Factory::getUser()->authorise('core.admin', 'com_einsatzkomponente.gmapkonfiguration.' . $array['id'])) {
       $actions = Factory::getACL()->getActions('com_einsatzkomponente', 'gmapkonfiguration');
       $default_actions = Factory::getACL()
         ->getAssetRules('com_einsatzkomponente.gmapkonfiguration.' . $array['id'])
@@ -169,17 +157,7 @@ class GmapkonfigurationTable extends Table
     }
 
     // Update the publishing state for rows with the given primary keys.
-    $this->_db->setQuery(
-      'UPDATE ' .
-        $this->_tbl .
-        '' .
-        ' SET state = ' .
-        (int) $state .
-        ' WHERE (' .
-        $where .
-        ')' .
-        $checkin
-    );
+    $this->_db->setQuery('UPDATE ' . $this->_tbl . '' . ' SET state = ' . (int) $state . ' WHERE (' . $where . ')' . $checkin);
     try {
       $this->_db->execute();
     } catch (\RuntimeException $e) {

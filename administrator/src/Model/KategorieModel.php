@@ -55,10 +55,7 @@ class KategorieModel extends AdminModel
   protected function loadFormData()
   {
     // Check the session for previously entered form data.
-    $data = Factory::getApplication()->getUserState(
-      'com_einsatzkomponente.edit.kategorie.data',
-      []
-    );
+    $data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.kategorie.data', []);
     if (empty($data)) {
       $data = $this->getItem();
 

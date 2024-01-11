@@ -21,10 +21,7 @@ HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('bootstrap.renderModal', 'a.modal');
 HTMLHelper::_('bootstrap.tooltip');
 HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_(
-  'stylesheet',
-  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
-);
+HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 // Versions-Nummer
 $db = Factory::getDbo();
 $db->setQuery('SELECT manifest_cache FROM #__extensions WHERE name = "com_einsatzkomponente"');
@@ -36,9 +33,7 @@ $userId = $user->get('id');
 <?php if (!empty($this->extra_sidebar)) {
   $this->sidebar .= $this->extra_sidebar;
 } ?>
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=kontrollcenter'
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=kontrollcenter'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if (!empty($this->sidebar)): ?>
 	<div id="j-sidebar-container" class="span2">
 		<?php
@@ -51,90 +46,54 @@ $userId = $user->get('id');
 <?php endif; ?>
 
 	<div class="center">
-		<?php echo '<h2>' .
-    Text::_('COM_EINSATZKOMPONENTE_KONTROLLCENTER_TITLE') .
-    ' <span class="badge bg-secondary">Joomla 4</span></h2>'; ?>
+		<?php echo '<h2>' . Text::_('COM_EINSATZKOMPONENTE_KONTROLLCENTER_TITLE') . ' <span class="badge bg-secondary">Joomla 4</span></h2>'; ?>
 	</div>
 					
                
         
 			  <div >
 	    					<a class="btn" href="index.php?option=com_einsatzkomponente&view=einsatzberichte">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/liste.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE'
-          ); ?></span>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE'); ?>" src="components/com_einsatzkomponente/assets/images/menu/liste.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBERICHTE'); ?></span>
 	    					</a>
 							
 	    					<a class="btn" href="index.php?option=com_einsatzkomponente&view=kategorien">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzarten.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN'
-          ); ?></span>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN'); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzarten.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_KATEGORIEN'); ?></span>
 	    					</a>   						
 						
 	    					<a class="btn" href="index.php?option=com_einsatzkomponente&view=einsatzarten">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZARTEN'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzarten.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZARTEN'
-          ); ?></span>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZARTEN'); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzarten.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZARTEN'); ?></span>
 	    					</a>    						
 						
 	    					<a class="btn" href="index.php?option=com_einsatzkomponente&view=organisationen">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_ORGANISATIONEN'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/organisationen.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_ORGANISATIONEN'
-          ); ?></span>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_ORGANISATIONEN'); ?>" src="components/com_einsatzkomponente/assets/images/menu/organisationen.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_ORGANISATIONEN'); ?></span>
 	    					</a>    						
 						
 	    					<a class="btn" href="index.php?option=com_einsatzkomponente&view=alarmierungsarten">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/alarmierungsarten.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN'
-          ); ?></span>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN'); ?>" src="components/com_einsatzkomponente/assets/images/menu/alarmierungsarten.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_ALARMIERUNGSARTEN'); ?></span>
 	    					</a>    						
 						
 	    					<a class="btn" href="index.php?option=com_einsatzkomponente&view=einsatzfahrzeuge">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzfahrzeuge.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE'
-          ); ?></span>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE'); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzfahrzeuge.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZFAHRZEUGE'); ?></span>
 	    					</a>
     						
 	    					<!--<a class="btn" href="index.php?option=com_einsatzkomponente&view=beispiel">
-		    				<img  style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_BEISPIEL'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/beispiel.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_BEISPIEL'
-          ); ?></span>
+		    				<img  style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_BEISPIEL'); ?>" src="components/com_einsatzkomponente/assets/images/menu/beispiel.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_BEISPIEL'); ?></span>
 	    					</a>-->
     					
 	    					<a class="btn" href="index.php?option=com_einsatzkomponente&view=einsatzbildmanager">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzbildmanager.png" /><br/>
-		    				<span style="font-size:11px;"><?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER'
-          ); ?></span>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER'); ?>" src="components/com_einsatzkomponente/assets/images/menu/einsatzbildmanager.png" /><br/>
+		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_TITLE_EINSATZBILDMANAGER'); ?></span>
 	    					</a>
 
 	    					<a class="btn" href="index.php?option=com_config&view=component&component=com_einsatzkomponente">
-		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_(
-            'COM_EINSATZKOMPONENTE_OPTIONS'
-          ); ?>" src="components/com_einsatzkomponente/assets/images/menu/einstellungen.png" /><br/>
+		    				<img style="width:50px;height:50px;" alt="<?php echo Text::_('COM_EINSATZKOMPONENTE_OPTIONS'); ?>" src="components/com_einsatzkomponente/assets/images/menu/einstellungen.png" /><br/>
 		    				<span style="font-size:11px;"><?php echo Text::_('COM_EINSATZKOMPONENTE_OPTIONS'); ?></span>
 	    					</a>
 
@@ -254,9 +213,7 @@ $userId = $user->get('id');
 <div class="span4">
 <div class="alert alert-info" style=" float:left;">
 <a target="_blank" href="https://www.einsatzkomponente.de/index.php"><img src="<?php echo Uri::base(); ?>components/com_einsatzkomponente/assets/images/komponentenbanner.jpg" style="float:left; margin-right:20px; padding-right:20px;"/></a>
-<span class="label label-important" style="padding: 5px 5px 5px 5px;font-size:larger;"><?php echo Text::_(
-  'COM_EINSATZKOMPONENTE_KONTROLLCENTER_PAYPAL_1'
-); ?></span><br/><br/> 
+<span class="label label-important" style="padding: 5px 5px 5px 5px;font-size:larger;"><?php echo Text::_('COM_EINSATZKOMPONENTE_KONTROLLCENTER_PAYPAL_1'); ?></span><br/><br/> 
 <span class="label label-important" style="padding: 5px 5px 5px 5px;font-size:larger;"><?php echo 'Bzw. Werde Premium-User'; ?></span><br/><br/>
 <?php echo Text::_('COM_EINSATZKOMPONENTE_KONTROLLCENTER_PAYPAL_2'); ?>
 
@@ -297,22 +254,13 @@ $userId = $user->get('id');
       case '=':
         break;
       case '-':
-        $ret .=
-          '<li><span style="font-size:8pt;color:#ff0000;">Removed:</span> ' .
-          substr($line, 1) .
-          '</li>';
+        $ret .= '<li><span style="font-size:8pt;color:#ff0000;">Removed:</span> ' . substr($line, 1) . '</li>';
         break;
       case '+':
-        $ret .=
-          '<li><span style="font-size:8pt;color:#ff0000;">Added:</span> ' .
-          substr($line, 1) .
-          '</li>';
+        $ret .= '<li><span style="font-size:8pt;color:#ff0000;">Added:</span> ' . substr($line, 1) . '</li>';
         break;
       case '#':
-        $ret .=
-          '<li><span style="font-size:8pt;color:#00e600;">Bugfix:</span> ' .
-          substr($line, 1) .
-          '</li>';
+        $ret .= '<li><span style="font-size:8pt;color:#00e600;">Bugfix:</span> ' . substr($line, 1) . '</li>';
         break;
 
       default:

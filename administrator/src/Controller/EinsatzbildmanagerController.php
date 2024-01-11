@@ -31,11 +31,8 @@ class EinsatzbildmanagerController extends AdminController
    * Proxy for getModel.
    * @since	1.6
    */
-  public function getModel(
-    $name = 'einsatzbilderbearbeiten',
-    $prefix = 'Administrator',
-    $config = []
-  ) {
+  public function getModel($name = 'einsatzbilderbearbeiten', $prefix = 'Administrator', $config = [])
+  {
     $model = parent::getModel($name, $prefix, ['ignore_request' => true]);
     return $model;
   }
@@ -76,10 +73,7 @@ class EinsatzbildmanagerController extends AdminController
     $cid = Factory::getApplication()->input->get('cid', [], 'array');
 
     if (!is_array($cid) || count($cid) < 1) {
-      Factory::getApplication()->enqueueMessage(
-        Text::_($this->text_prefix . '_NO_ITEM_SELECTED'),
-        'error'
-      );
+      Factory::getApplication()->enqueueMessage(Text::_($this->text_prefix . '_NO_ITEM_SELECTED'), 'error');
     } else {
       // Get the model.
       $model = $this->getModel();
@@ -101,9 +95,7 @@ class EinsatzbildmanagerController extends AdminController
       $this->postDeleteHook($model, $cid);
     endif;
 
-    $this->setRedirect(
-      Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false)
-    );
+    $this->setRedirect(Route::_('index.php?option=' . $this->option . '&view=' . $this->view_list, false));
   }
 
   function thumb()
@@ -132,8 +124,7 @@ class EinsatzbildmanagerController extends AdminController
       echo ini_get('max_execution_time') . '<br/>';
     }
 
-    $uploadPath_thumb =
-      $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . '/thumbs/';
+    $uploadPath_thumb = $params->get('uploadpath', 'images/com_einsatzkomponente/einsatzbilder') . '/thumbs/';
     $thumbwidth = $params->get('thumbwidth', '100');
     $thumbhigh = $params->get('thumbhigh', '100');
     $quadratisch = $params->get('quadratisch', 'true');
@@ -168,8 +159,7 @@ class EinsatzbildmanagerController extends AdminController
         $n++;
         makeThumb($source, $thumbwidth, $thumbhigh, $quadratisch, 80, $target); // Funktion makeThumb aufrufen
         $db = &Factory::getDBO();
-        $query =
-          'UPDATE #__eiko_images SET thumb="' . $rThumbFileName . '" WHERE id = "' . $cid[$i] . '"';
+        $query = 'UPDATE #__eiko_images SET thumb="' . $rThumbFileName . '" WHERE id = "' . $cid[$i] . '"';
         $db->setQuery($query);
         try {
           $db->execute();
@@ -180,10 +170,7 @@ class EinsatzbildmanagerController extends AdminController
         }
         $msg = $n . Text::_('Thumb(s) erstellt');
       } else {
-        Factory::getApplication()->enqueueMessage(
-          Text::_('Das Einsatzbild "' . $source . '" existiert nicht !'),
-          'error'
-        );
+        Factory::getApplication()->enqueueMessage(Text::_('Das Einsatzbild "' . $source . '" existiert nicht !'), 'error');
       }
     } //for
     $this->setRedirect('index.php?option=com_einsatzkomponente&view=einsatzbildmanager', $msg); // ### 110421 -
@@ -203,15 +190,7 @@ function einsatzbild($id)
 function makeThumb($bild, $maxbreite, $maxhoehe, $quadratisch, $qualitaet = 80, $speichern = null)
 {
   // Bilddaten auslesen
-  list(
-    $original_breite,
-    $original_hoehe,
-    $typ,
-    $imgtag,
-    $bits,
-    $channels,
-    $mimetype,
-  ) = @getimagesize($bild);
+  list($original_breite, $original_hoehe, $typ, $imgtag, $bits, $channels, $mimetype) = @getimagesize($bild);
 
   switch ($typ) {
     case '1':
@@ -245,59 +224,19 @@ function makeThumb($bild, $maxbreite, $maxhoehe, $quadratisch, $qualitaet = 80, 
     }
     // Thumbnail erstellen
     $thumb = imagecreatetruecolor($thumb_breite, $thumb_hoehe);
-    imagecopyresampled(
-      $thumb,
-      $originalbild,
-      0,
-      0,
-      0,
-      0,
-      $thumb_breite,
-      $thumb_hoehe,
-      $original_breite,
-      $original_hoehe
-    );
+    imagecopyresampled($thumb, $originalbild, 0, 0, 0, 0, $thumb_breite, $thumb_hoehe, $original_breite, $original_hoehe);
   } elseif ($quadratisch === 'true') {
     // Kantenlänge für quadratisches Thumbnail ermitteln
     $originalkantenlaenge = $original_breite < $original_hoehe ? $original_breite : $original_hoehe;
     $tmpbild = imagecreatetruecolor($originalkantenlaenge, $originalkantenlaenge);
     if ($original_breite > $original_hoehe) {
-      imagecopy(
-        $tmpbild,
-        $originalbild,
-        0,
-        0,
-        round($original_breite - $originalkantenlaenge) / 2,
-        0,
-        $original_breite,
-        $original_hoehe
-      );
+      imagecopy($tmpbild, $originalbild, 0, 0, round($original_breite - $originalkantenlaenge) / 2, 0, $original_breite, $original_hoehe);
     } elseif ($original_breite <= $original_hoehe) {
-      imagecopy(
-        $tmpbild,
-        $originalbild,
-        0,
-        0,
-        0,
-        round($original_hoehe - $originalkantenlaenge) / 2,
-        $original_breite,
-        $original_hoehe
-      );
+      imagecopy($tmpbild, $originalbild, 0, 0, 0, round($original_hoehe - $originalkantenlaenge) / 2, $original_breite, $original_hoehe);
     }
     // Thumbnail erstellen
     $thumb = imagecreatetruecolor($maxbreite, $maxbreite);
-    imagecopyresampled(
-      $thumb,
-      $tmpbild,
-      0,
-      0,
-      0,
-      0,
-      $maxbreite,
-      $maxbreite,
-      $originalkantenlaenge,
-      $originalkantenlaenge
-    );
+    imagecopyresampled($thumb, $tmpbild, 0, 0, 0, 0, $maxbreite, $maxbreite, $originalkantenlaenge, $originalkantenlaenge);
   }
 
   // Korrekten Image Header senden, wenn nicht gespeichert wird
