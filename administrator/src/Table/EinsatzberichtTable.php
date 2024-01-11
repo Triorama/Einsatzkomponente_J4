@@ -14,14 +14,26 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\Registry\Registry;
 use Joomla\CMS\Language\Text;
+use Joomla\CMS\Log\Log;
+use Joomla\CMS\Log\Logger;
+use Joomla\CMS\Service\Provider\Logger as ProviderLogger;
+use Joomla\CMS\Tag\TaggableTableInterface;
+use Joomla\CMS\Tag\TaggableTableTrait;
 use Joomla\Utilities\ArrayHelper;
 use Joomla\Database\DatabaseDriver;
+use Joomla\CMS\Log\Log as CMSLog;
 
 /**
  * einsatzbericht Table class
  */
-class EinsatzberichtTable extends Table
+class EinsatzberichtTable extends Table implements TaggableTableInterface
 {
+  use TaggableTableTrait;
+
+  public function getTypeAlias()
+  {
+    return $this->typeAlias;
+  }
   /**
    * Constructor
    *
@@ -29,6 +41,7 @@ class EinsatzberichtTable extends Table
    */
   public function __construct(DatabaseDriver $db)
   {
+    $this->typeAlias = 'com_einsatzkomponente.einsatzbericht';
     parent::__construct('#__eiko_einsatzberichte', 'id', $db);
     // Set the alias since the column is called state
     $this->setColumnAlias('published', 'state');
@@ -43,6 +56,10 @@ class EinsatzberichtTable extends Table
    */
   public function bind($array, $ignore = '')
   {
+    CMSLog::addLogger(['logger' => 'formattedtext', 'text_file' => 'com_einsatzkomponente.log.php'], CMSLog::ALL, ['com_einsatzkomponente.log']);
+    $newarray = json_encode($array);
+    CMSLog::add($newarray, CMSLog::INFO, 'com_einsatzkomponente.log');
+
     $array['updatedate'] = HTMLHelper::date('now', 'Y-m-d H:i:s');
 
     //Support for multiple or not foreign key field: auswahl_orga
@@ -78,7 +95,7 @@ class EinsatzberichtTable extends Table
       $array['ausruestung'] = '';
     }
 
-    //Support for multiple or not foreign key field: ausruestung
+    //Support for multiple or not foreign key field: params
     if (isset($array['params'])) {
       if (is_array($array['params'])) {
         $array['params'] = implode(',', $array['params']);
@@ -89,13 +106,7 @@ class EinsatzberichtTable extends Table
       $array['params'] = '';
     }
 
-    if (
-      !Factory::getUser()->authorise(
-        'core.edit.state',
-        'com_einsatzkomponente.einsatzbericht.' . $array['id']
-      ) &&
-      $array['state'] == 1
-    ) {
+    if (!Factory::getUser()->authorise('core.edit.state', 'com_einsatzkomponente.einsatzbericht.' . $array['id']) && $array['state'] == 1) {
       $array['state'] = 0;
     }
     if (!isset($array['modified_by'])) {
@@ -205,17 +216,7 @@ class EinsatzberichtTable extends Table
       $checkin = ' AND (checked_out = 0 OR checked_out = ' . (int) $userId . ')';
     }
     // Update the publishing state for rows with the given primary keys.
-    $this->_db->setQuery(
-      'UPDATE ' .
-        $this->_tbl .
-        '' .
-        ' SET state = ' .
-        (int) $state .
-        ' WHERE (' .
-        $where .
-        ')' .
-        $checkin
-    );
+    $this->_db->setQuery('UPDATE ' . $this->_tbl . '' . ' SET state = ' . (int) $state . ' WHERE (' . $where . ')' . $checkin);
     // Check for a database error.
     try {
       $this->_db->execute();

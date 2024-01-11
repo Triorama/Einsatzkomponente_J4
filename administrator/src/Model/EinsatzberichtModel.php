@@ -14,17 +14,31 @@ use Joomla\CMS\MVC\Model\AdminModel;
 use Joomla\CMS\Table\Table;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Component\ComponentHelper;
+use Eikonamespace\Component\Einsatzkomponente\Administrator\Field;
 /**
  * Einsatzkomponente model.
  */
 class EinsatzberichtModel extends AdminModel
 {
   /**
+   * The type alias for this content type.
+   *
+   * @var    string
+   * @since  3.2
+   */
+  public $typeAlias = 'com_einsatzkomponente.einsatzbericht';
+  /**
    * @var		string	The prefix to use with controller messages.
    * @since	1.6
    */
   protected $text_prefix = 'COM_EINSATZKOMPONENTE';
-
+  /**
+   * Name of the form
+   *
+   * @var string
+   * @since  4.0.0
+   */
+  protected $formName = 'einsatzbericht';
   /**
    * Method to get the record form.
    *
@@ -38,12 +52,13 @@ class EinsatzberichtModel extends AdminModel
     // Initialise variables.
     $app = Factory::getApplication();
     // Get the form.
-    $form = $this->loadForm('com_einsatzkomponente.einsatzbericht', 'einsatzbericht');
+    $form = $this->loadForm($this->typeAlias, 'einsatzbericht', ['control' => 'jform', 'load_data' => $loadData]);
     if (empty($form)) {
       return false;
     }
     return $form;
   }
+
   /**
    * Method to get the data that should be injected in the form.
    *
@@ -53,10 +68,7 @@ class EinsatzberichtModel extends AdminModel
   protected function loadFormData()
   {
     // Check the session for previously entered form data.
-    $data = Factory::getApplication()->getUserState(
-      'com_einsatzkomponente.edit.einsatzbericht.data',
-      []
-    );
+    $data = Factory::getApplication()->getUserState('com_einsatzkomponente.edit.einsatzbericht.data', []);
     if (empty($data)) {
       $data = $this->getItem();
 
@@ -68,15 +80,15 @@ class EinsatzberichtModel extends AdminModel
         endif;
       endforeach;
       $data->auswahl_orga = implode(',', $array);
-      if ($data->auswahl_orga == ''):
-        // Vorbelegung Organisationen
-        //$db = JFactory::getDbo();
-        //$db->setQuery('SELECT id,ffw FROM #__eiko_organisationen WHERE ffw="1" LIMIT 1');
-        //$standard = $db->loadResult();
-        //$data->auswahl_orga = $standard['id'];
-        $params = ComponentHelper::getParams('com_einsatzkomponente');
-        $data->auswahl_orga = $params->get('pre_auswahl_orga', '');
-      endif;
+      // if ($data->auswahl_orga == ''):
+      //   //Vorbelegung Organisationen
+      //   $db = Factory::getDbo();
+      //   $db->setQuery('SELECT id FROM #__eiko_organisationen WHERE ffw="1" LIMIT 1');
+      //   $standard = $db->loadResult();
+      //   $data->auswahl_orga = $standard['id'];
+      //   $params = ComponentHelper::getParams('com_einsatzkomponente');
+      //   $data->auswahl_orga = $params->get('pre_auswahl_orga', '');
+      // endif;
 
       //Support for multiple or not foreign key field: vehicles
       $array = [];
@@ -96,14 +108,14 @@ class EinsatzberichtModel extends AdminModel
       endforeach;
       $data->ausruestung = implode(',', $array);
 
-      //Support for multiple or not foreign key field: vehicles
-      $array = [];
-      foreach ((array) $data->params as $value):
-        if (!is_array($value)):
-          $array[] = $value;
-        endif;
-      endforeach;
-      $data->params = implode(',', $array);
+      //   //Support for multiple or not foreign key field: vehicles
+      //   $array = [];
+      //   foreach ((array) $data->params as $value):
+      //     if (!is_array($value)):
+      //       $array[] = $value;
+      //     endif;
+      //   endforeach;
+      //   $data->params = implode(',', $array);
     }
 
     $params = ComponentHelper::getParams('com_einsatzkomponente');
@@ -114,6 +126,30 @@ class EinsatzberichtModel extends AdminModel
 
     return $data;
   }
+  /**
+   * Method to validate the form data.
+   *
+   * @param   Form    $form   The form to validate against.
+   * @param   array   $data   The data to validate.
+   * @param   string  $group  The name of the field group to validate.
+   *
+   * @return  array|boolean  Array of filtered data if valid, false otherwise.
+   *
+   * @see     \Joomla\CMS\Form\FormRule
+   * @see     JFilterInput
+   * @since   3.7.0
+   */
+  public function validate($form, $data, $group = null)
+  {
+    if (!$this->getCurrentUser()->authorise('core.admin', 'com_einsatzkomponente')) {
+      if (isset($data['rules'])) {
+        unset($data['rules']);
+      }
+    }
+
+    return parent::validate($form, $data, $group);
+  }
+
   /**
    * Method to get a single record.
    *

@@ -15,15 +15,12 @@ use Joomla\CMS\HTML\HTMLHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Router\Route;
 use Joomla\CMS\Language\Text;
-
-HTMLHelper::_('behavior.multiselect');
+use EikoNamespace\Component\Einsatzkomponente\Administrator\Helper\EinsatzkomponenteHelper;
+// HTMLHelper::_('behavior.multiselect');
 HTMLHelper::_('bootstrap.renderModal', 'a.modal');
 HTMLHelper::_('bootstrap.tooltip');
-HTMLHelper::_('formbehavior.chosen', 'select');
-HTMLHelper::_(
-  'stylesheet',
-  'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css'
-);
+// HTMLHelper::_('formbehavior.chosen', 'select');
+// HTMLHelper::_('stylesheet', 'administrator/components/com_einsatzkomponente/assets/css/einsatzkomponente.css');
 
 $params = ComponentHelper::getParams('com_einsatzkomponente');
 
@@ -35,15 +32,8 @@ $listDirn = $this->state->get('list.direction');
 $canOrder = $user->authorise('core.edit.state', 'com_einsatzkomponente');
 $saveOrder = $listOrder == 'a.ordering';
 if ($saveOrder) {
-  $saveOrderingUrl =
-    'index.php?option=com_einsatzkomponente&task=einsatzberichte.saveOrderAjax&tmpl=component';
-  HTMLHelper::_(
-    'sortablelist.sortable',
-    'einsatzberichtList',
-    'adminForm',
-    strtolower($listDirn),
-    $saveOrderingUrl
-  );
+  $saveOrderingUrl = 'index.php?option=com_einsatzkomponente&task=einsatzberichte.saveOrderAjax&tmpl=component';
+  HTMLHelper::_('sortablelist.sortable', 'einsatzberichtList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
 
@@ -71,9 +61,7 @@ if (!empty($this->extra_sidebar)) {
   $this->sidebar .= $this->extra_sidebar;
 }
 ?>
-<form action="<?php echo Route::_(
-  'index.php?option=com_einsatzkomponente&view=einsatzberichte'
-); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo Route::_('index.php?option=com_einsatzkomponente&view=einsatzberichte'); ?>" method="post" name="adminForm" id="adminForm">
 	<?php if (!empty($this->sidebar)): ?>
 		<div id="j-sidebar-container" class="span2">
 			<?php echo $this->sidebar; ?>
@@ -87,34 +75,20 @@ if (!empty($this->extra_sidebar)) {
 
 
 				<div class="filter-search btn-group pull-left">
-					<label for="filter_search" class="element-invisible"><?php echo Text::_(
-       'JSEARCH_FILTER'
-     ); ?></label>
-					<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo Text::_(
-       'JSEARCH_FILTER'
-     ); ?>" value="<?php echo $this->escape(
-  $this->state->get('filter.search')
-); ?>" title="<?php echo Text::_('JSEARCH_FILTER'); ?>" />
+					<label for="filter_search" class="element-invisible"><?php echo Text::_('JSEARCH_FILTER'); ?></label>
+					<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo Text::_('JSEARCH_FILTER'); ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" title="<?php echo Text::_('JSEARCH_FILTER'); ?>" />
 				</div>
 				<div class="btn-group pull-left">
-					<button class="btn hasTooltip" type="submit" title="<?php echo Text::_(
-       'JSEARCH_FILTER_SUBMIT'
-     ); ?>"><i class="icon-search"></i></button>
-					<button class="btn hasTooltip" type="button" title="<?php echo Text::_(
-       'JSEARCH_FILTER_CLEAR'
-     ); ?>" onclick="document.getElementById('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
+					<button class="btn hasTooltip" type="submit" title="<?php echo Text::_('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
+					<button class="btn hasTooltip" type="button" title="<?php echo Text::_('JSEARCH_FILTER_CLEAR'); ?>" onclick="document.getElementById('filter_search').value='';this.form.submit();"><i class="icon-remove"></i></button>
 				</div>
 
 				<div class="btn-group pull-right hidden-phone">
-					<label for="limit" class="element-invisible"><?php echo Text::_(
-       'JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'
-     ); ?></label>
+					<label for="limit" class="element-invisible"><?php echo Text::_('JFIELD_PLG_SEARCH_SEARCHLIMIT_DESC'); ?></label>
 					<?php echo $this->pagination->getLimitBox(); ?>
 				</div>
 				<div class="btn-group pull-right hidden-phone">
-					<label for="directionTable" class="element-invisible"><?php echo Text::_(
-       'JFIELD_ORDERING_DESC'
-     ); ?></label>
+					<label for="directionTable" class="element-invisible"><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></label>
 					<select name="directionTable" id="directionTable" class="input-medium" onchange="Joomla.orderTable()">
 						<option value=""><?php echo Text::_('JFIELD_ORDERING_DESC'); ?></option>
 						<option value="asc" <?php if ($listDirn == 'asc') {
@@ -140,22 +114,11 @@ if (!empty($this->extra_sidebar)) {
 					<tr>
 						<?php if (isset($this->items[0]->ordering)): ?>
 							<th width="1%" class="nowrap center hidden-phone">
-								<?php echo HTMLHelper::_(
-          'grid.sort',
-          '<i class="icon-menu-2"></i>',
-          'a.ordering',
-          $listDirn,
-          $listOrder,
-          null,
-          'asc',
-          'JGRID_HEADING_ORDERING'
-        ); ?>
+								<?php echo HTMLHelper::_('grid.sort', '<i class="icon-menu-2"></i>', 'a.ordering', $listDirn, $listOrder, null, 'asc', 'JGRID_HEADING_ORDERING'); ?>
 							</th>
 						<?php endif; ?>
 						<th width="1%" class="">
-							<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_(
-         'JGLOBAL_CHECK_ALL'
-       ); ?>" onclick="Joomla.checkAll(this)" />
+							<input type="checkbox" name="checkall-toggle" value="" title="<?php echo Text::_('JGLOBAL_CHECK_ALL'); ?>" onclick="Joomla.checkAll(this)" />
 						</th>
 						<?php if (isset($this->items[0]->state)): ?>
 							<th width="1%" class="nowrap center">
@@ -164,63 +127,27 @@ if (!empty($this->extra_sidebar)) {
 						<?php endif; ?>
 
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATE1',
-         'a.date1',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALARMIERUNGSZEIT', 'a.alarmierungszeit', $listDirn, $listOrder); ?>
 						</th>
 						<!-- Spalte Alarmierungsart wurde mit Spalte Einsatzart zusammen gelegt			
                 <th>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALERTING',
-      'a.alerting',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ALARMIERUNGSART', 'a.alarmierungsart', $listDirn, $listOrder); ?>
 				</th>
 -->
-						<th class='left backend_tickerkat'>
-							<?php echo HTMLHelper::_('grid.sort', 'Kat', 'a.tickerkat', $listDirn, $listOrder); ?>
+						<th class='left backend_einsatzkategorie'>
+							<?php echo HTMLHelper::_('grid.sort', 'Kat', 'a.einsatzkategorie', $listDirn, $listOrder); ?>
 						</th>
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_DATA1',
-         'a.data1',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_EINSATZART', 'a.einsatzart', $listDirn, $listOrder); ?>
 						</th>
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ADDRESS',
-         'a.address',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ADDRESS', 'a.address', $listDirn, $listOrder); ?>
 						</th>
 						<th class='left backend_einsatzfoto'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_IMAGE',
-         'a.image',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_IMAGE', 'a.image', $listDirn, $listOrder); ?>
 						</th>
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_SUMMARY',
-         'a.summary',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_SUMMARY', 'a.summary', $listDirn, $listOrder); ?>
 						</th>
 						<!--				<th class='left'>
 				<?php
@@ -229,13 +156,7 @@ if (!empty($this->extra_sidebar)) {
 				</th>
 -->
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ZUGRIFFE',
-         'a.counter',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_ZUGRIFFE', 'a.counter', $listDirn, $listOrder); ?>
 						</th>
 
 						<?php if ($params->get('gmap_action', '0')): ?>
@@ -245,63 +166,27 @@ if (!empty($this->extra_sidebar)) {
 						<?php endif; ?>
 
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_CREATEDATE',
-         'a.createdate',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_CREATEDATE', 'a.createdate', $listDirn, $listOrder); ?>
 						</th>
 
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_UPDATEDATE',
-         'a.updatedate',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_UPDATEDATE', 'a.updatedate', $listDirn, $listOrder); ?>
 						</th>
 
 						<?php if ($params->get('info112', '0')): ?>
 							<th class='left'>
-								<?php echo HTMLHelper::_(
-          'grid.sort',
-          '<small>Info112.net</small>',
-          'a.notrufticker',
-          $listDirn,
-          $listOrder
-        ); ?>
+								<?php echo HTMLHelper::_('grid.sort', '<small>Info112.net</small>', 'a.notrufticker', $listDirn, $listOrder); ?>
 							</th>
 						<?php endif; ?>
 
 						<th class='left'>
-							<?php echo HTMLHelper::_(
-         'grid.sort',
-         'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_AUSWAHLORGA',
-         'a.auswahl_orga',
-         $listDirn,
-         $listOrder
-       ); ?>
+							<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_AUSWAHLORGA', 'a.auswahl_orga', $listDirn, $listOrder); ?>
 						</th>
 						<!--			<th class='left'>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_CREATED_BY',
-      'a.created_by',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_CREATED_BY', 'a.created_by', $listDirn, $listOrder); ?>
 				</th>
 				<th class='left'>
-				<?php echo HTMLHelper::_(
-      'grid.sort',
-      'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_MODIFIED_BY',
-      'a.modified_by',
-      $listDirn,
-      $listOrder
-    ); ?>
+				<?php echo HTMLHelper::_('grid.sort', 'COM_EINSATZKOMPONENTE_EINSATZBERICHTE_MODIFIED_BY', 'a.modified_by', $listDirn, $listOrder); ?>
 				</th>
 				-->
 
@@ -356,45 +241,30 @@ if (!empty($this->extra_sidebar)) {
 								</td>
 							<?php endif; ?>
 							<td class="center ">
-								<?php $curTime = strtotime($item->date1); ?>
-								<?php echo '<small>#' .
-          EinsatzkomponenteHelper::ermittle_einsatz_nummer($curTime, $item->data1_id) .
-          '/' .
-          date('Y', $curTime) .
-          '</small>'; ?>
+								<?php $curTime = strtotime($item->alarmierungszeit); ?>
+								<?php echo '<small>#' . EinsatzkomponenteHelper::ermittle_einsatz_nummer($curTime, $item->einsatzart_id) . '/' . date('Y', $curTime) . '</small>'; ?>
 								<?php echo HTMLHelper::_('grid.id', $i, $item->id); ?>
 
 							</td>
 							<?php if (isset($this->items[0]->state)): ?>
 								<td class="center">
-									<?php echo HTMLHelper::_(
-           'jgrid.published',
-           $item->state,
-           $i,
-           'einsatzberichte.',
-           $canChange,
-           'cb'
-         ); ?>
+									<?php echo HTMLHelper::_('jgrid.published', $item->state, $i, 'einsatzberichte.', $canChange, 'cb'); ?>
 								</td>
 							<?php endif; ?>
 							<td>
-								<?php echo $item->date1; ?>
+								<?php echo $item->alarmierungszeit; ?>
 							</td>
 
 							<?php // Get Einsatzkategorie
 
 
        $database = Factory::getDBO();
-       $query = 'SELECT * FROM #__eiko_tickerkat WHERE title = "' . $item->tickerkat . '" LIMIT 1 ';
+       $query = 'SELECT * FROM #__eiko_einsatzkategorie WHERE title = "' . $item->einsatzkategorie . '" LIMIT 1 ';
        $database->setQuery($query);
        $kat = $database->loadObject();
        ?>
-							<td class='backend_tickerkat'>
-								<?php echo '<img src="../' .
-          $kat->image .
-          '" width="32" height="100%" title="' .
-          $kat->title .
-          '" />'; ?>
+							<td class='backend_einsatzkategorie'>
+								<?php echo '<img src="../' . $kat->image . '" width="32" height="100%" title="' . $kat->title . '" />'; ?>
 							</td>
 
 							<td>
@@ -402,73 +272,45 @@ if (!empty($this->extra_sidebar)) {
 
 
         $database = Factory::getDBO();
-        $query =
-          'SELECT * FROM #__eiko_alarmierungsarten WHERE title = "' .
-          $item->alerting .
-          '" LIMIT 1 ';
+        $query = 'SELECT * FROM #__eiko_alarmierungsarten WHERE title = "' . $item->alarmierungsart . '" LIMIT 1 ';
         $database->setQuery($query);
-        $alerting_image = $database->loadObject();
+        $alarmierungsart_image = $database->loadObject();
         ?>
 								<?php // Get color of Einsatzart
 
 
         $database = Factory::getDBO();
-        $query = 'SELECT * FROM #__eiko_einsatzarten WHERE title = "' . $item->data1 . '" LIMIT 1 ';
+        $query = 'SELECT * FROM #__eiko_einsatzarten WHERE title = "' . $item->einsatzart . '" LIMIT 1 ';
         $database->setQuery($query);
-        $data1 = $database->loadObject();
+        $einsatzart = $database->loadObject();
         ?>
 								<?php if (isset($item->checked_out) && $item->checked_out): ?>
-									<?php echo HTMLHelper::_(
-           'jgrid.checkedout',
-           $i,
-           $item->editor,
-           $item->checked_out_time,
-           'einsatzberichte.',
-           $canCheckin
-         ); ?>
+									<?php echo HTMLHelper::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'einsatzberichte.', $canCheckin); ?>
 								<?php endif; ?>
 
 
-								<div style="border-left:6px solid;border-color:<?php echo $data1->marker; ?>;padding-left:3px;">
+								<div style="border-left:6px solid;border-color:<?php echo $einsatzart->marker; ?>;padding-left:3px;">
 									<?php if ($canEdit): ?>
-										<a href="<?php echo Route::_(
-            'index.php?option=com_einsatzkomponente&task=einsatzbericht.edit&id=' . (int) $item->id
-          ); ?>">
+										<a href="<?php echo Route::_('index.php?option=com_einsatzkomponente&task=einsatzbericht.edit&id=' . (int) $item->id); ?>">
 										<?php endif; ?>
-										<?php echo '<b>' . $data1->title . '</b>'; ?>
+										<?php echo '<b>' . $einsatzart->title . '</b>'; ?>
 										<?php if ($canEdit): ?>
 										</a>
 									<?php endif; ?>
 								</div>
 								<?php
         echo '<div style="padding-top:5px;">';
-        if (isset($alerting_image->image)):
-          echo '<img src="../' .
-            $alerting_image->image .
-            '" class="backend_alerting_style" title ="' .
-            $alerting_image->title .
-            '" />';
+        if (isset($alarmierungsart_image->image)):
+          echo '<img src="../' . $alarmierungsart_image->image . '" class="backend_alarmierungsart_style" title ="' . $alarmierungsart_image->title . '" />';
         endif;
-        if (isset($data1->list_icon)):
-          echo '&nbsp;<img src="../' .
-            $data1->list_icon .
-            '" class="backend_data_style" title ="' .
-            $data1->title .
-            '" />';
+        if (isset($einsatzart->list_icon)):
+          echo '&nbsp;<img src="../' . $einsatzart->list_icon . '" class="backend_data_style" title ="' . $einsatzart->title . '" />';
         endif;
         if (isset($kat->image)):
-          echo '&nbsp;<img src="../' .
-            $kat->image .
-            '" class="backend_kat_style" title="' .
-            $kat->title .
-            '" />';
+          echo '&nbsp;<img src="../' . $kat->image . '" class="backend_kat_style" title="' . $kat->title . '" />';
         endif;
         if ($item->image):
-          echo '&nbsp;<img src="../' .
-            $item->image .
-            '" class="backend_foto_style" title="' .
-            $item->image .
-            '"/>';
+          echo '&nbsp;<img src="../' . $item->image . '" class="backend_foto_style" title="' . $item->image . '"/>';
         endif;
         echo '</div>';
         ?>
@@ -478,11 +320,7 @@ if (!empty($this->extra_sidebar)) {
 								<?php echo $this->escape($item->address); ?>
 							</td>
 							<td class='backend_einsatzfoto'>
-								<?php echo '<span style="float:left;"> <img src="../' .
-          $item->image .
-          '" width="30" height="100%" title="' .
-          $item->image .
-          '"/></span>'; ?>
+								<?php echo '<span style="float:left;"> <img src="../' . $item->image . '" width="30" height="100%" title="' . $item->image . '"/></span>'; ?>
 							</td>
 							<td>
 								<?php echo $item->summary; ?>
@@ -512,40 +350,33 @@ if (!empty($this->extra_sidebar)) {
 							<?php endif; ?>
 
 							<td>
-								<?php echo '<span class="badge bg-info text-dark">' .
-          $item->createdate .
-          '</span><br/><span style="color:#aaaaaa;">' .
-          $item->created_by .
-          '</span>'; ?>
+								<?php echo '<span class="badge bg-info text-dark">' . $item->createdate . '</span><br/><span style="color:#aaaaaa;">' . $item->created_by . '</span>'; ?>
 							</td>
 							<td>
-								<?php echo '<span class="badge bg-info text-dark">' .
-          $item->updatedate .
-          '</span><br/><span style="color:#aaaaaa;">' .
-          $item->modified_by .
-          '</span>'; ?>
+								<?php echo '<span class="badge bg-info text-dark">' . $item->updatedate . '</span><br/><span style="color:#aaaaaa;">' . $item->modified_by . '</span>'; ?>
 							</td>
-							<?php // ----------------  info112.net  ----------------------------------------
+							<?php
+       // ----------------  info112.net  ----------------------------------------
 
-       if ($this->params->get('info112', '0')):
-         $notrufticker = $item->notrufticker;
+       //    if ($this->params->get('info112', '0')):
+       //      $notrufticker = $item->notrufticker;
 
-         if ($notrufticker == '1') {
-           echo '<td align="center" nowrap="nowrap"><a class="link" id="link" href="' .
-             Route::_('index.php?option=com_einsatzkomponente') .
-             '&view=einsatzberichte&tickerID2=' .
-             $item->id .
-             '"><img src="../administrator/components/com_einsatzkomponente/assets/images/send.png" width="32" height="32" /></a></td>';
-         }
+       //      if ($notrufticker == '1') {
+       //        echo '<td align="center" nowrap="nowrap"><a class="link" id="link" href="' .
+       //          Route::_('index.php?option=com_einsatzkomponente') .
+       //          '&view=einsatzberichte&tickerID2=' .
+       //          $item->id .
+       //          '"><img src="../administrator/components/com_einsatzkomponente/assets/images/send.png" width="32" height="32" /></a></td>';
+       //      }
 
-         if ($notrufticker == '2') {
-           echo '<td align="center" nowrap="nowrap"><img src="../administrator/components/com_einsatzkomponente/assets/images/ok.png" width="24" height="24" /></td>';
-         }
+       //      if ($notrufticker == '2') {
+       //        echo '<td align="center" nowrap="nowrap"><img src="../administrator/components/com_einsatzkomponente/assets/images/ok.png" width="24" height="24" /></td>';
+       //      }
 
-         if ($notrufticker == '0') {
-           echo '<td align="center" nowrap="nowrap"><img src="../administrator/components/com_einsatzkomponente/assets/images/error.png" width="24" height="24" /></td>';
-         }
-       endif;
+       //      if ($notrufticker == '0') {
+       //        echo '<td align="center" nowrap="nowrap"><img src="../administrator/components/com_einsatzkomponente/assets/images/error.png" width="24" height="24" /></td>';
+       //      }
+       //    endif;
        // ----------------  info112.net  ENDE ----------------------------------------
        ?>
 							<td>
